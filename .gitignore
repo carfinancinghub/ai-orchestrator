@@ -1,0 +1,28 @@
+﻿# JS/TS
+node_modules/
+**/node_modules/
+dist/
+build/
+coverage/
+*.log
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Project artifacts
+artifacts/
+artifacts_quarantine/
+archive/
+reports/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
