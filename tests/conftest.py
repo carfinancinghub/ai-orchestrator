@@ -1,4 +1,12 @@
-﻿import os, sys
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if ROOT not in sys.path:
-    sys.path.insert(0, ROOT)
+﻿
+""" path: tests/conftest.py """
+
+import pytest
+
+
+@pytest.fixture(autouse=True)
+def _env(monkeypatch):
+# ensure echo path end-to-end
+monkeypatch.setenv("AIO_PROVIDER", "echo")
+monkeypatch.setenv("AIO_DRY_RUN", "false")
+yield

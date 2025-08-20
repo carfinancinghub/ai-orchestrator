@@ -1,19 +1,21 @@
-name: CI
-on:
-  push:
-  pull_request:
+""" Path: .github/workflows/ci.yml """
+
+name: ci
+on: [push, pull_request]
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.11", "3.12"]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-      - run: python -m pip install -U pip
-      - run: pip install -r requirements.txt || true
-      - run: pip install fastapi "uvicorn[standard]" pytest
-      - run: pytest -q
+test:
+runs-on: ${{ matrix.os }}
+strategy:
+matrix:
+os: [ubuntu-latest, windows-latest]
+python-version: ["3.11"]
+steps:
+- uses: actions/checkout@v4
+- uses: actions/setup-python@v5
+with: { python-version: ${{ matrix.python-version }} }
+- name: Install deps
+run: |
+python -m pip install --upgrade pip
+pip install fastapi uvicorn pytest httpx
+- name: Run tests
+run: pytest -q
