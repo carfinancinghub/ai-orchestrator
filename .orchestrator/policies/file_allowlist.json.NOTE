@@ -1,0 +1,7 @@
+# File: .orchestrator/policies/file_allowlist.json.NOTE
+# Purpose: Human-readable guidance for the JSON allowlist.
+#
+# - allowed_paths: Folders where AI diffs/patches are permitted.
+# - blocked_globs: Files/folders the AI must never touch.
+# - Keep JSON comments out of the .json file—use this NOTE file for context.
+# - Adjust as your repo grows (e.g., add "web/", "infra/").

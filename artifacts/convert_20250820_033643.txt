@@ -1,0 +1,2 @@
+Conversion: src\some.js -> src\some.ts
+Wrote: True

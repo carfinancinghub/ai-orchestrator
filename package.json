@@ -1,0 +1,22 @@
+{
+  "name": "ai-orchestrator",
+  "version": "1.0.0",
+  "description": "<!-- AI‑ORCH HEADER: README.md | Purpose: Quick start & usage. -->",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

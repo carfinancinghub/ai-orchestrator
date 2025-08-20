@@ -1,0 +1,8 @@
+Run-ID: run-20250819T233636Z
+Artifact-ID: 5f0f04e5-1f05-4027-8e14-8af7e60fe039
+Stage: convert
+Version: v03
+Timestamp: 2025-08-20T00:02:54.477296+00:00
+
+Conversion: src\some.js -> src\some.ts
+Outcome: conversion-attempted
