@@ -1,0 +1,227 @@
+# Save Map & Comment Headers — Batch 1
+
+**What this is:** A precise checklist of files you should **save now** from the “Orchestrator Scaffold (v1) – Minimal Stack” document, plus small comment headers to paste at the top of each file (where the format allows it). This keeps everything organized and future‑proof.
+
+> **Scope:** Batch 1 includes just what’s needed to boot the API in DRY\_RUN mode. I’ll deliver Batch 2 (remaining files) after you say “continue”.
+
+---
+
+## 0) Create Folders
+
+```
+ai-orchestrator/
+  app/
+  core/
+  core/clients/
+  .orchestrator/
+  .orchestrator/prompts/
+  docker/
+  examples/
+```
+
+---
+
+## 1) Save These Files Now (from the existing scaffold)
+
+> Paste the corresponding **comment header** at the very top of each file before the file’s real content, unless noted.
+
+### 1. requirements.txt
+
+```txt
+# === AI‑ORCH HEADER ===
+# File: requirements.txt
+# Purpose: Pinned dependencies for the orchestrator and local QA tools.
+# Note: Safe to add version bumps via PR only.
+```
+
+### 2. .env.sample
+
+```env
+# === AI‑ORCH HEADER ===
+# File: .env.sample (copy to .env)
+# Purpose: Environment variables. Start with DRY_RUN=true.
+# Note: Do NOT commit your real .env.
+```
+
+### 3. .orchestrator/config.yaml
+
+```yaml
+# === AI‑ORCH HEADER ===
+# File: .orchestrator/config.yaml
+# Purpose: Pipeline + sandbox config. Interpolates ${ENV} from .env.
+# Note: No secrets here.
+```
+
+### 4. app/server.py
+
+```python
+# === AI‑ORCH HEADER ===
+# File: app/server.py
+# Purpose: FastAPI endpoints to enqueue tasks, run next, and fetch run logs.
+# Notes: Relies on Orchestrator; no API keys are logged.
+```
+
+### 5. core/utils.py
+
+```python
+# === AI‑ORCH HEADER ===
+# File: core/utils.py
+# Purpose: Env flags + config loader with ${VAR} interpolation.
+# Notes: Keep small and dependency‑free.
+```
+
+### 6. core/storage.py
+
+```python
+# === AI‑ORCH HEADER ===
+# File: core/storage.py
+# Purpose: SQLite run log (append‑only) using SQLAlchemy.
+# Notes: Migration‑free; safe for local/dev.
+```
+
+### 7. core/queue.py
+
+```python
+# === AI‑ORCH HEADER ===
+# File: core/queue.py
+# Purpose: In‑memory FIFO for tasks during dev.
+# Notes: Replace with Redis/SQS in production.
+```
+
+### 8. core/router.py
+
+```python
+# === AI‑ORCH HEADER ===
+# File: core/router.py
+# Purpose: Route roles → model clients (generator/reviewer/evaluator).
+# Notes: Reads defaults from config; pluggable.
+```
+
+### 9. core/orchestrator.py
+
+```python
+# === AI‑ORCH HEADER ===
+# File: core/orchestrator.py
+# Purpose: State machine: generate → QA → review → evaluate → persist.
+# Notes: Attempts, decisions, and artifacts are recorded per run.
+```
+
+### 10. core/sandbox.py
+
+```python
+# === AI‑ORCH HEADER ===
+# File: core/sandbox.py
+# Purpose: Run format/lint/tests/security commands and collect logs.
+# Notes: Switch to dockerized execution later if needed.
+```
+
+### 11. core/git\_ops.py
+
+```python
+# === AI‑ORCH HEADER ===
+# File: core/git_ops.py
+# Purpose: Commit to branch `feat/auto-{task_id}`; return branch name.
+# Notes: Configure author via env.
+```
+
+### 12. core/clients/base.py
+
+```python
+# === AI‑ORCH HEADER ===
+# File: core/clients/base.py
+# Purpose: Interface for model clients (generate/review/evaluate).
+# Notes: Keep method signatures stable.
+```
+
+### 13. core/clients/openai\_client.py
+
+```python
+# === AI‑ORCH HEADER ===
+# File: core/clients/openai_client.py
+# Purpose: OpenAI client with DRY_RUN simulation.
+# Notes: Replace TODO with real SDK calls when DRY_RUN=false.
+```
+
+### 14. core/clients/gemini\_client.py
+
+```python
+# === AI‑ORCH HEADER ===
+# File: core/clients/gemini_client.py
+# Purpose: Gemini client with DRY_RUN simulation.
+# Notes: Replace TODO with real SDK calls when DRY_RUN=false.
+```
+
+### 15. core/clients/grok\_client.py
+
+```python
+# === AI‑ORCH HEADER ===
+# File: core/clients/grok_client.py
+# Purpose: Grok client with DRY_RUN simulation.
+# Notes: Replace TODO with real SDK calls when DRY_RUN=false.
+```
+
+### 16. docker/sandbox.Dockerfile
+
+```dockerfile
+# === AI‑ORCH HEADER ===
+# File: docker/sandbox.Dockerfile
+# Purpose: Minimal image for format/lint/test/security.
+# Notes: Used for local sandboxing/CI; no secrets in image.
+```
+
+### 17. .orchestrator/prompts/generator.txt
+
+```txt
+# === OUTSIDE META (do NOT include in file) ===
+# Purpose: Prompt template for the generator.
+# Save the file **without** this meta header.
+```
+
+### 18. .orchestrator/prompts/reviewer.txt
+
+```txt
+# === OUTSIDE META (do NOT include in file) ===
+# Purpose: Prompt template for the reviewer.
+# Save the file **without** this meta header.
+```
+
+### 19. .orchestrator/prompts/evaluator.txt
+
+```txt
+# === OUTSIDE META (do NOT include in file) ===
+# Purpose: Prompt template for the evaluator.
+# Save the file **without** this meta header.
+```
+
+### 20. examples/task\_example.yaml
+
+```yaml
+# === AI‑ORCH HEADER ===
+# File: examples/task_example.yaml
+# Purpose: Sample task payload for local testing.
+# Notes: Safe to modify.
+```
+
+### 21. README.md
+
+```md
+<!-- AI‑ORCH HEADER: README.md | Purpose: Quick start & usage. -->
+```
+
+---
+
+## 2) Files to Handle Later (Batch 2)
+
+* `.orchestrator/policies/file_allowlist.json` → **JSON has no comments**. I’ll provide a companion `file_allowlist.json.NOTE` with guidance and the JSON body separate.
+* Optional CI files (GitHub Actions), Docker Compose, and real API wiring.
+
+---
+
+## 3) After Saving Batch 1 — Quick Smoke Test
+
+1. Create venv and install deps.
+2. Copy `.env.sample` → `.env` and keep `DRY_RUN=true`.
+3. Start API: `uvicorn app.server:app --reload`.
+4. `POST /tasks` with `examples/task_example.yaml`, then `POST /run/next`.
+
+If this boots and returns `{status: accepted}`, you’re good.

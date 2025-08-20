@@ -1,0 +1,1 @@
+<!-- AI‑ORCH HEADER: README.md | Purpose: Quick start & usage. -->

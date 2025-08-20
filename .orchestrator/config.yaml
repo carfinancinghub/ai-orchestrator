@@ -1,0 +1,4 @@
+# === AI‑ORCH HEADER ===
+# File: .orchestrator/config.yaml
+# Purpose: Pipeline + sandbox config. Interpolates ${ENV} from .env.
+# Note: No secrets here.

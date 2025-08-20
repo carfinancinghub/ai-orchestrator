@@ -1,0 +1,13 @@
+{
+  "allowed_paths": [
+    "src/",
+    "tests/",
+    "app/",
+    "core/"
+  ],
+  "blocked_globs": [
+    "**/.env",
+    "**/secrets/**",
+    "**/.git/**"
+  ]
+}
