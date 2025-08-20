@@ -4,6 +4,7 @@ Minimal router: orchestrator + convert + debug.
 """
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from typing import Dict, List, Optional
 from fastapi import APIRouter, HTTPException, Query
@@ -62,8 +63,9 @@ async def convert_file(path: str, write: bool = False, tests: bool = True, force
 @router.get("/debug/settings")
 async def debug_settings() -> Dict[str, object]:
     s = getattr(orc, "settings", {})
-    return {"pid": os.getpid() if "os" in globals() else None, "settings": {
+    return {"pid": os.getpid(), "settings": {
         "DRY_RUN": s.get("DRY_RUN"),
+        "PROVIDER": s.get("PROVIDER"),
     }}
 
 @router.get("/debug/fs/exists")

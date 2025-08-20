@@ -1,14 +1,16 @@
 ﻿"""
 Path: core/orchestrator.py
-Minimal Orchestrator used by routes.
+Minimal Orchestrator used by routes, now with provider support.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List
 import os
+
+from core.providers import load_provider
 
 @dataclass
 class OrchestratorConfig:
@@ -25,8 +27,11 @@ class Orchestrator:
         self.config.reports_dir.mkdir(parents=True, exist_ok=True)
         self.run_id = datetime.now(timezone.utc).strftime("run-%Y%m%dT%H%M%SZ")
         self.completed: List[str] = []
+        provider_name = os.getenv("AIO_PROVIDER", "").strip()
+        self.provider = load_provider(provider_name)
         self.settings: Dict[str, object] = {
-            "DRY_RUN": os.getenv("AIO_DRY_RUN", "true").strip().lower() in {"1","true","yes","on"}
+            "DRY_RUN": os.getenv("AIO_DRY_RUN", "true").strip().lower() in {"1","true","yes","on"},
+            "PROVIDER": provider_name or None,
         }
 
     # accessors
@@ -41,11 +46,17 @@ class Orchestrator:
         stage = stage.lower()
         if stage not in self.stages:
             raise ValueError(f"unknown-stage:{stage}")
-        content = (
-            f"Run-ID: {self.run_id}\n"
-            f"Stage: {stage}\n"
-            f"Timestamp: {datetime.now(timezone.utc).isoformat()}\n"
-        )
+
+        # Only 'generate' uses the provider (if set) for now
+        if stage == "generate" and self.provider is not None:
+            prompt = "Write a one-sentence status for our orchestrator demo."
+            content = self.provider.generate(prompt) + "\n"
+        else:
+            content = (
+                f"Run-ID: {self.run_id}\n"
+                f"Stage: {stage}\n"
+                f"Timestamp: {datetime.now(timezone.utc).isoformat()}\n"
+            )
         p = self._write_artifact(stage, content)
         self.completed.append(stage)
         return {"stage": stage, "status": "OK", "artifact_file": str(p), "stopped": False}
@@ -56,7 +67,7 @@ class Orchestrator:
             last = self.run_stage(s)
         return {"run_id": self.run_id, "completed": self.get_completed_stages(), "last": last}
 
-    # JS→TS helpers
+    # JS→TS helpers (unchanged)
     def discover_conversion(self, root: Path) -> List[Dict[str, str]]:
         root = Path(root)
         items: List[Dict[str, str]] = []
