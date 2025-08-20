@@ -26,3 +26,9 @@ Thumbs.db
 *.swp
 .idea/
 .vscode/
+# Secrets
+.env
+.env.*
+# Misc caches
+.cache/
+.coverage
