@@ -32,3 +32,6 @@ Thumbs.db
 # Misc caches
 .cache/
 .coverage
+
+.env
+.env.*
