@@ -1,0 +1,5 @@
+({[
+REVIEW ARTIFACT
+This is a mock artifact for stage: review
+Timestamp: 2025-08-17 22:43:39.278783
+({]})

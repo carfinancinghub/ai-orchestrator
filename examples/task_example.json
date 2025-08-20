@@ -1,0 +1,8 @@
+{
+  "id": "hello-world-module",
+  "spec": {
+    "files": ["src/hello.py", "tests/test_hello.py"],
+    "tests": ["pytest -q"],
+    "constraints": {"style": "pep8", "security": "bandit"}
+  }
+}
