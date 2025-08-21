@@ -1,37 +1,50 @@
 ﻿"""
 Path: core/orchestrator.py
-Minimal Orchestrator used by routes, now with provider support.
+Description: Orchestrator with lazy-loaded provider for 'generate' stage.
 """
+
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List
-import os
+from typing import Dict, List, Optional
 
+from core.providers.base import LLMProvider
 from core.providers import load_provider
+
 
 @dataclass
 class OrchestratorConfig:
     base_dir: Path = Path("./artifacts")
     reports_dir: Path = Path("./reports")
 
+
 @dataclass
 class Orchestrator:
     config: OrchestratorConfig = field(default_factory=OrchestratorConfig)
-    stages: List[str] = field(default_factory=lambda: ["generate","qa","review","evaluate","persist"])
+    stages: List[str] = field(
+        default_factory=lambda: ["generate", "qa", "review", "evaluate", "persist"]
+    )
+
+    # runtime
+    provider: Optional[LLMProvider] = None
+    _provider_name: Optional[str] = None
 
     def __post_init__(self) -> None:
         self.config.base_dir.mkdir(parents=True, exist_ok=True)
         self.config.reports_dir.mkdir(parents=True, exist_ok=True)
         self.run_id = datetime.now(timezone.utc).strftime("run-%Y%m%dT%H%M%SZ")
         self.completed: List[str] = []
-        provider_name = os.getenv("AIO_PROVIDER", "").strip()
-        self.provider = load_provider(provider_name)
+
+        # Record provider name from env; actual load happens lazily.
+        initial_name = os.getenv("AIO_PROVIDER", "").strip()
+        self._provider_name = initial_name or None
+
         self.settings: Dict[str, object] = {
-            "DRY_RUN": os.getenv("AIO_DRY_RUN", "true").strip().lower() in {"1","true","yes","on"},
-            "PROVIDER": provider_name or None,
+            "DRY_RUN": os.getenv("AIO_DRY_RUN", "true").strip().lower() in {"1", "true", "yes", "on"},
+            "PROVIDER": self._provider_name,
         }
 
     # accessors
@@ -41,33 +54,57 @@ class Orchestrator:
     def get_run_id(self) -> str:
         return self.run_id
 
+    # provider (lazy)
+    def _ensure_provider(self) -> None:
+        curr = os.getenv("AIO_PROVIDER", "").strip()
+        if not curr:
+            # Why: avoid stale provider when env is cleared during a run.
+            self.provider = None
+            self._provider_name = None
+            self.settings["PROVIDER"] = None
+            return
+
+        if self.provider is None or self._provider_name != curr:
+            self.provider = load_provider(curr)
+            self._provider_name = curr if self.provider else None
+
+        self.settings["PROVIDER"] = self._provider_name
+
     # pipeline
     def run_stage(self, stage: str) -> Dict[str, object]:
         stage = stage.lower()
         if stage not in self.stages:
             raise ValueError(f"unknown-stage:{stage}")
 
-        # Only 'generate' uses the provider (if set) for now
-        if stage == "generate" and self.provider is not None:
-            prompt = "Write a one-sentence status for our orchestrator demo."
-            content = self.provider.generate(prompt) + "\n"
+        if stage == "generate":
+            self._ensure_provider()
+            if self.provider is not None:
+                prompt = "Write a one-sentence status for our orchestrator demo."
+                content = self.provider.generate(prompt) + "\n"
+            else:
+                content = (
+                    f"Run-ID: {self.run_id}\n"
+                    f"Stage: {stage}\n"
+                    f"Timestamp: {datetime.now(timezone.utc).isoformat()}\n"
+                )
         else:
             content = (
                 f"Run-ID: {self.run_id}\n"
                 f"Stage: {stage}\n"
                 f"Timestamp: {datetime.now(timezone.utc).isoformat()}\n"
             )
+
         p = self._write_artifact(stage, content)
         self.completed.append(stage)
         return {"stage": stage, "status": "OK", "artifact_file": str(p), "stopped": False}
 
     def run_all(self) -> Dict[str, object]:
-        last = None
+        last: Optional[Dict[str, object]] = None
         for s in self.stages:
             last = self.run_stage(s)
         return {"run_id": self.run_id, "completed": self.get_completed_stages(), "last": last}
 
-    # JS→TS helpers (unchanged)
+    # JS→TS helpers
     def discover_conversion(self, root: Path) -> List[Dict[str, str]]:
         root = Path(root)
         items: List[Dict[str, str]] = []
@@ -77,24 +114,32 @@ class Orchestrator:
                 if any(part in skip for part in src.parts):
                     continue
                 ts = src.with_suffix(".tsx" if src.suffix.lower() == ".jsx" else ".ts")
-                items.append({
-                    "src": str(src.resolve()),
-                    "ts_target": str(ts.resolve()),
-                    "test_target": "",
-                    "kind": "module",
-                })
+                items.append(
+                    {
+                        "src": str(src.resolve()),
+                        "ts_target": str(ts.resolve()),
+                        "test_target": "",
+                        "kind": "module",
+                    }
+                )
         return items
 
     def convert_file(
-        self, src: Path, write_to_repo: bool = False, include_tests: bool = True, force_write: bool = False
+        self,
+        src: Path,
+        write_to_repo: bool = False,
+        include_tests: bool = True,
+        force_write: bool = False,
     ) -> Dict[str, object]:
         src = Path(src)
         if not src.exists():
             return {"ok": False, "reason": "missing"}
+
         ts_path = src.with_suffix(".tsx" if src.suffix.lower() == ".jsx" else ".ts")
         header = f"// Converted from {src.name} — {datetime.now(timezone.utc).isoformat()}\n"
         ts_code = header + src.read_text(encoding="utf-8", errors="replace")
-        wrote = None
+
+        wrote: Optional[Path] = None
         dry_run = bool(self.settings.get("DRY_RUN", True))
         if write_to_repo and (force_write or not dry_run):
             ts_path.parent.mkdir(parents=True, exist_ok=True)
@@ -106,6 +151,7 @@ class Orchestrator:
                 )
                 if not test_path.exists():
                     test_path.write_text(f"// Auto test scaffold for {ts_path.name}\n", encoding="utf-8")
+
         art = self._write_artifact("convert", f"Conversion: {src} -> {ts_path}\nWrote: {wrote is not None}\n")
         return {"ok": True, "artifact": str(art), "ts_path": (str(wrote) if wrote else None)}
 
