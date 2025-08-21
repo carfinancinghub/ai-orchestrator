@@ -1,39 +1,8 @@
-﻿# JS/TS
-node_modules/
-**/node_modules/
-dist/
-build/
-coverage/
-*.log
-
-# Python
-venv/
-.venv/
+﻿venv/
 __pycache__/
-*.py[cod]
-.pytest_cache/
-.mypy_cache/
-
-# Project artifacts
+*.pyc
 artifacts/
-artifacts_quarantine/
-archive/
 reports/
-
-# OS/editor
-.DS_Store
-Thumbs.db
-*.swp
-.idea/
-.vscode/
-# Secrets
 .env
-.env.*
-# Misc caches
-.cache/
-.coverage
-
-.env
-.env.*
-
-!.env.example
+_aio_app_parked/
+run_local.py

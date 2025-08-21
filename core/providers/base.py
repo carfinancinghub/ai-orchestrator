@@ -1,4 +1,7 @@
-﻿from __future__ import annotations
+﻿"""
+Path: core/providers/base.py
+"""
+from __future__ import annotations
 from abc import ABC, abstractmethod
 
 class LLMProvider(ABC):
