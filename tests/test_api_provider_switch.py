@@ -1,6 +1,4 @@
-""" 
-Path: tests/test_api_provider_switch.py
-"""
+# Path: tests/test_api_provider_switch.py
 
 from fastapi.testclient import TestClient
 from app.server import app
