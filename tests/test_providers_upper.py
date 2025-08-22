@@ -1,5 +1,5 @@
 ﻿"""
-Path: test/test_providers_upper.py
+Path: tests/test_providers_upper.py
 """
 
 from core.providers import load_provider
