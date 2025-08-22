@@ -1,7 +1,6 @@
-﻿"""
-Path: core/providers/__init__.py
-Purpose: Provider registry + loader.
-"""
+﻿# Path: core/providers/__init__.py
+# Purpose: Provider registry + loader.
+
 from __future__ import annotations
 from typing import Optional, Type
 

@@ -6,3 +6,14 @@ reports/
 .env
 _aio_app_parked/
 run_local.py
+
+# audit artifacts
+artifacts/*.csv
+artifacts/audit_js_*.txt
+artifacts/audit_js_dryrun_*.txt
+
+# Audit artifacts
+artifacts/audit_js_*.txt
+artifacts/audit_js_*.csv
+artifacts/quarantine/**
+artifacts/quarantine_manifest.jsonl

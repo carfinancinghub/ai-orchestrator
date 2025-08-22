@@ -1,0 +1,4 @@
+SERVER_FILE: C:\c\ai-orchestrator\app\server.py
+ROUTES_FILE: C:\c\ai-orchestrator\app\api\routes.py
+HAS_DEBUG_PROVIDER: True
+ENV: {'AIO_PROVIDER': 'echo', 'AIO_DRY_RUN': 'false'}
