@@ -16,3 +16,7 @@ reports/**/review-pack.md
 Thumbs.db
 .vscode/
 .idea/
+files/
+node_modules/
+reports/**/review_input_*.json
+reports/**/review-pack.md
