@@ -1,17 +1,10 @@
-# Default: text files normalized
-* text=auto
+﻿* text=auto
 
-# Windows scripts
-*.ps1 text eol=crlf
-
-# Unixy scripts
-*.sh  text eol=lf
-*.mjs text eol=lf
-*.js  text eol=lf
-*.ts  text eol=lf
-*.tsx text eol=lf
-*.jsx text eol=lf
-*.py  text eol=lf
-*.yml text eol=lf
+# explicit preferences
+*.py   text eol=lf
+*.ps1  text eol=crlf
+*.sh   text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+*.yml  text eol=lf
 *.yaml text eol=lf
-*.md  text eol=lf
