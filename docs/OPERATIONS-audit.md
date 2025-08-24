@@ -1,25 +1,19 @@
-# File: docs/OPERATIONS-audit.md
-## What this does
-- **Plan**: reads your inventories at `C:\CFH\TruthSource\docs\...`, de-dups, prefers TS/TSX, emits CSV/JSON.
-- **Convert**: creates `.ts/.tsx` next to JS/JSX for in-root candidates.
-- **Commit**: batches existing TS files via `core/git_ops.py`.
-- **Quarantine**: moves problematic files under `artifacts/quarantine/YYYYMMDD/<reason>/` and logs a row in `artifacts/quarantine_manifest.jsonl`.
+## Rollback
+## Path: docs/OPERATIONS-audit.md (append)
 
-## Commands
-- Plan only:
-  ```powershell
-  ./scripts/audit-run.ps1 -Root "C:\Backup_Projects\CFH"
+If a batch of conversions needs to be undone:
 
-Plan + Convert + Commit:
+1. Identify the commit(s) created by `/audit/js/commit`. They include messages like `audit: add N TS files`.
+2. Use `git revert <commitSha>` for each commit you want to roll back.
+3. If files were quarantined and later restored incorrectly, re-run `scripts/quarantine-review.ps1 -Restore -Paths ...` to put them back in quarantine for manual review.
 
-./scripts/audit-run.ps1 -Root "C:\Backup_Projects\CFH" -Convert -Commit
+## FAQ
 
+**Q: I see `outside_root` in results. What does it mean?**  
+A: The source file resolved path is not under `workspace_root` (or `root_override`). Update the root or skip these entries.
 
-Show quarantine:
+**Q: Why `wrote=0`?**  
+A: Most common reasons: `missing` (file no longer exists) or candidates exceeded the guardrail and the call was rejected. Run a `dry-run` or lower thresholds.
 
-./scripts/quarantine-review.ps1 -Port 8010 -List -Limit 20
-
-
-Restore from quarantine:
-
-./scripts/quarantine-review.ps1 -Port 8010 -Restore @("artifacts\quarantine\YYYYMMDD\outside_root\file.js")
+**Q: Where are metrics?**  
+A: `artifacts/audit_metrics.jsonl` — one line per file event plus a summary per run. Append-only.
