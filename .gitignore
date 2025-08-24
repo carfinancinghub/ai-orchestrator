@@ -1,27 +1,18 @@
-# Node
-node_modules/
-dist/
-coverage/
-npm-debug.log*
-pnpm-debug.log*
-yarn-error.log*
-
-# Python
-.venv/
-venv/
-__pycache__/
-*.pyc
-.mypy_cache/
-.pytest_cache/
-
-# Project artifacts (local only)
-artifacts/
-reports/
-files/
-
-# Env & OS
+﻿# env
 .env
-.env.*
-!.env.template
+.env.local
+
+# python
+__pycache__/
+.venv/
+
+# project outputs
+artifacts/
+reports/**/review_input_*.json
+reports/**/review-pack.md
+
+# OS/editor
 .DS_Store
 Thumbs.db
+.vscode/
+.idea/
