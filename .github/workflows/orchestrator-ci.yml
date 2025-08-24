@@ -1,0 +1,31 @@
+﻿name: orchestrator-ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: LLM SDK import smoke
+        run: python scripts/smoke_llms.py
+
+      - name: Boot API and health check
+        run: |
+          python -m uvicorn app.main:app --host 127.0.0.1 --port 9000 &
+          UV_PID=$!
+          sleep 3
+          curl -sf http://127.0.0.1:9000/health | jq .
+          kill $UV_PID
