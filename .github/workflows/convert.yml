@@ -1,0 +1,76 @@
+# Path: .github/workflows/convert.yml
+name: CFH TS Migration (Wow++) — Matrix
+on:
+  workflow_dispatch:
+    inputs:
+      branches:
+        description: "Comma-separated branches to scan (e.g., main)"
+        required: false
+        default: "main"
+  schedule:
+    - cron: "0 7 * * *"
+  push:
+    branches: ["main"]
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      batches: ${{ steps.calc.outputs.batches }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Install deps
+        run: pip install fastapi uvicorn pydantic PyGithub python-gitlab requests
+      - name: Scan (best effort, user-level)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_BRANCHES: ${{ inputs.branches }}
+        run: |
+          python -m app.ops_cli scan --user carfinancinghub --platform github --branches "${INPUT_BRANCHES}" || true
+      - name: Calculate batches
+        id: calc
+        run: |
+          sudo apt-get update && sudo apt-get install -y jq
+          total=$(jq '.found_js_jsx' reports/scan_latest.json 2>/dev/null || echo 1000)
+          python - <<'PY'
+          import json, os
+          total = int(os.environ.get("TOTAL") or "0")
+          if not total:
+              try:
+                  with open("reports/scan_latest.json","r",encoding="utf-8") as f:
+                      data=json.load(f)
+                  total=int(data.get("found_js_jsx") or 1000)
+              except Exception:
+                  total=1000
+          size=100
+          batches=[{"offset":i,"limit":size} for i in range(0,total,size)]
+          print(json.dumps(batches))
+          PY > batches.json
+          echo "batches=$(cat batches.json)" >> $GITHUB_OUTPUT
+
+  convert:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        batch: ${{ fromJson(needs.prepare.outputs.batches) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Install deps
+        run: pip install fastapi uvicorn pydantic PyGithub python-gitlab requests
+      - name: Run batch via CLI
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_BRANCHES: ${{ inputs.branches }}
+        run: |
+          python -m app.ops_cli run-batch \
+            --user carfinancinghub \
+            --platform github \
+            --branches "${INPUT_BRANCHES}" \
+            --offset "${{ matrix.batch.offset }}" \
+            --limit  "${{ matrix.batch.limit }}"
