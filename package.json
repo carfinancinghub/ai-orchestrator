@@ -1,24 +1,14 @@
 {
-  "name": "ai-orchestrator",
-  "version": "1.0.0",
-  "description": "<!-- AI‑ORCH HEADER: README.md | Purpose: Quick start & usage. -->",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "example": "examples",
-    "test": "tests"
-  },
+  "name": "cfh-llm-bridge",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Node bridge for CFH orchestrator using the ai package",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test-sparka": "node app/services/llm/sparka_bridge.mjs"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.3.0",
-    "ts-jest": "^29.4.1",
-    "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
+  "dependencies": {
+    "ai": "^3.4.33",
+    "openai": "^4.104.0"
   }
 }

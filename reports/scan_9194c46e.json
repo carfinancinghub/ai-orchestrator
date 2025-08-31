@@ -1,0 +1,53 @@
+{
+  "run_id": "9194c46e",
+  "timestamp": "2025-08-31T06:00:50.233810+00:00",
+  "user": "carfinancinghub",
+  "org": null,
+  "repo_name": "my-project-migration",
+  "branches": [
+    "main"
+  ],
+  "found_total": 2,
+  "found_js_jsx": 2,
+  "repos": [
+    {
+      "repo": "carfinancinghub/cfh",
+      "branches": [
+        "converting",
+        "main"
+      ]
+    },
+    {
+      "repo": "carfinancinghub/converting",
+      "branches": [
+        "main"
+      ]
+    },
+    {
+      "repo": "carfinancinghub/my-project-migration",
+      "branches": [
+        "main"
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "repo": "carfinancinghub/cfh",
+      "branch": "converting",
+      "path": "backend/socket.js",
+      "mtime": 0
+    },
+    {
+      "repo": "carfinancinghub/cfh",
+      "branch": "main",
+      "path": "backend/socket.js",
+      "mtime": 0
+    }
+  ],
+  "bundles": {},
+  "exclusions": [],
+  "ts_tsx_seen": [],
+  "discrepancies": {
+    "carfinancinghub/cfh": 2
+  }
+}

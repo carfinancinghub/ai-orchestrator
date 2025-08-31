@@ -1,0 +1,50 @@
+[
+  {
+    "severity": "warning",
+    "repo": "carfinancinghub/cfh",
+    "branch": "converting",
+    "path": "backend/socket.js",
+    "status": "ERROR",
+    "error": "Source file not found"
+  },
+  {
+    "severity": "warning",
+    "repo": "carfinancinghub/cfh",
+    "branch": "converting",
+    "path": "frontend/cypress.config.js",
+    "status": "ERROR",
+    "error": "Source file not found"
+  },
+  {
+    "severity": "warning",
+    "repo": "carfinancinghub/cfh",
+    "branch": "converting",
+    "path": "frontend/vite.config.js",
+    "status": "ERROR",
+    "error": "Source file not found"
+  },
+  {
+    "severity": "warning",
+    "repo": "carfinancinghub/cfh",
+    "branch": "main",
+    "path": "backend/socket.js",
+    "status": "ERROR",
+    "error": "Source file not found"
+  },
+  {
+    "severity": "warning",
+    "repo": "carfinancinghub/cfh",
+    "branch": "main",
+    "path": "frontend/cypress.config.js",
+    "status": "ERROR",
+    "error": "Source file not found"
+  },
+  {
+    "severity": "warning",
+    "repo": "carfinancinghub/cfh",
+    "branch": "main",
+    "path": "frontend/vite.config.js",
+    "status": "ERROR",
+    "error": "Source file not found"
+  }
+]

@@ -1,0 +1,164 @@
+INFO:     Started server process [46728]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8020 (Press CTRL+C to quit)
+2025-08-27 17:51:51,119 - INFO - Starting fetch_candidates for run_id dbab927b
+2025-08-27 17:51:51,120 - INFO - Scanning root directory: C:\Backup_Projects\CFH\frontend
+2025-08-27 17:51:52,710 - INFO - Listing repos for user carfinancinghub on github
+2025-08-27 17:51:58,067 - INFO - Found repo cfh with branches ['converting', 'main']
+2025-08-27 17:52:00,703 - INFO - Found repo converting with branches ['main']
+2025-08-27 17:52:03,366 - INFO - Found repo my-project-migration with branches ['main']
+2025-08-27 17:52:03,367 - INFO - Completed repo listing in 10.66s
+2025-08-27 17:52:03,374 - INFO - Scanning repo cfh
+2025-08-27 17:53:11,527 - WARNING - Timeout scanning cfh after 60s
+2025-08-27 17:53:12,603 - WARNING - Timeout scanning cfh after 60s
+2025-08-27 17:53:12,603 - INFO - Scanned repo cfh in 69.23s
+2025-08-27 17:53:12,604 - INFO - Scanning repo converting
+2025-08-27 17:53:15,670 - INFO - Scanned repo converting in 3.07s
+2025-08-27 17:53:15,670 - INFO - Scanning repo my-project-migration
+2025-08-27 17:53:54,470 - INFO - Scanned repo my-project-migration in 38.80s
+2025-08-27 17:53:54,580 - INFO - Saved inventory cache to reports\inventory_cache_dbab927b.json
+2025-08-27 17:53:54,580 - INFO - Completed fetch_candidates in 123.46s
+2025-08-27 17:53:54,585 - INFO - Starting process_batch for run_id dbab927b
+2025-08-27 17:53:54,585 - INFO - Generating error summary for run_id dbab927b
+2025-08-27 17:53:54,588 - INFO - Completed process_batch for run_id dbab927b
+2025-08-27 17:55:30,108 - INFO - Starting fetch_candidates for run_id 199d2c3a
+2025-08-27 17:55:30,108 - INFO - Scanning root directory: C:\Backup_Projects\CFH\frontend
+2025-08-27 17:55:32,615 - INFO - Listing repos for user carfinancinghub on github
+2025-08-27 17:55:37,615 - INFO - Found repo cfh with branches ['converting', 'main']
+2025-08-27 17:55:40,146 - INFO - Found repo converting with branches ['main']
+2025-08-27 17:55:42,500 - INFO - Found repo my-project-migration with branches ['main']
+2025-08-27 17:55:42,500 - INFO - Completed repo listing in 9.88s
+2025-08-27 17:55:42,503 - INFO - Scanning repo cfh
+2025-08-27 17:56:50,460 - WARNING - Timeout scanning cfh after 60s
+2025-08-27 17:56:51,749 - WARNING - Timeout scanning cfh after 60s
+2025-08-27 17:56:51,749 - INFO - Scanned repo cfh in 69.25s
+2025-08-27 17:56:51,749 - INFO - Scanning repo converting
+2025-08-27 17:56:54,520 - INFO - Scanned repo converting in 2.77s
+2025-08-27 17:56:54,521 - INFO - Scanning repo my-project-migration
+2025-08-27 17:57:27,223 - INFO - Scanned repo my-project-migration in 32.70s
+2025-08-27 17:57:27,263 - INFO - Saved inventory cache to reports\inventory_cache_199d2c3a.json
+2025-08-27 17:57:27,263 - INFO - Completed fetch_candidates in 117.16s
+2025-08-27 17:57:27,264 - INFO - Starting process_batch for run_id 199d2c3a
+2025-08-27 17:57:27,265 - INFO - Generating error summary for run_id 199d2c3a
+2025-08-27 17:57:27,265 - INFO - Completed process_batch for run_id 199d2c3a
+2025-08-27 18:08:28,215 - INFO - Starting fetch_candidates for run_id b5c6f148
+2025-08-27 18:08:28,216 - INFO - Scanning root directory: C:\Backup_Projects\CFH\frontend
+2025-08-27 18:08:29,610 - INFO - Listing repos for user carfinancinghub on github
+2025-08-27 18:08:35,447 - INFO - Found repo cfh with branches ['converting', 'main']
+2025-08-27 18:08:37,974 - INFO - Found repo converting with branches ['main']
+2025-08-27 18:08:40,742 - INFO - Found repo my-project-migration with branches ['main']
+2025-08-27 18:08:40,743 - INFO - Completed repo listing in 11.13s
+2025-08-27 18:08:40,746 - INFO - Scanning repo cfh
+2025-08-27 18:09:43,896 - WARNING - Timeout scanning cfh after 60s
+2025-08-27 18:09:44,979 - WARNING - Timeout scanning cfh after 60s
+2025-08-27 18:09:44,980 - INFO - Scanned repo cfh in 64.23s
+2025-08-27 18:09:44,980 - INFO - Scanning repo converting
+2025-08-27 18:09:47,519 - INFO - Scanned repo converting in 2.54s
+2025-08-27 18:09:47,519 - INFO - Scanning repo my-project-migration
+2025-08-27 18:10:27,133 - INFO - Scanned repo my-project-migration in 39.61s
+2025-08-27 18:10:27,205 - INFO - Saved inventory cache to reports\inventory_cache_b5c6f148.json
+2025-08-27 18:10:27,205 - INFO - Completed fetch_candidates in 118.99s
+2025-08-27 18:10:27,209 - INFO - Starting process_batch for run_id b5c6f148
+2025-08-27 18:10:27,209 - INFO - Generating error summary for run_id b5c6f148
+2025-08-27 18:10:27,211 - INFO - Completed process_batch for run_id b5c6f148
+INFO:     127.0.0.1:64612 - "POST /run-one HTTP/1.1" 200 OK
+INFO:     Started server process [57960]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8020 (Press CTRL+C to quit)
+2025-08-27 18:16:34,878 - INFO - Starting fetch_candidates for run_id 6ffa8c7e
+2025-08-27 18:16:34,878 - INFO - Using path prefix filter(s): ['frontend/', 'backend/']
+2025-08-27 18:16:34,878 - INFO - Scanning root directory: C:\Backup_Projects\CFH\frontend
+2025-08-27 18:16:35,294 - INFO - Listing repos for user carfinancinghub on github
+2025-08-27 18:16:38,738 - INFO - Found repo cfh with branches ['converting', 'main']
+2025-08-27 18:16:40,255 - INFO - Found repo converting with branches ['main']
+2025-08-27 18:16:41,743 - INFO - Found repo my-project-migration with branches ['main']
+2025-08-27 18:16:41,743 - INFO - Completed repo listing in 6.45s
+2025-08-27 18:16:41,747 - INFO - Restricting scan to branches: ['main']
+2025-08-27 18:16:41,747 - INFO - Scanning repo cfh
+2025-08-27 18:17:07,384 - INFO - Starting fetch_candidates for run_id 7d803517
+2025-08-27 18:17:07,384 - INFO - Using path prefix filter(s): ['frontend/', 'backend/']
+2025-08-27 18:17:07,385 - INFO - Scanning root directory: C:\Backup_Projects\CFH\frontend
+2025-08-27 18:17:07,820 - INFO - Listing repos for user carfinancinghub on github
+2025-08-27 18:17:10,956 - INFO - Found repo cfh with branches ['converting', 'main']
+2025-08-27 18:17:12,451 - INFO - Found repo converting with branches ['main']
+2025-08-27 18:17:13,948 - INFO - Found repo my-project-migration with branches ['main']
+2025-08-27 18:17:13,948 - INFO - Completed repo listing in 6.13s
+2025-08-27 18:17:13,950 - INFO - Restricting scan to branches: ['main']
+2025-08-27 18:17:13,951 - INFO - Scanning repo cfh
+2025-08-27 18:17:43,796 - WARNING - Timeout scanning cfh after 60s
+2025-08-27 18:17:43,797 - INFO - Scanned repo cfh in 62.05s
+2025-08-27 18:17:43,797 - INFO - Scanning repo converting
+2025-08-27 18:17:45,521 - INFO - Scanned repo converting in 1.72s
+2025-08-27 18:17:45,522 - INFO - Scanning repo my-project-migration
+2025-08-27 18:18:09,237 - INFO - Scanned repo my-project-migration in 23.72s
+2025-08-27 18:18:09,276 - INFO - Saved inventory cache to reports\inventory_cache_6ffa8c7e.json
+2025-08-27 18:18:09,276 - INFO - Completed fetch_candidates in 94.40s
+2025-08-27 18:18:09,278 - INFO - Starting process_batch for run_id 6ffa8c7e
+2025-08-27 18:18:09,278 - INFO - Generating error summary for run_id 6ffa8c7e
+2025-08-27 18:18:09,278 - INFO - Completed process_batch for run_id 6ffa8c7e
+INFO:     127.0.0.1:57899 - "POST /run-one HTTP/1.1" 200 OK
+2025-08-27 18:18:14,179 - WARNING - Timeout scanning cfh after 60s
+2025-08-27 18:18:14,179 - INFO - Scanned repo cfh in 60.23s
+2025-08-27 18:18:14,180 - INFO - Scanning repo converting
+2025-08-27 18:18:16,141 - INFO - Scanned repo converting in 1.96s
+2025-08-27 18:18:16,141 - INFO - Scanning repo my-project-migration
+2025-08-27 18:18:43,590 - INFO - Scanned repo my-project-migration in 27.45s
+2025-08-27 18:18:43,627 - INFO - Saved inventory cache to reports\inventory_cache_7d803517.json
+2025-08-27 18:18:43,627 - INFO - Completed fetch_candidates in 96.24s
+2025-08-27 18:18:43,629 - INFO - Starting process_batch for run_id 7d803517
+2025-08-27 18:18:43,629 - INFO - Generating error summary for run_id 7d803517
+2025-08-27 18:18:43,629 - INFO - Completed process_batch for run_id 7d803517
+INFO:     127.0.0.1:63271 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63274 - "GET /health HTTP/1.1" 200 OK
+INFO:     Started server process [47632]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8020 (Press CTRL+C to quit)
+INFO:     127.0.0.1:63280 - "GET /health HTTP/1.1" 200 OK
+C:\Users\Agasi5\AppData\Roaming\Python\Python313\site-packages\fastapi\openapi\utils.py:246: UserWarning: Duplicate Operation ID health_health_get for function health at C:\c\ai-orchestrator\app\main.py
+  warnings.warn(message, stacklevel=1)
+INFO:     127.0.0.1:63286 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63286 - "GET / HTTP/1.1" 200 OK
+INFO:     Started server process [17156]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8020 (Press CTRL+C to quit)
+INFO:     127.0.0.1:58985 - "GET /health HTTP/1.1" 200 OK
+C:\Users\Agasi5\AppData\Roaming\Python\Python313\site-packages\fastapi\openapi\utils.py:246: UserWarning: Duplicate Operation ID health_health_get for function health at C:\c\ai-orchestrator\app\main.py
+  warnings.warn(message, stacklevel=1)
+INFO:     127.0.0.1:57095 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57095 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57095 - "GET /health HTTP/1.1" 200 OK
+INFO:     Started server process [54104]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8020 (Press CTRL+C to quit)
+INFO:     127.0.0.1:64040 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     Started server process [51660]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8020 (Press CTRL+C to quit)
+INFO:     127.0.0.1:50063 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     Started server process [58416]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8020 (Press CTRL+C to quit)
+INFO:     127.0.0.1:56513 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56513 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56513 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     Started server process [53712]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8020 (Press CTRL+C to quit)
+INFO:     127.0.0.1:57123 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57123 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57123 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     Started server process [62244]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8020 (Press CTRL+C to quit)
+INFO:     127.0.0.1:64037 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64037 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64037 - "GET /openapi.json HTTP/1.1" 200 OK
