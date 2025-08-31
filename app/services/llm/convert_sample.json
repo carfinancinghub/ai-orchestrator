@@ -1,0 +1,8 @@
+# Path: app/services/llm/fixtures/convert_sample.json  (NEW: tiny feed for `npm run test-bridge`)
+{
+  "op": "convert",
+  "file_path": "sample.js",
+  "code": "function add(a,b){return a+b}",
+  "extra": {},
+  "env": { "OPENAI_API_KEY": "" }
+}

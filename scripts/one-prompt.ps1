@@ -1,67 +1,59 @@
-﻿param(
-  [Parameter(Mandatory=$true)][string]$PromptKey,
-  [ValidateSet("free","premium","wow++")][string]$Tier = "premium",
-  [Parameter(Mandatory=$true)][string]$Root,
-  [int]$Port = 8020   # default to a less-likely-to-be-used port
+# Path: C:\c\ai-orchestrator\scripts\one-prompt.ps1
+# Version: 0.2.0
+# Last Updated: 2025-08-30 20:52 PDT
+# Purpose: PowerShell script to trigger CFH AI-Orchestrator migration runs
+param (
+    [string]$PromptKey = "convert",
+    [string]$Tier = "free",
+    [string]$Root = "",
+    [int]$Port = 8020,
+    [string]$Org = "",
+    [string]$User = "",
+    [string]$RepoName = "",
+    [string]$Platform = "github",
+    [string]$Branches = "main",
+    [int]$BatchOffset = 0,
+    [int]$BatchLimit = 100,
+    [switch]$TriggerWorkflow
 )
 
-$ErrorActionPreference = "Stop"
-$base = "http://127.0.0.1:$Port"
+Write-Host "== CFH One-Prompt : $PromptKey / $Tier =="
 
-function Free-Port {
-  param([int]$Port)
-  try{
-    $p = Get-NetTCPConnection -LocalPort $Port -ErrorAction Stop |
-         Select-Object -First 1 -ExpandProperty OwningProcess
-    if($p){ Stop-Process -Id $p -Force; Start-Sleep -Milliseconds 300 }
-  }catch{}
-}
-
-function Wait-Api {
-  param([int]$Tries=20)
-  for($i=0;$i -lt $Tries;$i++){
-    try{
-      $r = Invoke-RestMethod -Method GET -Uri "$base/health" -TimeoutSec 2 -ErrorAction Stop
-      if($r.ok){ return $true }
-    }catch{}
-    Start-Sleep -Milliseconds 300
-  }
-  return $false
-}
-
-# ensure server up
-$alive = $false
-try { $alive = Wait-Api -Tries 1 } catch {}
-
-if(-not $alive){
-  Write-Host "[one-prompt] Ensuring uvicorn on :$Port ..." -ForegroundColor Cyan
-  Free-Port -Port $Port
-  $args = "-m uvicorn app.main:app --host 127.0.0.1 --port $Port"
-  Start-Process -FilePath "python" -ArgumentList $args -WindowStyle Hidden | Out-Null
-  if(-not (Wait-Api -Tries 50)){
-    throw "API failed to come up on :$Port"
-  }
-}
-
-# POST /run-one
+$uri = "http://127.0.0.1:$Port/run-one"
 $body = @{
-  prompt_key = $PromptKey
-  tier       = $Tier
-  root       = $Root
-  js         = @("src/**/*.js")
-  jsx        = @("src/**/*.jsx")
-  ts         = @("src/**/*.ts")
-  tsx        = @("src/**/*.tsx")
-} | ConvertTo-Json -Depth 5
+    prompt_key = $PromptKey
+    tier = $Tier
+    root = $Root
+    org = $Org
+    user = $User
+    repo_name = $RepoName
+    platform = $Platform
+    branches = $Branches
+    batch_offset = $BatchOffset
+    batch_limit = $BatchLimit
+} | ConvertTo-Json
 
-Write-Host "[one-prompt] Triggering '$PromptKey' ($Tier) on $Root ..." -ForegroundColor Green
-$resp = Invoke-RestMethod -Method POST -Uri "$base/run-one" -Body $body -ContentType "application/json"
+try {
+    $response = Invoke-RestMethod -Uri $uri -Method Post -Body $body -ContentType "application/json" -TimeoutSec 600 -ErrorAction Stop
+    Write-Host ($response | ConvertTo-Json -Depth 10)
+}
+catch {
+    Write-Host "Error: $_"
+    Write-Host "Metrics: $($_.Exception.Response | ConvertFrom-Json | ConvertTo-Json -Depth 10)"
+    exit 1
+}
 
-$log = $resp.log_path
-Write-Host "[one-prompt] in_root=$($resp.in_root) threshold=$($resp.threshold) stop=$($resp.stop)"
-if(Test-Path $log){
-  Write-Host "[one-prompt] Tail: $log" -ForegroundColor Yellow
-  Get-Content $log -Tail 120
-}else{
-  Write-Warning "Log not found: $log"
+if ($TriggerWorkflow) {
+    Write-Host "== Triggering GitHub workflow convert.yml =="
+    try {
+        $ghToken = $env:GITHUB_TOKEN
+        $workflowUri = "https://api.github.com/repos/$Org/ai-orchestrator/actions/workflows/convert.yml/dispatches"
+        $workflowBody = @{ ref = "main" } | ConvertTo-Json
+        Invoke-RestMethod -Uri $workflowUri -Method Post -Headers @{ Authorization = "Bearer $ghToken"; Accept = "application/vnd.github.v3+json" } -Body $workflowBody -TimeoutSec 30
+        Write-Host "== Done =="
+    }
+    catch {
+        Write-Host "Error triggering workflow: $_"
+        exit 1
+    }
 }

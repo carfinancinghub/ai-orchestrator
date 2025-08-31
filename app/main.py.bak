@@ -1,0 +1,70 @@
+# app/main.py
+from __future__ import annotations
+
+import os
+from datetime import datetime, timezone
+import logging
+from pathlib import Path
+from typing import List, Dict, Any
+
+from fastapi import FastAPI
+from api.routes import router as api_router
+
+# -----------------------------------------------------------------------------
+# Logging
+# -----------------------------------------------------------------------------
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
+
+# -----------------------------------------------------------------------------
+# Paths
+# -----------------------------------------------------------------------------
+ARTIFACTS_ROOT = Path("artifacts")
+ARTIFACTS_ROOT.mkdir(parents=True, exist_ok=True)
+
+# -----------------------------------------------------------------------------
+# App
+# -----------------------------------------------------------------------------
+APP_NAME = "CFH AI-Orchestrator"
+APP_VERSION = "0.2.1"
+
+app = FastAPI(title=APP_NAME, version=APP_VERSION)
+app.include_router(api_router)
+
+# -----------------------------------------------------------------------------
+# Routes
+# -----------------------------------------------------------------------------
+@app.get("/", summary="Root", description="Basic root endpoint.")
+def root() -> Dict[str, Any]:
+    return {"ok": True, "service": "cfh-ai-orchestrator", "version": APP_VERSION}
+
+# Keep /health minimal to avoid clobbering any router-defined /health
+@app.get("/health", summary="Health", description="Minimal health for legacy checks.")
+def health_min() -> Dict[str, Any]:
+    return {"ok": True}
+
+# Provide a rich health payload at /healthz to avoid collisions
+@app.get("/healthz", summary="HealthZ", description="Detailed health probe for diagnostics.")
+def healthz() -> Dict[str, Any]:
+    artifacts_ok = ARTIFACTS_ROOT.exists() and ARTIFACTS_ROOT.is_dir()
+    return {
+        "ok": True,
+        "service": "cfh-ai-orchestrator",
+        "version": APP_VERSION,
+        "time_utc": datetime.now(timezone.utc).isoformat(),
+        "artifacts_dir": str(ARTIFACTS_ROOT.resolve()),
+        "artifacts_ready": artifacts_ok,
+        "env": {
+            "CFH_SCAN_PATH_PREFIXES": os.getenv("CFH_SCAN_PATH_PREFIXES"),
+        },
+    }
+
+# Emit migration list even if empty
+def emit_migration_list(run_id: str, ts_tsx_candidates: List) -> None:
+    migration_path = ARTIFACTS_ROOT / f"migration_list_{run_id}.csv"
+    migration_path.parent.mkdir(parents=True, exist_ok=True)
+    with migration_path.open("w", encoding="utf-8") as f:
+        f.write("repo,branch,path\n")
+        for c in ts_tsx_candidates:
+            f.write(f"{c.repo},{c.branch},{c.src_path}\n")
+    logger.info(f"Migration list written to {migration_path}")
