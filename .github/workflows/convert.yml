@@ -1,5 +1,8 @@
-# Path: .github/workflows/convert.yml
-name: CFH TS Migration (Wow++) — Matrix
+# Path: C:\c\ai-orchestrator\.github\workflows\convert.yml
+# Version: 0.2.0
+# Last Updated: 2025-08-30 20:52 PDT
+# Purpose: GitHub Actions workflow for CFH TypeScript migration
+name: CFH TS Migration (Wow++)
 on:
   workflow_dispatch:
     inputs:
@@ -11,7 +14,6 @@ on:
     - cron: "0 7 * * *"
   push:
     branches: ["main"]
-
 jobs:
   prepare:
     runs-on: ubuntu-latest
@@ -20,12 +22,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
+        with:
+          python-version: "3.13"
       - name: Install deps
-        run: pip install fastapi uvicorn pydantic PyGithub python-gitlab requests
+        run: pip install -r requirements.txt
       - name: Scan (best effort, user-level)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
           INPUT_BRANCHES: ${{ inputs.branches }}
         run: |
           python -m app.ops_cli scan --user carfinancinghub --platform github --branches "${INPUT_BRANCHES}" || true
@@ -49,7 +55,6 @@ jobs:
           print(json.dumps(batches))
           PY > batches.json
           echo "batches=$(cat batches.json)" >> $GITHUB_OUTPUT
-
   convert:
     needs: prepare
     runs-on: ubuntu-latest
@@ -60,12 +65,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
+        with:
+          python-version: "3.13"
       - name: Install deps
-        run: pip install fastapi uvicorn pydantic PyGithub python-gitlab requests
+        run: pip install -r requirements.txt
       - name: Run batch via CLI
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
           INPUT_BRANCHES: ${{ inputs.branches }}
         run: |
           python -m app.ops_cli run-batch \
@@ -73,4 +82,4 @@ jobs:
             --platform github \
             --branches "${INPUT_BRANCHES}" \
             --offset "${{ matrix.batch.offset }}" \
-            --limit  "${{ matrix.batch.limit }}"
+            --limit "${{ matrix.batch.limit }}"
