@@ -20,3 +20,7 @@ files/
 node_modules/
 reports/**/review_input_*.json
 reports/**/review-pack.md
+
+logs/*
+
+reports/CFH/absolute-path-refs.csv
