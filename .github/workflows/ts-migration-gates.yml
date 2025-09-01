@@ -1,0 +1,19 @@
+﻿name: TS Migration Gates
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - name: No-JS/JSX gate
+        shell: bash
+        run: pwsh -NoLogo -NoProfile -Command "scripts/check-no-js.ps1"
+      - name: Type check (no emit)
+        run: npx tsc --noEmit
