@@ -1,14 +1,14 @@
-{
-  "name": "cfh-llm-bridge",
-  "private": true,
-  "type": "module",
-  "version": "0.1.0",
-  "description": "Node bridge for CFH orchestrator using the ai package",
-  "scripts": {
-    "test-sparka": "node app/services/llm/sparka_bridge.mjs"
-  },
-  "dependencies": {
-    "ai": "^3.4.33",
-    "openai": "^4.104.0"
-  }
+﻿{
+    "name":  "cfh-llm-bridge",
+    "private":  true,
+    "type":  "module",
+    "version":  "0.1.0",
+    "description":  "Node bridge for CFH orchestrator using the ai package",
+    "scripts":  {
+                    "test-sparka":  "node app/services/llm/sparka_bridge.mjs"
+                },
+    "dependencies":  {
+                         "ai":  "^3.4.33",
+                         "openai":  "^4.104.0"
+                     }
 }
