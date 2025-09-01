@@ -24,3 +24,7 @@ reports/**/review-pack.md
 logs/*
 
 reports/CFH/absolute-path-refs.csv
+
+app/ops.backup_*.py
+
+app/*.backup_*.py
