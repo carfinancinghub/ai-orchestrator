@@ -1,0 +1,1224 @@
+{
+  "build": "PENDING",
+  "test": "PENDING",
+  "lint": "PENDING",
+  "thresholds": {
+    "Free": {
+      "type_coverage": 10,
+      "test_coverage": 10
+    },
+    "Premium": {
+      "type_coverage": 50,
+      "refactor_quality": 30,
+      "test_coverage": 50
+    },
+    "Wow++": {
+      "type_coverage": 80,
+      "refactor_quality": 60,
+      "test_coverage": 80,
+      "future_readiness": 50
+    }
+  },
+  "per_file": [
+    {
+      "file": "app.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\app.tsx",
+        "test": "app.test.tsx"
+      }
+    },
+    {
+      "file": "index.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\index.tsx",
+        "test": "index.test.tsx"
+      }
+    },
+    {
+      "file": "setuptests.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\setuptests.ts",
+        "test": "setuptests.test.ts"
+      }
+    },
+    {
+      "file": "components/adminemailnotifications.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\components\\adminemailnotifications.tsx",
+        "test": "components/adminemailnotifications.test.tsx"
+      }
+    },
+    {
+      "file": "hooks/usemechanicsocket.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\hooks\\usemechanicsocket.ts",
+        "test": "hooks/usemechanicsocket.test.ts"
+      }
+    },
+    {
+      "file": "hooks/usemechanicsocket.test.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\hooks\\usemechanicsocket.test.ts",
+        "test": "hooks/usemechanicsocket.test.test.ts"
+      }
+    },
+    {
+      "file": "styles/theme.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\styles\\theme.ts",
+        "test": "styles/theme.test.ts"
+      }
+    },
+    {
+      "file": "tests/aidiagnosticsassistant.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\aidiagnosticsassistant.test.tsx",
+        "test": "tests/aidiagnosticsassistant.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/buyercommunityforum.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\buyercommunityforum.test.tsx",
+        "test": "tests/buyercommunityforum.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/buyerlenderresults.test.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\buyerlenderresults.test.ts",
+        "test": "tests/buyerlenderresults.test.test.ts"
+      }
+    },
+    {
+      "file": "tests/buyersearchpreferences.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\buyersearchpreferences.test.tsx",
+        "test": "tests/buyersearchpreferences.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/cartransportcoordination.test.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\cartransportcoordination.test.ts",
+        "test": "tests/cartransportcoordination.test.test.ts"
+      }
+    },
+    {
+      "file": "tests/collaborationchat.test.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\collaborationchat.test.ts",
+        "test": "tests/collaborationchat.test.test.ts"
+      }
+    },
+    {
+      "file": "tests/escrowstatussync.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\escrowstatussync.test.tsx",
+        "test": "tests/escrowstatussync.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/escrowstatustracker.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\escrowstatustracker.test.tsx",
+        "test": "tests/escrowstatustracker.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/guestdashboard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\guestdashboard.test.tsx",
+        "test": "tests/guestdashboard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/guestdashboard.test50000.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\guestdashboard.test50000.tsx",
+        "test": "tests/guestdashboard.test50000.test.tsx"
+      }
+    },
+    {
+      "file": "tests/haulercollaboration.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\haulercollaboration.test.tsx",
+        "test": "tests/haulercollaboration.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/haulercommunityboard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\haulercommunityboard.test.tsx",
+        "test": "tests/haulercommunityboard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/inspectionphotopreviewer.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\inspectionphotopreviewer.test.tsx",
+        "test": "tests/inspectionphotopreviewer.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/lenderexportpanel.test.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\lenderexportpanel.test.ts",
+        "test": "tests/lenderexportpanel.test.test.ts"
+      }
+    },
+    {
+      "file": "tests/mechanicdashboard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\mechanicdashboard.test.tsx",
+        "test": "tests/mechanicdashboard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/mechanicshiftplanner.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\mechanicshiftplanner.test.tsx",
+        "test": "tests/mechanicshiftplanner.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/officerdashboard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\officerdashboard.test.tsx",
+        "test": "tests/officerdashboard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/riskassessmentengine.test.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\riskassessmentengine.test.ts",
+        "test": "tests/riskassessmentengine.test.test.ts"
+      }
+    },
+    {
+      "file": "tests/routeriskanalysis.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\routeriskanalysis.test.tsx",
+        "test": "tests/routeriskanalysis.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/sellerdeepanalytics.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\sellerdeepanalytics.test.tsx",
+        "test": "tests/sellerdeepanalytics.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/sellerexportpanel.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\sellerexportpanel.test.tsx",
+        "test": "tests/sellerexportpanel.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/sellerreputationdashboard.test.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\sellerreputationdashboard.test.ts",
+        "test": "tests/sellerreputationdashboard.test.test.ts"
+      }
+    },
+    {
+      "file": "tests/sellerreputationdashboard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\sellerreputationdashboard.test.tsx",
+        "test": "tests/sellerreputationdashboard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/taskcompletionbutton.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\taskcompletionbutton.test.tsx",
+        "test": "tests/taskcompletionbutton.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/vehiclehealthtrendcharts.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\vehiclehealthtrendcharts.test.tsx",
+        "test": "tests/vehiclehealthtrendcharts.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/vehicleinspectionmodule.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\vehicleinspectionmodule.test.tsx",
+        "test": "tests/vehicleinspectionmodule.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/vindecoder.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\vindecoder.test.tsx",
+        "test": "tests/vindecoder.test.test.tsx"
+      }
+    },
+    {
+      "file": "utils/rewardhelper.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\utils\\rewardhelper.ts",
+        "test": "utils/rewardhelper.test.ts"
+      }
+    },
+    {
+      "file": "utils/socialsharehelper.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\utils\\socialsharehelper.ts",
+        "test": "utils/socialsharehelper.test.ts"
+      }
+    },
+    {
+      "file": "utils/useauth.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\utils\\useauth.ts",
+        "test": "utils/useauth.test.ts"
+      }
+    },
+    {
+      "file": "__mocks__/health_test.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\__mocks__\\health_test.ts",
+        "test": "__mocks__/health_test.test.ts"
+      }
+    },
+    {
+      "file": "_archive/jsx_legacy/button.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\_archive\\jsx_legacy\\button.ts",
+        "test": "_archive/jsx_legacy/button.test.ts"
+      }
+    },
+    {
+      "file": "_archive/jsx_legacy/loadingspinner.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\_archive\\jsx_legacy\\loadingspinner.ts",
+        "test": "_archive/jsx_legacy/loadingspinner.test.ts"
+      }
+    },
+    {
+      "file": "_archive/jsx_legacy/messaging.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "PASS",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\_archive\\jsx_legacy\\messaging.ts",
+        "test": "_archive/jsx_legacy/messaging.test.ts"
+      }
+    },
+    {
+      "file": "_archive/jsx_legacy/navbar.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\_archive\\jsx_legacy\\navbar.ts",
+        "test": "_archive/jsx_legacy/navbar.test.ts"
+      }
+    },
+    {
+      "file": "_archive/jsx_legacy/protectedroute.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\_archive\\jsx_legacy\\protectedroute.ts",
+        "test": "_archive/jsx_legacy/protectedroute.test.ts"
+      }
+    },
+    {
+      "file": "utils/auction/auctionexportutils.jsx",
+      "tiers": {
+        "Free": "FAIL",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\utils\\auction\\auctionexportutils.tsx",
+        "test": "utils/auction/auctionexportutils.test.tsx"
+      }
+    },
+    {
+      "file": "utils/auction/auctionexportutils.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\utils\\auction\\auctionexportutils.test.tsx",
+        "test": "utils/auction/auctionexportutils.test.test.tsx"
+      }
+    },
+    {
+      "file": "utils/graph/graphexportservice.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\utils\\graph\\graphexportservice.ts",
+        "test": "utils/graph/graphexportservice.test.ts"
+      }
+    },
+    {
+      "file": "utils/inspection/submitinspectiontobackend.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\utils\\inspection\\submitinspectiontobackend.ts",
+        "test": "utils/inspection/submitinspectiontobackend.test.ts"
+      }
+    },
+    {
+      "file": "tests/ai/aibadgeoverlay.test.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\ai\\aibadgeoverlay.test.ts",
+        "test": "tests/ai/aibadgeoverlay.test.test.ts"
+      }
+    },
+    {
+      "file": "tests/ai/aiscorepanel.test.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\ai\\aiscorepanel.test.ts",
+        "test": "tests/ai/aiscorepanel.test.test.ts"
+      }
+    },
+    {
+      "file": "tests/ai/bidconfidencemeter.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\ai\\bidconfidencemeter.test.tsx",
+        "test": "tests/ai/bidconfidencemeter.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/ai/bidstrategyadvisor.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\ai\\bidstrategyadvisor.test.tsx",
+        "test": "tests/ai/bidstrategyadvisor.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/ai/predictivecomparison.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\ai\\predictivecomparison.test.tsx",
+        "test": "tests/ai/predictivecomparison.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/ai/smartinsightswidget.test.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\ai\\smartinsightswidget.test.ts",
+        "test": "tests/ai/smartinsightswidget.test.test.ts"
+      }
+    },
+    {
+      "file": "tests/ai/trustscoreviewer.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\ai\\trustscoreviewer.test.tsx",
+        "test": "tests/ai/trustscoreviewer.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/ai/valuationassistant.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\ai\\valuationassistant.test.tsx",
+        "test": "tests/ai/valuationassistant.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/ai/valuationlivefeed.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\ai\\valuationlivefeed.test.tsx",
+        "test": "tests/ai/valuationlivefeed.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/arbitrator/arbitratoranalyticspanel.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\arbitrator\\arbitratoranalyticspanel.test.tsx",
+        "test": "tests/arbitrator/arbitratoranalyticspanel.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/arbitrator/arbitratordashboard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\arbitrator\\arbitratordashboard.test.tsx",
+        "test": "tests/arbitrator/arbitratordashboard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/auction/auctionintegrationtest.js",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\auction\\auctionintegrationtest.ts",
+        "test": "tests/auction/auctionintegrationtest.test.ts"
+      }
+    },
+    {
+      "file": "tests/auction/auctionintelligencedashboard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\auction\\auctionintelligencedashboard.test.tsx",
+        "test": "tests/auction/auctionintelligencedashboard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/auction/auctionpremiuminsightspanel.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\auction\\auctionpremiuminsightspanel.test.tsx",
+        "test": "tests/auction/auctionpremiuminsightspanel.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/buyer/buyerauctionhistory.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\buyer\\buyerauctionhistory.test.tsx",
+        "test": "tests/buyer/buyerauctionhistory.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/buyer/buyerbidmodal.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\buyer\\buyerbidmodal.test.tsx",
+        "test": "tests/buyer/buyerbidmodal.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/buyer/buyercontractview.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\buyer\\buyercontractview.test.tsx",
+        "test": "tests/buyer/buyercontractview.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/buyer/buyerdeliverytracker.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\buyer\\buyerdeliverytracker.test.tsx",
+        "test": "tests/buyer/buyerdeliverytracker.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/buyer/buyerfinancingoffers.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\buyer\\buyerfinancingoffers.test.tsx",
+        "test": "tests/buyer/buyerfinancingoffers.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/buyer/buyertitletracker.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\buyer\\buyertitletracker.test.tsx",
+        "test": "tests/buyer/buyertitletracker.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/components/userprofilepage.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\components\\userprofilepage.test.tsx",
+        "test": "tests/components/userprofilepage.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/contracts/contractsummary.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\contracts\\contractsummary.test.tsx",
+        "test": "tests/contracts/contractsummary.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/equity-hub/equityintelligencehub.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\equity-hub\\equityintelligencehub.test.tsx",
+        "test": "tests/equity-hub/equityintelligencehub.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/escrow/escrowofficerdashboard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\escrow\\escrowofficerdashboard.test.tsx",
+        "test": "tests/escrow/escrowofficerdashboard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/escrow/escrowstatusviewer.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\escrow\\escrowstatusviewer.test.tsx",
+        "test": "tests/escrow/escrowstatusviewer.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/escrow/escrowsyncadminpanel.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\escrow\\escrowsyncadminpanel.test.tsx",
+        "test": "tests/escrow/escrowsyncadminpanel.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/finance/financeriskassessment.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\finance\\financeriskassessment.test.tsx",
+        "test": "tests/finance/financeriskassessment.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/gamification/achievementpopup.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\gamification\\achievementpopup.test.tsx",
+        "test": "tests/gamification/achievementpopup.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/gamification/badgestorefront.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\gamification\\badgestorefront.test.tsx",
+        "test": "tests/gamification/badgestorefront.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/hauler/haulerauctiondelivery.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\hauler\\haulerauctiondelivery.test.tsx",
+        "test": "tests/hauler/haulerauctiondelivery.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/insurance/insuranceaimodelperformance.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\insurance\\insuranceaimodelperformance.test.tsx",
+        "test": "tests/insurance/insuranceaimodelperformance.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/insurance/insuranceclaimsanalytics.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\insurance\\insuranceclaimsanalytics.test.tsx",
+        "test": "tests/insurance/insuranceclaimsanalytics.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/insurance/insuranceclaimsprocessor.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\insurance\\insuranceclaimsprocessor.test.tsx",
+        "test": "tests/insurance/insuranceclaimsprocessor.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/insurance/insuranceofficerdashboard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\insurance\\insuranceofficerdashboard.test.tsx",
+        "test": "tests/insurance/insuranceofficerdashboard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/judge/smartverdicthint.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\judge\\smartverdicthint.test.tsx",
+        "test": "tests/judge/smartverdicthint.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/lender/lendertermshistoryviewer.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\lender\\lendertermshistoryviewer.test.tsx",
+        "test": "tests/lender/lendertermshistoryviewer.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/marketplace/marketplaceinsightsdashboard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\marketplace\\marketplaceinsightsdashboard.test.tsx",
+        "test": "tests/marketplace/marketplaceinsightsdashboard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/mechanic/mechanicinspectionform.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\mechanic\\mechanicinspectionform.test.tsx",
+        "test": "tests/mechanic/mechanicinspectionform.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/mobile/mobileanalytics.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\mobile\\mobileanalytics.test.tsx",
+        "test": "tests/mobile/mobileanalytics.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/mobile/mobileauctionview.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\mobile\\mobileauctionview.test.tsx",
+        "test": "tests/mobile/mobileauctionview.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/officer/disputeradarwidget.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\officer\\disputeradarwidget.test.tsx",
+        "test": "tests/officer/disputeradarwidget.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/onboarding/onboardingwizard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\onboarding\\onboardingwizard.test.tsx",
+        "test": "tests/onboarding/onboardingwizard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/premium/badgedisplay.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\premium\\badgedisplay.test.tsx",
+        "test": "tests/premium/badgedisplay.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/premium/premiumdashboard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\premium\\premiumdashboard.test.tsx",
+        "test": "tests/premium/premiumdashboard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/premium/pricinginsights.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\premium\\pricinginsights.test.tsx",
+        "test": "tests/premium/pricinginsights.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/premium/recommendedauctions.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\premium\\recommendedauctions.test.tsx",
+        "test": "tests/premium/recommendedauctions.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/premium/supportchatwidget.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\premium\\supportchatwidget.test.tsx",
+        "test": "tests/premium/supportchatwidget.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/premium/vrtourlauncher.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\premium\\vrtourlauncher.tsx",
+        "test": "tests/premium/vrtourlauncher.test.tsx"
+      }
+    },
+    {
+      "file": "tests/seller/selleranalyticschart.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\seller\\selleranalyticschart.test.tsx",
+        "test": "tests/seller/selleranalyticschart.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/seller/sellerauctionform.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\seller\\sellerauctionform.test.tsx",
+        "test": "tests/seller/sellerauctionform.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/seller/sellerauctionstatus.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\seller\\sellerauctionstatus.test.tsx",
+        "test": "tests/seller/sellerauctionstatus.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/seller/sellerdashboard.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\seller\\sellerdashboard.test.tsx",
+        "test": "tests/seller/sellerdashboard.test.test.tsx"
+      }
+    },
+    {
+      "file": "tests/seller/sellerinventorylist.test.jsx",
+      "tiers": {
+        "Free": "PASS",
+        "Premium": "FAIL",
+        "Wow++": "FAIL"
+      },
+      "staged_paths": {
+        "ts": "artifacts\\staging\\local\\main\\tests\\seller\\sellerinventorylist.test.tsx",
+        "test": "tests/seller/sellerinventorylist.test.test.tsx"
+      }
+    }
+  ]
+}

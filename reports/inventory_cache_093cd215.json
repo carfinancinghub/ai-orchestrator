@@ -1,0 +1,29 @@
+{
+  "candidates": [],
+  "files": [],
+  "found_js_jsx": 0,
+  "ts_tsx_seen": [],
+  "bundles": {},
+  "exclusions": [],
+  "repos": [
+    {
+      "repo": "carfinancinghub/cfh",
+      "branches": [
+        "converting",
+        "main"
+      ]
+    },
+    {
+      "repo": "carfinancinghub/converting",
+      "branches": [
+        "main"
+      ]
+    },
+    {
+      "repo": "carfinancinghub/my-project-migration",
+      "branches": [
+        "main"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "tier": "Premium",
+  "run_id": "069c548f",
+  "file": "tests/buyersearchpreferences.test.jsx",
+  "prompt": {
+    "file": "tests/buyersearchpreferences.test.jsx",
+    "target_ts_path": "tests/buyersearchpreferences.test.tsx",
+    "context": "CFH Marketplace TypeScript migration with Vite/Vitest; ensure ESM compatibility and router@6.",
+    "task": "Add proper TS types for props/state, extract interfaces, reduce any/unknown, suggest safe refactors.",
+    "checks": [
+      "type errors resolved",
+      "tests compile",
+      "no anti-patterns"
+    ]
+  },
+  "scores": {
+    "type_coverage": 70,
+    "refactor_quality": 20,
+    "test_coverage": 60,
+    "future_readiness": 30
+  },
+  "timestamp": "2025-09-02T04:54:57.411914+00:00"
+}
