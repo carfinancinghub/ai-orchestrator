@@ -1,5 +1,4 @@
 ﻿* text=auto
-
 # explicit preferences
 *.py   text eol=lf
 *.ps1  text eol=crlf
@@ -8,3 +7,4 @@
 *.json text eol=lf
 *.yml  text eol=lf
 *.yaml text eol=lf
+*.csv filter=lfs diff=lfs merge=lfs -text
