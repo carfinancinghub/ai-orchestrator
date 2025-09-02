@@ -1,0 +1,23 @@
+{
+  "tier": "Wow++",
+  "run_id": "069c548f",
+  "file": "__mocks__/health_test.js",
+  "prompt": {
+    "file": "__mocks__/health_test.js",
+    "target_ts_path": "__mocks__/health_test.ts",
+    "context": "CFH Marketplace TypeScript migration with Vite/Vitest; ensure ESM compatibility and router@6.",
+    "task": "Deep critique: a11y, perf, state mgmt, SSR/Suspense readiness, routing edges; propose tests.",
+    "checks": [
+      "a11y notes",
+      "perf notes",
+      "forward-compat"
+    ]
+  },
+  "scores": {
+    "type_coverage": 70,
+    "refactor_quality": 20,
+    "test_coverage": 10,
+    "future_readiness": 30
+  },
+  "timestamp": "2025-09-02T04:54:58.258136+00:00"
+}

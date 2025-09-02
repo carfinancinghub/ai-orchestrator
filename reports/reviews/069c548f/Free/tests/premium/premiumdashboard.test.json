@@ -1,0 +1,23 @@
+{
+  "tier": "Free",
+  "run_id": "069c548f",
+  "file": "tests/premium/premiumdashboard.test.jsx",
+  "prompt": {
+    "file": "tests/premium/premiumdashboard.test.jsx",
+    "target_ts_path": "tests/premium/premiumdashboard.test.tsx",
+    "context": "CFH Marketplace TypeScript migration with Vite/Vitest; ensure ESM compatibility and router@6.",
+    "task": "Basic JS->TS conversion with @ts-nocheck as needed. Fix import/export issues; behavior must match.",
+    "checks": [
+      "build passes",
+      "file compiles",
+      "no console errors"
+    ]
+  },
+  "scores": {
+    "type_coverage": 70,
+    "refactor_quality": 20,
+    "test_coverage": 60,
+    "future_readiness": 30
+  },
+  "timestamp": "2025-09-02T04:54:59.768209+00:00"
+}

@@ -1,5 +1,3 @@
-repo,branch,path
-local,main,C:\Backup_Projects\CFH\frontend\src\App.jsx
-local,main,C:\Backup_Projects\CFH\frontend\src\index.jsx
-carfinancinghub/cfh,main,frontend/src/App.jsx
-carfinancinghub/cfh,main,frontend/src/index.jsx
+version https://git-lfs.github.com/spec/v1
+oid sha256:93eb0acae9d71842fb8737bfbb0a61ae0d3dfded62809caa25dce7117affda0e
+size 223
