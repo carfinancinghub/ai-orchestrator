@@ -1,0 +1,23 @@
+{
+  "tier": "Premium",
+  "run_id": "069c548f",
+  "file": "utils/graph/graphexportservice.js",
+  "prompt": {
+    "file": "utils/graph/graphexportservice.js",
+    "target_ts_path": "utils/graph/graphexportservice.ts",
+    "context": "CFH Marketplace TypeScript migration with Vite/Vitest; ensure ESM compatibility and router@6.",
+    "task": "Add proper TS types for props/state, extract interfaces, reduce any/unknown, suggest safe refactors.",
+    "checks": [
+      "type errors resolved",
+      "tests compile",
+      "no anti-patterns"
+    ]
+  },
+  "scores": {
+    "type_coverage": 70,
+    "refactor_quality": 20,
+    "test_coverage": 10,
+    "future_readiness": 30
+  },
+  "timestamp": "2025-09-02T04:54:58.487588+00:00"
+}
