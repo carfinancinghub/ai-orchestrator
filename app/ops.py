@@ -29,14 +29,28 @@ def _candidate_path(obj):
 # ---------------------------------------------
 
 # ---------------- scanning config ------------
-IGNORE_DIRS = {"node_modules", ".git", "dist", "build", ".next", ".turbo", ".cache"}
+IGNORE_DIRS = {
+    "node_modules", ".git", "dist", "build", ".next", ".turbo", ".cache",
+    "artifacts", "reports", "coverage", "out", "tmp",
+    "venv", ".venv", "env", ".env", ".pytest_cache", ".mypy_cache"
+}
+BACKUP_RX = re.compile(r"(?i)backup|zipped_batches|recovered|archive|snapshot")
+
 EXTS = {".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs"}
 CRYPTIC_RX = re.compile(
     r"^(?:\$|_)?(?:[A-Z0-9]{6,}|[A-F0-9]{6,}|I[0-9A-Z]{6,})(?:\.[A-Za-z0-9_-]+)*$"
 )
 
 def _is_ignored_path(p: Path) -> bool:
-    return any(part in IGNORE_DIRS for part in p.parts)
+    """True if any path segment is an ignored dir, backup-like, or site-packages."""
+    parts_lower = [part.lower() for part in p.parts]
+    if any(part in IGNORE_DIRS for part in parts_lower):
+        return True
+    if any("site-packages" in part for part in parts_lower):
+        return True
+    if any(BACKUP_RX.search(part or "") for part in parts_lower):
+        return True
+    return False
 
 def _is_cryptic(name: str) -> bool:
     return bool(CRYPTIC_RX.match(Path(name).stem))
@@ -53,22 +67,30 @@ class Candidate:
     path: str         # absolute or normalized absolute
     action: str       # "convert" for .js/.jsx without TS sibling, "evaluate" for .ts/.tsx
 
-# ---------- file iteration (prunes node_modules early) ----------
+# ---------- file iteration (prunes ignored/backup/site-packages early) ----------
 def _iter_files_pruned(root: Path):
     """
-    os.walk with dir pruning so we never descend into node_modules or other ignores.
+    os.walk with in-place dir pruning so we never descend into:
+      - anything in IGNORE_DIRS,
+      - backup-like dirs (backup, zipped_batches, recovered, archive, snapshot),
+      - any directory containing 'site-packages'.
     This avoids listing 20k+ files and speeds scans significantly.
     """
     if not root.exists():
         return
     for dirpath, dirnames, filenames in os.walk(root):
-        # prune ignored directories in-place
-        dirnames[:] = [d for d in dirnames if d not in IGNORE_DIRS]
+        # prune ignored + backup-like dirs + site-packages anywhere
+        dirnames[:] = [
+            d for d in dirnames
+            if d.lower() not in IGNORE_DIRS
+            and not BACKUP_RX.search(d)
+            and "site-packages" not in d.lower()
+        ]
         for fn in filenames:
             p = Path(dirpath) / fn
             yield p
 
-# ------- local candidates for one root (excludes node_modules) -------
+# ------- local candidates for one root (excludes ignored/backup/site-packages) -------
 def _list_local_candidates_one_root(root: Path, repo_alias: str = "local") -> List[Candidate]:
     js_jsx: List[Path] = []
     ts_tsx: List[Path] = []
@@ -235,7 +257,7 @@ def fetch_candidates(
     """
     Safe, minimal, multi-root local scan:
     - Reads roots from env (CFH_SCAN_ROOTS / CFH_SCAN_ROOT / CFH_ROOT [+ CFH_EXTRA_ROOTS])
-    - Excludes node_modules, .git, dist, build, .next, .turbo, .cache
+    - Excludes ignored, backup-like, and site-packages directories
     - Filters cryptic filenames
     - Writes reports/grouped_files.txt if missing (or CFH_FORCE_GROUPING=1)
     """
