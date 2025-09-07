@@ -31,3 +31,9 @@ app/*.backup_*.py
 
 logs/*
 !logs/.gitkeep
+artifacts/
+reports/
+logs/
+workspaces/
+__pycache__/
+run_stderr.log run_stdout.log
