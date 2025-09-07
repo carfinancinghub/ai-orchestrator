@@ -1,8 +1,0 @@
-Run-ID: run-20250819T233636Z
-Artifact-ID: 10608d82-456e-4ecb-b9c7-a6fbf217d5f8
-Stage: convert
-Version: v04
-Timestamp: 2025-08-20T00:03:05.620088+00:00
-
-Conversion: C:\c\ai-orchestrator\src\some.js -> C:\c\ai-orchestrator\src\some.ts
-Outcome: conversion-attempted
