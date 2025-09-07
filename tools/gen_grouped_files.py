@@ -1,6 +1,7 @@
 # tools/gen_grouped_files.py
 from __future__ import annotations
-import os, re, json
+import os
+import re
 from pathlib import Path
 from collections import defaultdict
 

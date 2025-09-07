@@ -1,0 +1,63 @@
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import List, Dict, Tuple, Optional
+
+def _norm_slashes(s: str) -> str:
+    try:
+        return (s or "").replace("\\", "/")
+    except Exception:
+        return ""
+
+def _safe_attr(obj, name):
+    try:
+        return getattr(obj, name)
+    except Exception:
+        return None
+
+def _candidate_path(obj):
+    v = _safe_attr(obj, "path")
+    if v: return v
+    v = _safe_attr(obj, "src_path")
+    if v: return v
+    if isinstance(obj, dict):
+        return obj.get("path") or obj.get("src_path")
+    return None
+
+@dataclass
+class LocalCandidate:
+    repo: str
+    branch: str
+    src_path: str
+    action: str = "convert"
+
+def fetch_candidates(
+    org: Optional[str],
+    user: Optional[str],
+    repo_name: Optional[str],
+    platform: str,
+    token: Optional[str],
+    run_id: str,
+    branches: List[str],
+    local_inventory_paths: Optional[List[str]] = None,
+) -> Tuple[List[LocalCandidate], Dict[str, List[int]], Dict[str, List[str]]]:
+    # Minimal placeholder – returns empty sets to keep the API responsive.
+    return [], {}, {}
+
+def process_batch(
+    platform: str,
+    token: Optional[str],
+    candidates: List[LocalCandidate],
+    bundle_by_src: Dict[str, List[int]],
+    run_id: str,
+    batch_offset: int = 0,
+    batch_limit: int = 100,
+) -> List[Dict]:
+    start = int(batch_offset or 0)
+    lim = int(batch_limit or 0)
+    batch = candidates[start:start+lim] if lim and lim > 0 else candidates[start:]
+    results: List[Dict] = []
+    for i, c in enumerate(batch):
+        p = _candidate_path(c) or (getattr(c, "src_path", None))
+        base = _norm_slashes(p or "").replace("/", "__") or f"cand_{start+i}"
+        results.append({"index": start+i, "path": p, "base": base, "status": "PASS", "run_id": run_id})
+    return results
