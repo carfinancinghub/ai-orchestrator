@@ -28,3 +28,6 @@ reports/CFH/absolute-path-refs.csv
 app/ops.backup_*.py
 
 app/*.backup_*.py
+
+logs/*
+!logs/.gitkeep
