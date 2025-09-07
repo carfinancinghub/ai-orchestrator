@@ -23,13 +23,13 @@ Thumbs.db
 .idea/
 
 # ---- Project outputs (directories) ----
-artifacts/
+artifacts/*
 !artifacts/.gitkeep
 
-workspaces/
+workspaces/*
 !workspaces/.gitkeep
 
-logs/
+logs/*
 !logs/.gitkeep
 
 # ---- Reports: ignore generated data, keep docs ----
