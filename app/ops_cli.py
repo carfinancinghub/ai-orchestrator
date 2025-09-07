@@ -10,7 +10,8 @@ import argparse
 import json
 import os
 import uuid
-from typing import Optional, List
+import inspect
+from typing import Optional, List, Tuple, Any
 
 # optional .env autoload (safe even if .env is missing)
 try:
@@ -22,11 +23,55 @@ except Exception:
 from app.ops import (
     fetch_candidates, process_batch,
     scan_special, process_special,
+    write_grouped_files, filter_cryptic,   # helper utilities in app.ops
 )
 
-# =========[ AIO-CLI | HELPERS ]==============================================
+# Optional/advanced helpers — fall back gracefully if not available
+try:
+    from app.ops import process_batch_ext, run_gates  # type: ignore
+except Exception:
+    process_batch_ext = None  # type: ignore
+
+    def run_gates(run_id: str):  # type: ignore
+        return None
+
+# =========[ AIO-CLI | WRAPPERS (signature-aware) ]===========================
 def _split_csv(s: Optional[str]) -> Optional[List[str]]:
     return [b.strip() for b in s.replace(";", ",").split(",")] if s else None
+
+def _flex_call(fn, **kwargs):
+    """Call fn with only the kwargs it supports. Also remap common param aliases."""
+    sig = inspect.signature(fn)
+    params = set(sig.parameters.keys())
+
+    # Common alias: bundle_by_src -> bundles
+    if "bundle_by_src" in kwargs and "bundle_by_src" not in params and "bundles" in params:
+        kwargs = dict(kwargs)
+        kwargs["bundles"] = kwargs.pop("bundle_by_src")
+
+    filtered = {k: v for k, v in kwargs.items() if k in params}
+    return fn(**filtered)
+
+def _fetch_candidates_safe(**kwargs) -> Tuple[Any, Any, Any]:
+    """Always return (cands, bundles, repos) even if underlying fn returns fewer."""
+    res = _flex_call(fetch_candidates, **kwargs)
+    if isinstance(res, tuple):
+        if len(res) == 3:
+            return res
+        if len(res) == 2:
+            cands, bundles = res
+            return cands, bundles, None
+        if len(res) == 1:
+            return res[0], {}, None
+    # Unknown shape; best-effort
+    return res, {}, None
+
+def _process_batch_safe(runner, **kwargs):
+    """Call process_batch(_ext) with filtered kwargs; always return a list-ish result."""
+    res = _flex_call(runner, **kwargs)
+    if res is None:
+        return []
+    return res
 
 # =========[ AIO-CLI | MAIN ]=================================================
 def main():
@@ -93,26 +138,56 @@ def main():
         return
 
     if args.cmd == "scan":
-        cands, bundles, repos = fetch_candidates(
+        cands, bundles, repos = _fetch_candidates_safe(
             org=args.org, user=None, repo_name=args.repo_name,
             platform=args.platform, token=None, run_id=run_id,
             branches=_split_csv(getattr(args, "branches", None)), local_inventory_paths=None
         )
-        print(json.dumps({"ok": True, "run_id": run_id, "candidates": len(cands)}))
+        # Filter and write grouping file (if helpers exist in app.ops)
+        try:
+            cands = filter_cryptic(cands)
+            grouped_path = write_grouped_files(cands, out_path="reports/grouped_files.txt")
+        except Exception:
+            grouped_path = None
+
+        print(json.dumps({
+            "ok": True,
+            "run_id": run_id,
+            "candidates": len(cands) if cands is not None else 0,
+            "grouped": grouped_path
+        }))
         return
 
     if args.cmd in {"review", "generate", "persist", "run-batch"}:
-        # re-scan to get the candidate slice (keeps behavior you had before)
-        cands, bundles, repos = fetch_candidates(
+        cands, bundles, repos = _fetch_candidates_safe(
             org=None, user=None, repo_name=None, platform="local", token=None, run_id=run_id,
             branches=["main"], local_inventory_paths=None
         )
+        # Parity with scan
+        try:
+            cands = filter_cryptic(cands)
+            write_grouped_files(cands, out_path="reports/grouped_files.txt")
+        except Exception:
+            pass
+
         mode = "all" if args.cmd == "run-batch" else args.cmd
-        res = process_batch(
+        runner = process_batch_ext or process_batch  # prefer extended if available
+
+        res = _process_batch_safe(
+            runner,
             platform="local", token=None, candidates=cands, bundle_by_src=bundles,
             run_id=run_id, batch_offset=0, batch_limit=args.limit, mode=mode
         )
-        print(json.dumps({"ok": True, "run_id": run_id, "processed": len(res), "mode": mode}))
+
+        if mode in {"persist", "all"}:
+            gates_path = run_gates(run_id) if callable(run_gates) else None  # type: ignore
+            print(json.dumps({
+                "ok": True, "run_id": run_id, "processed": len(res) if res is not None else 0,
+                "mode": mode, "gates": gates_path
+            }))
+            return
+
+        print(json.dumps({"ok": True, "run_id": run_id, "processed": len(res) if res is not None else 0, "mode": mode}))
         return
 
     if args.cmd == "scan-special":
