@@ -3,13 +3,14 @@
 # Purpose: Command-line entry for orchestrator (standard + special)
 # ============================================================
 from __future__ import annotations
+
+# =========[ AIO-CLI | IMPORTS ]==============================================
 from pathlib import Path
 import argparse
 import json
 import os
 import uuid
 from typing import Optional, List
- 
 
 # optional .env autoload (safe even if .env is missing)
 try:
@@ -23,11 +24,11 @@ from app.ops import (
     scan_special, process_special,
 )
 
-
+# =========[ AIO-CLI | HELPERS ]==============================================
 def _split_csv(s: Optional[str]) -> Optional[List[str]]:
     return [b.strip() for b in s.replace(";", ",").split(",")] if s else None
 
-
+# =========[ AIO-CLI | MAIN ]=================================================
 def main():
     ap = argparse.ArgumentParser(prog="ai-orchestrator", description="Scan and batch-process repo files")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -62,27 +63,24 @@ def main():
 
     # ---- SPECIAL: multi-root scan / process ---------------------------------
     sp = sub.add_parser("scan-special", help="Scan multiple roots for test files and letters-only basenames")
-
     sp.add_argument("--roots", default=os.getenv("AIO_SCAN_ROOTS", os.getenv("AIO_REPO_ROOT", str(Path.cwd()))))
- 
     sp.add_argument("--exts", default=os.getenv("AIO_SPECIAL_EXTS", "js,jsx,ts,tsx,md"))
     sp.add_argument("--skip-dirs", default=os.getenv("AIO_SKIP_DIRS", ""))
     sp.add_argument("--only-tests", action="store_true", help="Limit to *.test.* files")
     sp.add_argument("--only-letters", action="store_true", help="Limit to filenames with letters only (A-Za-z)")
- 
 
     rp = sub.add_parser("run-special", help="Scan + review/generate/persist special files")
     rp.add_argument("--mode", default="review", choices=["review", "generate", "persist", "all"])
     rp.add_argument("--limit", type=int, default=100)
-    
     rp.add_argument("--roots", default=os.getenv("AIO_SCAN_ROOTS", os.getenv("AIO_REPO_ROOT", str(Path.cwd()))))
- 
     rp.add_argument("--exts", default=os.getenv("AIO_SPECIAL_EXTS", "js,jsx,ts,tsx,md"))
     rp.add_argument("--skip-dirs", default=os.getenv("AIO_SKIP_DIRS", ""))
     rp.add_argument("--only-tests", action="store_true")
     rp.add_argument("--only-letters", action="store_true")
 
+    # ----------[ Commands ]---------------
     args = ap.parse_args()
+    run_id = uuid.uuid4().hex[:8]
 
     if args.cmd == "ai-check":
         payload = {
@@ -93,9 +91,6 @@ def main():
         }
         print(json.dumps(payload, indent=2))
         return
-
-
-    run_id = uuid.uuid4().hex[:8]
 
     if args.cmd == "scan":
         cands, bundles, repos = fetch_candidates(
@@ -145,6 +140,6 @@ def main():
         print(json.dumps({"ok": True, "run_id": run_id, "processed": len(res), "mode": args.mode}))
         return
 
-
+# =========[ AIO-CLI | ENTRYPOINT ]===========================================
 if __name__ == "__main__":
     main()

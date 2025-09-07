@@ -248,3 +248,195 @@ def run_gates(frontend_root: str, run_id: Optional[str] = None) -> str:
     with open(out, "w", encoding="utf-8") as fh:
         json.dump({"run_id": run_id, "frontend_root": frontend_root, "results": results}, fh, indent=2)
     return out
+
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# AIO-SPECIAL v1 — multi-root scan + lightweight processing
+# (Non-destructive: complements fetch_candidates/process_batch)
+# Public API: scan_special(...), process_special(...)
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+import re, csv, json, hashlib, time
+from pathlib import Path
+from typing import List, Dict, Any, Optional, Iterable, Tuple
+
+_SPECIAL_EXTS_DEFAULT = {"js", "jsx", "ts", "tsx", "md"}
+
+def _special_now_id() -> str:
+    return time.strftime("%Y%m%d_%H%M%S")
+
+def _special_hash(s: object) -> str:
+    try:
+        return hashlib.sha1(str(s).encode("utf-8")).hexdigest()[:8]
+    except Exception:
+        return "00000000"
+
+_TEST_RX = re.compile(r"""(\.test\.|\.spec\.)""")
+_LETTERS_ONLY_RX = re.compile(r"^[A-Za-z]+$")
+
+def _special_iter_files(roots: List[str], exts: List[str], extra_skips: List[str]) -> Iterable[Path]:
+    exts_l = {"." + e.lower().lstrip(".") for e in exts}
+    skip_parts = [s for s in (extra_skips or []) if s]
+    for root in roots:
+        if not root:
+            continue
+        rp = Path(root)
+        if not rp.exists():
+            continue
+        for p in rp.rglob("*"):
+            if not p.is_file():
+                continue
+            parts_lower = [seg.lower() for seg in p.parts]
+            if any(sk.lower() in parts_lower or any(sk.lower() in seg for seg in parts_lower) for sk in skip_parts):
+                continue
+            if p.suffix.lower() in exts_l:
+                yield p
+
+def _special_category(p: Path) -> str:
+    name = p.name
+    base = p.stem
+    if _TEST_RX.search(name):
+        return "test"
+    if _LETTERS_ONLY_RX.match(base):
+        return "letters_only"
+    return "other"
+
+def _special_group_by_base(paths: Iterable[Path]) -> Dict[str, List[str]]:
+    groups: Dict[str, List[str]] = {}
+    for p in paths:
+        groups.setdefault(p.stem, []).append(str(p))
+    return groups
+
+def _special_score_and_reco(base: str, paths: List[str]) -> Tuple[int, str]:
+    score = 10
+    if any(_TEST_RX.search(Path(p).name) for p in paths):
+        score += 25
+    has_js = any(Path(p).suffix.lower() in {".js", ".jsx"} for p in paths)
+    has_ts = any(Path(p).suffix.lower() in {".ts", ".tsx"} for p in paths)
+    if has_js and has_ts:
+        score += 35
+    return max(0, min(100, score)), ("discard" if score < 30 else ("keep" if score < 60 else "merge"))
+
+def scan_special(
+    roots: List[str],
+    exts: List[str],
+    extra_skips: List[str],
+    run_id: Optional[str] = None,
+) -> List[Dict[str, Any]]:
+    """
+    Multi-root scanner used by ops_cli.py:
+    - returns list of {path, base, ext, category}
+    - writes:
+        - reports/grouped_files.txt
+        - reports/special_inventory_<run_id>.csv
+        - reports/special_scan_<run_id>.json
+    """
+    run_id = run_id or f"special_{_special_now_id()}_{_special_hash(roots)}"
+    reports_dir = Path("reports")
+    reports_dir.mkdir(parents=True, exist_ok=True)
+
+    exts = exts or list(_SPECIAL_EXTS_DEFAULT)
+    paths = list(_special_iter_files(roots, exts, extra_skips))
+    items: List[Dict[str, Any]] = []
+    for p in paths:
+        items.append({
+            "path": str(p),
+            "base": p.stem,
+            "ext": p.suffix.lstrip(".").lower(),
+            "category": _special_category(p),
+        })
+
+    # group by basename and emit grouped_files.txt
+    groups = _special_group_by_base(p for p in paths)
+    grouped_out = reports_dir / "grouped_files.txt"
+    with grouped_out.open("w", encoding="utf-8") as fh:
+        for base in sorted(groups.keys()):
+            fh.write(f"{base}: {', '.join(groups[base])}\n")
+
+    # inventory CSV
+    inv_csv = reports_dir / f"special_inventory_{run_id}.csv"
+    with inv_csv.open("w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh)
+        w.writerow(["base", "ext", "category", "path"])
+        for it in items:
+            w.writerow([it["base"], it["ext"], it["category"], it["path"]])
+
+    # summary JSON (handy for logs)
+    summary_json = reports_dir / f"special_scan_{run_id}.json"
+    payload = {
+        "run_id": run_id,
+        "roots": roots,
+        "exts": exts,
+        "skips": extra_skips,
+        "counts": {"items": len(items), "groups": len(groups)},
+        "outputs": {
+            "grouped_files": str(grouped_out),
+            "inventory_csv": str(inv_csv),
+            "summary_json": str(summary_json),
+        },
+    }
+    with summary_json.open("w", encoding="utf-8") as fh:
+        json.dump(payload, fh, indent=2)
+
+    return items
+
+def process_special(
+    items: List[Dict[str, Any]],
+    run_id: str,
+    limit: int = 100,
+    mode: str = "review",
+) -> List[Dict[str, Any]]:
+    """
+    Lightweight multi-AI-ish review stub for 'special' runs.
+    - Computes worth_score + recommendation
+    - Optionally creates stub artifacts for generate/all
+    - Writes reports/review_summary_special_<run_id>.json
+    Returns list of result rows (for CLI to count/echo).
+    """
+    mode = (mode or "review").lower()
+    out_art = Path("artifacts") / "generations_special"
+    out_art.mkdir(parents=True, exist_ok=True)
+    reports_dir = Path("reports")
+    reports_dir.mkdir(parents=True, exist_ok=True)
+
+    groups: Dict[str, List[str]] = {}
+    for it in items[: max(0, limit)]:
+        groups.setdefault(it["base"], []).append(it["path"])
+
+    results: List[Dict[str, Any]] = []
+    for base, paths in sorted(groups.items()):
+        score, reco = _special_score_and_reco(base, paths)
+
+        artifact_path = None
+        if mode in ("generate", "all"):
+            artifact_path = out_art / f"{base}.ts"
+            try:
+                with artifact_path.open("w", encoding="utf-8") as fh:
+                    fh.write(f"// Auto-generated stub for {base}\n")
+                    fh.write(f"export function {base}(...args: any[]): any {{ /* TODO */ }}\n")
+            except Exception:
+                artifact_path = None
+
+        reviews = {}
+        if mode in ("review", "all"):
+            reviews = {
+                "notes": "Heuristic review only (no external API calls). Prefer merging JS↔TS siblings; prioritize files with tests."
+            }
+
+        results.append({
+            "base": base,
+            "paths": paths,
+            "worth_score": score,
+            "recommendation": reco,
+            "artifact": str(artifact_path) if artifact_path else None,
+            "reviews": reviews,
+        })
+
+    out_json = reports_dir / f"review_summary_special_{run_id}.json"
+    with out_json.open("w", encoding="utf-8") as fh:
+        json.dump({"run_id": run_id, "mode": mode, "results": results}, fh, indent=2)
+
+    return results
+
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# /AIO-SPECIAL v1
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
