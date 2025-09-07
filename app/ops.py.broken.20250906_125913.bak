@@ -1,0 +1,534 @@
+# === CFH ultra-safe helpers ===
+def _safe_attr(obj, name):
+    try:
+        return getattr(obj, name)
+    except Exception:
+        return None
+
+def _candidate_path(obj):
+    v = _safe_attr(obj, "path")
+    if v: return v
+    v = _safe_attr(obj, "src_path")
+    if v: return v
+    if isinstance(obj, dict):
+        return obj.get("path") or obj.get("src_path")
+    return None
+# === /helpers ===
+# --- CFH helper: unified safe path accessor for either remote (.path) or local (.src_path)
+def _candidate_path(obj):
+    # Prefer attribute lookup with default to avoid raising AttributeError
+    try:
+        v = getattr(obj, "path", None)
+        if v:
+            return v
+    except Exception:
+        pass
+    try:
+        v = getattr(obj, "src_path", None)
+        if v:
+            return v
+    except Exception:
+        pass
+    if isinstance(obj, dict):
+        return obj.get("path") or obj.get("src_path")
+    return None
+# ============================================================
+# File: app/ops.py
+# Purpose: Core operations for the orchestrator
+# Notes:
+# • Drop-in replacement. Keeps existing scan/review/generate/persist flow
+# AND adds a new "special" multi-root scanner for test files and
+# letters-only basenames across drives. Always prunes node_modules.
+# • No external deps required (dotenv optional). Safe in AIO_DRY_RUN.
+# ============================================================
+from __future__ import annotations
+import os, re, json, time, logging
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
+from datetime import datetime, timezone
+
+# --- Optional .env autoload ---------------------------------------------------
+try: # keep optional, don't crash if python-dotenv isn't installed
+    from dotenv import load_dotenv # type: ignore
+    load_dotenv()
+except Exception:
+    pass
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# --- LLM helpers (OpenAI live mode) ------------------------------------------
+def _is_live_mode() -> bool:
+    return os.getenv("AIO_DRY_RUN", "true").lower() != "true"
+
+def _has_openai() -> bool:
+    return bool(os.getenv("OPENAI_API_KEY"))
+
+def _openai_chat(messages: list, model: str) -> str:
+    """
+    Try new SDK first (openai>=1.x), fallback to legacy (openai<1).
+    Returns string content (first choice).
+    """
+    try:
+        from openai import OpenAI # new SDK
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        resp = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=0
+        )
+        return (resp.choices[0].message.content or "").strip()
+    except Exception:
+        try:
+            import openai as _legacy
+            _legacy.api_key = os.getenv("OPENAI_API_KEY")
+            resp = _legacy.ChatCompletion.create(
+                model=model,
+                messages=messages,
+                temperature=0
+            )
+            # legacy returns dict-like
+            return (resp["choices"][0]["message"]["content"] or "").strip()
+        except Exception as e:
+            logger.exception("OpenAI call failed: %s", e)
+            return ""
+
+# --- Utility to strip code fences ---------------------------------------------
+def _unwrap_code_fence(s: str) -> str:
+    if not s:
+        return s
+    # remove leading ```{lang} ... ``` or plain ```
+    import re
+    s = s.strip()
+    m = re.match(r"^```[a-zA-Z0-9+\-]*\s*\n(.*)```$", s, flags=re.DOTALL)
+    if m:
+        return m.group(1).strip()
+    m = re.match(r"^```\s*\n(.*)```$", s, flags=re.DOTALL)
+    if m:
+        return m.group(1).strip()
+    return s
+
+# Root for reports/artifacts (relative to project)
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+REPORTS_ROOT = PROJECT_ROOT / "reports"
+ARTIFACTS_ROOT = PROJECT_ROOT / "artifacts"
+
+# --------------------------- ENV HELPERS --------------------------------------
+def _env_bool(name: str, default: bool = False) -> bool:
+    val = os.getenv(name)
+    if val is None:
+        return default
+    return str(val).strip().lower() in {"1", "true", "yes", "on"}
+
+def _env_list(name: str, default: List[str]) -> List[str]:
+    raw = os.getenv(name)
+    if not raw:
+        return default
+    out = []
+    for part in raw.replace(";", ",").split(","):
+        p = part.strip()
+        if p:
+            out.append(p)
+    return out or default
+
+# --------------------------- COMMON CONSTANTS ---------------------------------
+SKIP_DIRS_BASE = {
+    "node_modules", ".git", ".hg", ".svn", ".cache", "dist", "build", "coverage",
+    ".next", "out", "storybook-static", ".turbo", ".yarn", ".pnpm-store"
+}
+EXCLUDE_FILES = {
+    "cypress.config.js", "vite.config.js", "vite.config.ts", "jest.config.js"
+}
+DEFAULT_CODE_EXTS = (".js", ".jsx", ".ts", ".tsx")
+DEFAULT_SPECIAL_EXTS = (".js", ".jsx", ".ts", ".tsx", ".md")
+
+# --------------------------- DATAMODELS ---------------------------------------
+@dataclass
+class Candidate:
+    repo: str
+    branch: str
+    path: str # repo-relative with forward slashes
+    mtime: float
+    size: int
+
+# --------------------------- UTILS --------------------------------------------
+def _norm_slashes(p: str) -> str:
+    return p.replace("\\", "/")
+
+def _rel_from_root(abs_path: Path, root: Path) -> str:
+    try:
+        rel = abs_path.resolve().relative_to(root.resolve())
+        return _norm_slashes(str(rel))
+    except Exception:
+        return _norm_slashes(str(abs_path))
+
+def _should_skip_dir(name: str, extra_skips: List[str]) -> bool:
+    n = name.lower()
+    if n in (s.lower() for s in SKIP_DIRS_BASE):
+        return True
+    if n in (s.lower() for s in extra_skips):
+        return True
+    return False
+
+def _is_test_file(name: str) -> bool:
+    return bool(re.search(r"\.test\.", name, re.IGNORECASE))
+
+def _letters_only_basename(name: str) -> bool:
+    base = Path(name).stem
+    return bool(re.fullmatch(r"[A-Za-z]+", base))
+
+# --------------------------- PRIMARY SCAN (single-root) -----------------------
+# Keeps existing behavior: scans AIO_REPO_ROOT (default to src/, exts AIO_EXTS)
+def fetch_candidates(
+    org: Optional[str],
+    repo_name: Optional[str],
+    platform: str,
+    token: Optional[str],
+    run_id: str,
+    branches: Optional[List[str]],
+    local_inventory_paths: Optional[List[str]] = None,
+    user: Optional[str] = None,
+) -> Tuple[List[Candidate], Dict[str, List[Candidate]], List[str]]:
+    """Scan a single repo root for JS/TS files, excluding tests/mocks, write reports.
+    Returns (candidates, bundle_by_src, repos_info).
+    """
+    REPORTS_ROOT.mkdir(parents=True, exist_ok=True)
+    ARTIFACTS_ROOT.mkdir(parents=True, exist_ok=True)
+    repo_root = Path(os.getenv("AIO_REPO_ROOT", str(PROJECT_ROOT))).resolve()
+    include_tests = _env_bool("AIO_INCLUDE_TESTS", False)
+    exts = tuple([("." + e.strip().lstrip(".")) for e in _env_list("AIO_EXTS", ["js", "jsx", "ts", "tsx"])])
+    prefixes = _env_list("CFH_SCAN_PATH_PREFIXES", ["src/"])
+    extra_skips = _env_list("AIO_SKIP_DIRS", [])
+    logger.info(f"Scanning repo root: {repo_root}")
+    logger.info(f"Allowed extensions: {exts} | include_tests={include_tests}")
+    logger.info(f"Path prefixes: {prefixes if prefixes else '[ALL PATHS]'}")
+    found_by_ext: Dict[str, int] = {e.lstrip('.'): 0 for e in exts}
+    candidates: List[Candidate] = []
+    total_kept = 0
+    # Walk
+    for dirpath, dirnames, filenames in os.walk(repo_root):
+        # prune
+        dirnames[:] = [d for d in dirnames if not _should_skip_dir(d, extra_skips)]
+        for fn in filenames:
+            if fn in EXCLUDE_FILES:
+                continue
+            ext = Path(fn).suffix.lower()
+            if ext not in exts:
+                continue
+            abs_path = Path(dirpath) / fn
+            rel = _rel_from_root(abs_path, repo_root)
+            # prefix filter (normalized)
+            if prefixes and not any(rel.lower().startswith(p.lower()) for p in prefixes if p):
+                continue
+            # tests/mocks allowed?
+            if not include_tests and (_is_test_file(fn) or "/__mocks__/" in _norm_slashes(rel).lower()):
+                continue
+            stat = abs_path.stat()
+            candidates.append(Candidate(
+                repo="local", branch="main", path=rel, mtime=stat.st_mtime, size=stat.st_size
+            ))
+            found_by_ext[ext.lstrip('.')] = found_by_ext.get(ext.lstrip('.'), 0) + 1
+            total_kept += 1
+    # Emit reports
+    payload = {
+        "run_id": run_id,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "repo_root": str(repo_root),
+        "found_total": total_kept,
+        "found_by_ext": found_by_ext,
+        "candidates": [c.__dict__ for c in candidates],
+        "prefixes": prefixes,
+        "include_tests": include_tests,
+        "exts": [e.lstrip('.') for e in exts],
+    }
+    (REPORTS_ROOT / f"scan_{run_id}.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    (REPORTS_ROOT / "scan_latest.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    # Write inventory CSV of src/*.js|jsx (legacy behavior kept)
+    try:
+        import csv
+        inv_csv = REPORTS_ROOT / "tsx_inventory_full_clean.csv"
+        with inv_csv.open("w", encoding="utf-8", newline="") as fp:
+            w = csv.writer(fp)
+            w.writerow(["path"])
+            for c in candidates:
+                if _candidate_path(c).startswith("src/") and _candidate_path(c).lower().endswith((".js", ".jsx")):
+                    w.writerow([_candidate_path(c)])
+        logger.info(f"Wrote {inv_csv}")
+    except Exception as e:
+        logger.warning(f"Could not write inventory csv: {e}")
+    return candidates, {}, []
+
+# --------------------------- BATCH PLACEHOLDERS -------------------------------
+def _ensure_dirs_for_mode(run_id: str) -> Dict[str, Path]:
+    paths = {
+        "reviews": ARTIFACTS_ROOT / "reviews",
+        "generations": ARTIFACTS_ROOT / "generations",
+        "persist": ARTIFACTS_ROOT / "persist",
+        "staging": ARTIFACTS_ROOT / "_staged_all",
+        "gates": REPORTS_ROOT,
+    }
+    for p in paths.values():
+        p.mkdir(parents=True, exist_ok=True)
+    return paths
+
+def process_batch(
+    platform: str,
+    token: Optional[str],
+    candidates: List[Candidate],
+    bundle_by_src: Dict[str, List[Candidate]],
+    run_id: str,
+    batch_offset: int = 0,
+    batch_limit: int = 50,
+    mode: str = "all",
+) -> List[str]:
+    """Create placeholder artifacts for a slice of candidates.
+    If AIO_DRY_RUN=false later, this is where provider calls would go.
+    """
+    paths = _ensure_dirs_for_mode(run_id)
+    dry = _env_bool("AIO_DRY_RUN", True)
+    slice_ = candidates[batch_offset: batch_offset + batch_limit]
+    processed: List[str] = []
+    gens_out: List[Dict] = []
+    repo_root = Path(os.getenv("AIO_REPO_ROOT", str(PROJECT_ROOT))).resolve()
+    
+    for c in slice_:
+        path_val = _candidate_path(c)\n    try:
+        _p = _candidate_path(c)
+        try:
+        _p = _candidate_path(c)
+        base = _norm_slashes(_p or "").replace("/", "__") or f"cand_{i}"
+    except Exception:
+        base = f"cand_{i}" or f"cand_{i}"
+    except Exception:
+        base = f"cand_{i}" or f"cand_{i}"
+        if mode in ("all", "review"):
+            (paths["reviews"] / f"{base}.review.json").write_text(
+                json.dumps({
+                    "run_id": run_id,
+                    "path": _candidate_path(c),
+                    "analysis": {"summary": "Auto-review placeholder", "recommendation": "ok"}
+                }, indent=2),
+                encoding="utf-8",
+            )
+        if mode in ("all", "generate"):
+            # Decide extension up-front
+            src_path = Path(repo_root) / _candidate_path(c)
+            text = src_path.read_text(encoding="utf-8", errors="ignore")
+
+            # map extension
+            lower = _candidate_path(c).lower()
+            if lower.endswith(".jsx"):
+                out_rel = _candidate_path(c)[:-4] + "tsx"
+            elif lower.endswith(".js"):
+                out_rel = _candidate_path(c)[:-2] + "ts"
+            else:
+                out_rel = _candidate_path(c)  # already ts/tsx
+
+            # live vs placeholder
+            live = _is_live_mode() and _has_openai()
+            model = os.getenv("AIO_MODEL", "gpt-4o-mini")
+
+            if live:
+                sys_msg = {
+                    "role": "system",
+                    "content": (
+                        "You convert React JS/JSX files to TypeScript (TS/TSX). "
+                        "Preserve behavior, props, and runtime semantics. "
+                        "If typing is ambiguous, prefer minimal safe types and add '// @ts-nocheck' only as a last resort. "
+                        "Return ONLY the final file content, no explanations."
+                    )
+                }
+                user_msg = {
+                    "role": "user",
+                    "content": f"File: {_candidate_path(c)}\n\n---\n{text}\n---\nConvert to {out_rel.split('.')[-1].upper()}."
+                }
+                content = _openai_chat([sys_msg, user_msg], model=model)
+                if not content:
+                    # fallback: keep original with a guard comment
+                    content = "// @ts-nocheck\n" + text
+                    note = "openai-fallback"
+                else:
+                    content = _unwrap_code_fence(content)
+                    note = "openai-live"
+            else:
+                # existing placeholder path
+                content = "// @ts-nocheck\n" + text
+                note = "placeholder"
+
+            # write staged output
+            staged_path = (ARTIFACTS_ROOT / "_staged_all" / out_rel).resolve()
+            staged_path.parent.mkdir(parents=True, exist_ok=True)
+            staged_path.write_text(content, encoding="utf-8")
+
+            # record generation metadata
+            gen = {
+                "run_id": run_id,
+                "path": _candidate_path(c),
+                "tier": "Free",
+                "generation": {
+                    "kind": "ts-conversion",
+                    "note": note,
+                },
+            }
+            gens_out.append(gen)
+            (paths["generations"] / f"{base}.gen.json").write_text(
+                json.dumps(gen, indent=2), encoding="utf-8"
+            )
+        if mode in ("all", "persist"):
+            (paths["persist"] / f"{base}.persist.json").write_text(
+                json.dumps({"run_id": run_id, "path": _candidate_path(c), "action": "stage"}, indent=2),
+                encoding="utf-8",
+            )
+        processed.append(_candidate_path(c))
+    # Simple gate file
+    gates = {
+        "run_id": run_id,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "dry_run": dry,
+        "processed_count": len(processed),
+        "modes": mode,
+    }
+    (paths["gates"] / f"gates_{run_id}.json").write_text(json.dumps(gates, indent=2), encoding="utf-8")
+    return processed
+
+# --------------------------- SPECIAL MULTI-ROOT SCAN --------------------------
+# Scans multiple roots (drives/shares), selects only *.test.* files and files
+# whose base name is letters-only, across extensions {js,jsx,ts,tsx,md}.
+# Always skips node_modules and SKIP_DIRS_BASE; accepts extra skips via env.
+@dataclass
+class SpecialItem:
+    path: str # absolute (forward slashes)
+    size: int
+    ext: str
+    category: str # "test" | "letters_only" | "both"
+
+def scan_special(roots: List[str], exts: List[str], extra_skips: List[str], run_id: str) -> List[SpecialItem]:
+    REPORTS_ROOT.mkdir(parents=True, exist_ok=True)
+    wanted_exts = tuple(("." + e.lstrip(".").lower()) for e in exts)
+    items: List[SpecialItem] = []
+    for r in roots:
+        root = Path(r).resolve()
+        if not root.exists():
+            logger.info(f"[special] skip missing root: {root}")
+            continue
+        logger.info(f"[special] scanning root: {root}")
+        for dirpath, dirnames, filenames in os.walk(root):
+            dirnames[:] = [d for d in dirnames if not _should_skip_dir(d, extra_skips)]
+            for fn in filenames:
+                if fn in EXCLUDE_FILES:
+                    continue
+                ext = Path(fn).suffix.lower()
+                if ext not in wanted_exts:
+                    continue
+                abs_path = Path(dirpath) / fn
+                # classify
+                is_test = _is_test_file(fn)
+                is_letters = _letters_only_basename(fn)
+                if not (is_test or is_letters):
+                    continue
+                try:
+                    st = abs_path.stat()
+                    size = int(st.st_size)
+                except Exception:
+                    size = -1
+                cat = "both" if (is_test and is_letters) else ("test" if is_test else "letters_only")
+                items.append(SpecialItem(path=_norm_slashes(str(abs_path)), size=size, ext=ext.lstrip("."), category=cat))
+    # write reports
+    payload = {
+        "run_id": run_id,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "roots": roots,
+        "exts": exts,
+        "skip_dirs": sorted(set(list(SKIP_DIRS_BASE) + extra_skips)),
+        "total": len(items),
+        "samples": [items[i].__dict__ for i in range(min(10, len(items)))],
+    }
+    (REPORTS_ROOT / f"special_scan_{run_id}.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    (REPORTS_ROOT / "special_scan_latest.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    # CSV
+    try:
+        import csv
+        csv_path = REPORTS_ROOT / f"special_inventory_{run_id}.csv"
+        with csv_path.open("w", encoding="utf-8", newline="") as fp:
+            w = csv.writer(fp)
+            w.writerow(["path", "size_bytes", "ext", "category"])
+            for it in items:
+                w.writerow([_candidate_path(it), it.size, it.ext, it.category])
+    except Exception as e:
+        logger.warning(f"[special] could not write csv: {e}")
+    return items
+
+# Minimal review/generation for special items (placeholder or future AI hooks)
+def process_special(
+    items: List[SpecialItem],
+    run_id: str,
+    limit: int = 100,
+    mode: str = "review",
+) -> List[str]:
+    ARTIFACTS_ROOT.mkdir(parents=True, exist_ok=True)
+    out_dirs = {
+        "reviews": ARTIFACTS_ROOT / "reviews_special",
+        "generations": ARTIFACTS_ROOT / "generations_special",
+        "persist": ARTIFACTS_ROOT / "persist_special",
+    }
+    for p in out_dirs.values():
+        p.mkdir(parents=True, exist_ok=True)
+    dry = _env_bool("AIO_DRY_RUN", True)
+    processed: List[str] = []
+    for it in items[:limit]:
+        path_val = _candidate_path(c)\n    try:
+        _p = _candidate_path(c)
+        try:
+        _p = _candidate_path(c)
+        base = _norm_slashes(_p or "").replace("/", "__") or f"cand_{i}"
+    except Exception:
+        base = f"cand_{i}" or f"cand_{i}"
+    except Exception:
+        base = f"cand_{i}" or f"cand_{i}"
+        if mode in ("all", "review"):
+            (out_dirs["reviews"] / f"{base}.review.json").write_text(
+                json.dumps({
+                    "run_id": run_id,
+                    "path": _candidate_path(it),
+                    "size": it.size,
+                    "category": it.category,
+                    "analysis": {
+                        "summary": "Special review placeholder",
+                        "recommendation": "ok"
+                    }
+                }, indent=2),
+                encoding="utf-8",
+            )
+        if mode in ("all", "generate"):
+            (out_dirs["generations"] / f"{base}.gen.json").write_text(
+                json.dumps({
+                    "run_id": run_id,
+                    "path": _candidate_path(it),
+                    "tier": "Free",
+                    "generation": {
+                        "kind": "special-ai-review",
+                        "note": "placeholder; no external calls" if dry else "pending provider"
+                    }
+                }, indent=2),
+                encoding="utf-8",
+            )
+        if mode in ("all", "persist"):
+            (out_dirs["persist"] / f"{base}.persist.json").write_text(
+                json.dumps({"run_id": run_id, "path": _candidate_path(it), "action": "stage"}, indent=2),
+                encoding="utf-8",
+            )
+        processed.append(_candidate_path(it))
+    # Gate file for special pipeline
+    gates = {
+        "run_id": run_id,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "dry_run": dry,
+        "processed_count": len(processed),
+        "modes": mode,
+        "pipeline": "special",
+    }
+    (REPORTS_ROOT / f"gates_special_{run_id}.json").write_text(json.dumps(gates, indent=2), encoding="utf-8")
+    return processed
+
+
+
