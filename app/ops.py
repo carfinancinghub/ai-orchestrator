@@ -1,347 +1,250 @@
 # app/ops.py
 from __future__ import annotations
-from dataclasses import dataclass
-from typing import List, Dict, Tuple, Optional
-import os
-import re
-from pathlib import Path
+import os, re, json, csv, hashlib, time, subprocess, pathlib
+from dataclasses import dataclass, asdict
+from typing import Dict, List, Iterable, Tuple, Optional
 
-# ---------------- small utils ----------------
-def _norm_slashes(s: str) -> str:
-    return (s or "").replace("\\", "/")
+FRONTEND_EXTS = {".js", ".jsx", ".ts", ".tsx"}
+CRYPTO_RX = re.compile(r"""^(
+    \$[A-Za-z0-9]{6,}        # $I2H07PR.test.ts, etc.
+  | [A-Fa-f0-9]{8,}$         # 8+ hex chars as a bare basename
+)$""", re.X)
 
-def _safe_attr(obj, name):
+def _now_id() -> str:
+    return time.strftime("%Y%m%d_%H%M%S")
+
+def _hash(s: str) -> str:
+    return hashlib.sha1(s.encode("utf-8")).hexdigest()[:8]
+
+def _is_cryptic_base(base: str) -> bool:
+    return bool(CRYPTO_RX.match(base))
+
+def _safe_rel(path: str, root: str) -> str:
     try:
-        return getattr(obj, name)
+        return str(pathlib.Path(path).resolve().relative_to(pathlib.Path(root).resolve()))
     except Exception:
-        return None
+        return path
 
-def _candidate_path(obj):
-    v = _safe_attr(obj, "path")
-    if v:
-        return v
-    v = _safe_attr(obj, "src_path")
-    if v:
-        return v
-    if isinstance(obj, dict):
-        return obj.get("path") or obj.get("src_path")
-    return None
-# ---------------------------------------------
-
-# ---------------- scanning config ------------
-IGNORE_DIRS = {
-    "node_modules", ".git", "dist", "build", ".next", ".turbo", ".cache",
-    "artifacts", "reports", "coverage", "out", "tmp",
-    "venv", ".venv", "env", ".env", ".pytest_cache", ".mypy_cache"
-}
-BACKUP_RX = re.compile(r"(?i)backup|zipped_batches|recovered|archive|snapshot")
-
-EXTS = {".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs"}
-CRYPTIC_RX = re.compile(
-    r"^(?:\$|_)?(?:[A-Z0-9]{6,}|[A-F0-9]{6,}|I[0-9A-Z]{6,})(?:\.[A-Za-z0-9_-]+)*$"
-)
-
-def _is_ignored_path(p: Path) -> bool:
-    """True if any path segment is an ignored dir, backup-like, or site-packages."""
-    parts_lower = [part.lower() for part in p.parts]
-    if any(part in IGNORE_DIRS for part in parts_lower):
-        return True
-    if any("site-packages" in part for part in parts_lower):
-        return True
-    if any(BACKUP_RX.search(part or "") for part in parts_lower):
-        return True
-    return False
-
-def _is_cryptic(name: str) -> bool:
-    return bool(CRYPTIC_RX.match(Path(name).stem))
-
-def _is_test_like(name: str) -> bool:
-    n = name.lower()
-    return ".test." in n or ".spec." in n
-# ---------------------------------------------
-
-@dataclass
-class Candidate:
-    repo: str
-    branch: str
-    path: str         # absolute or normalized absolute
-    action: str       # "convert" for .js/.jsx without TS sibling, "evaluate" for .ts/.tsx
-
-# ---------- file iteration (prunes ignored/backup/site-packages early) ----------
-def _iter_files_pruned(root: Path):
-    """
-    os.walk with in-place dir pruning so we never descend into:
-      - anything in IGNORE_DIRS,
-      - backup-like dirs (backup, zipped_batches, recovered, archive, snapshot),
-      - any directory containing 'site-packages'.
-    This avoids listing 20k+ files and speeds scans significantly.
-    """
-    if not root.exists():
-        return
-    for dirpath, dirnames, filenames in os.walk(root):
-        # prune ignored + backup-like dirs + site-packages anywhere
-        dirnames[:] = [
-            d for d in dirnames
-            if d.lower() not in IGNORE_DIRS
-            and not BACKUP_RX.search(d)
-            and "site-packages" not in d.lower()
-        ]
-        for fn in filenames:
-            p = Path(dirpath) / fn
-            yield p
-
-# ------- local candidates for one root (excludes ignored/backup/site-packages) -------
-def _list_local_candidates_one_root(root: Path, repo_alias: str = "local") -> List[Candidate]:
-    js_jsx: List[Path] = []
-    ts_tsx: List[Path] = []
-
-    for p in _iter_files_pruned(root):
-        if not p.is_file():
-            continue
-        if _is_ignored_path(p):
-            continue
-        ext = p.suffix.lower()
-        if ext not in EXTS:
-            continue
-        if _is_cryptic(p.name):
-            continue
-
-        if ext in (".js", ".jsx"):
-            js_jsx.append(p)
-        elif ext in (".ts", ".tsx"):
-            ts_tsx.append(p)
-
-    # Build sibling TS base set using relpaths so Windows casing doesn't break us.
-    def _base_rel(path_obj: Path) -> str:
-        rel = _norm_slashes(os.path.relpath(str(path_obj), str(root)))
-        return os.path.splitext(rel)[0].lower()
-
-    ts_bases = { _base_rel(p) for p in ts_tsx }
-
-    out: List[Candidate] = []
-    # Convert: .js/.jsx without .ts/.tsx siblings
-    for p in js_jsx:
-        base = _base_rel(p)
-        if base not in ts_bases:
-            out.append(Candidate(
-                repo=repo_alias, branch="local",
-                path=_norm_slashes(str(p.resolve())),
-                action="convert"
-            ))
-    # Evaluate existing .ts/.tsx
-    for p in ts_tsx:
-        out.append(Candidate(
-            repo=repo_alias, branch="local",
-            path=_norm_slashes(str(p.resolve())),
-            action="evaluate"
-        ))
-    return out
-
-def _list_local_candidates_multi(roots: List[Path]) -> List[Candidate]:
-    out: List[Candidate] = []
-    for idx, r in enumerate(roots):
-        if not r or not r.exists():
-            continue
-        alias = r.name or f"root{idx+1}"
-        out.extend(_list_local_candidates_one_root(r, repo_alias=alias))
-    return out
-# ----------------------------------------------------------------------
-
-# ---------------- grouping output (safe write in reports/) -------------
-def _build_groups_from_candidates(roots: List[Path], cands: List[Candidate]) -> Dict[str, List[str]]:
-    """
-    Groups by base name (without .test/.spec) and lists per-root relative paths.
-    Skips cryptic names & ignored dirs.
-    """
-    # Map path prefix -> root Path to compute relpaths
-    root_map: Dict[str, Path] = { _norm_slashes(str(r.resolve())): r for r in roots }
-
-    groups: Dict[str, List[str]] = {}
-    for c in cands:
-        p = Path(c.path)
-        if not p.exists():
-            continue
-        if _is_ignored_path(p) or _is_cryptic(p.name):
-            continue
-        base = p.stem
-        # normalize base by stripping .test/.spec
-        if base.lower().endswith(".test"):
-            base = base[:-5]
-        if base.lower().endswith(".spec"):
-            base = base[:-5]
-
-        # Find which root we belong to for a nice relpath
-        rel = None
-        p_str = _norm_slashes(str(p.resolve()))
-        for rp_str, r in root_map.items():
-            if p_str.startswith(rp_str + "/") or p_str == rp_str:
-                rel = _norm_slashes(os.path.relpath(p_str, rp_str))
-                break
-        if not rel:
-            # fallback: just use filename
-            rel = p.name
-
-        groups.setdefault(base, [])
-        if rel not in groups[base]:
-            groups[base].append(rel)
-    return groups
-
-def _maybe_write_grouped_files(roots: List[Path], cands: List[Candidate], reports_dir: Path):
-    """
-    Writes reports/grouped_files.txt only if missing, unless CFH_FORCE_GROUPING=1.
-    Always safe: confined to reports/.
-    """
-    reports_dir.mkdir(parents=True, exist_ok=True)
-    out = reports_dir / "grouped_files.txt"
-    force = (os.getenv("CFH_FORCE_GROUPING") == "1")
-    if out.exists() and not force:
-        return
-
-    groups = _build_groups_from_candidates(roots, cands)
-    with out.open("w", encoding="utf-8") as fh:
-        for base in sorted(groups.keys()):
-            fh.write(f"{base}:\n")
-            for rel in sorted(groups[base]):
-                fh.write(f"  - {rel}\n")
-# ----------------------------------------------------------------------
-
-# ---------------- public API (unchanged signatures) --------------------
-def _parse_roots_from_env() -> List[Path]:
-    """
-    CFH_SCAN_ROOTS: semicolon or comma separated list of roots
-    Fallback to CFH_SCAN_ROOT or CFH_ROOT
-    Optional CFH_EXTRA_ROOTS to append.
-    """
-    roots: List[str] = []
-    env_roots = os.getenv("CFH_SCAN_ROOTS") or ""
-    if env_roots:
-        parts = [p.strip() for p in re.split(r"[;,]", env_roots) if p.strip()]
-        roots.extend(parts)
-
-    one = os.getenv("CFH_SCAN_ROOT") or os.getenv("CFH_ROOT") or ""
-    if one and one.strip():
-        roots.append(one.strip())
-
-    extra = os.getenv("CFH_EXTRA_ROOTS") or ""
-    if extra:
-        parts = [p.strip() for p in re.split(r"[;,]", extra) if p.strip()]
-        roots.extend(parts)
-
-    # De-dup while preserving order
-    seen = set()
-    out = []
-    for r in roots:
-        nr = os.path.normpath(r)
-        if nr not in seen:
-            seen.add(nr)
-            out.append(Path(nr))
-    return out
-
-def _bundle_by_source(cands: List[Candidate]) -> Dict[str, List[int]]:
-    bundles: Dict[str, List[int]] = {}
-    for i, c in enumerate(cands):
-        src = _candidate_path(c) or f"cand_{i}"
-        bundles.setdefault(src, []).append(i)
-    return bundles
+def _iter_files(root: str, exts=FRONTEND_EXTS) -> Iterable[str]:
+    if not root or not os.path.isdir(root):
+        return []
+    for dirpath, _dirs, files in os.walk(root):
+        for f in files:
+            p = os.path.join(dirpath, f)
+            if os.path.splitext(p)[1].lower() in exts:
+                yield p
 
 def fetch_candidates(
-    org: Optional[str],
-    user: Optional[str],
-    repo_name: Optional[str],
-    platform: str,
-    token: Optional[str],
-    run_id: str,
-    branches: List[str],
-    local_inventory_paths: Optional[List[str]] = None,
-) -> Tuple[List[Candidate], Dict[str, List[int]], Dict[str, List[str]]]:
+    frontend_root: str = r"C:/Backup_Projects/CFH/frontend",
+    repo_root: str = ".",
+    grouped_out: str = "reports/grouped_files.txt",
+    inventory_csv: Optional[str] = None,
+) -> Dict[str, List[str]]:
     """
-    Safe, minimal, multi-root local scan:
-    - Reads roots from env (CFH_SCAN_ROOTS / CFH_SCAN_ROOT / CFH_ROOT [+ CFH_EXTRA_ROOTS])
-    - Excludes ignored, backup-like, and site-packages directories
-    - Filters cryptic filenames
-    - Writes reports/grouped_files.txt if missing (or CFH_FORCE_GROUPING=1)
+    Scan both the external frontend root and this repo, group by basename,
+    filter cryptic/temp names, and write a grouped preview file.
     """
-    roots = _parse_roots_from_env()
-    if not roots:
-        return [], {}, {}
-    cands = _list_local_candidates_multi(roots)
+    sources = []
+    for root in filter(None, [frontend_root, repo_root]):
+        sources.extend(list(_iter_files(root)))
 
-    # Safe grouped files output
-    reports_dir = Path(os.getenv("CFH_REPORTS_DIR") or "reports")
-    _maybe_write_grouped_files(roots, cands, reports_dir)
+    groups: Dict[str, List[str]] = {}
+    for p in sources:
+        base = os.path.splitext(os.path.basename(p))[0]
+        if _is_cryptic_base(base):
+            continue
+        groups.setdefault(base, []).append(p)
 
-    # sources map is informational for callers
-    sources_map: Dict[str, List[str]] = {"roots": [str(r) for r in roots]}
-    return cands, _bundle_by_source(cands), sources_map
+    os.makedirs(os.path.dirname(grouped_out), exist_ok=True)
+    with open(grouped_out, "w", encoding="utf-8") as fh:
+        for base in sorted(groups.keys()):
+            rels = [p for p in groups[base]]
+            fh.write(f"{base}: " + ", ".join(rels) + "\n")
 
-# -------------------- batch processing (non-destructive) --------------------
-def _worth_score_for(path: str, action: str) -> int:
+    if inventory_csv:
+        os.makedirs(os.path.dirname(inventory_csv), exist_ok=True)
+        with open(inventory_csv, "w", newline="", encoding="utf-8") as fh:
+            w = csv.writer(fh)
+            w.writerow(["base", "path"])
+            for base, paths in sorted(groups.items()):
+                for p in paths:
+                    w.writerow([base, p])
+
+    return groups
+
+def scan_special(frontend_root: str, out_dir: str = "reports") -> str:
     """
-    Heuristic worth score 0–100:
-    - Convert (no TS sibling): base 70
-    - Evaluate (already TS): base 40
-    - Tests/specs get -10
-    - Size bumps: +0..20 based on kb up to ~50KB
+    Compatibility shim for ops_cli.py. Produces a JSON summary.
     """
-    base = 70 if action == "convert" else 40
-    name = os.path.basename(path).lower()
-    if ".test." in name or ".spec." in name:
-        base -= 10
+    run_id = f"special_{_now_id()}_{_hash(frontend_root)}"
+    grouped_out = os.path.join(out_dir, "grouped_files.txt")
+    inventory_csv = os.path.join(out_dir, f"special_inventory_{run_id}.csv")
+    summary_json = os.path.join(out_dir, f"special_scan_{run_id}.json")
+    groups = fetch_candidates(frontend_root=frontend_root, repo_root=".", grouped_out=grouped_out, inventory_csv=inventory_csv)
+    payload = {
+        "run_id": run_id,
+        "roots": {"frontend_root": frontend_root, "repo_root": os.getcwd()},
+        "groups": {k: sorted(v) for k, v in groups.items()},
+        "counts": {"groups": len(groups), "files": sum(len(v) for v in groups.values())},
+        "outputs": {"grouped": grouped_out, "inventory_csv": inventory_csv, "summary_json": summary_json},
+    }
+    os.makedirs(out_dir, exist_ok=True)
+    with open(summary_json, "w", encoding="utf-8") as fh:
+        json.dump(payload, fh, indent=2)
+    return run_id
+
+# --- Lightweight function extraction (no external deps required) ----------------
+
+JS_FUNC_RX = re.compile(r"""
+(?:
+    # named function
+    (?:export\s+)?function\s+(?P<n1>[A-Za-z_$][A-Za-z0-9_$]*)\s*\(
+  |
+    # const foo = (...) => or function (...)
+    (?:export\s+)?(?:const|let|var)\s+(?P<n2>[A-Za-z_$][A-Za-z0-9_$]*)\s*=\s*(?:async\s+)?(?:\(|function\b)
+)
+""", re.X)
+
+def extract_functions_from_text(code: str, lang_hint: str) -> List[str]:
+    if lang_hint.lower() in ("js", "ts", "tsx", "jsx"):
+        names = []
+        for m in JS_FUNC_RX.finditer(code):
+            names.append(m.group("n1") or m.group("n2"))
+        return sorted(set(names))
+    # Default/other: Python heuristic
+    out = []
+    for line in code.splitlines():
+        s = line.lstrip()
+        if s.startswith("def ") and "(" in s:
+            name = s[4:].split("(")[0].strip()
+            if name:
+                out.append(name)
+    return sorted(set(out))
+
+# --- Multi-AI review skeleton ---------------------------------------------------
+
+def _maybe_import_clients():
+    oa = gm = gr = None
     try:
-        sz = os.path.getsize(path)
+        from app.services.llm.openai_client import ask as oa  # type: ignore
     except Exception:
-        sz = 0
-    kb = min(int(sz / 1024), 50)
-    bump = int((kb / 50) * 20)  # up to +20
-    score = max(0, min(100, base + bump))
-    return score
-
-def _recommendation(score: int) -> str:
-    if score >= 70: return "keep"
-    if score >= 40: return "merge"
-    return "discard"
-
-def process_batch(
-    platform: str,
-    token: Optional[str],
-    candidates: List[Candidate],
-    bundle_by_src: Dict[str, List[int]],
-    run_id: str,
-    batch_offset: int = 0,
-    batch_limit: int = 100,
-) -> List[Dict]:
-    """
-    Non-destructive batch processor:
-    - Slices candidates and returns a PASS placeholder per item
-    - Adds worth_score (0-100) and recommendation keep/merge/discard
-    - No external calls; safe for dashboards & dry-runs
-    """
+        pass
     try:
-        start = int(batch_offset or 0)
+        from app.services.llm.google_client import ask as gm  # type: ignore
     except Exception:
-        start = 0
+        pass
     try:
-        lim = int(batch_limit or 0)
+        from app.services.llm.grok_client import ask as gr  # type: ignore
     except Exception:
-        lim = 0
+        pass
+    return oa, gm, gr
 
-    batch = candidates[start:start + lim] if lim and lim > 0 else candidates[start:]
-    results: List[Dict] = []
-    for i, c in enumerate(batch):
-        p = _candidate_path(c) or ""
-        base = _norm_slashes(p).replace("/", "__") or f"cand_{start + i}"
-        score = _worth_score_for(p, getattr(c, "action", "convert"))
+def _score_and_recommend(base: str, paths: List[str]) -> Tuple[int, str]:
+    score = 10
+    if any(p.endswith((".test.ts", ".spec.ts", ".test.tsx", ".spec.tsx")) for p in paths):
+        score += 25
+    if any(p.endswith((".js", ".jsx")) for p in paths) and any(p.endswith((".ts", ".tsx")) for p in paths):
+        score += 35
+    score = max(0, min(100, score))
+    reco = "discard" if score < 30 else ("keep" if score < 60 else "merge")
+    return score, reco
+
+def process_batch(tier: str, groups: Dict[str, List[str]], out_dir="artifacts/generated", report_dir="reports") -> str:
+    """
+    For each base group, extract function names, run tiered reviews, and
+    optionally emit a generated .ts file. Writes a summary JSON.
+    """
+    run_id = f"batch_{_now_id()}"
+    os.makedirs(out_dir, exist_ok=True)
+    os.makedirs(report_dir, exist_ok=True)
+    oa, gm, gr = _maybe_import_clients()
+
+    results = []
+    for base, paths in sorted(groups.items()):
+        # Concatenate code for quick context (bounded)
+        blobs = []
+        for p in paths[:6]:
+            try:
+                with open(p, "r", encoding="utf-8", errors="ignore") as fh:
+                    code = fh.read()
+            except Exception:
+                code = ""
+            lang_hint = os.path.splitext(p)[1].lstrip(".")
+            fns = extract_functions_from_text(code, lang_hint)
+            blobs.append({"path": p, "functions": fns, "sample": code[:4000]})
+        score, reco = _score_and_recommend(base, paths)
+
+        # Multi-AI reviewers (best-effort; skip if client missing)
+        reviews = {}
+        prompt = f"Give concise refactor/type hints for: {base}. Functions: {[f for b in blobs for f in b['functions']]}"
+        if tier.lower() in ("free", "premium", "wow++") and oa:
+            try:
+                reviews["openai"] = oa(prompt)
+            except Exception as e:
+                reviews["openai"] = f"openai_error: {e}"
+        if tier.lower() in ("premium", "wow++") and oa:
+            try:
+                reviews["chatgpt"] = oa(prompt + " Be specific on TS types.")
+            except Exception as e:
+                reviews["chatgpt"] = f"chatgpt_error: {e}"
+        if tier.lower() == "wow++":
+            if gm:
+                try:
+                    reviews["gemini"] = gm(prompt + " Focus on system-level risks.")
+                except Exception as e:
+                    reviews["gemini"] = f"gemini_error: {e}"
+            if gr:
+                try:
+                    reviews["grok"] = gr(prompt + " Suggest bold refactors.")
+                except Exception as e:
+                    reviews["grok"] = f"grok_error: {e}"
+
+        # Optional minimal generation artifact (stub)
+        gen_path = os.path.join(out_dir, f"{base}.ts")
+        with open(gen_path, "w", encoding="utf-8") as fh:
+            fh.write("// Generated stub for {}\n".format(base))
+            for b in blobs:
+                for fn in b["functions"][:5]:
+                    fh.write(f"export function {fn}(...args: any[]): any {{ /* TODO */ }}\n")
+
         results.append({
-            "index": start + i,
-            "repo": getattr(c, "repo", "local"),
-            "branch": getattr(c, "branch", "local"),
-            "path": p,
-            "action": getattr(c, "action", "convert"),
             "base": base,
-            "status": "PASS",
-            "run_id": run_id,
+            "paths": paths,
             "worth_score": score,
-            "recommendation": _recommendation(score),
+            "recommendation": reco,
+            "reviews": {k: (v[:600] if isinstance(v, str) else str(v)) for k, v in reviews.items()},
+            "artifact": gen_path,
         })
-    return results
-# ---------------------------------------------------------------------------
+
+    report_path = os.path.join(report_dir, f"review_summary_{run_id}.json")
+    with open(report_path, "w", encoding="utf-8") as fh:
+        json.dump({"run_id": run_id, "results": results}, fh, indent=2)
+    return report_path
+
+# --- Gates (tsc, test, lint) ---------------------------------------------------
+
+def run_gates(frontend_root: str, run_id: Optional[str] = None) -> str:
+    run_id = run_id or f"gates_{_now_id()}"
+    out = os.path.join("reports", f"gates_{run_id}.json")
+    os.makedirs("reports", exist_ok=True)
+
+    def _run(cmd: List[str], cwd: str) -> Dict[str, str]:
+        try:
+            p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, shell=False, timeout=30*60)
+            return {
+                "cmd": " ".join(cmd),
+                "code": p.returncode,
+                "stdout_head": (p.stdout or "")[-4000:],
+                "stderr_head": (p.stderr or "")[-4000:],
+            }
+        except Exception as e:
+            return {"cmd": " ".join(cmd), "code": -999, "error": str(e)}
+
+    results = {
+        "tsc": _run(["npm", "run", "-s", "tsc"], frontend_root),
+        "test": _run(["npm", "test", "--", "-w=1", "--silent"], frontend_root),
+        "lint": _run(["npm", "run", "-s", "lint"], frontend_root),
+    }
+    with open(out, "w", encoding="utf-8") as fh:
+        json.dump({"run_id": run_id, "frontend_root": frontend_root, "results": results}, fh, indent=2)
+    return out
