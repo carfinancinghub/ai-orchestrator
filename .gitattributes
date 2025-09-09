@@ -1,19 +1,4 @@
-* text=auto
-# explicit preferences
-*.py   text eol=lf
-*.ps1  text eol=crlf
-*.sh   text eol=lf
-*.md   text eol=lf
-*.json text eol=lf
-*.yml  text eol=lf
-*.yaml text eol=lf
-*.csv filter=lfs diff=lfs merge=lfs -text
-
-*.py text eol=lf
-*.md text eol=lf
-*.ts text eol=lf
-*.tsx text eol=lf
-* text=auto
+text=auto
 *.py text eol=lf
 *.ts text eol=lf
 *.tsx text eol=lf
@@ -22,3 +7,7 @@
 *.md text eol=lf
 *.sh text eol=lf
 *.ps1 text eol=crlf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.csv filter=lfs diff=lfs merge=lfs -text
