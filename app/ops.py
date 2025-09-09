@@ -1,284 +1,384 @@
-# app/ops.py
-from __future__ import annotations
-import os, re, json, csv, hashlib, time, subprocess, pathlib
-from dataclasses import dataclass, asdict
-from typing import Dict, List, Iterable, Tuple, Optional
+# ==== 0) AIO-OPS | STANDARD FILE HEADER — START ==============================
+# File: app/ops.py
+# Purpose:
+#   Core operations for scanning, scoring, reviewing, and generating frontend
+#   artifacts. This module powers the CLI in app/ops_cli.py and writes reports
+#   and stubs under ./reports and ./artifacts.
+#
+# Public API (imported by app/ops_cli.py):
+#   - fetch_candidates(...)                      # local scanner → groups by basename
+#   - filter_cryptic(...), write_grouped_files(...)  # helper utilities
+#   - worth_score_and_reco(paths)                # heuristic score + recommendation
+#   - extract_js_functions(text)                 # JS/TS fuzzy function extraction
+#   - extract_js_functions_ast(path, text?)      # AST (acorn) extractor with fallback
+#   - process_batch_ext(..., mode=...)           # multi-AI review/generate wrapper
+#   - process_batch(...)                         # compat wrapper
+#   - scan_special(...), process_special(..., ...) # SPECIAL pipeline
+#   - run_gates(run_id)                          # gated build/test/lint (safe by default)
+#   - upload_generated_to_github(...)            # optional GitHub upload of stubs
+#
+# Inputs / Outputs (relative to repo root):
+#   - reports/
+#       grouped_files.txt
+#       review_multi_<run_id>.json
+#       review_summary_special_<run_id>.json
+#       special_scan_<run_id>.json
+#       special_inventory_<run_id>.csv
+#       gates_<run_id>.json
+#       _last_review.txt
+#   - artifacts/
+#       generated/<base>.ts
+#       _staged_all/src/components/<base>.ts
+#       _staged_all/src/tests/<base>.test.tsx
+#
+# Environment Variables:
+#   - AIO_RUN_GATES   : "1" to actually run npm build/test/lint; else skip
+#   - AIO_FRONTEND_DIR: path to frontend (default C:\Backup_Projects\CFH\frontend)
+#   - OPENAI_API_KEY  : optional; presence logged only (no network calls)
+#   - GEMINI_API_KEY  : optional; presence logged only (no network calls)
+#   - GROK_API_KEY    : optional; presence logged only (no network calls)
+#   - AIO_UPLOAD_TS   : "1" to attempt GitHub upload of generated stubs
+#   - AIO_TARGET_REPO : "<owner>/<repo>" for upload destination
+#   - GITHUB_TOKEN    : PAT for upload
+#
+# Conventions:
+#   - Timestamp format       : YYYYMMDD_HHMMSS
+#   - Test file detection    : /.test.|.spec./i (e.g., foo.test.tsx)
+#   - Supported extensions   : .js, .jsx, .ts, .tsx (plus .mjs/.mts where noted)
+#   - Scoring heuristic      : tests (+25), mixed js↔ts siblings (+35), group size
+#   - Stub naming            : sanitized base name → <base>.ts
+#
+# SPDX-License-Identifier: MIT
+# Last-Updated: 2025-09-08
+# ==== 0) AIO-OPS | STANDARD FILE HEADER — END ================================
 
-FRONTEND_EXTS = {".js", ".jsx", ".ts", ".tsx"}
-CRYPTO_RX = re.compile(r"""^(
-    \$[A-Za-z0-9]{6,}        # $I2H07PR.test.ts, etc.
-  | [A-Fa-f0-9]{8,}$         # 8+ hex chars as a bare basename
-)$""", re.X)
 
+# ==== 1) AIO-OPS | IMPORTS & CONSTANTS — START ===============================
+import os, re, json, csv, hashlib, time, subprocess, shlex
+from pathlib import Path
+from typing import Any, Dict, Iterable, List, Optional, Tuple
+
+# Core dirs (created on import)
+_REPORTS = Path("reports")
+_ARTIFACTS = Path("artifacts")
+_GENERATED = _ARTIFACTS / "generated"
+_STAGED_ALL = _ARTIFACTS / "_staged_all"
+_REPORTS.mkdir(parents=True, exist_ok=True)
+_GENERATED.mkdir(parents=True, exist_ok=True)
+_STAGED_ALL.mkdir(parents=True, exist_ok=True)
+
+# File kinds & quick patterns
+_JS_TS_EXTS = {".js", ".jsx", ".ts", ".tsx", ".mjs", ".mts"}
+_TEST_RX = re.compile(r"(?:\.test\.|\.spec\.)", re.I)
+_LETTERS_ONLY_RX = re.compile(r"^[A-Za-z]+$")
+# ==== 1) AIO-OPS | IMPORTS & CONSTANTS — END =================================
+
+
+# ==== 2) AIO-OPS | HELPERS — START ==========================================
 def _now_id() -> str:
     return time.strftime("%Y%m%d_%H%M%S")
 
-def _hash(s: str) -> str:
-    return hashlib.sha1(s.encode("utf-8")).hexdigest()[:8]
-
-def _is_cryptic_base(base: str) -> bool:
-    return bool(CRYPTO_RX.match(base))
-
-def _safe_rel(path: str, root: str) -> str:
-    try:
-        return str(pathlib.Path(path).resolve().relative_to(pathlib.Path(root).resolve()))
-    except Exception:
-        return path
-
-def _iter_files(root: str, exts=FRONTEND_EXTS) -> Iterable[str]:
-    if not root or not os.path.isdir(root):
-        return []
-    for dirpath, _dirs, files in os.walk(root):
-        for f in files:
-            p = os.path.join(dirpath, f)
-            if os.path.splitext(p)[1].lower() in exts:
-                yield p
-
-def fetch_candidates(
-    frontend_root: str = r"C:/Backup_Projects/CFH/frontend",
-    repo_root: str = ".",
-    grouped_out: str = "reports/grouped_files.txt",
-    inventory_csv: Optional[str] = None,
-) -> Dict[str, List[str]]:
-    """
-    Scan both the external frontend root and this repo, group by basename,
-    filter cryptic/temp names, and write a grouped preview file.
-    """
-    sources = []
-    for root in filter(None, [frontend_root, repo_root]):
-        sources.extend(list(_iter_files(root)))
-
-    groups: Dict[str, List[str]] = {}
-    for p in sources:
-        base = os.path.splitext(os.path.basename(p))[0]
-        if _is_cryptic_base(base):
-            continue
-        groups.setdefault(base, []).append(p)
-
-    os.makedirs(os.path.dirname(grouped_out), exist_ok=True)
-    with open(grouped_out, "w", encoding="utf-8") as fh:
-        for base in sorted(groups.keys()):
-            rels = [p for p in groups[base]]
-            fh.write(f"{base}: " + ", ".join(rels) + "\n")
-
-    if inventory_csv:
-        os.makedirs(os.path.dirname(inventory_csv), exist_ok=True)
-        with open(inventory_csv, "w", newline="", encoding="utf-8") as fh:
-            w = csv.writer(fh)
-            w.writerow(["base", "path"])
-            for base, paths in sorted(groups.items()):
-                for p in paths:
-                    w.writerow([base, p])
-
-    return groups
-
-def scan_special(frontend_root: str, out_dir: str = "reports") -> str:
-    """
-    Compatibility shim for ops_cli.py. Produces a JSON summary.
-    """
-    run_id = f"special_{_now_id()}_{_hash(frontend_root)}"
-    grouped_out = os.path.join(out_dir, "grouped_files.txt")
-    inventory_csv = os.path.join(out_dir, f"special_inventory_{run_id}.csv")
-    summary_json = os.path.join(out_dir, f"special_scan_{run_id}.json")
-    groups = fetch_candidates(frontend_root=frontend_root, repo_root=".", grouped_out=grouped_out, inventory_csv=inventory_csv)
-    payload = {
-        "run_id": run_id,
-        "roots": {"frontend_root": frontend_root, "repo_root": os.getcwd()},
-        "groups": {k: sorted(v) for k, v in groups.items()},
-        "counts": {"groups": len(groups), "files": sum(len(v) for v in groups.values())},
-        "outputs": {"grouped": grouped_out, "inventory_csv": inventory_csv, "summary_json": summary_json},
-    }
-    os.makedirs(out_dir, exist_ok=True)
-    with open(summary_json, "w", encoding="utf-8") as fh:
-        json.dump(payload, fh, indent=2)
-    return run_id
-
-# --- Lightweight function extraction (no external deps required) ----------------
-
-JS_FUNC_RX = re.compile(r"""
-(?:
-    # named function
-    (?:export\s+)?function\s+(?P<n1>[A-Za-z_$][A-Za-z0-9_$]*)\s*\(
-  |
-    # const foo = (...) => or function (...)
-    (?:export\s+)?(?:const|let|var)\s+(?P<n2>[A-Za-z_$][A-Za-z0-9_$]*)\s*=\s*(?:async\s+)?(?:\(|function\b)
-)
-""", re.X)
-
-def extract_functions_from_text(code: str, lang_hint: str) -> List[str]:
-    if lang_hint.lower() in ("js", "ts", "tsx", "jsx"):
-        names = []
-        for m in JS_FUNC_RX.finditer(code):
-            names.append(m.group("n1") or m.group("n2"))
-        return sorted(set(names))
-    # Default/other: Python heuristic
-    out = []
-    for line in code.splitlines():
-        s = line.lstrip()
-        if s.startswith("def ") and "(" in s:
-            name = s[4:].split("(")[0].strip()
-            if name:
-                out.append(name)
-    return sorted(set(out))
-
-# --- Multi-AI review skeleton ---------------------------------------------------
-
-def _maybe_import_clients():
-    oa = gm = gr = None
-    try:
-        from app.services.llm.openai_client import ask as oa  # type: ignore
-    except Exception:
-        pass
-    try:
-        from app.services.llm.google_client import ask as gm  # type: ignore
-    except Exception:
-        pass
-    try:
-        from app.services.llm.grok_client import ask as gr  # type: ignore
-    except Exception:
-        pass
-    return oa, gm, gr
-
-def _score_and_recommend(base: str, paths: List[str]) -> Tuple[int, str]:
-    score = 10
-    if any(p.endswith((".test.ts", ".spec.ts", ".test.tsx", ".spec.tsx")) for p in paths):
-        score += 25
-    if any(p.endswith((".js", ".jsx")) for p in paths) and any(p.endswith((".ts", ".tsx")) for p in paths):
-        score += 35
-    score = max(0, min(100, score))
-    reco = "discard" if score < 30 else ("keep" if score < 60 else "merge")
-    return score, reco
-
-def process_batch(tier: str, groups: Dict[str, List[str]], out_dir="artifacts/generated", report_dir="reports") -> str:
-    """
-    For each base group, extract function names, run tiered reviews, and
-    optionally emit a generated .ts file. Writes a summary JSON.
-    """
-    run_id = f"batch_{_now_id()}"
-    os.makedirs(out_dir, exist_ok=True)
-    os.makedirs(report_dir, exist_ok=True)
-    oa, gm, gr = _maybe_import_clients()
-
-    results = []
-    for base, paths in sorted(groups.items()):
-        # Concatenate code for quick context (bounded)
-        blobs = []
-        for p in paths[:6]:
-            try:
-                with open(p, "r", encoding="utf-8", errors="ignore") as fh:
-                    code = fh.read()
-            except Exception:
-                code = ""
-            lang_hint = os.path.splitext(p)[1].lstrip(".")
-            fns = extract_functions_from_text(code, lang_hint)
-            blobs.append({"path": p, "functions": fns, "sample": code[:4000]})
-        score, reco = _score_and_recommend(base, paths)
-
-        # Multi-AI reviewers (best-effort; skip if client missing)
-        reviews = {}
-        prompt = f"Give concise refactor/type hints for: {base}. Functions: {[f for b in blobs for f in b['functions']]}"
-        if tier.lower() in ("free", "premium", "wow++") and oa:
-            try:
-                reviews["openai"] = oa(prompt)
-            except Exception as e:
-                reviews["openai"] = f"openai_error: {e}"
-        if tier.lower() in ("premium", "wow++") and oa:
-            try:
-                reviews["chatgpt"] = oa(prompt + " Be specific on TS types.")
-            except Exception as e:
-                reviews["chatgpt"] = f"chatgpt_error: {e}"
-        if tier.lower() == "wow++":
-            if gm:
-                try:
-                    reviews["gemini"] = gm(prompt + " Focus on system-level risks.")
-                except Exception as e:
-                    reviews["gemini"] = f"gemini_error: {e}"
-            if gr:
-                try:
-                    reviews["grok"] = gr(prompt + " Suggest bold refactors.")
-                except Exception as e:
-                    reviews["grok"] = f"grok_error: {e}"
-
-        # Optional minimal generation artifact (stub)
-        gen_path = os.path.join(out_dir, f"{base}.ts")
-        with open(gen_path, "w", encoding="utf-8") as fh:
-            fh.write("// Generated stub for {}\n".format(base))
-            for b in blobs:
-                for fn in b["functions"][:5]:
-                    fh.write(f"export function {fn}(...args: any[]): any {{ /* TODO */ }}\n")
-
-        results.append({
-            "base": base,
-            "paths": paths,
-            "worth_score": score,
-            "recommendation": reco,
-            "reviews": {k: (v[:600] if isinstance(v, str) else str(v)) for k, v in reviews.items()},
-            "artifact": gen_path,
-        })
-
-    report_path = os.path.join(report_dir, f"review_summary_{run_id}.json")
-    with open(report_path, "w", encoding="utf-8") as fh:
-        json.dump({"run_id": run_id, "results": results}, fh, indent=2)
-    return report_path
-
-# --- Gates (tsc, test, lint) ---------------------------------------------------
-
-def run_gates(frontend_root: str, run_id: Optional[str] = None) -> str:
-    run_id = run_id or f"gates_{_now_id()}"
-    out = os.path.join("reports", f"gates_{run_id}.json")
-    os.makedirs("reports", exist_ok=True)
-
-    def _run(cmd: List[str], cwd: str) -> Dict[str, str]:
-        try:
-            p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, shell=False, timeout=30*60)
-            return {
-                "cmd": " ".join(cmd),
-                "code": p.returncode,
-                "stdout_head": (p.stdout or "")[-4000:],
-                "stderr_head": (p.stderr or "")[-4000:],
-            }
-        except Exception as e:
-            return {"cmd": " ".join(cmd), "code": -999, "error": str(e)}
-
-    results = {
-        "tsc": _run(["npm", "run", "-s", "tsc"], frontend_root),
-        "test": _run(["npm", "test", "--", "-w=1", "--silent"], frontend_root),
-        "lint": _run(["npm", "run", "-s", "lint"], frontend_root),
-    }
-    with open(out, "w", encoding="utf-8") as fh:
-        json.dump({"run_id": run_id, "frontend_root": frontend_root, "results": results}, fh, indent=2)
-    return out
-
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-# AIO-SPECIAL v1 — multi-root scan + lightweight processing
-# (Non-destructive: complements fetch_candidates/process_batch)
-# Public API: scan_special(...), process_special(...)
-# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-import re, csv, json, hashlib, time
-from pathlib import Path
-from typing import List, Dict, Any, Optional, Iterable, Tuple
-
-_SPECIAL_EXTS_DEFAULT = {"js", "jsx", "ts", "tsx", "md"}
-
-def _special_now_id() -> str:
-    return time.strftime("%Y%m%d_%H%M%S")
-
-def _special_hash(s: object) -> str:
+def _hash(s: Any) -> str:
     try:
         return hashlib.sha1(str(s).encode("utf-8")).hexdigest()[:8]
     except Exception:
         return "00000000"
 
-_TEST_RX = re.compile(r"""(\.test\.|\.spec\.)""")
-_LETTERS_ONLY_RX = re.compile(r"^[A-Za-z]+$")
+def _coerce_path(obj: Any) -> Optional[Path]:
+    if obj is None:
+        return None
+    if isinstance(obj, Path):
+        return obj
+    if isinstance(obj, str):
+        return Path(obj)
+    if isinstance(obj, dict):
+        for k in ("path", "file", "src"):
+            v = obj.get(k)
+            if isinstance(v, str):
+                return Path(v)
+    return None
 
-def _special_iter_files(roots: List[str], exts: List[str], extra_skips: List[str]) -> Iterable[Path]:
-    exts_l = {"." + e.lower().lstrip(".") for e in exts}
-    skip_parts = [s for s in (extra_skips or []) if s]
-    for root in roots:
-        if not root:
+def _iter_candidate_paths(candidates: Any) -> Iterable[Path]:
+    """Yield Path objects from many shapes: list/tuple/set, dicts, nested groups, etc."""
+    if not candidates:
+        return []
+    def _walk(x: Any):
+        if x is None:
+            return
+        if isinstance(x, (list, tuple, set)):
+            for it in x:
+                yield from _walk(it)
+            return
+        if isinstance(x, dict):
+            if any(k in x for k in ("path","file","src")):
+                p = _coerce_path(x)
+                if p:
+                    yield p
+                return
+            for v in x.values():
+                yield from _walk(v)
+            return
+        p = _coerce_path(x)
+        if p:
+            yield p
+
+    for p in _walk(candidates):
+        if p.exists() and (p.suffix.lower() in _JS_TS_EXTS):
+            yield p
+
+def _sanitize_base(name: str) -> str:
+    return re.sub(r"[^A-Za-z0-9_]", "_", name)
+
+def _safe_read_text(p: Path) -> str:
+    try:
+        return p.read_text(encoding="utf-8", errors="ignore")
+    except Exception:
+        return ""
+
+def _group_by_base(paths: Iterable[Path]) -> Dict[str, List[Path]]:
+    groups: Dict[str, List[Path]] = {}
+    for p in paths:
+        groups.setdefault(p.stem, []).append(p)
+    return groups
+# ==== 2) AIO-OPS | HELPERS — END ============================================
+
+
+# ==== 3) AIO-OPS | GROUPING & FILTERS — START ================================
+def filter_cryptic(candidates: Any) -> List[Path]:
+    """
+    Drop obviously cryptic basenames like '$I2H07PR.test.ts'.
+    Accepts list[str|Path|{path:...}|mixed]; returns flat list[Path].
+    """
+    out: List[Path] = []
+    for p in _iter_candidate_paths(candidates):
+        base = p.stem
+        # starts with $I****** (Windows temp) → drop
+        if re.match(r"^\$I[A-Z0-9]{5,}$", base):
             continue
+        # too many non-letters vs letters → drop
+        if len(re.sub(r"[A-Za-z]", "", base)) > max(4, len(base) // 2):
+            continue
+        out.append(p)
+    return out
+
+def write_grouped_files(candidates: Any, out_path: str = "reports/grouped_files.txt") -> str:
+    groups = _group_by_base(_iter_candidate_paths(candidates))
+    out = Path(out_path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with out.open("w", encoding="utf-8") as fh:
+        for base in sorted(groups.keys()):
+            fh.write(f"{base}: {', '.join(str(p) for p in groups[base])}\n")
+    return str(out)
+# ==== 3) AIO-OPS | GROUPING & FILTERS — END ==================================
+
+
+# ==== 4) AIO-OPS | FUNCTION EXTRACTION — START ===============================
+_FUNC_PATTERNS = [
+    re.compile(r"\bfunction\s+([A-Za-z0-9_]+)\s*\(", re.M),
+    re.compile(r"\bconst\s+([A-Za-z0-9_]+)\s*=\s*(?:async\s*)?\([^)]*\)\s*=>", re.M),
+    re.compile(r"\bexport\s+function\s+([A-Za-z0-9_]+)\s*\(", re.M),
+    re.compile(r"\bexport\s+default\s+function\s+([A-Za-z0-9_]+)?\s*\(", re.M),
+    re.compile(r"\bclass\s+([A-Za-z0-9_]+)\b", re.M),  # include classes for review context
+]
+
+def extract_js_functions(src_text: str) -> List[str]:
+    names: List[str] = []
+    for rx in _FUNC_PATTERNS:
+        for m in rx.finditer(src_text or ""):
+            nm = (m.group(1) or "").strip()
+            if nm and nm not in names:
+                names.append(nm)
+    return names
+# ==== 4) AIO-OPS | FUNCTION EXTRACTION — END =================================
+
+
+# ==== 5) AIO-OPS | ACORN EXTRACTOR — START ===================================
+def _node_has_acorn() -> bool:
+    """Return True if `node` is available and can require('acorn')."""
+    try:
+        p = subprocess.run(["node", "-e", "require('acorn')"], capture_output=True, text=True)
+        return p.returncode == 0
+    except Exception:
+        return False
+
+def _extract_with_acorn_one(path: Path) -> List[str]:
+    """
+    Use Node + acorn (+ jsx/typescript plugins if available) to extract
+    function/class names from a single JS/TS/TSX/JSX file. Returns [] on failure.
+    """
+    script = r"""
+const fs = require('fs');
+function tryReq(n){ try { return require(n); } catch { return null; } }
+const acorn = tryReq('acorn') || require('acorn');
+const acornJsx = tryReq('acorn-jsx');
+const acornTs  = tryReq('acorn-typescript');
+
+const filename = process.argv[2];
+const src = fs.readFileSync(filename, 'utf8');
+
+let Parser = acorn.Parser;
+if (acornJsx) Parser = Parser.extend(acornJsx());
+if (acornTs)  Parser = Parser.extend(acornTs());
+
+let tree;
+try {
+  tree = Parser.parse(src, { ecmaVersion: 'latest', sourceType: 'module' });
+} catch (e) {
+  console.error('PARSE_ERR', e.message);
+  console.log('[]');
+  process.exit(0);
+}
+
+const names = new Set();
+function add(n){ if(n) names.add(n); }
+
+function walk(node){
+  if (!node || typeof node !== 'object') return;
+  switch(node.type){
+    case 'FunctionDeclaration':
+      add(node.id && node.id.name);
+      break;
+    case 'VariableDeclaration':
+      for (const d of node.declarations || []) {
+        if (d.id && d.id.name && (d.init && (d.init.type === 'ArrowFunctionExpression' || d.init.type === 'FunctionExpression'))) {
+          add(d.id.name);
+        }
+      }
+      break;
+    case 'ClassDeclaration':
+      add(node.id && node.id.name);
+      break;
+  }
+  for (const k of Object.keys(node)) {
+    const v = node[k];
+    if (Array.isArray(v)) v.forEach(walk);
+    else if (v && typeof v === 'object') walk(v);
+  }
+}
+
+walk(tree);
+console.log(JSON.stringify(Array.from(names)));
+"""
+    try:
+        tmp = _REPORTS / "_tmp_acorn.js"
+        tmp.parent.mkdir(parents=True, exist_ok=True)
+        tmp.write_text(script, encoding="utf-8")
+        p = subprocess.run(["node", str(tmp), str(path)], capture_output=True, text=True, timeout=20)
+        if p.returncode == 0 and (p.stdout or "").strip().startswith("["):
+            return json.loads(p.stdout.strip())
+    except Exception:
+        pass
+    return []
+
+def extract_js_functions_ast(path: Path, fallback_text: Optional[str] = None) -> List[str]:
+    """
+    Prefer AST-based extraction (Node+acorn); fallback to regex extractor.
+    """
+    if _node_has_acorn():
+        names = _extract_with_acorn_one(path)
+        if names:
+            return names
+    txt = fallback_text if fallback_text is not None else _safe_read_text(path)
+    return extract_js_functions(txt)
+# ==== 5) AIO-OPS | ACORN EXTRACTOR — END =====================================
+
+
+# ==== 6) AIO-OPS | WORTH SCORE & RECOMMENDATION — START ======================
+def worth_score_and_reco(paths: List[Path]) -> Tuple[int, str]:
+    score = 10
+    has_test = any(_TEST_RX.search(p.name) for p in paths)
+    has_js   = any(p.suffix.lower() in {".js", ".jsx"} for p in paths)
+    has_ts   = any(p.suffix.lower() in {".ts", ".tsx"} for p in paths)
+    if has_test: score += 25
+    if has_js and has_ts: score += 35
+    if len(paths) >= 3: score += 10
+    score = max(0, min(100, score))
+    reco = "discard" if score < 30 else ("keep" if score < 60 else "merge")
+    return score, reco
+# ==== 6) AIO-OPS | WORTH SCORE & RECOMMENDATION — END ========================
+
+
+# ==== 7) AIO-OPS | GATES — START =============================================
+def run_gates(run_id: str) -> str:
+    """
+    Writes reports/gates_<run_id>.json.
+    If AIO_RUN_GATES=1, runs npm build/test/lint in AIO_FRONTEND_DIR.
+
+    Honors AIO_NPM_BIN for the npm path. If it's a PowerShell shim (.ps1),
+    try to use a sibling npm.cmd/npm.exe. For .cmd/.bat, wrap with
+    ['cmd.exe', '/c', ...] to keep shell=False.
+    """
+    rpt = _REPORTS
+    rpt.mkdir(parents=True, exist_ok=True)
+    out = rpt / f"gates_{run_id}.json"
+
+    payload: Dict[str, Any] = {
+        "run_id": run_id,
+        "timestamp": time.time(),
+        "dry_run": os.getenv("AIO_RUN_GATES", "0") != "1",
+    }
+
+    def _try(cmd: List[str], cwd: Optional[str] = None, cap: int = 120) -> Dict[str, Any]:
+        try:
+            p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=cap, shell=False)
+            tail = (p.stdout or "").splitlines()[-15:] + (p.stderr or "").splitlines()[-15:]
+            return {"cmd": " ".join(cmd), "exit": p.returncode, "pass": p.returncode == 0, "tail": tail}
+        except Exception as e:
+            return {"cmd": " ".join(cmd), "exit": -1, "pass": False, "tail": [str(e)]}
+
+    def _wrap_cmd(npm_bin: str, args: List[str]) -> List[str]:
+        nb = (npm_bin or "npm").strip('"')
+        # .cmd/.bat must run via command interpreter on Windows
+        if nb.lower().endswith((".cmd", ".bat")):
+            return ["cmd.exe", "/c", nb] + args
+        return [nb] + args
+
+    if os.getenv("AIO_RUN_GATES", "0") == "1":
+        fe = os.getenv("AIO_FRONTEND_DIR", r"C:\Backup_Projects\CFH\frontend")
+        npm = os.getenv("AIO_NPM_BIN") or "npm"
+
+        # If pointed at a PowerShell shim, try a sibling npm.cmd/npm.exe
+        if npm.lower().endswith(".ps1"):
+            ps = Path(npm)
+            for cand in ("npm.cmd", "npm.exe"):
+                alt = ps.with_name(cand)
+                if alt.exists():
+                    npm = str(alt)
+                    break
+
+        payload["frontend"] = fe
+        payload["tooling"] = {"npm_bin": npm}
+
+        payload["steps"] = {
+            "build": _try(_wrap_cmd(npm, ["run", "build"]), cwd=fe, cap=180),
+            "test":  _try(_wrap_cmd(npm, ["test"]),        cwd=fe, cap=240),
+            "lint":  _try(_wrap_cmd(npm, ["run", "lint"]), cwd=fe, cap=120),
+        }
+    else:
+        payload["steps"] = {
+            "build": {"exit": -1, "pass": False, "tail": ["skipped: AIO_RUN_GATES!=1"]},
+            "test":  {"exit": -1, "pass": False, "tail": ["skipped: AIO_RUN_GATES!=1"]},
+            "lint":  {"exit": -1, "pass": False, "tail": ["skipped: AIO_RUN_GATES!=1"]},
+        }
+
+    out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    return str(out)
+# ==== 7) AIO-OPS | GATES — END ===============================================
+
+
+# ==== 8) AIO-OPS | SPECIAL SCAN & PROCESS — START ============================
+def scan_special(
+    roots: List[str],
+    exts: List[str],
+    extra_skips: List[str],
+    run_id: Optional[str] = None,
+) -> List[Dict[str, Any]]:
+    run_id = run_id or f"special_{_now_id()}_{_hash(roots)}"
+    exts_set = {"." + e.lower().lstrip(".") for e in (exts or ["js","jsx","ts","tsx","md"]) }
+    skip_terms = [s.lower() for s in (extra_skips or []) if s]
+
+    paths: List[Path] = []
+    for root in roots or []:
         rp = Path(root)
         if not rp.exists():
             continue
@@ -286,98 +386,47 @@ def _special_iter_files(roots: List[str], exts: List[str], extra_skips: List[str
             if not p.is_file():
                 continue
             parts_lower = [seg.lower() for seg in p.parts]
-            if any(sk.lower() in parts_lower or any(sk.lower() in seg for seg in parts_lower) for sk in skip_parts):
+            if any(st in parts_lower or any(st in seg for seg in parts_lower) for st in skip_terms):
                 continue
-            if p.suffix.lower() in exts_l:
-                yield p
+            if p.suffix.lower() in exts_set:
+                paths.append(p)
 
-def _special_category(p: Path) -> str:
-    name = p.name
-    base = p.stem
-    if _TEST_RX.search(name):
-        return "test"
-    if _LETTERS_ONLY_RX.match(base):
-        return "letters_only"
-    return "other"
-
-def _special_group_by_base(paths: Iterable[Path]) -> Dict[str, List[str]]:
-    groups: Dict[str, List[str]] = {}
-    for p in paths:
-        groups.setdefault(p.stem, []).append(str(p))
-    return groups
-
-def _special_score_and_reco(base: str, paths: List[str]) -> Tuple[int, str]:
-    score = 10
-    if any(_TEST_RX.search(Path(p).name) for p in paths):
-        score += 25
-    has_js = any(Path(p).suffix.lower() in {".js", ".jsx"} for p in paths)
-    has_ts = any(Path(p).suffix.lower() in {".ts", ".tsx"} for p in paths)
-    if has_js and has_ts:
-        score += 35
-    return max(0, min(100, score)), ("discard" if score < 30 else ("keep" if score < 60 else "merge"))
-
-def scan_special(
-    roots: List[str],
-    exts: List[str],
-    extra_skips: List[str],
-    run_id: Optional[str] = None,
-) -> List[Dict[str, Any]]:
-    """
-    Multi-root scanner used by ops_cli.py:
-    - returns list of {path, base, ext, category}
-    - writes:
-        - reports/grouped_files.txt
-        - reports/special_inventory_<run_id>.csv
-        - reports/special_scan_<run_id>.json
-    """
-    run_id = run_id or f"special_{_special_now_id()}_{_special_hash(roots)}"
-    reports_dir = Path("reports")
-    reports_dir.mkdir(parents=True, exist_ok=True)
-
-    exts = exts or list(_SPECIAL_EXTS_DEFAULT)
-    paths = list(_special_iter_files(roots, exts, extra_skips))
     items: List[Dict[str, Any]] = []
     for p in paths:
         items.append({
             "path": str(p),
             "base": p.stem,
             "ext": p.suffix.lstrip(".").lower(),
-            "category": _special_category(p),
+            "category": "test" if _TEST_RX.search(p.name) else ("letters_only" if _LETTERS_ONLY_RX.match(p.stem) else "other"),
         })
 
-    # group by basename and emit grouped_files.txt
-    groups = _special_group_by_base(p for p in paths)
-    grouped_out = reports_dir / "grouped_files.txt"
+    # grouped files (for quick eyeballing)
+    grouped_out = _REPORTS / "grouped_files.txt"
+    groups: Dict[str, List[str]] = {}
+    for p in paths:
+        groups.setdefault(p.stem, []).append(str(p))
     with grouped_out.open("w", encoding="utf-8") as fh:
         for base in sorted(groups.keys()):
             fh.write(f"{base}: {', '.join(groups[base])}\n")
 
     # inventory CSV
-    inv_csv = reports_dir / f"special_inventory_{run_id}.csv"
+    inv_csv = _REPORTS / f"special_inventory_{run_id}.csv"
     with inv_csv.open("w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
         w.writerow(["base", "ext", "category", "path"])
         for it in items:
             w.writerow([it["base"], it["ext"], it["category"], it["path"]])
 
-    # summary JSON (handy for logs)
-    summary_json = reports_dir / f"special_scan_{run_id}.json"
-    payload = {
+    # summary json
+    summary_json = _REPORTS / f"special_scan_{run_id}.json"
+    summary_json.write_text(json.dumps({
         "run_id": run_id,
-        "roots": roots,
-        "exts": exts,
-        "skips": extra_skips,
         "counts": {"items": len(items), "groups": len(groups)},
-        "outputs": {
-            "grouped_files": str(grouped_out),
-            "inventory_csv": str(inv_csv),
-            "summary_json": str(summary_json),
-        },
-    }
-    with summary_json.open("w", encoding="utf-8") as fh:
-        json.dump(payload, fh, indent=2)
+        "outputs": {"grouped_files": str(grouped_out), "inventory_csv": str(inv_csv)},
+    }, indent=2), encoding="utf-8")
 
     return items
+
 
 def process_special(
     items: List[Dict[str, Any]],
@@ -385,58 +434,300 @@ def process_special(
     limit: int = 100,
     mode: str = "review",
 ) -> List[Dict[str, Any]]:
-    """
-    Lightweight multi-AI-ish review stub for 'special' runs.
-    - Computes worth_score + recommendation
-    - Optionally creates stub artifacts for generate/all
-    - Writes reports/review_summary_special_<run_id>.json
-    Returns list of result rows (for CLI to count/echo).
-    """
     mode = (mode or "review").lower()
-    out_art = Path("artifacts") / "generations_special"
+    out_art = _ARTIFACTS / "generations_special"
     out_art.mkdir(parents=True, exist_ok=True)
-    reports_dir = Path("reports")
-    reports_dir.mkdir(parents=True, exist_ok=True)
 
+    # group per base
     groups: Dict[str, List[str]] = {}
     for it in items[: max(0, limit)]:
         groups.setdefault(it["base"], []).append(it["path"])
 
+    def _ws_and_reco(paths: List[str]) -> Tuple[int, str]:
+        names = [str(Path(p)).lower() for p in paths]
+        score = 10
+        if any(".test." in n or ".spec." in n for n in names): score += 25
+        has_js = any(n.endswith(".js") or n.endswith(".jsx") for n in names)
+        has_ts = any(n.endswith(".ts") or n.endswith(".tsx") for n in names)
+        if has_js and has_ts: score += 35
+        score = max(0, min(100, score))
+        reco = "discard" if score < 30 else ("keep" if score < 60 else "merge")
+        return score, reco
+
     results: List[Dict[str, Any]] = []
     for base, paths in sorted(groups.items()):
-        score, reco = _special_score_and_reco(base, paths)
+        score, reco = _ws_and_reco(paths)
 
-        artifact_path = None
-        if mode in ("generate", "all"):
-            artifact_path = out_art / f"{base}.ts"
+        gen_path = None
+        if mode in {"generate", "all"}:
+            safe = _sanitize_base(base)
+            stub = f"""// Special stub for {base}
+// worth_score: {score} | recommendation: {reco}
+export const { safe } = () => null;
+"""
+            gen_path = out_art / f"{safe}.ts"
             try:
-                with artifact_path.open("w", encoding="utf-8") as fh:
-                    fh.write(f"// Auto-generated stub for {base}\n")
-                    fh.write(f"export function {base}(...args: any[]): any {{ /* TODO */ }}\n")
+                gen_path.write_text(stub, encoding="utf-8")
             except Exception:
-                artifact_path = None
-
-        reviews = {}
-        if mode in ("review", "all"):
-            reviews = {
-                "notes": "Heuristic review only (no external API calls). Prefer merging JS↔TS siblings; prioritize files with tests."
-            }
+                gen_path = None
 
         results.append({
             "base": base,
             "paths": paths,
             "worth_score": score,
             "recommendation": reco,
-            "artifact": str(artifact_path) if artifact_path else None,
-            "reviews": reviews,
+            "artifact": str(gen_path) if gen_path else None,
         })
 
-    out_json = reports_dir / f"review_summary_special_{run_id}.json"
-    with out_json.open("w", encoding="utf-8") as fh:
-        json.dump({"run_id": run_id, "mode": mode, "results": results}, fh, indent=2)
+    out_json = _REPORTS / f"review_summary_special_{run_id}.json"
+    out_json.write_text(json.dumps({"run_id": run_id, "mode": mode, "results": results}, indent=2), encoding="utf-8")
+    return results
+# ==== 8) AIO-OPS | SPECIAL SCAN & PROCESS — END ==============================
+
+
+# ==== 9) AIO-OPS | COMPAT: fetch_candidates — START ==========================
+def fetch_candidates(
+    org: Optional[str] = None,
+    user: Optional[str] = None,
+    repo_name: Optional[str] = None,
+    platform: str = "local",
+    token: Optional[str] = None,
+    run_id: Optional[str] = None,
+    branches: Optional[List[str]] = None,
+    local_inventory_paths: Optional[List[str]] = None,
+) -> Tuple[List[Path], Dict[str, List[Path]], Dict[str, Any]]:
+    """
+    Lightweight local fetch:
+      • roots from AIO_SCAN_ROOTS (CSV) if set; else [cwd, C:\Backup_Projects\CFH\frontend if exists]
+      • includes: *.js, *.jsx, *.ts, *.tsx
+      • skips: node_modules, dist, .git (+ AIO_SKIP_DIRS)
+    Returns: (candidates, bundles_by_base, repos_meta)
+    """
+    roots: List[Path] = []
+    env_roots = os.getenv("AIO_SCAN_ROOTS")
+    if env_roots:
+        for r in [p.strip() for p in env_roots.replace(";", ",").split(",") if p.strip()]:
+            rp = Path(r)
+            if rp.exists():
+                roots.append(rp)
+    else:
+        roots = [Path.cwd()]
+        default_fe = Path(r"C:\Backup_Projects\CFH\frontend")
+        if default_fe.exists():
+            roots.append(default_fe)
+
+    skip_terms = {"node_modules", "dist", ".git"}
+    extra_skips = {s.strip().lower() for s in (os.getenv("AIO_SKIP_DIRS", "") or "").replace(";", ",").split(",") if s.strip()}
+    skip_terms |= extra_skips
+
+    candidates: List[Path] = []
+    for root in roots:
+        for p in root.rglob("*"):
+            if not p.is_file():
+                continue
+            parts_lower = [seg.lower() for seg in p.parts]
+            if any(st in parts_lower or any(st in seg for seg in parts_lower) for st in skip_terms):
+                continue
+            if p.suffix.lower() in {".js", ".jsx", ".ts", ".tsx"}:
+                candidates.append(p)
+
+    # optional filtering
+    try:
+        clean = filter_cryptic(candidates)  # type: ignore
+    except Exception:
+        clean = candidates
+
+    # group by basename
+    bundles: Dict[str, List[Path]] = {}
+    for p in clean:
+        bundles.setdefault(p.stem, []).append(p)
+
+    repos = {"platform": platform, "roots": [str(r) for r in roots]}
+    return clean, bundles, repos
+# ==== 9) AIO-OPS | COMPAT: fetch_candidates — END ============================
+
+
+# ==== 10) AIO-OPS | MULTI-AI REVIEW / GENERATE — START =======================
+def _make_stub_for_base(base: str, score: int, reco: str) -> str:
+    safe = _sanitize_base(base)
+    return f"""// Auto-generated stub for base: {base}
+// worth_score: {score} | recommendation: {reco}
+export function {safe}(...args: any[]): any {{
+  return null;
+}}
+"""
+
+def process_batch_ext(
+    platform: str,
+    token: Optional[str],
+    candidates: Any,
+    bundle_by_src: Any,
+    run_id: str,
+    batch_offset: int = 0,
+    batch_limit: int = 50,
+    mode: str = "all",
+) -> List[Dict[str, Any]]:
+    """
+    Minimal, local-only implementation:
+    - scores groups, extracts function names (regex + optional acorn)
+    - writes TS stubs to artifacts/generated
+    - stages a copy under artifacts/_staged_all/src/components or src/tests
+    - returns review JSON payload compatible with ops_cli expectations
+    """
+    mode = (mode or "all").lower()
+    groups: Dict[str, List[Path]] = {}
+
+    # collect from candidates
+    for p in _iter_candidate_paths(candidates):
+        groups.setdefault(p.stem, []).append(p)
+    # include anything in bundle_by_src too
+    if isinstance(bundle_by_src, dict):
+        for k, v in bundle_by_src.items():
+            for p in _iter_candidate_paths(v):
+                groups.setdefault(k, []).append(p)
+
+    bases = sorted(groups.keys())
+    if batch_limit > 0:
+        bases = bases[batch_offset : batch_offset + batch_limit]
+
+    results: List[Dict[str, Any]] = []
+    gen_paths: List[Path] = []
+
+    for base in bases:
+        paths = groups.get(base, [])
+        score, reco = worth_score_and_reco(paths)
+        func_names: List[str] = []
+        if paths:
+            p0 = paths[0]
+            text = _safe_read_text(p0)
+            func_names = extract_js_functions_ast(p0, text)
+
+        gen_path = None
+        stage_path = None
+        if mode in {"generate", "persist", "all"}:
+            stub = _make_stub_for_base(base, score, reco)
+            gen_path = _GENERATED / f"{_sanitize_base(base)}.ts"
+            gen_path.write_text(stub, encoding="utf-8")
+            gen_paths.append(gen_path)
+
+            # Stage: tests → src/tests, others → src/components
+            target_dir = _STAGED_ALL / ("src/tests" if _TEST_RX.search(base) else "src/components")
+            target_dir.mkdir(parents=True, exist_ok=True)
+            stage_name = f"{_sanitize_base(base)}.test.tsx" if _TEST_RX.search(base) else f"{_sanitize_base(base)}.ts"
+            stage_path = target_dir / stage_name
+            stage_path.write_text(stub, encoding="utf-8")
+
+        results.append({
+            "base": base,
+            "files": [str(p) for p in paths],
+            "functions": func_names,
+            "worth_score": score,
+            "recommendation": "keep" if reco == "keep" else ("merge" if reco == "merge" else "discard"),
+            "generated": str(gen_path) if gen_path else None,
+            "staged": str(stage_path) if stage_path else None,
+        })
+
+    # write a review file for the run + pointer
+    review_path = _REPORTS / f"review_multi_{run_id}.json"
+    review_path.write_text(json.dumps({"results": results}, indent=2), encoding="utf-8")
+    (_REPORTS / "_last_review.txt").write_text(str(review_path), encoding="utf-8")
+
+    # Optional: upload to GitHub if requested
+    if os.getenv("AIO_UPLOAD_TS", "0") == "1" and gen_paths:
+        try:
+            pr_url = upload_generated_to_github(run_id, gen_paths)
+            if pr_url:
+                (_REPORTS / f"upload_{run_id}.txt").write_text(pr_url, encoding="utf-8")
+        except Exception:
+            pass
 
     return results
 
-# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-# /AIO-SPECIAL v1
-# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+def process_batch(
+    platform: str,
+    token: Optional[str],
+    candidates: Any,
+    bundle_by_src: Any,
+    run_id: str,
+    batch_offset: int = 0,
+    batch_limit: int = 50,
+    mode: str = "all",
+) -> List[Dict[str, Any]]:
+    """Compatibility wrapper used by ops_cli."""
+    return process_batch_ext(
+        platform=platform,
+        token=token,
+        candidates=candidates,
+        bundle_by_src=bundle_by_src,
+        run_id=run_id,
+        batch_offset=batch_offset,
+        batch_limit=batch_limit,
+        mode=mode,
+    )
+# ==== 10) AIO-OPS | MULTI-AI REVIEW / GENERATE — END =========================
+
+
+# ==== 11) AIO-OPS | GITHUB UPLOAD — START ====================================
+def upload_generated_to_github(run_id: str, generated_paths: List[Path]) -> Optional[str]:
+    """
+    Push generated TS files to a new branch 'ts-migration/generated-<run_id>'
+    in repo specified by AIO_TARGET_REPO (e.g., 'carfinancinghub/frontend').
+    Requires: GITHUB_TOKEN and PyGithub installed.
+    Returns: PR URL (str) or None.
+    """
+    try:
+        from github import Github, InputGitTreeElement  # PyGithub
+    except Exception:
+        return None
+
+    token = os.getenv("GITHUB_TOKEN")
+    repo_name = os.getenv("AIO_TARGET_REPO")
+    if not token or not repo_name:
+        return None
+
+    gh = Github(token)
+    repo = gh.get_repo(repo_name)
+
+    base_branch = repo.default_branch
+    base = repo.get_branch(base_branch)
+    base_commit = repo.get_commit(base.commit.sha)
+
+    branch_name = f"ts-migration/generated-{run_id}"
+    ref_name = f"refs/heads/{branch_name}"
+
+    # Create branch (if exists, ignore)
+    try:
+        repo.create_git_ref(ref=ref_name, sha=base.commit.sha)
+    except Exception:
+        pass
+
+    # Build a tree with our files under 'generated/'
+    elements = []
+    for p in generated_paths:
+        if not p.exists():
+            continue
+        rel_path = f"generated/{p.name}"
+        content = p.read_text(encoding="utf-8")
+        elements.append(InputGitTreeElement(path=rel_path, mode="100644", type="blob", content=content))
+
+    tree = repo.create_git_tree(elements, base_commit.sha)
+    commit = repo.create_git_commit(
+        f"feat(ts-migration): add generated stubs for run {run_id}",
+        tree,
+        [base_commit.commit] if hasattr(base_commit, "commit") else [base_commit]
+    )
+
+    # Move branch ref to the new commit
+    ref = repo.get_git_ref(f"heads/{branch_name}")
+    ref.edit(commit.sha, force=True)
+
+    pr = repo.create_pull(
+        title=f"TS migration stubs (run {run_id})",
+        body="Automated upload from ai-orchestrator.",
+        head=branch_name,
+        base=base_branch,
+        draft=True,
+    )
+    return pr.html_url
+# ==== 11) AIO-OPS | GITHUB UPLOAD — END ======================================

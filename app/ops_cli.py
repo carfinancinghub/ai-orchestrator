@@ -1,10 +1,38 @@
-# ============================================================
+# ==== 0) AIO-CLI | STANDARD FILE HEADER — START ==============================
 # File: app/ops_cli.py
-# Purpose: Command-line entry for orchestrator (standard + special)
-# ============================================================
+# Purpose:
+#   Command-line entry for the orchestrator. Drives scanning, reviewing,
+#   generating, and special pipelines backed by app/ops.py.
+#
+# Public Commands:
+#   - scan                : discover candidates and write grouped file
+#   - review|generate|persist|run-batch
+#   - ai-check            : print provider key presence (no network calls)
+#   - scan-special        : multi-root scan for tests / letters-only
+#   - run-special         : scan + process special set (review/generate/all)
+#
+# Key Outputs (relative to repo root):
+#   - reports/grouped_files.txt
+#   - reports/review_multi_<run_id>.json
+#   - reports/_last_review.txt               (pointer written explicitly)
+#   - reports/special_scan_<run_id>.json
+#   - reports/special_inventory_<run_id>.csv
+#   - reports/review_summary_special_<run_id>.json
+#   - reports/gates_<run_id>.json
+#
+# Notes:
+#   - CLI prefers process_batch_ext (if present) but falls back to process_batch.
+#   - After batch run, we explicitly write _last_review.txt -> review_multi_<run_id>.json
+#   - Optional GitHub upload is handled inside ops.py when AIO_UPLOAD_TS=1.
+#
+# SPDX-License-Identifier: MIT
+# Last-Updated: 2025-09-08
+# ==== 0) AIO-CLI | STANDARD FILE HEADER — END ================================
+
+
+# ==== 1) AIO-CLI | IMPORTS — START ==========================================
 from __future__ import annotations
 
-# =========[ AIO-CLI | IMPORTS ]==============================================
 from pathlib import Path
 import argparse
 import json
@@ -28,14 +56,18 @@ from app.ops import (
 
 # Optional/advanced helpers — fall back gracefully if not available
 try:
-    from app.ops import process_batch_ext, run_gates  # type: ignore
+    from app.ops import process_batch_ext, run_gates, upload_generated_to_github  # type: ignore
 except Exception:
     process_batch_ext = None  # type: ignore
 
     def run_gates(run_id: str):  # type: ignore
         return None
 
-# =========[ AIO-CLI | WRAPPERS (signature-aware) ]===========================
+    upload_generated_to_github = None  # type: ignore
+# ==== 1) AIO-CLI | IMPORTS — END ============================================
+
+
+# ==== 2) AIO-CLI | HELPERS — START ==========================================
 def _split_csv(s: Optional[str]) -> Optional[List[str]]:
     return [b.strip() for b in s.replace(";", ",").split(",")] if s else None
 
@@ -73,7 +105,31 @@ def _process_batch_safe(runner, **kwargs):
         return []
     return res
 
-# =========[ AIO-CLI | MAIN ]=================================================
+def _ensure_reports_dir() -> Path:
+    p = Path("reports")
+    p.mkdir(parents=True, exist_ok=True)
+    return p
+
+def _latest_report(prefix: str) -> Optional[Path]:
+    rpt = _ensure_reports_dir()
+    files = sorted(rpt.glob(f"{prefix}_*.json"), key=lambda x: x.stat().st_mtime, reverse=True)
+    return files[0] if files else None
+
+def _write_pointer(pointer_name: str, target: Optional[Path]) -> Optional[Path]:
+    """Write a small text file in reports/ that points at another report file."""
+    if not target:
+        return None
+    rpt = _ensure_reports_dir()
+    ptr = rpt / pointer_name
+    try:
+        ptr.write_text(str(target), encoding="utf-8")
+        return ptr
+    except Exception:
+        return None
+# ==== 2) AIO-CLI | HELPERS — END ============================================
+
+
+# ==== 3) AIO-CLI | MAIN — START =============================================
 def main():
     ap = argparse.ArgumentParser(prog="ai-orchestrator", description="Scan and batch-process repo files")
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -104,7 +160,7 @@ def main():
     ab.add_argument("--out", default="artifacts")
 
     # ---- provider sanity -----------------------------------------------------
-    ai = sub.add_parser("ai-check", help="Verify provider keys presence (no network calls)")
+    sub.add_parser("ai-check", help="Verify provider keys presence (no network calls)")
 
     # ---- SPECIAL: multi-root scan / process ---------------------------------
     sp = sub.add_parser("scan-special", help="Scan multiple roots for test files and letters-only basenames")
@@ -143,12 +199,14 @@ def main():
             platform=args.platform, token=None, run_id=run_id,
             branches=_split_csv(getattr(args, "branches", None)), local_inventory_paths=None
         )
-        # Filter and write grouping file (if helpers exist in app.ops)
+        # NEW: filter noisy names and drop a grouping file for SG Man
+        grouped_path = None
         try:
             cands = filter_cryptic(cands)
-            grouped_path = write_grouped_files(cands, out_path="reports/grouped_files.txt")
+            write_grouped_files(cands, out_path="reports/grouped_files.txt")
+            grouped_path = "reports/grouped_files.txt"
         except Exception:
-            grouped_path = None
+            pass
 
         print(json.dumps({
             "ok": True,
@@ -159,6 +217,7 @@ def main():
         return
 
     if args.cmd in {"review", "generate", "persist", "run-batch"}:
+        # re-scan to get the candidate slice (keeps behavior you had before)
         cands, bundles, repos = _fetch_candidates_safe(
             org=None, user=None, repo_name=None, platform="local", token=None, run_id=run_id,
             branches=["main"], local_inventory_paths=None
@@ -170,7 +229,9 @@ def main():
         except Exception:
             pass
 
-        mode = "all" if args.cmd == "run-batch" else args.cmd
+        # honor --mode passed to run-batch; fall back to default behavior
+        mode = (getattr(args, "mode", None) or ("all" if args.cmd == "run-batch" else args.cmd))
+
         runner = process_batch_ext or process_batch  # prefer extended if available
 
         res = _process_batch_safe(
@@ -178,6 +239,14 @@ def main():
             platform="local", token=None, candidates=cands, bundle_by_src=bundles,
             run_id=run_id, batch_offset=0, batch_limit=args.limit, mode=mode
         )
+
+        # pointer to the review file (created by process_batch_ext)
+        try:
+            (Path("reports") / "_last_review.txt").write_text(
+                f"reports/review_multi_{run_id}.json", encoding="utf-8"
+            )
+        except Exception:
+            pass
 
         if mode in {"persist", "all"}:
             gates_path = run_gates(run_id) if callable(run_gates) else None  # type: ignore
@@ -214,7 +283,10 @@ def main():
         res = process_special(items=items, run_id=run_id, limit=args.limit, mode=args.mode)
         print(json.dumps({"ok": True, "run_id": run_id, "processed": len(res), "mode": args.mode}))
         return
+# ==== 3) AIO-CLI | MAIN — END ===============================================
 
-# =========[ AIO-CLI | ENTRYPOINT ]===========================================
+
+# ==== 4) AIO-CLI | ENTRYPOINT — START =======================================
 if __name__ == "__main__":
     main()
+# ==== 4) AIO-CLI | ENTRYPOINT — END =========================================
