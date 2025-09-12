@@ -18,3 +18,22 @@ def main():
 
 if __name__ == "__main__":
     main()
+# --- Cod1 hooks ---
+try:
+    import argparse, os
+    from .review_multi import scan_and_review
+    from .upload_generated import upload_generated
+    def _cod1_cli():
+        ap = argparse.ArgumentParser(add_help=False)
+        ap.add_argument("--scan-reviews", action="store_true")
+        ap.add_argument("--upload-generated", action="store_true")
+        ns, _ = ap.parse_known_args()
+        if ns.scan_reviews:
+            scan_and_review(); raise SystemExit(0)
+        if ns.upload_generated:
+            upload_generated(branch=os.environ.get("AIO_UPLOAD_BRANCH","ts-migration/generated"),
+                             dry_run=os.environ.get("AIO_DRY_RUN","false").lower()=="true")
+            raise SystemExit(0)
+    _cod1_cli()
+except Exception:
+    pass
