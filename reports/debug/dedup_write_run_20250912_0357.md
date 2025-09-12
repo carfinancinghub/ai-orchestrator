@@ -209,3 +209,32 @@ PS C:\c\ai-orchestrator>
 PS C:\c\ai-orchestrator>
 (.venv) git add -f -- reports\duplicates_eliminated.csv reports\conversion_candidates.txt
 
+PS C:\c\ai-orchestrator>
+(.venv) git add -f -- $log
+
+PS C:\c\ai-orchestrator>
+(.venv) git commit --allow-empty --no-verify -m "feat: numeric-junk filter + dedup runner ($ts)" | Out-Null
+PS C:\c\ai-orchestrator>
+(.venv) git push -u origin $BRANCH
+
+PS C:\c\ai-orchestrator>
+PS C:\c\ai-orchestrator>
+(.venv) # 4) Print a GitHub URL for the log (so I can click it)
+PS C:\c\ai-orchestrator>
+(.venv) $remote = git remote get-url origin 2>$null
+PS C:\c\ai-orchestrator>
+(.venv) $ownerRepo = ($remote -match "github\.com[:/](.+?)(\.git)?$") ? $Matches[1] : "carfinancinghub/ai-orchestrator"
+PS C:\c\ai-orchestrator>
+(.venv) $repoPosix = ($PWD.Path -replace "\\","/")
+PS C:\c\ai-orchestrator>
+(.venv) $logPosix  = ($log -replace "\\","/")
+PS C:\c\ai-orchestrator>
+(.venv) $relLog    = $logPosix.Substring($repoPosix.Length + 1)
+PS C:\c\ai-orchestrator>
+(.venv) $blobUrl   = "https://github.com/$ownerRepo/blob/$BRANCH/$relLog"
+PS C:\c\ai-orchestrator>
+(.venv) try { Stop-Transcript | Out-Null } catch {}
+**********************
+PowerShell transcript end
+End time: 20250912035748
+**********************
