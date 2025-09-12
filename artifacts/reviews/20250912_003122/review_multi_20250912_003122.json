@@ -1,0 +1,54 @@
+{
+  "file": "artifacts/staging/local/main/src/tests/seller/sellerinventorylist.test.tsx",
+  "results": [
+    {
+      "tier": "Free",
+      "provider": "openai",
+      "rubric": {
+        "type_coverage": 71,
+        "refactor_quality": 66,
+        "test_coverage": 61,
+        "future_readiness": 61
+      },
+      "worth_score": 64,
+      "decision": "merge"
+    },
+    {
+      "tier": "Premium",
+      "provider": "openai",
+      "rubric": {
+        "type_coverage": 98,
+        "refactor_quality": 93,
+        "test_coverage": 88,
+        "future_readiness": 88
+      },
+      "worth_score": 91,
+      "decision": "keep"
+    },
+    {
+      "tier": "Wow++",
+      "provider": "gemini",
+      "rubric": {
+        "type_coverage": 61,
+        "refactor_quality": 96,
+        "test_coverage": 91,
+        "future_readiness": 91
+      },
+      "worth_score": 84,
+      "decision": "keep"
+    },
+    {
+      "tier": "Wow++",
+      "provider": "grok",
+      "rubric": {
+        "type_coverage": 85,
+        "refactor_quality": 80,
+        "test_coverage": 75,
+        "future_readiness": 75
+      },
+      "worth_score": 78,
+      "decision": "merge"
+    }
+  ],
+  "ts": 1757662282
+}

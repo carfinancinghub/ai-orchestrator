@@ -63,3 +63,5 @@ run_stdout.log
 !reports/**/*.csv
 !reports/**/*.md
 !reports/**/*.log
+!artifacts/reviews/**
+!reports/debug/**
