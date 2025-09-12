@@ -1,6 +1,7 @@
 # Path: app/services/validation/validate.py
 from __future__ import annotations
-import json, re, subprocess
+import re
+import subprocess
 from typing import Iterable, Optional, Dict, Any
 
 def _run(cmd: list[str]) -> tuple[int, str]:
