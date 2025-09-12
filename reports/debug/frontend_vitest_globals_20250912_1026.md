@@ -157,3 +157,30 @@ The term 'else' is not recognized as a name of a cmdlet, function, script file, 
 Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
 else: The term 'else' is not recognized as a name of a cmdlet, function, script file, or executable program.
 Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\c\ai-orchestrator>
+(.venv) git add -- $log
+
+PS C:\c\ai-orchestrator>
+(.venv) git commit --allow-empty --no-verify -m "debug: vitest globals run ($ts)" | Out-Null
+PS C:\c\ai-orchestrator>
+(.venv) git push -u origin $AIO_BRANCH
+
+PS C:\c\ai-orchestrator>
+PS C:\c\ai-orchestrator>
+(.venv) $remote = git remote get-url origin 2>$null
+PS C:\c\ai-orchestrator>
+(.venv) $ownerRepo = ($remote -match "github\.com[:/](.+?)(\.git)?$") ? $Matches[1] : "carfinancinghub/ai-orchestrator"
+PS C:\c\ai-orchestrator>
+(.venv) $repoPosix = ($PWD.Path -replace "\\","/")
+PS C:\c\ai-orchestrator>
+(.venv) $logPosix  = ($log -replace "\\","/")
+PS C:\c\ai-orchestrator>
+(.venv) $relLog    = $logPosix.Substring($repoPosix.Length + 1)
+PS C:\c\ai-orchestrator>
+(.venv) $blobUrl   = "https://github.com/$ownerRepo/blob/$AIO_BRANCH/$relLog"
+PS C:\c\ai-orchestrator>
+(.venv) try { Stop-Transcript | Out-Null } catch {}
+**********************
+PowerShell transcript end
+End time: 20250912102847
+**********************

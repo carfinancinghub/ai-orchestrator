@@ -277,3 +277,18 @@ else: The term 'else' is not recognized as a name of a cmdlet, function, script 
 Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
 else: The term 'else' is not recognized as a name of a cmdlet, function, script file, or executable program.
 Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+PS C:\c\ai-orchestrator>
+(.venv) git -C $AIO add -- $log $sum
+
+PS C:\c\ai-orchestrator>
+(.venv) git -C $AIO commit --allow-empty --no-verify -m "debug: orchestrator utf8 smoke ($ts)" | Out-Null
+PS C:\c\ai-orchestrator>
+(.venv) git -C $AIO push -u origin $BRANCH
+
+PS C:\c\ai-orchestrator>
+PS C:\c\ai-orchestrator>
+(.venv) try { Stop-Transcript | Out-Null } catch {}
+**********************
+PowerShell transcript end
+End time: 20250912034041
+**********************
