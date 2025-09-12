@@ -60,3 +60,6 @@ app/ops.backup_*.py
 # ---- Standalone logs ----
 run_stderr.log
 run_stdout.log
+!reports/**/*.csv
+!reports/**/*.md
+!reports/**/*.log
