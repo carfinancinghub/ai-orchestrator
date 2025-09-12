@@ -55,6 +55,8 @@
 
 # ==== 1) AIO-OPS | IMPORTS & CONSTANTS — START ===============================
 import os, re, json, csv, hashlib, time, subprocess, shlex
+from .review_multi import scan_and_review
+from .upload_generated import upload_generated
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
@@ -732,3 +734,14 @@ def upload_generated_to_github(run_id: str, generated_paths: List[Path]) -> Opti
     return pr.html_url
 # ==== 11) AIO-OPS | GITHUB UPLOAD — END ======================================
 
+
+# --- Cod1 tail hooks (auto) ---
+try:
+    import os
+    if os.environ.get('AIO_SCAN_REVIEWS','0') == '1':
+        scan_and_review()
+    if os.environ.get('AIO_UPLOAD_TS','0') == '1':
+        upload_generated(branch=os.environ.get('AIO_UPLOAD_BRANCH','ts-migration/generated'),
+                         dry_run=os.environ.get('AIO_DRY_RUN','false').lower()=='true')
+except Exception as _cod1_e:
+    print('[cod1-hooks]', _cod1_e)
