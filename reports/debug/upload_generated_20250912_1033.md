@@ -54,3 +54,24 @@ PS C:\c\ai-orchestrator>
 The process cannot access the file 'C:\c\ai-orchestrator\reports\debug\upload_generated_20250912_1033.md' because it is being used by another process.
 out-file: The process cannot access the file 'C:\c\ai-orchestrator\reports\debug\upload_generated_20250912_1033.md' because it is being used by another process.
 PS C:\c\ai-orchestrator>
+PS C:\c\ai-orchestrator>
+(.venv) git add app\upload_generated.py $log
+
+PS C:\c\ai-orchestrator>
+(.venv) git commit --allow-empty -m "feat: standalone uploader for artifacts/generated ($ts)"
+
+PS C:\c\ai-orchestrator>
+(.venv) git push -u origin fix/restore-report-docs
+
+PS C:\c\ai-orchestrator>
+(.venv) $remote = git remote get-url origin 2>$null
+PS C:\c\ai-orchestrator>
+(.venv) $ownerRepo = ($remote -match "github\.com[:/](.+?)(\.git)?$") ? $Matches[1] : "carfinancinghub/ai-orchestrator"
+PS C:\c\ai-orchestrator>
+(.venv) $blobUrl = "https://github.com/$ownerRepo/blob/fix/restore-report-docs/" + ($log -replace "\\","/")
+PS C:\c\ai-orchestrator>
+(.venv) try { Stop-Transcript | Out-Null } catch {}
+**********************
+PowerShell transcript end
+End time: 20250912103400
+**********************
