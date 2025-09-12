@@ -60,3 +60,7 @@ app/ops.backup_*.py
 # ---- Standalone logs ----
 run_stderr.log
 run_stdout.log
+# allow orchestrator reports we want to keep
+!reports/duplicates_eliminated.csv
+!reports/conversion_candidates.txt
+!reports/debug/*.md
