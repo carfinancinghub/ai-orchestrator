@@ -1,8 +1,0 @@
-Run-ID: run-20250819T233946Z
-Artifact-ID: 00c977d6-d5d0-4c4d-b11a-d1dc3006075c
-Stage: persist
-Version: v08
-Timestamp: 2025-08-19T23:39:46.322779+00:00
-
-Persistence: Artifact finalized and ready for storage.
-Retention: Tagged with run and version identifiers.

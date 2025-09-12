@@ -1,6 +1,8 @@
 # Path: app/services/dashboard.py
 from __future__ import annotations
-import json, statistics, os
+import json
+import statistics
+import os
 
 try:
     import requests
