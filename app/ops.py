@@ -321,7 +321,7 @@ def run_gates(run_id: str) -> str:
 
     def _try(cmd: List[str], cwd: Optional[str] = None, cap: int = 120) -> Dict[str, Any]:
         try:
-            p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=cap, shell=False)
+            p = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=cap, shell=False)
             tail = (p.stdout or "").splitlines()[-15:] + (p.stderr or "").splitlines()[-15:]
             return {"cmd": " ".join(cmd), "exit": p.returncode, "pass": p.returncode == 0, "tail": tail}
         except Exception as e:
@@ -730,5 +730,6 @@ def upload_generated_to_github(run_id: str, generated_paths: List[Path]) -> Opti
     )
     return pr.html_url
 # ==== 11) AIO-OPS | GITHUB UPLOAD — END ======================================
+
 
 
