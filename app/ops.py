@@ -56,6 +56,7 @@
 # ==== 1) AIO-OPS | IMPORTS & CONSTANTS — START ===============================
 import os, re, json, csv, hashlib, time, subprocess, shlex
 from pathlib import Path
+from app.path_filters import is_skipped
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 # Core dirs (created on import)
@@ -522,9 +523,7 @@ def fetch_candidates(
 
     candidates: List[Path] = []
     for root in roots:
-        for p in root.rglob("*"):
-            if not p.is_file():
-                continue
+        for p in root.rglob("*"):`n            if is_skipped(p) or (not p.is_file()):`n                continue
             parts_lower = [seg.lower() for seg in p.parts]
             if any(st in parts_lower or any(st in seg for seg in parts_lower) for st in skip_terms):
                 continue
@@ -731,3 +730,5 @@ def upload_generated_to_github(run_id: str, generated_paths: List[Path]) -> Opti
     )
     return pr.html_url
 # ==== 11) AIO-OPS | GITHUB UPLOAD — END ======================================
+
+
