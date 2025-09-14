@@ -64,3 +64,8 @@ run_stdout.log
 !reports/duplicates_eliminated.csv
 !reports/conversion_candidates.txt
 !reports/debug/*.md
+# allow debug reports
+!reports/
+!reports/debug/
+!reports/debug/*.md
+!reports/debug/*.json
