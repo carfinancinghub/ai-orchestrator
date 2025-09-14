@@ -806,8 +806,8 @@ if "process_batch_ext" not in globals():
     process_batch_ext = process_batch_reviews  # type: ignore
 # ==== 12) AIO-OPS | SG-Man multi-AI review hook - END =========================
 
-# ==== 13) AIO-OPS | ECOSYSTEM HELPERS — START =================================
-# These helpers are additive only and do not change sections 1–12.
+# ==== 13) AIO-OPS | ECOSYSTEM HELPERS â€” START =================================
+# These helpers are additive only and do not change sections 1â€“12.
 
 from typing import Iterable as _IterableType
 
@@ -1072,4 +1072,4 @@ def multi_ai_review_bundle(files: _IterableType[str], run_id: str) -> List[str]:
     (_REPORTS / f"review_multi_{run_id}.json").write_text(json.dumps({"written": written}, indent=2), encoding="utf-8")
     return written
 
-# ==== 13) AIO-OPS | ECOSYSTEM HELPERS — END ===================================
+# ==== 13) AIO-OPS | ECOSYSTEM HELPERS â€” END ===================================
