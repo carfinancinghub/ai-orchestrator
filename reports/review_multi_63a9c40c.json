@@ -1,0 +1,36 @@
+{
+  "results": [
+    {
+      "base": "app",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\app.jsx"
+      ],
+      "functions": [
+        "App",
+        "NotFoundPage"
+      ],
+      "worth_score": 10,
+      "recommendation": "discard",
+      "ai": {
+        "free": {
+          "tier": "Free",
+          "model": "openai:gpt-4o-mini",
+          "status": "ok",
+          "summary": "offline heuristic summary"
+        },
+        "premium": {
+          "tier": "Premium",
+          "model": "openai:gpt-4.1",
+          "status": "ok",
+          "summary": "type/refactor hints (offline stub)"
+        },
+        "wowpp": {
+          "tier": "Wow++",
+          "model": "gemini|grok",
+          "status": "skipped_placeholder",
+          "summary": "critique/insights (offline stub)"
+        }
+      }
+    }
+  ]
+}
