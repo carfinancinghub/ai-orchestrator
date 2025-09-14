@@ -806,15 +806,15 @@ if "process_batch_ext" not in globals():
     process_batch_ext = process_batch_reviews  # type: ignore
 # ==== 12) AIO-OPS | SG-Man multi-AI review hook - END =========================
 
-# ==== 13) AIO-OPS | ECOSYSTEM HELPERS — START =================================
-# These helpers are additive. They do not change the behavior of sections 1–12.
+# ==== 13) AIO-OPS | ECOSYSTEM HELPERS â€” START =================================
+# These helpers are additive only and do not change sections 1â€“12.
 
 from typing import Iterable as _IterableType
 
 def scan_and_group_files(roots: List[str], exts: List[str]) -> Dict[str, List[str]]:
     """
     Scan roots and group files by base name. Skips common vendor dirs.
-    Writes 'reports/grouped_files.txt' for quick inspection.
+    Writes reports/grouped_files.txt for inspection.
     """
     allow = {"." + e.lower().lstrip(".") for e in (exts or ["js","jsx","ts","tsx","md"])}
     groups: Dict[str, List[str]] = {}
@@ -856,7 +856,10 @@ def generate_ts_file(src_file: str, ai_reviews: Optional[Dict[str, Any]]=None, o
     todos: List[str] = []
     if ai_reviews:
         for tier, payload in ai_reviews.items():
-            summary = payload.get("summary") or payload.get("hint") or ""
+            try:
+                summary = (payload.get("summary") or payload.get("hint") or "").strip()
+            except Exception:
+                summary = ""
             if summary:
                 todos.append(f"[{tier}] {summary}")
 
@@ -892,16 +895,22 @@ def review_generated_file(gen_file: str, original_reviews: Optional[Dict[str, An
         "non_empty": bool(txt.strip()),
     }
 
-    suggestions_present = []
-    suggestions_missing = []
+    suggestions_present: List[str] = []
+    suggestions_missing: List[str] = []
     if original_reviews:
         for tier, payload in original_reviews.items():
-            s = (payload.get("summary") or "")[:400].lower()
+            try:
+                s = (payload.get("summary") or "").lower()
+            except Exception:
+                s = ""
             hit = 0
             for key in ["type", "prop", "memo", "lazy", "refactor", "split", "config"]:
                 if key in s and key in txt.lower():
                     hit += 1
-            (suggestions_present if hit else suggestions_missing).append(tier)
+            if hit:
+                suggestions_present.append(tier)
+            else:
+                suggestions_missing.append(tier)
 
     result = {
         "file": str(p),
@@ -953,7 +962,6 @@ def ai_review_file(path: str, tier: str) -> Dict[str, Any]:
     if not live:
         return _offline_review_summary(path)
 
-    # Live mode: attempt OpenAI for Free/Premium; leave Wow++ as offline unless keys are provided.
     try:
         import requests  # noqa
     except Exception:
@@ -966,10 +974,9 @@ def ai_review_file(path: str, tier: str) -> Dict[str, Any]:
         if not key:
             return _offline_review_summary(path)
         try:
-            # Basic chat completion against a small model; safe prompt, short output.
             url = "https://api.openai.com/v1/chat/completions"
             headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
-            prompt = f"Summarize the main functions and potential TypeScript typing hotspots in this code:\n\n{text[:4000]}"
+            prompt = f"Summarize main functions and TS typing hotspots:\n\n{text[:4000]}"
             data = {
                 "model": os.getenv("AIO_OPENAI_MODEL", "gpt-4o-mini"),
                 "messages": [
@@ -988,55 +995,51 @@ def ai_review_file(path: str, tier: str) -> Dict[str, Any]:
             return _offline_review_summary(path)
 
     if tier == "Wow++":
-        # Optional: integrate Gemini or Grok if keys are present; else offline.
-        if os.getenv("GEMINI_API_KEY") or os.getenv("GROK_API_KEY"):
-            # To avoid fragile vendor specifics here, fall back to offline unless you set AIO_LIVE_AI_VENDOR to "gemini" or "grok".
-            vendor = (os.getenv("AIO_LIVE_AI_VENDOR") or "").lower()
-            try:
-                import requests  # noqa
-            except Exception:
-                return _offline_review_summary(path)
-            try:
-                if vendor == "gemini" and os.getenv("GEMINI_API_KEY"):
-                    # Minimal call shape for Gemini; details may vary by account/SDK version.
-                    api_key = os.getenv("GEMINI_API_KEY")
-                    url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
-                    payload = {
-                        "contents": [{"parts": [{"text": f"Review JS/TS for advanced improvements:\n\n{text[:4000]}"}]}]
-                    }
-                    r = requests.post(url, params={"key": api_key}, json=payload, timeout=30)
-                    r.raise_for_status()
-                    j = r.json()
-                    cand = ((j.get("candidates") or [{}])[0].get("content") or {}).get("parts", [{}])
-                    content = (cand[0].get("text") if cand else "") or ""
-                    return {"model": "gemini-1.5-flash", "summary": content.strip(), "confidence": 0.7}
-                if vendor == "grok" and os.getenv("GROK_API_KEY"):
-                    api_key = os.getenv("GROK_API_KEY")
-                    url = "https://api.x.ai/v1/chat/completions"
-                    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-                    data = {
-                        "model": os.getenv("AIO_GROK_MODEL", "grok-beta"),
-                        "messages": [
-                            {"role": "system", "content": "Expert frontend performance reviewer."},
-                            {"role": "user", "content": f"Suggest non-trivial optimizations for this code:\n\n{text[:4000]}"},
-                        ],
-                        "max_tokens": 300,
-                        "temperature": 0.2,
-                    }
-                    r = requests.post(url, headers=headers, json=data, timeout=30)
-                    r.raise_for_status()
-                    out = r.json()
-                    content = (out.get("choices") or [{}])[0].get("message", {}).get("content", "") or ""
-                    return {"model": data["model"], "summary": content.strip(), "confidence": 0.7}
-            except Exception:
-                return _offline_review_summary(path)
+        vendor = (os.getenv("AIO_LIVE_AI_VENDOR") or "").lower()
+        try:
+            import requests  # noqa
+        except Exception:
+            return _offline_review_summary(path)
+        try:
+            if vendor == "gemini" and os.getenv("GEMINI_API_KEY"):
+                api_key = os.getenv("GEMINI_API_KEY")
+                url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+                payload = {
+                    "contents": [{"parts": [{"text": f"Advanced improvements for this code:\n\n{text[:4000]}"}]}]
+                }
+                r = requests.post(url, params={"key": api_key}, json=payload, timeout=30)
+                r.raise_for_status()
+                j = r.json()
+                cand = ((j.get("candidates") or [{}])[0].get("content") or {}).get("parts", [{}])
+                content = (cand[0].get("text") if cand else "") or ""
+                return {"model": "gemini-1.5-flash", "summary": content.strip(), "confidence": 0.7}
+            if vendor == "grok" and os.getenv("GROK_API_KEY"):
+                api_key = os.getenv("GROK_API_KEY")
+                url = "https://api.x.ai/v1/chat/completions"
+                headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+                data = {
+                    "model": os.getenv("AIO_GROK_MODEL", "grok-beta"),
+                    "messages": [
+                        {"role": "system", "content": "Expert frontend performance reviewer."},
+                        {"role": "user", "content": f"Suggest non-trivial optimizations:\n\n{text[:4000]}"},
+                    ],
+                    "max_tokens": 300,
+                    "temperature": 0.2,
+                }
+                r = requests.post(url, headers=headers, json=data, timeout=30)
+                r.raise_for_status()
+                out = r.json()
+                content = (out.get("choices") or [{}])[0].get("message", {}).get("content", "") or ""
+                return {"model": data["model"], "summary": content.strip(), "confidence": 0.7}
+        except Exception:
+            return _offline_review_summary(path)
 
     return _offline_review_summary(path)
 
 
 def multi_ai_review_bundle(files: _IterableType[str], run_id: str) -> List[str]:
     """
-    Produce tiered review JSONs similar to app.review_multi, but locally here:
+    Produce tiered review JSONs:
       artifacts/reviews/<run_id>/<tier>/<rel>.json
     Uses ai_review_file(...) per tier, per file.
     """
@@ -1047,7 +1050,12 @@ def multi_ai_review_bundle(files: _IterableType[str], run_id: str) -> List[str]:
 
     for f in files:
         absf = os.path.abspath(f)
-        rel = os.path.relpath(absf, root) if absf.startswith(os.path.abspath(root)) else os.path.basename(absf)
+        root_abs = os.path.abspath(root)
+        if absf.startswith(root_abs):
+            rel = os.path.relpath(absf, root_abs)
+        else:
+            rel = os.path.basename(absf)
+
         for tier in tiers:
             payload = ai_review_file(absf, tier)
             outp = out_root / tier / (rel + ".json")
@@ -1062,10 +1070,274 @@ def multi_ai_review_bundle(files: _IterableType[str], run_id: str) -> List[str]:
             }, indent=2), encoding="utf-8")
             written.append(str(outp))
 
-    # pointer file for convenience
+    (_REPORTS / f"review_multi_{run_id}.json").write_text(json.dumps({"written": written}, indent=2), encoding="utf-8")
+    return written
+
+# ==== 13) AIO-OPS | ECOSYSTEM HELPERS â€” END ===================================
+# ==== 13) AIO-OPS | ECOSYSTEM HELPERS — START =================================
+# These helpers are additive only and do not change sections 1–12.
+
+from typing import Iterable as _IterableType
+
+def scan_and_group_files(roots: List[str], exts: List[str]) -> Dict[str, List[str]]:
+    """
+    Scan roots and group files by base name. Skips common vendor dirs.
+    Writes reports/grouped_files.txt for inspection.
+    """
+    allow = {"." + e.lower().lstrip(".") for e in (exts or ["js","jsx","ts","tsx","md"])}
+    groups: Dict[str, List[str]] = {}
+    skip_terms = {"node_modules", "dist", ".git", "build", "coverage", ".next", ".turbo"}
+    out_txt = _REPORTS / "grouped_files.txt"
+    out_txt.parent.mkdir(parents=True, exist_ok=True)
+
+    for root in roots or []:
+        rp = Path(root)
+        if not rp.exists():
+            continue
+        for p in rp.rglob("*"):
+            if not p.is_file():
+                continue
+            parts_lower = [seg.lower() for seg in p.parts]
+            if any(st in parts_lower or any(st in seg for seg in parts_lower) for st in skip_terms):
+                continue
+            if p.suffix.lower() in allow:
+                groups.setdefault(p.stem, []).append(str(p))
+
+    with out_txt.open("w", encoding="utf-8") as fh:
+        for base in sorted(groups):
+            fh.write(f"{base}: {', '.join(groups[base])}\n")
+    return groups
+
+
+def generate_ts_file(src_file: str, ai_reviews: Optional[Dict[str, Any]]=None, out_dir: Optional[Path]=None) -> str:
+    """
+    Create a simple TS/TSX stub for the given file. Adds TODOs from ai_reviews if present.
+    Returns path to the generated file under artifacts/generated.
+    """
+    p = Path(src_file)
+    base = _sanitize_base(p.stem)
+    ts_name = base + (".tsx" if p.suffix.lower() in {".jsx", ".tsx"} else ".ts")
+    out_dir = out_dir or _GENERATED
+    out_dir.mkdir(parents=True, exist_ok=True)
+    outp = out_dir / ts_name
+
+    todos: List[str] = []
+    if ai_reviews:
+        for tier, payload in ai_reviews.items():
+            try:
+                summary = (payload.get("summary") or payload.get("hint") or "").strip()
+            except Exception:
+                summary = ""
+            if summary:
+                todos.append(f"[{tier}] {summary}")
+
+    header = [
+        f"// Auto-generated from: {p.name}",
+        "// NOTE: Replace this stub with real conversion when ready.",
+    ]
+    if todos:
+        header.append("// TODOs:")
+        for t in todos[:8]:
+            header.append(f"//  - {t}")
+
+    body = f"""
+export function {base}(...args: any[]): any {{
+  return null;
+}}
+""".lstrip("\n")
+
+    outp.write_text("\n".join(header) + "\n\n" + body, encoding="utf-8")
+    return str(outp)
+
+
+def review_generated_file(gen_file: str, original_reviews: Optional[Dict[str, Any]], reviewer: str, run_id: Optional[str]=None) -> Dict[str, Any]:
+    """
+    Lightweight verification: checks for exports, type annotations, and presence of suggested keywords.
+    Writes artifacts/reviews/<run_id>/verify/<base>.json if run_id is given.
+    """
+    p = Path(gen_file)
+    txt = _safe_read_text(p)
+    checks = {
+        "has_export": "export " in txt,
+        "has_types_hint": (": " in txt) or ("interface " in txt) or ("type " in txt),
+        "non_empty": bool(txt.strip()),
+    }
+
+    suggestions_present: List[str] = []
+    suggestions_missing: List[str] = []
+    if original_reviews:
+        for tier, payload in original_reviews.items():
+            try:
+                s = (payload.get("summary") or "").lower()
+            except Exception:
+                s = ""
+            hit = 0
+            for key in ["type", "prop", "memo", "lazy", "refactor", "split", "config"]:
+                if key in s and key in txt.lower():
+                    hit += 1
+            if hit:
+                suggestions_present.append(tier)
+            else:
+                suggestions_missing.append(tier)
+
+    result = {
+        "file": str(p),
+        "checks": checks,
+        "suggestions_present_from_tiers": suggestions_present,
+        "suggestions_missing_from_tiers": suggestions_missing,
+        "reviewer": reviewer,
+        "timestamp": time.time(),
+    }
+
+    if run_id:
+        outv = _ARTIFACTS / "reviews" / run_id / "verify"
+        outv.mkdir(parents=True, exist_ok=True)
+        (outv / (p.stem + ".json")).write_text(json.dumps(result, indent=2), encoding="utf-8")
+
+    return result
+
+
+def duplicate_elimination_wrapper(scan_roots: List[str]) -> Tuple[str, str]:
+    """
+    Thin wrapper around app.dedup. Returns (csv_path, txt_path).
+    """
+    try:
+        from app.dedup import duplicate_elimination as _de
+    except Exception as e:
+        raise RuntimeError(f"dedup module missing: {e}")
+    return _de(scan_roots)
+
+
+def _offline_review_summary(path: str) -> Dict[str, Any]:
+    p = Path(path)
+    text = _safe_read_text(p)
+    names = extract_js_functions(text)
+    return {
+        "model": "offline",
+        "summary": f"Offline summary for {p.name}. functions: {', '.join(names[:10])}",
+        "confidence": 0.25 + min(0.5, len(names)/50.0),
+    }
+
+
+def ai_review_file(path: str, tier: str) -> Dict[str, Any]:
+    """
+    Returns a dict with keys: model, summary, confidence.
+    Live calls only if AIO_LIVE_AI=1 and the relevant key is set; otherwise returns offline stub.
+    """
+    live = os.getenv("AIO_LIVE_AI", "0") == "1"
+    tier = (tier or "Free").strip()
+    if not live:
+        return _offline_review_summary(path)
+
+    try:
+        import requests  # noqa
+    except Exception:
+        return _offline_review_summary(path)
+
+    text = _safe_read_text(Path(path))[:5000]
+
+    if tier in ("Free", "Premium"):
+        key = os.getenv("OPENAI_API_KEY")
+        if not key:
+            return _offline_review_summary(path)
+        try:
+            url = "https://api.openai.com/v1/chat/completions"
+            headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+            prompt = f"Summarize main functions and TS typing hotspots:\n\n{text[:4000]}"
+            data = {
+                "model": os.getenv("AIO_OPENAI_MODEL", "gpt-4o-mini"),
+                "messages": [
+                    {"role": "system", "content": "You are a concise code reviewer."},
+                    {"role": "user", "content": prompt},
+                ],
+                "max_tokens": 300,
+                "temperature": 0.2,
+            }
+            r = requests.post(url, headers=headers, json=data, timeout=30)
+            r.raise_for_status()
+            out = r.json()
+            content = (out.get("choices") or [{}])[0].get("message", {}).get("content", "") or ""
+            return {"model": data["model"], "summary": content.strip(), "confidence": 0.7}
+        except Exception:
+            return _offline_review_summary(path)
+
+    if tier == "Wow++":
+        vendor = (os.getenv("AIO_LIVE_AI_VENDOR") or "").lower()
+        try:
+            import requests  # noqa
+        except Exception:
+            return _offline_review_summary(path)
+        try:
+            if vendor == "gemini" and os.getenv("GEMINI_API_KEY"):
+                api_key = os.getenv("GEMINI_API_KEY")
+                url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+                payload = {
+                    "contents": [{"parts": [{"text": f"Advanced improvements for this code:\n\n{text[:4000]}"}]}]
+                }
+                r = requests.post(url, params={"key": api_key}, json=payload, timeout=30)
+                r.raise_for_status()
+                j = r.json()
+                cand = ((j.get("candidates") or [{}])[0].get("content") or {}).get("parts", [{}])
+                content = (cand[0].get("text") if cand else "") or ""
+                return {"model": "gemini-1.5-flash", "summary": content.strip(), "confidence": 0.7}
+            if vendor == "grok" and os.getenv("GROK_API_KEY"):
+                api_key = os.getenv("GROK_API_KEY")
+                url = "https://api.x.ai/v1/chat/completions"
+                headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+                data = {
+                    "model": os.getenv("AIO_GROK_MODEL", "grok-beta"),
+                    "messages": [
+                        {"role": "system", "content": "Expert frontend performance reviewer."},
+                        {"role": "user", "content": f"Suggest non-trivial optimizations:\n\n{text[:4000]}"},
+                    ],
+                    "max_tokens": 300,
+                    "temperature": 0.2,
+                }
+                r = requests.post(url, headers=headers, json=data, timeout=30)
+                r.raise_for_status()
+                out = r.json()
+                content = (out.get("choices") or [{}])[0].get("message", {}).get("content", "") or ""
+                return {"model": data["model"], "summary": content.strip(), "confidence": 0.7}
+        except Exception:
+            return _offline_review_summary(path)
+
+    return _offline_review_summary(path)
+
+
+def multi_ai_review_bundle(files: _IterableType[str], run_id: str) -> List[str]:
+    """
+    Produce tiered review JSONs:
+      artifacts/reviews/<run_id>/<tier>/<rel>.json
+    Uses ai_review_file(...) per tier, per file.
+    """
+    written: List[str] = []
+    tiers = ("Free", "Premium", "Wow++")
+    root = os.getenv("AIO_FRONTEND_ROOT") or os.getenv("AIO_FRONTEND_DIR") or os.getcwd()
+    out_root = _ARTIFACTS / "reviews" / run_id
+
+    for f in files:
+        absf = os.path.abspath(f)
+        root_abs = os.path.abspath(root)
+        if absf.startswith(root_abs):
+            rel = os.path.relpath(absf, root_abs)
+        else:
+            rel = os.path.basename(absf)
+
+        for tier in tiers:
+            payload = ai_review_file(absf, tier)
+            outp = out_root / tier / (rel + ".json")
+            outp.parent.mkdir(parents=True, exist_ok=True)
+            outp.write_text(json.dumps({
+                "file": rel,
+                "tier": tier,
+                "provider_hint": payload.get("model"),
+                "summary": payload.get("summary"),
+                "confidence": payload.get("confidence"),
+                "ts": int(time.time()),
+            }, indent=2), encoding="utf-8")
+            written.append(str(outp))
+
     (_REPORTS / f"review_multi_{run_id}.json").write_text(json.dumps({"written": written}, indent=2), encoding="utf-8")
     return written
 
 # ==== 13) AIO-OPS | ECOSYSTEM HELPERS — END ===================================
-
-<<PASTE THE PYTHON BLOCK FROM SECTION 13 HERE>>
