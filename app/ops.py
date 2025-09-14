@@ -1,4 +1,11 @@
-# ==== 0) AIO-OPS | STANDARD FILE HEADER — START ==============================
+# --- COD1 optional injector (safe Unicode + hooks) ----------------------------
+try:
+    from app._cod1_inject import enable_cod1
+    enable_cod1()
+except Exception:
+    pass
+# -----------------------------------------------------------------------------
+# ==== 0) AIO-OPS | STANDARD FILE HEADER â€” START ==============================
 # File: app/ops.py
 # Purpose:
 #   Core operations for scanning, scoring, reviewing, and generating frontend
@@ -6,7 +13,7 @@
 #   and stubs under ./reports and ./artifacts.
 #
 # Public API (imported by app/ops_cli.py):
-#   - fetch_candidates(...)                      # local scanner → groups by basename
+#   - fetch_candidates(...)                      # local scanner â†’ groups by basename
 #   - filter_cryptic(...), write_grouped_files(...)  # helper utilities
 #   - worth_score_and_reco(paths)                # heuristic score + recommendation
 #   - extract_js_functions(text)                 # JS/TS fuzzy function extraction
@@ -45,15 +52,15 @@
 #   - Timestamp format       : YYYYMMDD_HHMMSS
 #   - Test file detection    : /.test.|.spec./i (e.g., foo.test.tsx)
 #   - Supported extensions   : .js, .jsx, .ts, .tsx (plus .mjs/.mts where noted)
-#   - Scoring heuristic      : tests (+25), mixed js↔ts siblings (+35), group size
-#   - Stub naming            : sanitized base name → <base>.ts
+#   - Scoring heuristic      : tests (+25), mixed jsâ†”ts siblings (+35), group size
+#   - Stub naming            : sanitized base name â†’ <base>.ts
 #
 # SPDX-License-Identifier: MIT
 # Last-Updated: 2025-09-08
-# ==== 0) AIO-OPS | STANDARD FILE HEADER — END ================================
+# ==== 0) AIO-OPS | STANDARD FILE HEADER â€” END ================================
 
 
-# ==== 1) AIO-OPS | IMPORTS & CONSTANTS — START ===============================
+# ==== 1) AIO-OPS | IMPORTS & CONSTANTS â€” START ===============================
 import os, re, json, csv, hashlib, time, subprocess, shlex
 from pathlib import Path
 from app.path_filters import is_skipped
@@ -72,10 +79,10 @@ _STAGED_ALL.mkdir(parents=True, exist_ok=True)
 _JS_TS_EXTS = {".js", ".jsx", ".ts", ".tsx", ".mjs", ".mts"}
 _TEST_RX = re.compile(r"(?:\.test\.|\.spec\.)", re.I)
 _LETTERS_ONLY_RX = re.compile(r"^[A-Za-z]+$")
-# ==== 1) AIO-OPS | IMPORTS & CONSTANTS — END =================================
+# ==== 1) AIO-OPS | IMPORTS & CONSTANTS â€” END =================================
 
 
-# ==== 2) AIO-OPS | HELPERS — START ==========================================
+# ==== 2) AIO-OPS | HELPERS â€” START ==========================================
 def _now_id() -> str:
     return time.strftime("%Y%m%d_%H%M%S")
 
@@ -141,10 +148,10 @@ def _group_by_base(paths: Iterable[Path]) -> Dict[str, List[Path]]:
     for p in paths:
         groups.setdefault(p.stem, []).append(p)
     return groups
-# ==== 2) AIO-OPS | HELPERS — END ============================================
+# ==== 2) AIO-OPS | HELPERS â€” END ============================================
 
 
-# ==== 3) AIO-OPS | GROUPING & FILTERS — START ================================
+# ==== 3) AIO-OPS | GROUPING & FILTERS â€” START ================================
 def filter_cryptic(candidates: Any) -> List[Path]:
     """
     Drop obviously cryptic basenames like '$I2H07PR.test.ts'.
@@ -153,10 +160,10 @@ def filter_cryptic(candidates: Any) -> List[Path]:
     out: List[Path] = []
     for p in _iter_candidate_paths(candidates):
         base = p.stem
-        # starts with $I****** (Windows temp) → drop
+        # starts with $I****** (Windows temp) â†’ drop
         if re.match(r"^\$I[A-Z0-9]{5,}$", base):
             continue
-        # too many non-letters vs letters → drop
+        # too many non-letters vs letters â†’ drop
         if len(re.sub(r"[A-Za-z]", "", base)) > max(4, len(base) // 2):
             continue
         out.append(p)
@@ -170,10 +177,10 @@ def write_grouped_files(candidates: Any, out_path: str = "reports/grouped_files.
         for base in sorted(groups.keys()):
             fh.write(f"{base}: {', '.join(str(p) for p in groups[base])}\n")
     return str(out)
-# ==== 3) AIO-OPS | GROUPING & FILTERS — END ==================================
+# ==== 3) AIO-OPS | GROUPING & FILTERS â€” END ==================================
 
 
-# ==== 4) AIO-OPS | FUNCTION EXTRACTION — START ===============================
+# ==== 4) AIO-OPS | FUNCTION EXTRACTION â€” START ===============================
 _FUNC_PATTERNS = [
     re.compile(r"\bfunction\s+([A-Za-z0-9_]+)\s*\(", re.M),
     re.compile(r"\bconst\s+([A-Za-z0-9_]+)\s*=\s*(?:async\s*)?\([^)]*\)\s*=>", re.M),
@@ -190,10 +197,10 @@ def extract_js_functions(src_text: str) -> List[str]:
             if nm and nm not in names:
                 names.append(nm)
     return names
-# ==== 4) AIO-OPS | FUNCTION EXTRACTION — END =================================
+# ==== 4) AIO-OPS | FUNCTION EXTRACTION â€” END =================================
 
 
-# ==== 5) AIO-OPS | ACORN EXTRACTOR — START ===================================
+# ==== 5) AIO-OPS | ACORN EXTRACTOR â€” START ===================================
 def _node_has_acorn() -> bool:
     """Return True if `node` is available and can require('acorn')."""
     try:
@@ -281,10 +288,10 @@ def extract_js_functions_ast(path: Path, fallback_text: Optional[str] = None) ->
             return names
     txt = fallback_text if fallback_text is not None else _safe_read_text(path)
     return extract_js_functions(txt)
-# ==== 5) AIO-OPS | ACORN EXTRACTOR — END =====================================
+# ==== 5) AIO-OPS | ACORN EXTRACTOR â€” END =====================================
 
 
-# ==== 6) AIO-OPS | WORTH SCORE & RECOMMENDATION — START ======================
+# ==== 6) AIO-OPS | WORTH SCORE & RECOMMENDATION â€” START ======================
 def worth_score_and_reco(paths: List[Path]) -> Tuple[int, str]:
     score = 10
     has_test = any(_TEST_RX.search(p.name) for p in paths)
@@ -296,10 +303,10 @@ def worth_score_and_reco(paths: List[Path]) -> Tuple[int, str]:
     score = max(0, min(100, score))
     reco = "discard" if score < 30 else ("keep" if score < 60 else "merge")
     return score, reco
-# ==== 6) AIO-OPS | WORTH SCORE & RECOMMENDATION — END ========================
+# ==== 6) AIO-OPS | WORTH SCORE & RECOMMENDATION â€” END ========================
 
 
-# ==== 7) AIO-OPS | GATES — START =============================================
+# ==== 7) AIO-OPS | GATES â€” START =============================================
 def run_gates(run_id: str) -> str:
     """
     Writes reports/gates_<run_id>.json.
@@ -364,10 +371,10 @@ def run_gates(run_id: str) -> str:
 
     out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     return str(out)
-# ==== 7) AIO-OPS | GATES — END ===============================================
+# ==== 7) AIO-OPS | GATES â€” END ===============================================
 
 
-# ==== 8) AIO-OPS | SPECIAL SCAN & PROCESS — START ============================
+# ==== 8) AIO-OPS | SPECIAL SCAN & PROCESS â€” START ============================
 def scan_special(
     roots: List[str],
     exts: List[str],
@@ -483,10 +490,10 @@ export const { safe } = () => null;
     out_json = _REPORTS / f"review_summary_special_{run_id}.json"
     out_json.write_text(json.dumps({"run_id": run_id, "mode": mode, "results": results}, indent=2), encoding="utf-8")
     return results
-# ==== 8) AIO-OPS | SPECIAL SCAN & PROCESS — END ==============================
+# ==== 8) AIO-OPS | SPECIAL SCAN & PROCESS â€” END ==============================
 
 
-# ==== 9) AIO-OPS | COMPAT: fetch_candidates — START ==========================
+# ==== 9) AIO-OPS | COMPAT: fetch_candidates â€” START ==========================
 def fetch_candidates(
     org: Optional[str] = None,
     user: Optional[str] = None,
@@ -499,9 +506,9 @@ def fetch_candidates(
 ) -> Tuple[List[Path], Dict[str, List[Path]], Dict[str, Any]]:
     """
     Lightweight local fetch:
-      • roots from AIO_SCAN_ROOTS (CSV) if set; else [cwd, C:\Backup_Projects\CFH\frontend if exists]
-      • includes: *.js, *.jsx, *.ts, *.tsx
-      • skips: node_modules, dist, .git (+ AIO_SKIP_DIRS)
+      â€¢ roots from AIO_SCAN_ROOTS (CSV) if set; else [cwd, C:\Backup_Projects\CFH\frontend if exists]
+      â€¢ includes: *.js, *.jsx, *.ts, *.tsx
+      â€¢ skips: node_modules, dist, .git (+ AIO_SKIP_DIRS)
     Returns: (candidates, bundles_by_base, repos_meta)
     """
     roots: List[Path] = []
@@ -543,10 +550,10 @@ def fetch_candidates(
 
     repos = {"platform": platform, "roots": [str(r) for r in roots]}
     return clean, bundles, repos
-# ==== 9) AIO-OPS | COMPAT: fetch_candidates — END ============================
+# ==== 9) AIO-OPS | COMPAT: fetch_candidates â€” END ============================
 
 
-# ==== 10) AIO-OPS | MULTI-AI REVIEW / GENERATE — START =======================
+# ==== 10) AIO-OPS | MULTI-AI REVIEW / GENERATE â€” START =======================
 def _make_stub_for_base(base: str, score: int, reco: str) -> str:
     safe = _sanitize_base(base)
     return f"""// Auto-generated stub for base: {base}
@@ -609,7 +616,7 @@ def process_batch_ext(
             gen_path.write_text(stub, encoding="utf-8")
             gen_paths.append(gen_path)
 
-            # Stage: tests → src/tests, others → src/components
+            # Stage: tests â†’ src/tests, others â†’ src/components
             target_dir = _STAGED_ALL / ("src/tests" if _TEST_RX.search(base) else "src/components")
             target_dir.mkdir(parents=True, exist_ok=True)
             stage_name = f"{_sanitize_base(base)}.test.tsx" if _TEST_RX.search(base) else f"{_sanitize_base(base)}.ts"
@@ -664,10 +671,10 @@ def process_batch(
         batch_limit=batch_limit,
         mode=mode,
     )
-# ==== 10) AIO-OPS | MULTI-AI REVIEW / GENERATE — END =========================
+# ==== 10) AIO-OPS | MULTI-AI REVIEW / GENERATE â€” END =========================
 
 
-# ==== 11) AIO-OPS | GITHUB UPLOAD — START ====================================
+# ==== 11) AIO-OPS | GITHUB UPLOAD â€” START ====================================
 def upload_generated_to_github(run_id: str, generated_paths: List[Path]) -> Optional[str]:
     """
     Push generated TS files to a new branch 'ts-migration/generated-<run_id>'
@@ -729,7 +736,7 @@ def upload_generated_to_github(run_id: str, generated_paths: List[Path]) -> Opti
         draft=True,
     )
     return pr.html_url
-# ==== 11) AIO-OPS | GITHUB UPLOAD — END ======================================
+# ==== 11) AIO-OPS | GITHUB UPLOAD â€” END ======================================
 
 
 
