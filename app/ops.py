@@ -740,3 +740,61 @@ def upload_generated_to_github(run_id: str, generated_paths: List[Path]) -> Opti
 
 
 
+# ==== 12) AIO-OPS | SG-Man multi-AI review hook — START =======================
+# Non-destructive: thin wrapper that calls app.review_multi.run
+# and (optionally) stages an upload plan via app.github_uploader if present.
+# Keeps SG-Man-friendly names without overwriting existing implementations.
+
+# Optional COD1 injector stays harmless if not present (already used above, safe to repeat)
+try:
+    from app._cod1_inject import enable_cod1
+    enable_cod1()
+except Exception:
+    pass
+
+from typing import List as _ListType  # local alias to avoid any typing import issues
+import os, time
+
+# Try to import the multi-review runner (scaffold you executed)
+try:
+    from app.review_multi import run as _run_reviews
+except Exception:
+    _run_reviews = None  # type: ignore
+
+# Try to import a "plan" style uploader separate from this module's own uploader impl
+try:
+    from app.github_uploader import upload_generated_to_github as _stage_upload_plan
+except Exception:
+    _stage_upload_plan = None  # type: ignore
+
+def process_batch_reviews(files: _ListType[str], run_id: str | None = None, root: str | None = None) -> list[str]:
+    """
+    SG-Man hook: batch review router (append-only).
+    Produces artifacts/reviews/<run_id>/<tier>/... via app.review_multi.run
+    Returns list of written JSON paths.
+    """
+    run_id = run_id or time.strftime("%Y%m%d_%H%M%S")
+    root   = root or os.getenv("AIO_FRONTEND_ROOT", os.getcwd())
+
+    if not _run_reviews:
+        # Scaffold not available; keep it quiet & harmless.
+        return []
+
+    out = _run_reviews(files, run_id, root)
+
+    # Optional: stage upload plan if the separate uploader supports it
+    if _stage_upload_plan:
+        try:
+            plan = _stage_upload_plan(run_id)  # plan-style uploader (no paths arg)
+            if plan:
+                print(f"[upload-plan] {plan}")
+        except Exception:
+            # Never fail the run because of optional planning
+            pass
+
+    return out
+
+# Back-compat alias ONLY if not already defined to avoid clobbering existing impl.
+if "process_batch_ext" not in globals():
+    process_batch_ext = process_batch_reviews  # type: ignore
+# ==== 12) AIO-OPS | SG-Man multi-AI review hook — END =========================
