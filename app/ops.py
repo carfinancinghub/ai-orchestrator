@@ -549,7 +549,6 @@ def process_batch_ext(source: str,
 
 # ==== 10) AIO-OPS | MULTI-AI REVIEW / GENERATE - END ==========================
 # ==== 11) AIO-OPS | GITHUB UPLOAD - START =====================================
-
 def _gh_required():
     if not _repo:
         raise RuntimeError("GITHUB_TOKEN not set or repo init failed; cannot upload.")
@@ -599,10 +598,11 @@ def upload_to_github(run_id: str,
     # 5) Move branch ref to our new commit (create if missing)
     ref_name = f"heads/{head_branch}"
     try:
-        ref = _repo.get_git_ref(ref_name)
+        ref = _repo.get_git_ref(ref_name)              # OK to use "heads/<...>" for GET
         ref.edit(sha=new_commit.sha, force=True)
     except Exception:
-        ref = _repo.create_git_ref(ref=(ref_name if ref_name.startswith("refs/") else f"refs/{ref_name}"), sha=new_commit.sha)
+        full_ref = ref_name if ref_name.startswith("refs/") else f"refs/{ref_name}"
+        ref = _repo.create_git_ref(ref=full_ref, sha=new_commit.sha)  # MUST be "refs/heads/<...>"
 
     # 6) Reuse or open a draft PR
     existing = None
@@ -627,7 +627,6 @@ def upload_to_github(run_id: str,
 
     log(f"upload_to_github: PR #{pr.number}  head={head_branch}  base={base_branch}")
     return pr.html_url
-
 # ==== 11) AIO-OPS | GITHUB UPLOAD - END =======================================
 # ==== 12) AIO-OPS | SG-Man multi-AI review hook - START =======================
 
