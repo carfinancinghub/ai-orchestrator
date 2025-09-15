@@ -1,15 +1,36 @@
-# --- COD1 optional injector (safe Unicode + hooks) ----------------------------
+﻿# --- Cod1: compute head branch (rolling if enabled) ---
+_default_branch = f"ts-migration/generated-{run_id}"
+head_branch     = _cod1_branch_for_run(_default_branch, run_id)
+
+# Move/point the branch ref to our new commit
+ref_name = f"heads/{head_branch}"
 try:
-    from app._cod1_inject import enable_cod1
-    enable_cod1()
+    ref = repo.get_git_ref(ref_name)
+    ref.edit(sha=new_commit.sha, force=True)
 except Exception:
-    pass
-# -----------------------------------------------------------------------------
+    ref = repo.create_git_ref(ref=ref_name, sha=new_commit.sha)
 
-# -----------------------------------------------------------------------------
+# Reuse/open a PR targeting the same head/base
+existing = None
+for pr in repo.get_pulls(state="open"):
+    if pr.head.ref == head_branch and pr.base.ref == base_branch:
+        existing = pr
+        break
 
-# ==== 0) AIO-OPS | STANDARD FILE HEADER - START ===============================
-# File: app/ops.py
+if existing:
+    pr = existing
+else:
+    pr = repo.create_pull(
+        title=f"TS migration stubs (run {run_id})" if head_branch == _default_branch else "TS migration stubs (rolling)",
+        body=f"Automated stubs upload for run {run_id}",
+        head=head_branch,
+        base=base_branch,
+        draft=True,
+    )
+
+# Record the PR URL for this run (status scripts rely on this file)
+(Path("reports")/f"upload_{run_id}.txt").write_text(pr.html_url, encoding="utf-8")
+# --- /Cod1 branch & PR ---
 # Purpose:
 #   Core operations for scanning, scoring, reviewing, and generating frontend
 #   artifacts. This module powers the CLI in app/ops_cli.py and writes reports
@@ -676,6 +697,22 @@ def process_batch(
 # ==== 10) AIO-OPS | MULTI-AI REVIEW / GENERATE - END ==========================
 
 # ==== 11) AIO-OPS | GITHUB UPLOAD - START =====================================
+# --- Cod1: rolling-PR chooser (non-breaking) ---
+import os as _os
+
+_AIO_UPLOAD_BRANCH = (_os.environ.get("AIO_UPLOAD_BRANCH") or "").strip()
+_AIO_UPLOAD_TS     = (_os.environ.get("AIO_UPLOAD_TS") or "1").strip()
+
+def _cod1_branch_for_run(default_branch: str, run_id: str) -> str:
+    """
+    If AIO_UPLOAD_TS == "0" and AIO_UPLOAD_BRANCH is set, always use that branch.
+    Otherwise fall back to the timestamp branch name derived from run_id.
+    """
+    if _AIO_UPLOAD_TS == "0" and _AIO_UPLOAD_BRANCH:
+        return _AIO_UPLOAD_BRANCH
+    return default_branch  # caller typically passes f"ts-migration/generated-{run_id}"
+# --- /Cod1 chooser ---
+
 def upload_generated_to_github(run_id: str, generated_paths: List[Path]) -> Optional[str]:
     """
     Push generated TS files to a new branch 'ts-migration/generated-<run_id>'
@@ -806,7 +843,7 @@ if "process_batch_ext" not in globals():
     process_batch_ext = process_batch_reviews  # type: ignore
 # ==== 12) AIO-OPS | SG-Man multi-AI review hook - END =========================
 
-# ==== 13) AIO-OPS | ECOSYSTEM HELPERS â€” START =================================
+# ==== 13) AIO-OPS | ECOSYSTEM HELPERS - START =================================
 # These helpers are additive only and do not change sections 1â€“12.
 
 from typing import Iterable as _IterableType
@@ -1072,4 +1109,4 @@ def multi_ai_review_bundle(files: _IterableType[str], run_id: str) -> List[str]:
     (_REPORTS / f"review_multi_{run_id}.json").write_text(json.dumps({"written": written}, indent=2), encoding="utf-8")
     return written
 
-# ==== 13) AIO-OPS | ECOSYSTEM HELPERS â€” END ===================================
+# ==== 13) AIO-OPS | ECOSYSTEM HELPERS - END ===================================
