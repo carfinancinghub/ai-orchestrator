@@ -1,74 +1,50 @@
 ﻿# --- Cod1: compute head branch (rolling if enabled) ---
-from pathlib import Path as _Path  # safe if already imported
-_default_branch = f"ts-migration/generated-{run_id}"
-head_branch     = _cod1_branch_for_run(_default_branch, run_id)
-
-# Resolve locals with fallbacks
-new_commit_obj = locals().get("new_commit") or locals().get("commit")
-if not new_commit_obj:
-    raise RuntimeError("Cod1: cannot resolve new_commit/commit")
-base_branch = locals().get("base_branch") or locals().get("base") or "main"
-
-# Move/point the branch ref to our new commit
-ref_name = f"heads/{head_branch}"
-try:
-    ref = repo.get_git_ref(ref_name)
-    ref.edit(sha=new_commit_obj.sha, force=True)
-except Exception:
-    ref = repo.create_git_ref(ref=ref_name, sha=new_commit_obj.sha)
-
-# Reuse/open a PR targeting the same head/base
-existing = None
-for _pr in repo.get_pulls(state="open"):
-    if (_pr.head.ref == head_branch) and (_pr.base.ref == base_branch):
-        existing = _pr
-        break
-
-if existing:
-    pr = existing
-else:
-    pr = repo.create_pull(
-        title=(f"TS migration stubs (run {run_id})" if head_branch == _default_branch else "TS migration stubs (rolling)"),
-        body=f"Automated stubs upload for run {run_id}",
-        head=head_branch,
-        base=base_branch,
-        draft=True,
-    )
-
-# Record the PR URL for this run (status scripts rely on this file)
-(_Path("reports")/f"upload_{run_id}.txt").write_text(pr.html_url, encoding="utf-8")
-# --- /Cod1 branch & PR ---
 _default_branch = f"ts-migration/generated-{run_id}"
 head_branch     = _cod1_branch_for_run(_default_branch, run_id)
 
 # Move/point the branch ref to our new commit
 ref_name = f"heads/{head_branch}"
 try:
-    ref = repo.get_git_ref(ref_name)
-    ref.edit(sha=new_commit.sha, force=True)
-except Exception:
-    ref = repo.create_git_ref(ref=ref_name, sha=new_commit.sha)
-
-# Reuse/open a PR targeting the same head/base
-existing = None
-for pr in repo.get_pulls(state="open"):
-    if pr.head.ref == head_branch and pr.base.ref == base_branch:
-        existing = pr
-        break
-
-if existing:
-    pr = existing
-else:
-    pr = repo.create_pull(
-        title=f"TS migration stubs (run {run_id})" if head_branch == _default_branch else "TS migration stubs (rolling)",
-        body=f"Automated stubs upload for run {run_id}",
-        head=head_branch,
-        base=base_branch,
-        draft=True,
-    )
-
-# Record the PR URL for this run (status scripts rely on this file)
-(Path("reports")/f"upload_{run_id}.txt").write_text(pr.html_url, encoding="utf-8")
+    # --- Cod1: compute head branch (rolling if enabled) ---
+    from pathlib import Path as _Path  # safe to re-import in function
+    _default_branch = f"ts-migration/generated-{run_id}"
+    head_branch     = _cod1_branch_for_run(_default_branch, run_id)
+    
+    # Resolve locals with fallbacks
+    new_commit_obj = locals().get("new_commit") or locals().get("commit")
+    if not new_commit_obj:
+        raise RuntimeError("Cod1: cannot resolve new_commit/commit")
+    base_branch = locals().get("base_branch") or locals().get("base") or "main"
+    
+    # Move/point the branch ref to our new commit
+    ref_name = f"heads/{head_branch}"
+    try:
+        ref = repo.get_git_ref(ref_name)
+        ref.edit(sha=new_commit_obj.sha, force=True)
+    except Exception:
+        ref = repo.create_git_ref(ref=ref_name, sha=new_commit_obj.sha)
+    
+    # Reuse/open a PR targeting the same head/base
+    existing = None
+    for _pr in repo.get_pulls(state="open"):
+        if (_pr.head.ref == head_branch) and (_pr.base.ref == base_branch):
+            existing = _pr
+            break
+    
+    if existing:
+        pr = existing
+    else:
+        pr = repo.create_pull(
+            title=(f"TS migration stubs (run {run_id})" if head_branch == _default_branch else "TS migration stubs (rolling)"),
+            body=f"Automated stubs upload for run {run_id}",
+            head=head_branch,
+            base=base_branch,
+            draft=True,
+        )
+    
+    # Record the PR URL for this run (status scripts rely on this file)
+    (_Path("reports")/f"upload_{run_id}.txt").write_text(pr.html_url, encoding="utf-8")
+    # --- /Cod1 branch & PR ---
 # --- /Cod1 branch & PR ---
 # Purpose:
 #   Core operations for scanning, scoring, reviewing, and generating frontend
