@@ -602,7 +602,7 @@ def upload_to_github(run_id: str,
         ref = _repo.get_git_ref(ref_name)
         ref.edit(sha=new_commit.sha, force=True)
     except Exception:
-        ref = _repo.create_git_ref(ref=ref_name, sha=new_commit.sha)
+        ref = _repo.create_git_ref(ref=(ref_name if ref_name.startswith("refs/") else f"refs/{ref_name}"), sha=new_commit.sha)
 
     # 6) Reuse or open a draft PR
     existing = None
@@ -843,3 +843,4 @@ if __name__ == "__main__":
         sys.exit(130)
 
 # ==== 13) AIO-OPS | ECOSYSTEM HELPERS — END ===================================
+
