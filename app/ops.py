@@ -843,3 +843,24 @@ if __name__ == "__main__":
 
 # ==== 13) AIO-OPS | ECOSYSTEM HELPERS — END ===================================
 
+# ==== Cod1 Continuity Hook (import) ====
+try:
+    from app.cod1_continuity import cod1_pipeline_for_file
+except Exception as _e:
+    cod1_pipeline_for_file = None  # fallback if module missing
+# ==== Cod1 Continuity Hook - END ====
+# ==== Cod1 Continuity Hook (dispatcher) ====
+if "cod1" not in globals():
+    def cod1(file_paths: list[str], gh_repo: str|None=None):
+        results = []
+        if "cod1_pipeline_for_file" not in globals() or cod1_pipeline_for_file is None:
+            return results
+        from pathlib import Path
+        for fp in file_paths:
+            try:
+                res = cod1_pipeline_for_file(Path(fp), gh_repo=gh_repo)
+                results.append(res)
+            except Exception as e:
+                results.append({"error": str(e), "file": fp})
+        return results
+# ==== Cod1 Continuity Hook (dispatcher) - END ====
