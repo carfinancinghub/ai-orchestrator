@@ -48,6 +48,7 @@
 # - Batches limited to 25 files per append.
 # - Post gates summary as PR comment after each append.
 # ==== 0) AIO-OPS | STANDARD FILE HEADER - END =================================
+
 # ==== 1) AIO-OPS | IMPORTS & CONSTANTS - START ================================
 import os
 import re
@@ -85,7 +86,6 @@ _repo = _gh.get_repo(AIO_REPO) if _gh else None
 
 # ==== 1) AIO-OPS | IMPORTS & CONSTANTS - END ==================================
 # ==== 2) AIO-OPS | HELPERS - START ===========================================
-
 def log(msg: str) -> None:
     """Lightweight logger with UTC timestamp."""
     ts = time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime())
@@ -504,16 +504,21 @@ def process_batch_ext(source: str,
                       mode: str = "generate") -> List[Dict[str, Any]]:
     """
     Main entrypoint used by Cod1 scripts.
-    Steps: scan/normalize → dedupe/limit → generate stubs → save review → upload.
-    Returns a list with one group summary for now.
+
+    Modes:
+      - "cod1"     : delegate to the Cod1 continuity dispatcher (review→suggest→spec→generate→verify).
+      - "generate" : default stub generation + upload to rolling/timestamp PR.
+
+    Steps (generate mode): scan/normalize → dedupe/limit → generate stubs → save review → upload → return summary.
     """
-    # 1) Normalize & filter
+
+    # Normalize and/or discover candidates
     paths = _norm_paths(cands)
     if not paths:
         # If no cands provided, fall back to scan_frontend_sources
         paths = scan_frontend_sources(limit=BATCH_SIZE)
 
-    # 2) Hard cap per SG-Man guidance (25 max per append)
+    # Cap per run
     cap = min(BATCH_SIZE, int(batch_limit or BATCH_SIZE))
     paths = paths[:cap]
 
@@ -521,24 +526,35 @@ def process_batch_ext(source: str,
         log("process_batch_ext: no candidates after filtering.")
         return []
 
-    # 3) Generate stubs into artifacts/stubs/<run_id>
+    # ---- Mode dispatch -------------------------------------------------------
+    if mode == "cod1":
+        # Use Cod1 continuity pipeline dispatcher (defined at end of file).
+        # It expects absolute file paths.
+        gh_repo = opts.get("gh_repo") if isinstance(opts, dict) else None
+        try:
+            res = cod1([str(p) for p in paths], gh_repo=gh_repo)  # returns list of dicts
+        except NameError:
+            log("process_batch_ext[cod1]: cod1 dispatcher not available; falling back to no-op.")
+            res = []
+        return res
+    # -------------------------------------------------------------------------
+
+    # Default: stub generation + upload
     staging_root, staged = _stage_stubs(run_id, paths)
 
-    # 4) Persist a simple review bundle for this run
+    # Persist a simple review bundle for this run
     _save_run_review(run_id, staged)
 
-    # 5) Upload stubs to GitHub (rolling PR logic handled in Section 11)
-    #    We upload under repo path prefix "generated/" to keep things tidy.
+    # Upload stubs to GitHub (rolling PR logic handled in Section 11)
     repo_files: List[Tuple[str, Path]] = [(f"generated/{rel}", lp) for (rel, lp) in staged]
     try:
         upload_to_github(run_id, repo_files)  # defined in Section 11
     except NameError:
-        # If Section 11 not yet loaded, we can defer; but in normal execution it exists.
         log("WARN: upload_to_github not available at call-time; skipping upload.")
     except Exception as e:
         log(f"ERROR: upload_to_github failed: {e!r}")
 
-    # 6) Return concise group summary
+    # Return concise group summary
     return [{
         "run_id": run_id,
         "source": source,
@@ -548,6 +564,7 @@ def process_batch_ext(source: str,
     }]
 
 # ==== 10) AIO-OPS | MULTI-AI REVIEW / GENERATE - END ==========================
+
 # ==== 11) AIO-OPS | GITHUB UPLOAD - START =====================================
 def _gh_required():
     if not _repo:
@@ -843,15 +860,18 @@ if __name__ == "__main__":
 
 # ==== 13) AIO-OPS | ECOSYSTEM HELPERS — END ===================================
 
-# ==== Cod1 Continuity Hook (import) ====
+# ==== 14) AIO-OPS | COD1 CONTINUITY HOOKS - START ============================
+
+# Import-safe: we only wire the pipeline if the helper module is present.
 try:
     from app.cod1_continuity import cod1_pipeline_for_file
 except Exception as _e:
     cod1_pipeline_for_file = None  # fallback if module missing
-# ==== Cod1 Continuity Hook - END ====
-# ==== Cod1 Continuity Hook (dispatcher) ====
+
+# Lightweight dispatcher used by process_batch_ext(mode="cod1").
+# Accepts absolute file paths and optional gh_repo.
 if "cod1" not in globals():
-    def cod1(file_paths: list[str], gh_repo: str|None=None):
+    def cod1(file_paths: list[str], gh_repo: str | None = None):
         results = []
         if "cod1_pipeline_for_file" not in globals() or cod1_pipeline_for_file is None:
             return results
@@ -863,4 +883,5 @@ if "cod1" not in globals():
             except Exception as e:
                 results.append({"error": str(e), "file": fp})
         return results
-# ==== Cod1 Continuity Hook (dispatcher) - END ====
+
+# ==== 14) AIO-OPS | COD1 CONTINUITY HOOKS - END ==============================
