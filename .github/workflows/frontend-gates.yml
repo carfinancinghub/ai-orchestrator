@@ -1,0 +1,13 @@
+name: Frontend Gates
+on: [pull_request, push]
+jobs:
+  gates:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20', cache: 'npm' }
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test:ci
+      - run: npm run lint

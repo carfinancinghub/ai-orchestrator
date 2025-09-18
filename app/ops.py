@@ -731,6 +731,7 @@ def sgman_after_append(run_id: str, also_label: bool = True) -> None:
             log(f"sgman_after_append: label step skipped ({e!r})")
 
 # ==== 12) AIO-OPS | SG-Man multi-AI review hook - END =========================
+
 # ==== 13) AIO-OPS | ECOSYSTEM HELPERS — START =================================
 
 # --- Cod1: rolling-PR chooser (import-safe; no run_id at import) ---------------
@@ -804,7 +805,7 @@ def _now_run_id() -> str:
 
 
 def _cli() -> int:
-    """
+    r"""
     Minimal CLI:
       python -m app.ops --mode generate --limit 25 --files "C:\path\one.tsx,C:\path\two.ts"
     If --files omitted, falls back to scan_frontend_sources().
@@ -860,6 +861,7 @@ if __name__ == "__main__":
 
 # ==== 13) AIO-OPS | ECOSYSTEM HELPERS — END ===================================
 
+
 # ==== 14) AIO-OPS | COD1 CONTINUITY HOOKS - START ============================
 
 # Import-safe: we only wire the pipeline if the helper module is present.
@@ -871,15 +873,20 @@ except Exception as _e:
 # Lightweight dispatcher used by process_batch_ext(mode="cod1").
 # Accepts absolute file paths and optional gh_repo.
 if "cod1" not in globals():
-    def cod1(file_paths: list[str], gh_repo: str | None = None):
-        results = []
-        if "cod1_pipeline_for_file" not in globals() or cod1_pipeline_for_file is None:
+    from typing import Optional, List
+
+    def cod1(file_paths: List[str], gh_repo: Optional[str] = None) -> List[Dict[str, Any]]:
+        results: List[Dict[str, Any]] = []
+        if cod1_pipeline_for_file is None:
             return results
-        from pathlib import Path
         for fp in file_paths:
             try:
                 res = cod1_pipeline_for_file(Path(fp), gh_repo=gh_repo)
-                results.append(res)
+                # ensure a dict result shape
+                if isinstance(res, dict):
+                    results.append(res)
+                else:
+                    results.append({"file": fp, "result": res})
             except Exception as e:
                 results.append({"error": str(e), "file": fp})
         return results
