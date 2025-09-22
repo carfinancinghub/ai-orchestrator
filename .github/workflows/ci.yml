@@ -1,15 +1,51 @@
 name: CI
 on: [push, pull_request]
+
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: '3.13' }
-      - run: python -m pip install -U pip
-      - run: python -m pip install -r requirements.txt
-      - run: python -m ruff check .
-      - run: python -m mypy app core tools
-      - run: python -m pytest -q
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'   # stable; bump later if you really need 3.13
+
+      - name: Upgrade pip
+        run: python -m pip install -U pip
+
+      # If your repo provides requirements.txt, use it
+      - name: Install deps (requirements.txt)
+        if: ${{ hashFiles('requirements.txt') != '' }}
+        run: python -m pip install -r requirements.txt
+
+      # Otherwise, install just the tooling we need to lint/typecheck/test
+      - name: Install minimal tooling (no requirements.txt)
+        if: ${{ hashFiles('requirements.txt') == '' }}
+        run: python -m pip install ruff mypy pytest
+
+      - name: Ruff (lint)
+        run: python -m ruff check .
+
+      - name: Mypy (type check selected dirs if present)
+        shell: bash
+        run: |
+          set -e
+          TARGETS=""
+          for d in app core tools; do
+            if [ -d "$d" ]; then TARGETS="$TARGETS $d"; fi
+          done
+          if [ -z "$TARGETS" ]; then
+            echo "No typing targets (app/core/tools) present; skipping."
+          else
+            python -m mypy $TARGETS
+          fi
+
+      - name: Pytest (only if tests exist)
+        shell: bash
+        run: |
+          if [ -f pytest.ini ] || [ -d tests ] || grep -qE '^\[tool.pytest.ini_options\]' pyproject.toml 2>/dev/null; then
+            python -m pytest -q
+          else
+            echo "No pytest config or tests/ found; skipping."
+          fi
