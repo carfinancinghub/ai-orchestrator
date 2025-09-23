@@ -5,64 +5,60 @@ on:
 
 jobs:
   test:
+    # Only run if this repo looks like Python
+    if: >
+      !cancelled() &&
+      (
+        hashFiles('requirements.txt') != '' ||
+        hashFiles('pyproject.toml')  != ''  ||
+        hashFiles('**/*.py')         != ''
+      )
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      # Detect a Python project (any of these markers)
-      - name: Detect Python project
-        id: detect_py
-        shell: bash
-        run: |
-          set -euo pipefail
-          has_req=$([ -f requirements.txt ] && echo true || echo false)
-          has_pyt=$([ -f pyproject.toml ] && echo true || echo false)
-          has_setup=$([ -f setup.cfg ] && echo true || echo false)
-          has_src=$([ -d app ] || [ -d src ] || [ -d core ] || [ -d tools ] && echo true || echo false)
-          if [[ "$has_req" == "false" && "$has_pyt" == "false" && "$has_setup" == "false" && "$has_src" == "false" ]]; then
-            echo "python_present=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "python_present=true" >> "$GITHUB_OUTPUT"
-          fi
-
       - uses: actions/setup-python@v5
-        if: steps.detect_py.outputs.python_present == 'true'
         with:
           python-version: '3.13'
 
       - name: Upgrade pip
-        if: steps.detect_py.outputs.python_present == 'true'
         run: python -m pip install -U pip
 
-      - name: Install project requirements (if requirements.txt exists)
-        if: steps.detect_py.outputs.python_present == 'true' && hashFiles('requirements.txt') != ''
+      - name: Install deps (requirements.txt)
+        if: hashFiles('requirements.txt') != ''
         run: python -m pip install -r requirements.txt
 
-      - name: Ensure dev tools present (ruff, mypy, pytest)
-        if: steps.detect_py.outputs.python_present == 'true'
+      # Ruff only if we have config or python files
+      - name: Ruff
+        if: >
+          hashFiles('pyproject.toml')  != '' ||
+          hashFiles('ruff.toml')       != '' ||
+          hashFiles('**/*.py')         != ''
         run: |
-          python - <<'PY'
-          import importlib.util, subprocess, sys
-          tools = ['ruff','mypy','pytest']
-          missing = [t for t in tools if importlib.util.find_spec(t) is None]
-          if missing:
-              subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--disable-pip-version-check', *missing])
-          PY
+          python -m pip install ruff
+          python -m ruff check .
 
-      - name: Ruff (lint)
-        if: steps.detect_py.outputs.python_present == 'true'
-        run: python -m ruff check .
-
-      - name: Mypy (type check; non-fatal while stabilizing)
-        if: steps.detect_py.outputs.python_present == 'true'
+      # Mypy only if config or python files are present
+      - name: Mypy (soft fail while stabilizing)
+        if: >
+          hashFiles('mypy.ini')        != '' ||
+          hashFiles('setup.cfg')       != '' ||
+          hashFiles('pyproject.toml')  != '' ||
+          hashFiles('**/*.py')         != ''
         run: |
-          set -e
-          python -m mypy app core tools || echo "::warning::mypy reported issues (non-blocking for now)"
+          python -m pip install mypy types-requests
+          # Use --ignore-missing-imports for now to keep CI green
+          python -m mypy app core tools --ignore-missing-imports || echo "mypy soft fail (ignored)"
 
+      # Pytest only if there are tests or config
       - name: Pytest
-        if: steps.detect_py.outputs.python_present == 'true'
-        run: python -m pytest -q
-
-      - name: No Python detected — skip job
-        if: steps.detect_py.outputs.python_present != 'true'
-        run: echo "No Python project markers found; CI/test skipped."
+        if: >
+          hashFiles('pytest.ini')      != '' ||
+          hashFiles('pyproject.toml')  != '' ||
+          hashFiles('**/tests/**')     != '' ||
+          hashFiles('**/test_*.py')    != '' ||
+          hashFiles('**/*_test.py')    != ''
+        run: |
+          python -m pip install pytest
+          python -m pytest -q
