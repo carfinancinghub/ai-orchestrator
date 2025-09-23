@@ -1,10 +1,21 @@
 name: Block node_modules
 on: [pull_request]
+
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run vendor guard
-        shell: pwsh
-        run: pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/check-no-vendor.ps1
+
+      # Pure inline guard: ONLY fail if a tracked path contains node_modules/ or vendor/
+      - name: vendor/node_modules guard
+        shell: bash
+        run: |
+          set -euo pipefail
+          bad="$(git ls-files | grep -E '(^|[\\/])(node_modules|vendor)([\\/]|$)' || true)"
+          if [ -n "$bad" ]; then
+            echo "❌ vendor guard: disallowed tracked paths detected:"
+            echo "$bad" | sed 's/^/ - /'
+            exit 1
+          fi
+          echo "vendor guard ✅ (no tracked vendor/node_modules)"
