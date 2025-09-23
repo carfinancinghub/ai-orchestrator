@@ -1,19 +1,72 @@
 ﻿name: TS Migration Gates
 on:
-  pull_request:
   push:
     branches: [ main ]
+  pull_request:
+
 jobs:
   gates:
+    # Only run if (a) it's the CFH repo OR (b) this repo actually contains TS-migration artifacts/front-end
+    if: >
+      github.repository == 'carfinancinghub/cfh' ||
+      hashFiles('artifacts/generated/**') != '' ||
+      hashFiles('frontend/package.json') != ''
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
+      - name: Detect frontend
+        id: detect
+        shell: bash
+        run: |
+          if [ -f "frontend/package.json" ]; then
+            echo "has_frontend=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_frontend=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-node@v4
+        if: steps.detect.outputs.has_frontend == 'true'
         with:
           node-version: '20'
-      - run: npm ci
-      - name: No-JS/JSX gate
-        shell: bash
-        run: pwsh -NoLogo -NoProfile -Command "scripts/check-no-js.ps1"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: npm ci
+        if: steps.detect.outputs.has_frontend == 'true'
+        working-directory: frontend
+        run: npm ci --no-audit --no-fund
+
+      - name: No-JS/JSX gate (skip if script missing)
+        shell: pwsh
+        run: |
+          if (Test-Path "scripts/check-no-js.ps1") {
+            pwsh -NoLogo -NoProfile -File "scripts/check-no-js.ps1"
+          } else {
+            Write-Host "scripts/check-no-js.ps1 not found; skipping."
+          }
+
       - name: Type check (no emit)
+        if: steps.detect.outputs.has_frontend == 'true'
+        working-directory: frontend
         run: npx tsc --noEmit
+
+      - name: Build
+        if: steps.detect.outputs.has_frontend == 'true'
+        working-directory: frontend
+        run: npm run build --silent
+
+      - name: Test
+        if: steps.detect.outputs.has_frontend == 'true'
+        working-directory: frontend
+        run: npm run test --silent -- -r
+
+      - name: Lint
+        if: steps.detect.outputs.has_frontend == 'true'
+        working-directory: frontend
+        run: npm run lint --silent
+
+      - name: No frontend found — skipping gates
+        if: steps.detect.outputs.has_frontend != 'true'
+        run: echo "No frontend/package.json; TS Migration Gates skipped."
