@@ -1,5 +1,5 @@
-﻿# .github/workflows/ts-migration-gates.yml
-name: TS Migration Gates
+﻿name: TS Migration Gates
+
 on:
   pull_request:
   push:
@@ -7,41 +7,36 @@ on:
 
 jobs:
   gates:
+    # Run only if this repo actually has TS + package.json
+    if: >
+      github.event_name != 'schedule' &&
+      !cancelled() &&
+      (
+        (hashFiles('tsconfig.json') != '' || hashFiles('**/*.ts') != '' || hashFiles('**/*.tsx') != '') &&
+        hashFiles('package.json') != ''
+      )
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Detect frontend project
-        id: detect_frontend
-        shell: bash
-        run: |
-          set -euo pipefail
-          # Consider either a frontend folder or package.json at repo root as a “frontend” project
-          if [[ -d "frontend" ]] || [[ -f "package.json" ]]; then
-            echo "present=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "present=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - uses: actions/setup-node@v4
-        if: steps.detect_frontend.outputs.present == 'true'
         with:
           node-version: '20'
           cache: 'npm'
 
-      - name: npm ci
-        if: steps.detect_frontend.outputs.present == 'true'
-        run: npm ci
+      # If there's no lockfile, npm ci fails; fall back to npm i
+      - name: Install deps
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm i
+          fi
 
-      - name: No-JS/JSX gate
-        if: steps.detect_frontend.outputs.present == 'true'
+      - name: No-JS/JSX gate (PowerShell)
         shell: pwsh
         run: pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/check-no-js.ps1
 
       - name: Type check (no emit)
-        if: steps.detect_frontend.outputs.present == 'true'
         run: npx tsc --noEmit
-
-      - name: Skip TS gates (no frontend detected)
-        if: steps.detect_frontend.outputs.present != 'true'
-        run: echo "No frontend/package.json detected; skipping TS gates."
