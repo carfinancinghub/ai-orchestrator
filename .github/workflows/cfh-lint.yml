@@ -1,0 +1,49 @@
+name: CFH Lint Gates
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'artifacts/generated/**'
+      - 'frontend/**'
+      - 'scripts/cfh_lint.ps1'
+      - '.github/workflows/cfh-lint.yml'
+  push:
+    branches: [ main, fix/**, feat/** ]
+    paths:
+      - 'artifacts/generated/**'
+      - 'frontend/**'
+      - 'scripts/cfh_lint.ps1'
+      - '.github/workflows/cfh-lint.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cfh-lint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  cfh-lint:
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run CFH lint (anti-patterns hard fail; required patterns soft)
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/cfh_lint.ps1 -Root . -Out reports/gates_cfh_lint.json
+
+      - name: Print summary
+        shell: pwsh
+        run: |
+          $j = Get-Content reports/gates_cfh_lint.json -Raw | ConvertFrom-Json
+          "ok=$($j.ok) files=$($j.files) strict=$($j.strict)"
+          $j.summary | Format-Table | Out-String | Write-Host
+
+      - name: Upload gate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gates_cfh_lint
+          path: reports/gates_cfh_lint.json
