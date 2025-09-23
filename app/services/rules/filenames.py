@@ -1,6 +1,7 @@
 # Path: app/services/rules/filenames.py
 from __future__ import annotations
-import json, re
+import json
+import re
 from pathlib import Path
 from typing import List, Dict
 
