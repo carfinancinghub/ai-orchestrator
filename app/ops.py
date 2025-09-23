@@ -1,4 +1,4 @@
-﻿# ==== 0) AIO-OPS | STANDARD FILE HEADER - START ===============================
+# ==== 0) AIO-OPS | STANDARD FILE HEADER - START ===============================
 # File: app/ops.py
 # Purpose: Orchestrator for CFH TypeScript migration automation.
 # Loop: scan → review → generate → gates → upload → report
@@ -892,3 +892,4 @@ if "cod1" not in globals():
         return results
 
 # ==== 14) AIO-OPS | COD1 CONTINUITY HOOKS - END ==============================
+
