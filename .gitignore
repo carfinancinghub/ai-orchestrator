@@ -82,3 +82,6 @@ tools/cod1/*.zip
 # Ignore all artifacts here (we upload results to CFH repo instead)
 artifacts/**
 !artifacts/.gitkeep
+# Ignore all artifacts here (we upload results to CFH repo instead)
+artifacts/**
+!artifacts/.gitkeep
