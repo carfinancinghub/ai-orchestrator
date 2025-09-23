@@ -1,5 +1,5 @@
 env:
-CFH_LINT_SOFT: 0
+  CFH_LINT_SOFT: 0
 name: CFH Lint Gates
 
 on:
@@ -39,6 +39,7 @@ jobs:
           name: cfh-lint-summary
           path: reports/cfh_lint_summary.json
           if-no-files-found: ignore
+
 
 
 
