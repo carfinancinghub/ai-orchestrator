@@ -74,3 +74,8 @@ node_modules/
 **/node_modules/
 vendor/
 **/vendor/
+# report/build archives (keep out of Git)
+reports/*.zip
+reports/*.tar
+reports/*.tar.gz
+tools/cod1/*.zip
