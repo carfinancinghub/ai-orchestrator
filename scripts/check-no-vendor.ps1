@@ -1,44 +1,31 @@
 # scripts/check-no-vendor.ps1
-# Blocks committed vendor directories like node_modules/ and vendor/
-# Scans only tracked files to avoid noise from local caches.
+$ErrorActionPreference = 'Stop'
 
-$ErrorActionPreference = "Stop"
+# Directories we disallow in this repo
+$blockedDirs = @('node_modules', 'vendor')
 
-# List all tracked files in the repo
-$tracked = & git ls-files 2>$null
+# Files we disallow (big zips/tars sneaking in)
+$blockedGlobs = @('*.zip','*.tar','*.tar.gz','*.tgz')
 
-# Nothing to check?
-if (-not $tracked) {
-  Write-Host "vendor guard ✅ (no tracked files)"
+$foundDirs  = @()
+$foundFiles = @()
+
+foreach ($d in $blockedDirs) {
+  $hits = Get-ChildItem -Recurse -Force -Directory -ErrorAction SilentlyContinue `
+          | Where-Object { $_.Name -ieq $d }
+  if ($hits) { $foundDirs += $hits.FullName }
+}
+
+foreach ($g in $blockedGlobs) {
+  $hits = Get-ChildItem -Recurse -Force -File -Filter $g -ErrorAction SilentlyContinue
+  if ($hits) { $foundFiles += $hits.FullName }
+}
+
+if ($foundDirs.Count -or $foundFiles.Count) {
+  Write-Host "❌ vendor/node_modules or blocked archives detected:"
+  foreach ($p in ($foundDirs + $foundFiles)) { Write-Host " - $p" }
+  exit 1
+} else {
+  Write-Host "Vendor/node_modules guard ✅"
   exit 0
 }
-
-# Pattern: a path segment named node_modules or vendor
-$bad = $tracked | Where-Object {
-  $_ -match '(^|[\\/])(node_modules|vendor)([\\/]|$)'
-}
-
-# Allowlist: if you ever need to permit specific subpaths, put them here
-$allowlist = @(
-  # Example: '^tools[\\/]vendor[\\/]some-allowed-lib[\\/]'
-)
-
-if ($bad) {
-  # Apply allowlist
-  $disallowed = @()
-  foreach ($p in $bad) {
-    $allowed = $false
-    foreach ($pat in $allowlist) {
-      if ($p -match $pat) { $allowed = $true; break }
-    }
-    if (-not $allowed) { $disallowed += $p }
-  }
-
-  if ($disallowed.Count -gt 0) {
-    Write-Host "❌ vendor guard: disallowed paths detected:`n - " + ($disallowed -join "`n - ")
-    throw "vendor guard failed."
-  }
-}
-
-Write-Host "vendor guard ✅"
-exit 0
