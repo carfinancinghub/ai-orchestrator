@@ -1,87 +1,24 @@
-﻿# ---- Environment ----
-.env
-.env.local
-.venv/
+# Dependencies & virtual envs
+**/node_modules/
+**/.venv/
+**/venv/
+**/env/
+**/__pycache__/
 
-# ---- Python ----
-__pycache__/
-*.py[cod]
-*.egg-info/
-.mypy_cache/
-.pytest_cache/
-.ruff_cache/
-.coverage
-htmlcov/
+# Python build artifacts
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+**/build/
+**/dist/
+**/*.egg-info/
 
-# ---- Node / Frontend ----
-node_modules/
+# Reports that mirror filesystem inventories
+reports/*_orchestrator_files.csv
 
-# ---- OS / Editors ----
+# OS / editor cruft
 .DS_Store
 Thumbs.db
-.vscode/
 .idea/
-
-# ---- Project outputs (directories) ----
-artifacts/*
-!artifacts/.gitkeep
-
-workspaces/*
-!workspaces/.gitkeep
-
-logs/*
-!logs/.gitkeep
-
-# ---- Reports: ignore generated data, keep docs ----
-reports/**/*.json
-reports/**/*.csv
-reports/**/*.txt
-reports/**/*.log
-
-# If these two are generated, keep ignoring them explicitly:
-reports/**/review_input_*.json
-reports/**/review-pack.md
-
-# Specific file to ignore (requested)
-reports/CFH/absolute-path-refs.csv
-
-# ---- Local backup / temp files ----
-*.bak
-*.bak-*
-*.recover*
-*.prepatch*
-*.broken.*
-
-# More specific Python backup patterns (if you keep them around locally)
-app/**/backup_*.py
-app/*.backup_*.py
-app/ops.backup_*.py
-
-# ---- Standalone logs ----
-run_stderr.log
-run_stdout.log
-# allow orchestrator reports we want to keep
-!reports/duplicates_eliminated.csv
-!reports/conversion_candidates.txt
-!reports/debug/*.md
-# allow debug reports
-!reports/
-!reports/debug/
-!reports/debug/*.md
-!reports/debug/*.json
-# Vendor / build outputs (guards)
-node_modules/
-**/node_modules/
-vendor/
-**/vendor/
-# report/build archives (keep out of Git)
-reports/*.zip
-reports/*.tar
-reports/*.tar.gz
-tools/cod1/*.zip
-# Ignore all artifacts here (we upload results to CFH repo instead)
-artifacts/**
-!artifacts/.gitkeep
-# Ignore all artifacts here (we upload results to CFH repo instead)
-artifacts/**
-!artifacts/.gitkeep
+.vscode/
