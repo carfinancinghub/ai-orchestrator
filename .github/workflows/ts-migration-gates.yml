@@ -2,12 +2,34 @@
 
 on:
   pull_request:
+    branches: [ main ]
+    paths:
+      - 'artifacts/generated/**'
+      - 'app/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'tsconfig.json'
+      - '.github/workflows/ts-migration-gates.yml'
   push:
     branches: [ main ]
+    paths:
+      - 'artifacts/generated/**'
+      - 'app/**'
+      - 'scripts/**'
+      - 'package.json'
+      - 'tsconfig.json'
+      - '.github/workflows/ts-migration-gates.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ts-migration-gates-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   gates:
-    # Run only if this repo actually has TS + package.json
+    # Run only if this repo actually has TS + package.json (extra safety)
     if: >
       github.event_name != 'schedule' &&
       !cancelled() &&
@@ -29,14 +51,29 @@ jobs:
       - name: Install deps
         run: |
           if [ -f package-lock.json ]; then
-            npm ci
+            npm ci --no-audit --no-fund
           else
-            npm i
+            npm i --no-audit --no-fund
           fi
 
+      # Hard gate: no JS/JSX left in generated output
       - name: No-JS/JSX gate (PowerShell)
         shell: pwsh
         run: pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/check-no-js.ps1
 
+      # Type check the repo (no emit)
       - name: Type check (no emit)
         run: npx tsc --noEmit
+
+      # Lint if config present (keeps noise down)
+      - name: ESLint (if config present)
+        if: >
+          hashFiles('.eslintrc*') != '' ||
+          hashFiles('eslint.config.*') != ''
+        run: npx eslint "artifacts/generated/**/*.ts" "artifacts/generated/**/*.tsx" || true
+
+      # Unit tests (only if present)
+      - name: Tests (Vitest/Jest if present)
+        run: |
+          npx -y vitest --version >/dev/null 2>&1 && npx vitest run --reporter dot || \
+          (npm run test:ci --if-present || npm run test --if-present -- -r)

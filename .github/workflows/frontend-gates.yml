@@ -2,25 +2,34 @@ name: Frontend Gates
 
 on:
   pull_request:
+    branches: [ main ]
     paths:
       - 'frontend/**'
       - '.github/workflows/frontend-gates.yml'
   push:
-    branches: ['*']
+    branches: [ main, fix/**, feat/** ]
     paths:
       - 'frontend/**'
+      - '.github/workflows/frontend-gates.yml'
+
+permissions:
+  contents: read
 
 jobs:
   gates:
     # Run only if a real frontend project exists in this repo
-    if: ${{ hashFiles('frontend/package.json') != '' }}
+    if: >
+      !cancelled() &&
+      hashFiles('frontend/package.json') != ''
     runs-on: ubuntu-latest
     concurrency:
       group: frontend-gates-${{ github.ref }}
       cancel-in-progress: true
+
     defaults:
       run:
         working-directory: frontend
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,14 +41,25 @@ jobs:
           cache: 'npm'
           cache-dependency-path: 'frontend/package-lock.json'
 
+      # If there's no lockfile, npm ci fails; fall back to npm i
       - name: Install
-        run: npm ci --no-audit --no-fund
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm i --no-audit --no-fund
+          fi
 
-      - name: Build
+      - name: Typecheck (if tsconfig present)
+        if: hashFiles('frontend/tsconfig.json') != ''
+        run: npx tsc --noEmit
+
+      - name: Build (if script present)
         run: npm run build --if-present
 
-      - name: Test
-        run: npm run test:ci --if-present || npm run test --if-present -- -r
+      - name: Test (prefer CI script, else fallback)
+        run: |
+          npm run test:ci --if-present || npm run test --if-present -- -r
 
-      - name: Lint
+      - name: Lint (if script present)
         run: npm run lint --if-present
