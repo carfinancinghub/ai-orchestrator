@@ -69,3 +69,8 @@ run_stdout.log
 !reports/debug/
 !reports/debug/*.md
 !reports/debug/*.json
+# Vendor / build outputs (guards)
+node_modules/
+**/node_modules/
+vendor/
+**/vendor/
