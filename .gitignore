@@ -21,4 +21,6 @@ reports/*_orchestrator_files.csv
 .DS_Store
 Thumbs.db
 .idea/
-.vscode/
+.vscode/# Orchestrator/CI artifacts & snapshots
+artifacts/
+reports/*_workspace_collect/
