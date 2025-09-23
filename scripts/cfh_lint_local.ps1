@@ -1,3 +1,13 @@
+$global:CFH_ALLOW_PATTERNS = @(
+  'interface\s+LoanTerms\s*\{[^}]*\}',
+  '\bPaymentSchedule\b',
+  '\bAmortization(?:Table|Schedule)\b',
+  '\bAPR\b',
+  '\bPrincipal\b',
+  '\bDownPayment\b',
+  '\bBalloonPayment\b',
+  '\bDealer(?:ID|Code)\b'
+)
 <#  scripts\cfh_lint_local.ps1
     Local CFH lint (no GitHub calls): scans a given root (default C:\Backup_Projects\CFH\frontend),
     writes reports\cfh_lint_summary.json, and returns nonzero on hard violations.
@@ -103,3 +113,11 @@ if ($soft -ne 0) {
 ($result | ConvertTo-Json -Depth 6) | Set-Content $summary -Encoding UTF8
 Write-Host "CFH lint summary -> $summary" -ForegroundColor Green
 if($result.hard_fail){ exit 2 } else { exit 0 }
+function Bypass-AllowedPattern($line){
+  foreach($p in $global:CFH_ALLOW_PATTERNS){
+    if($line -match $p){ return $true }
+  }
+  return $false
+}
+
+
