@@ -893,3 +893,4 @@ if "cod1" not in globals():
 
 # ==== 14) AIO-OPS | COD1 CONTINUITY HOOKS - END ==============================
 
+rn# NOTE(Cod1/20250923_084351): Supports AI-driven loan type inference and CFH lint-gate friendly LoanTerms/PaymentSchedule scaffolds.rn
