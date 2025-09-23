@@ -1,0 +1,1 @@
+export const __AIO_PLACEHOLDER: boolean = true;

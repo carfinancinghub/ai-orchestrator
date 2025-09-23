@@ -1,4 +1,0 @@
-# Artifact for stage: evaluate
-# Saved at: C:\c\ai-orchestrator\artifacts\evaluate_20250817_231556.txt
-
-Evaluation score: 95/100

@@ -1,8 +1,0 @@
-Run-ID: run-20250819T233728Z
-Artifact-ID: f9692a3d-7821-4dee-9fc0-0350126455d3
-Stage: generate
-Version: v13
-Timestamp: 2025-08-19T23:37:28.444777+00:00
-
-Goal: Produce initial artifact content for downstream QA.
-Quality: Coherent, relevant, and within size constraints.

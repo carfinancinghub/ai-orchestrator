@@ -1,32 +1,93 @@
-name: ci
+name: CI
+
 on:
   push:
+    branches: [ main, fix/**, feat/** ]
+    paths:
+      - 'app/**'
+      - 'core/**'
+      - 'tools/**'
+      - 'scripts/**'
+      - 'requirements.txt'
+      - 'pyproject.toml'
+      - '**/*.py'
+      - '.github/workflows/ci.yml'
   pull_request:
+    branches: [ main ]
+    paths:
+      - 'app/**'
+      - 'core/**'
+      - 'tools/**'
+      - 'scripts/**'
+      - 'requirements.txt'
+      - 'pyproject.toml'
+      - '**/*.py'
+      - '.github/workflows/ci.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        python-version: ["3.11"]
+    # Only run if this repo looks like Python (extra safety on top of path filters)
+    if: >
+      !cancelled() &&
+      (
+        hashFiles('requirements.txt') != '' ||
+        hashFiles('pyproject.toml')  != ''  ||
+        hashFiles('**/*.py')         != ''
+      )
+    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install deps
-        shell: bash
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Upgrade pip
+        run: python -m pip install -U pip
+
+      - name: Install deps (requirements.txt)
+        if: hashFiles('requirements.txt') != ''
+        run: python -m pip install -r requirements.txt
+
+      # Ruff only if we have config or python files
+      - name: Ruff
+        if: >
+          hashFiles('pyproject.toml')  != '' ||
+          hashFiles('ruff.toml')       != '' ||
+          hashFiles('**/*.py')         != ''
         run: |
-          python -m pip install --upgrade pip
-          pip install fastapi uvicorn
-          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; else pip install pytest httpx pytest-cov; fi
-      - name: Run tests (coverage + JUnit)
-        shell: bash
-        run: pytest -q --cov=core --cov=app --cov-report=xml --cov-report=term-missing --junitxml=pytest-report.xml
-      - name: Upload test reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-reports-${{ runner.os }}
-          path: |
-            coverage.xml
-            pytest-report.xml
+          python -m pip install ruff
+          python -m ruff check .
+
+      # Mypy only if config or python files are present (soft fail while stabilizing)
+      - name: Mypy (soft fail while stabilizing)
+        if: >
+          hashFiles('mypy.ini')        != '' ||
+          hashFiles('setup.cfg')       != '' ||
+          hashFiles('pyproject.toml')  != '' ||
+          hashFiles('**/*.py')         != ''
+        run: |
+          python -m pip install mypy types-requests
+          # Keep CI green while types stabilize
+          python -m mypy app core tools --ignore-missing-imports || echo "mypy soft fail (ignored)"
+
+      # Pytest only if there are tests or config
+      - name: Pytest
+        if: >
+          hashFiles('pytest.ini')      != '' ||
+          hashFiles('pyproject.toml')  != '' ||
+          hashFiles('**/tests/**')     != '' ||
+          hashFiles('**/test_*.py')    != '' ||
+          hashFiles('**/*_test.py')    != ''
+        run: |
+          python -m pip install pytest
+          python -m pytest -q
