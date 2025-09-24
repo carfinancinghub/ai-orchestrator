@@ -45,6 +45,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Enforce that no vendored/artifact paths are tracked
+      - name: No vendor/artifact files tracked
+        shell: pwsh
+        run: pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/check-no-vendor.ps1
 
       - uses: actions/setup-python@v5
         with:
