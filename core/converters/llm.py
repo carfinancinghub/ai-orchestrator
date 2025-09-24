@@ -5,7 +5,6 @@ LLM-backed converter scaffold. Falls back to conservative heuristics when no API
 from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 import os
 
 from .base import Converter, ConversionResult, HEADER_TS

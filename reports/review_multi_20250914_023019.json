@@ -1,0 +1,55 @@
+{
+  "results": [
+    {
+      "base": "AIDiagnosticsAssistant",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\src\\components\\mechanic\\AIDiagnosticsAssistant.tsx"
+      ],
+      "functions": [
+        "AIDiagnosticsAssistant"
+      ],
+      "worth_score": 10,
+      "recommendation": "discard",
+      "generated": "artifacts\\generated\\AIDiagnosticsAssistant.ts",
+      "staged": "artifacts\\_staged_all\\src\\components\\AIDiagnosticsAssistant.ts"
+    },
+    {
+      "base": "App",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\src\\App.tsx"
+      ],
+      "functions": [
+        "App"
+      ],
+      "worth_score": 10,
+      "recommendation": "discard",
+      "generated": "artifacts\\generated\\App.ts",
+      "staged": "artifacts\\_staged_all\\src\\components\\App.ts"
+    },
+    {
+      "base": "InspectionPhotoPreviewer",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\src\\components\\InspectionPhotoPreviewer.tsx"
+      ],
+      "functions": [
+        "InspectionPhotoPreviewer",
+        "onUpload"
+      ],
+      "worth_score": 10,
+      "recommendation": "discard",
+      "generated": "artifacts\\generated\\InspectionPhotoPreviewer.ts",
+      "staged": "artifacts\\_staged_all\\src\\components\\InspectionPhotoPreviewer.ts"
+    },
+    {
+      "base": "main",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\src\\main.tsx"
+      ],
+      "functions": [],
+      "worth_score": 10,
+      "recommendation": "discard",
+      "generated": "artifacts\\generated\\main.ts",
+      "staged": "artifacts\\_staged_all\\src\\components\\main.ts"
+    }
+  ]
+}

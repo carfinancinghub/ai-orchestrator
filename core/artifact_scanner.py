@@ -6,7 +6,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional, List, Dict
 
-from .status import ValidationStatus, ValidationResult, ScanSummary
+from .status import ValidationResult, ScanSummary
 from .artifact_validator import ArtifactValidator
 
 
