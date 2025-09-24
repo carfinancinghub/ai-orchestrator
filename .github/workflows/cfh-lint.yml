@@ -1,5 +1,5 @@
 env:
-  CFH_LINT_SOFT: 0
+  CFH_LINT_SOFT: "0"
 name: CFH Lint Gates
 
 on:
