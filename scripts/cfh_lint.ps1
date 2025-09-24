@@ -101,6 +101,123 @@ if (-not $CommentOnly) {
 # 4) Post PR comment
 New-Item -ItemType Directory -Force -Path 'reports\debug' | Out-Null
 $tmp = "reports\debug\pr_comment_$runId.md"
+
+$body = @"
+**Cod1 Batch Upload** — run `$runId`
+
+- Generated TS/TSX files: **$genCount** (from ai-orchestrator workspace)
+- Review JSONs: **$reviewCount** (under `artifacts/reviews/$runId/`)
+- Selected candidates: `reports/selected_candidates_25.txt` $((Test-Path 'reports\selected_candidates_25.txt') ? '' : '(missing)')
+- Gates reports (if any): `reports/gates_*.json`
+"@
+
+Set-Content -Path $tmp -Encoding UTF8 -Value $body
+
+try {
+  gh pr comment $Pr --repo $Repo --body-file $tmp | Out-Null
+  Write-Good ("Posted PR comment to {0} #{1}." -f $Repo, $Pr)
+<# 
+Upload batch artifacts summary to a PR, with optional commit/push in the same repo.
+
+Usage:
+  # Same-repo (ai-orchestrator) commit + push + comment
+  pwsh -File scripts\upload_to_github.ps1 -Pr 4 -AttachReports
+
+  # Cross-repo comment-only (CFH PR #17), no git operations
+  pwsh -File scripts\upload_to_github.ps1 -Pr 17 -Repo 'carfinancinghub/cfh' -AttachReports -CommentOnly
+#>
+
+[CmdletBinding()]
+param(
+  [Parameter(Mandatory = $true)]
+  [int]$Pr,
+
+  [switch]$AttachReports,
+
+  # Target repository in "owner/name" form
+  [string]$Repo = 'carfinancinghub/ai-orchestrator',
+
+  # If set, skip any git checkout/add/commit/push. Only comment/labels will be posted.
+  [switch]$CommentOnly
+)
+
+$ErrorActionPreference = 'Stop'
+
+function Write-Info([string]$msg) { Write-Host $msg -ForegroundColor Cyan }
+function Write-Warn([string]$msg) { Write-Warning $msg }
+function Write-Good([string]$msg) { Write-Host $msg -ForegroundColor Green }
+function Path-Exists($p) { Test-Path $p -PathType Leaf -or Test-Path $p -PathType Container }
+
+# 1) Read PR info
+Write-Info ("Reading PR #{0} in repo {1}…" -f $Pr, $Repo)
+try {
+  $prJson = gh pr view $Pr --repo $Repo --json number,state,mergeable,headRefName,baseRefName,headRepository,files `
+    --jq '{num:.number,state:.state,mergeable:.mergeable,head:.headRefName,base:.baseRefName,files:[.files[].path]}'
+  if (-not $prJson) { throw "Empty PR info" }
+  $pr = $prJson | ConvertFrom-Json
+} catch {
+  throw ("Unable to get PR info for {0} #{1}. {2}" -f $Repo, $Pr, $_)
+}
+$head = $pr.head
+Write-Host ("PR #{0}  state={1}  mergeable={2}  head={3}  base={4}" -f $pr.num,$pr.state,$pr.mergeable,$pr.head,$pr.base) -ForegroundColor Gray
+
+# 2) Collect run metadata from current workspace (ai-orchestrator)
+$runIdPath  = Join-Path 'reports' 'latest_run_id.txt'
+$runId      = (Get-Content $runIdPath -ErrorAction SilentlyContinue | Select-Object -First 1)
+if (-not $runId) { $runId = (Get-Date -Format 'yyyyMMdd_HHmmss') }
+
+$genRoot    = 'artifacts\generated'
+$reviewRoot = Join-Path 'artifacts\reviews' $runId
+
+$genCount    = (Path-Exists $genRoot)    ? ((Get-ChildItem $genRoot -Recurse -File -Include *.ts,*.tsx).Count) : 0
+$reviewCount = (Path-Exists $reviewRoot) ? ((Get-ChildItem $reviewRoot -Recurse -File -Include *.json | Where-Object { $_.Length -gt 3 }).Count) : 0
+
+# 3) Same-repo commit/push (skipped in CommentOnly mode)
+if (-not $CommentOnly) {
+  Write-Info ("Same-repo mode: committing to {0} on branch {1}" -f $Repo, $head)
+  try {
+    git fetch origin $head | Out-Null
+    git checkout $head 2>$null | Out-Null
+  } catch {
+    Write-Warn ("Unable to checkout branch '{0}'. Switching to comment-only mode. {1}" -f $head, $_)
+    $CommentOnly = $true
+  }
+
+  if (-not $CommentOnly) {
+    $toAdd = @()
+    if (Path-Exists $genRoot) { $toAdd += $genRoot }
+
+    if ($AttachReports) {
+      $candSel = 'reports\selected_candidates_25.txt'
+      $feedMd  = 'reports\feed_review_20250922.md'
+      $gates   = Get-ChildItem 'reports' -File -Filter 'gates_*.json' -ErrorAction SilentlyContinue
+      $debugs  = Get-ChildItem 'reports\debug' -File -Filter 'run_candidates_*.json' -ErrorAction SilentlyContinue
+
+      foreach($p in @($candSel, $feedMd)) { if (Path-Exists $p) { $toAdd += $p } }
+      if ($gates)  { $toAdd += $gates.FullName }
+      if ($debugs) { $toAdd += $debugs.FullName }
+    }
+
+    if ($toAdd.Count -gt 0) { git add -- $toAdd } else { Write-Warn "Nothing to add. Skipping commit/push." }
+
+    $hasStaged = ((git diff --cached --name-only) | Measure-Object).Count -gt 0
+    if ($hasStaged) {
+      $msg = "chore(ts): add batch artifacts (run $runId) — $genCount files; $reviewCount reviews"
+      git commit -m $msg | Out-Null
+      Write-Good ("Committed: {0}" -f $msg)
+      git push origin $head | Out-Null
+      Write-Good ("Pushed to origin/{0}" -f $head)
+    } else {
+      Write-Host "No staged changes to commit." -ForegroundColor Yellow
+    }
+  }
+} else {
+  Write-Host ("Comment-only mode: will not git commit/push (target repo {0})." -f $Repo) -ForegroundColor Yellow
+}
+
+# 4) Post PR comment
+New-Item -ItemType Directory -Force -Path ''reports\debug'' | Out-Null
+$tmp = "reports\debug\pr_comment_$runId.md"
 @"
 **Cod1 Batch Upload** — run `$runId`
 
@@ -112,7 +229,7 @@ $tmp = "reports\debug\pr_comment_$runId.md"
 
 try {
   gh pr comment $Pr --repo $Repo --body-file $tmp | Out-Null
-  Write-Good ("Posted PR comment to {0} #{1}." -f $Repo, $Pr)
+  Write-Good ("Posted PR comment to {0} #{1}." -f $Repo, $Pr)Write-Good ("Posted PR comment to {0} #{1}." -f $Repo, $Pr)
 } catch {
   Write-Warn ("Failed to post PR comment to {0} #{1}: {2}" -f $Repo, $Pr, $_)
 }
@@ -152,3 +269,6 @@ foreach($n in $desiredLabels.name){
 }
 
 Write-Good ("Posted PR comment + labels to {0} #{1}." -f $Repo, $Pr)
+
+
+
