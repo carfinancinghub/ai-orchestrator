@@ -1,0 +1,14 @@
+$env:AIO_LIVE_AI = "1"
+$env:OPENAI_API_KEY = "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"           # Free/Premium
+# Choose a Wow++ vendor:
+$env:AIO_LIVE_AI_VENDOR = "gemini"
+$env:GEMINI_API_KEY     = "AIzaSyAAPYT6-GPc0aCSHsVAxmGXqGLkEwbspQY"
+# or:
+# $env:AIO_LIVE_AI_VENDOR = "grok"
+# $env:GROK_API_KEY       = "xai-lskiULtWJ9qspQF9n2Ldq5fINmfmrBV1pOHCABtXc4cy4QTVff3Tv1WuGpRIRbnHCLSn5o5ExAhJCNM0"
+
+
+# $env:OPENAI_API_KEY = "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
+"
+# $env:GOOGLE_API_KEY = "AIzaSyAAPYT6-GPc0aCSHsVAxmGXqGLkEwbspQY"
+# $env:XAI_API_KEY    = "xai-lskiULtWJ9qspQF9n2Ldq5fINmfmrBV1pOHCABtXc4cy4QTVff3Tv1WuGpRIRbnHCLSn5o5ExAhJCNM0"

@@ -1,0 +1,41 @@
+name: TS Migration Gates
+
+on:
+  pull_request:
+    paths:
+      - 'artifacts/generated/**'
+      - '.github/workflows/gates.yml'
+  push:
+    branches: ['*']
+    paths:
+      - 'artifacts/generated/**'
+
+jobs:
+  gates:
+    # Only run if there are generated TS/TSX files in this repo
+    if: ${{ hashFiles('artifacts/generated/**') != '' }}
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ts-gates-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Summarize generated artifacts
+        id: inv
+        shell: bash
+        run: |
+          COUNT="$(git ls-files 'artifacts/generated/**/*.ts*' | wc -l | xargs)"
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "Found $COUNT generated files:"
+          git ls-files 'artifacts/generated/**/*.ts*' | sed 's/^/ - /' || true
+
+      # (Optional) Placeholders for future CI steps driven by your Python gates (build/test/lint)
+      # - name: Run additional gates
+      #   run: echo "Hook for orchestrator-driven checks"
+
+      - name: Mark result
+        if: ${{ steps.inv.outputs.count == '0' }}
+        run: |
+          echo "No generated files found. Skipping."

@@ -1,0 +1,15 @@
+{
+  "name": "cfh-llm-bridge",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Node bridge for CFH orchestrator using the ai package",
+  "scripts": {
+    "test-bridge": "node ./test_bridge.cjs"
+  },
+  "dependencies": {
+    "ai": "^3.4.0",
+    "cfh-llm-bridge": "file:../../..",
+    "openai": "^4.58.1"
+  }
+}

@@ -1,0 +1,28 @@
+# File Review — Login.jsx
+Run ID: 20250917_122247
+Local exists: True
+GitHub repo: carfinancinghub/cfh @ main
+
+## Summary
+- Path: C:\Backup_Projects\CFH_Backup_2025-08-02_15-36\frontend\src\components\auth\Login.jsx
+- Size: 1672 bytes
+- Needs type work: yes
+
+## Notable Elements
+- Hooks used: `useState`, `useEffect` if present
+- Routing/lazy: check `React.lazy`/`Suspense`
+- Props flow: identify prop drilling vs context
+
+## Conversion Needs
+- Convert to .tsx, add FC<Props> typing, children?: ReactNode
+- Add typed state/effect dependencies; prefer explicit types when crossing module boundaries
+- Type network responses; define DTOs and narrow to view models
+
+## Remote Check
+- Remote not fetched or no local content
+
+## Next Steps
+1) Suggest features (perform worth scoring)
+2) Generate spec MD
+3) Generate TS/TSX
+4) Re-review vs spec & suggestions
