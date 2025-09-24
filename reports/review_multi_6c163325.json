@@ -1,0 +1,65 @@
+{
+  "results": [
+    {
+      "base": "app",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\app.jsx",
+        "C:\\Backup_Projects\\CFH\\frontend\\app.tsx"
+      ],
+      "functions": [
+        "App",
+        "NotFoundPage"
+      ],
+      "worth_score": 45,
+      "recommendation": "keep"
+    },
+    {
+      "base": "app.test",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\app.test.tsx"
+      ],
+      "functions": [],
+      "worth_score": 35,
+      "recommendation": "keep"
+    },
+    {
+      "base": "cypress.config",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\cypress.config.js",
+        "C:\\Backup_Projects\\CFH\\frontend\\cypress.config.ts"
+      ],
+      "functions": [],
+      "worth_score": 45,
+      "recommendation": "keep"
+    },
+    {
+      "base": "index",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\index.jsx",
+        "C:\\Backup_Projects\\CFH\\frontend\\index.tsx"
+      ],
+      "functions": [],
+      "worth_score": 45,
+      "recommendation": "keep"
+    },
+    {
+      "base": "index.test",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\index.test.tsx"
+      ],
+      "functions": [],
+      "worth_score": 35,
+      "recommendation": "keep"
+    },
+    {
+      "base": "jest.config",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\jest.config.js",
+        "C:\\Backup_Projects\\CFH\\frontend\\jest.config.ts"
+      ],
+      "functions": [],
+      "worth_score": 45,
+      "recommendation": "keep"
+    }
+  ]
+}

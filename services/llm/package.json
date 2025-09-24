@@ -1,0 +1,15 @@
+# Path: app/services/llm/package.json  (UPDATE: make test script PS-friendly)
+{
+  "name": "cfh-llm-bridge",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Node bridge for CFH orchestrator using the ai package",
+  "scripts": {
+    "test-bridge": "node app/services/llm/test_bridge.cjs"
+  },
+  "dependencies": {
+    "ai": "^3.4.0",
+    "openai": "^4.58.1"
+  }
+}

@@ -1,26 +1,26 @@
-﻿# env
-.env
-.env.local
+# Dependencies & virtual envs
+**/node_modules/
+**/.venv/
+**/venv/
+**/env/
+**/__pycache__/
 
-# python
-__pycache__/
-.venv/
+# Python build artifacts
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+**/build/
+**/dist/
+**/*.egg-info/
 
-# project outputs
-artifacts/
-reports/**/review_input_*.json
-reports/**/review-pack.md
+# Reports that mirror filesystem inventories
+reports/*_orchestrator_files.csv
 
-# OS/editor
+# OS / editor cruft
 .DS_Store
 Thumbs.db
-.vscode/
 .idea/
-files/
-node_modules/
-reports/**/review_input_*.json
-reports/**/review-pack.md
-
-logs/*
-
-reports/CFH/absolute-path-refs.csv
+.vscode/# Orchestrator/CI artifacts & snapshots
+artifacts/
+reports/*_workspace_collect/

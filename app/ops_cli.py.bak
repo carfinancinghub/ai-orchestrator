@@ -1,0 +1,99 @@
+# app/ops_cli.py
+rb = sub.add_parser("run-batch", help="scan then run a chained batch")
+rb.add_argument("--platform", default="local", choices=["local", "github", "gitlab"]) # scanning source
+rb.add_argument("--user", default="carfinancinghub")
+rb.add_argument("--org", default=None)
+rb.add_argument("--repo-name", default=None)
+rb.add_argument("--branches", default="main")
+rb.add_argument("--offset", type=int, default=0)
+rb.add_argument("--limit", type=int, default=50)
+rb.add_argument("--out", default="artifacts")
+rb.add_argument("--mode", default="all", choices=["all", "review", "generate", "persist"]) # which stages to run
+
+
+args = ap.parse_args()
+
+
+# Pick token by platform (optional for local)
+token = None
+if args.platform == "github":
+token = os.getenv("GITHUB_TOKEN")
+elif args.platform == "gitlab":
+token = os.getenv("GITLAB_TOKEN")
+
+
+run_id = uuid.uuid4().hex[:8]
+
+
+if args.cmd == "scan":
+cands, bundles, repos = fetch_candidates(
+org=args.org,
+repo_name=args.repo_name,
+platform=args.platform,
+token=token,
+run_id=run_id,
+branches=_split(args.branches),
+local_inventory_paths=None,
+user=args.user,
+)
+print(json.dumps({"ok": True, "run_id": run_id, "candidates": len(cands)}))
+return
+
+
+if args.cmd in ("review", "generate", "persist"):
+# Always scan first to get the fresh candidate list
+cands, bundles, repos = fetch_candidates(
+org=args.org,
+repo_name=args.repo_name,
+platform=args.platform,
+token=token,
+run_id=run_id,
+branches=_split(args.branches),
+local_inventory_paths=None,
+user=args.user,
+)
+res = process_batch(
+platform=args.platform,
+token=token,
+candidates=cands,
+bundle_by_src=bundles,
+run_id=run_id,
+batch_offset=args.offset,
+batch_limit=args.limit,
+mode=args.cmd,
+out_dir=args.out,
+)
+print(json.dumps({"ok": True, "run_id": run_id, "processed": len(res), "mode": args.cmd}))
+return
+
+
+if args.cmd == "run-batch":
+cands, bundles, repos = fetch_candidates(
+org=args.org,
+repo_name=args.repo_name,
+platform=args.platform,
+token=token,
+run_id=run_id,
+branches=_split(args.branches),
+local_inventory_paths=None,
+user=args.user,
+)
+res = process_batch(
+platform=args.platform,
+token=token,
+candidates=cands,
+bundle_by_src=bundles,
+run_id=run_id,
+batch_offset=args.offset,
+batch_limit=args.limit,
+mode=args.mode,
+out_dir=args.out,
+)
+print(json.dumps({"ok": True, "run_id": run_id, "processed": len(res), "mode": args.mode}))
+return
+
+
+
+
+if __name__ == "__main__":
+main()

@@ -1,16 +1,32 @@
 {
-  "name": "cfh-llm-bridge",
-  "private": true,
-  "type": "module",
-  "version": "0.1.0",
-  "description": "Node bridge for CFH orchestrator using the ai package",
-  "scripts": {
-    "test-sparka": "node app/services/llm/sparka_bridge.mjs",
-    "check:nojs": "powershell -NoLogo -NoProfile -ExecutionPolicy Bypass -File scripts/check-no-js.ps1",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "ai": "^3.4.33",
-    "openai": "^4.104.0"
-  }
+    "name":  "frontend",
+    "version":  "0.0.0",
+    "scripts":  {
+                    "build":  "vite build",
+                    "test":  "vitest run --root . --config vitest.config.ts",
+                    "lint":  "eslint -c eslint.config.mjs \"src/**/*.{ts,tsx}\"",
+                    "test:utils:smoke":  "vitest --config vitest.config.ts --run tests/utils",
+                    "test:ci":  "pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-vitest.ps1",
+                    "test:watch":  "pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/run-vitest.ps1 -Watch"
+                },
+    "dependencies":  {
+                         "react":  "^18.2.0",
+                         "react-dom":  "^18.2.0",
+                         "react-helmet-async":  "^2.0.5",
+                         "react-toastify":  "^10.0.5",
+                         "socket.io-client":  "^4.7.5"
+                     },
+    "devDependencies":  {
+                            "@testing-library/jest-dom":  "^6.5.0",
+                            "@testing-library/react":  "^16.0.1",
+                            "@typescript-eslint/eslint-plugin":  "^8.4.0",
+                            "@typescript-eslint/parser":  "^8.4.0",
+                            "@vitejs/plugin-react":  "^4.3.1",
+                            "eslint":  "^9.9.1",
+                            "eslint-plugin-react":  "^7.35.2",
+                            "globals":  "^16.4.0",
+                            "vite":  "^5.4.19",
+                            "vite-tsconfig-paths":  "^5.0.1",
+                            "vitest":  "^1.6.1"
+                        }
 }

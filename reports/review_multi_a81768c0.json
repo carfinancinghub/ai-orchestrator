@@ -1,0 +1,42 @@
+{
+  "results": [
+    {
+      "base": "app",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\app.jsx",
+        "C:\\Backup_Projects\\CFH\\frontend\\app.tsx"
+      ],
+      "functions": [
+        "App",
+        "NotFoundPage"
+      ],
+      "worth_score": 45,
+      "recommendation": "keep",
+      "generated": "artifacts\\generated\\app.ts",
+      "staged": "artifacts\\_staged_all\\src\\components\\app.ts"
+    },
+    {
+      "base": "app.test",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\app.test.tsx"
+      ],
+      "functions": [],
+      "worth_score": 35,
+      "recommendation": "keep",
+      "generated": "artifacts\\generated\\app_test.ts",
+      "staged": "artifacts\\_staged_all\\src\\tests\\app_test.test.tsx"
+    },
+    {
+      "base": "cypress.config",
+      "files": [
+        "C:\\Backup_Projects\\CFH\\frontend\\cypress.config.js",
+        "C:\\Backup_Projects\\CFH\\frontend\\cypress.config.ts"
+      ],
+      "functions": [],
+      "worth_score": 45,
+      "recommendation": "keep",
+      "generated": "artifacts\\generated\\cypress_config.ts",
+      "staged": "artifacts\\_staged_all\\src\\components\\cypress_config.ts"
+    }
+  ]
+}

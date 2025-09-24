@@ -1,0 +1,202 @@
+﻿[
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_changelog_search.js_20250917_084837.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084837\\changelog_search.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\changelog_search_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\changelog_search.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084837\\verify\\changelog_search.ts.json",
+    "run_id": "20250917_084837"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_cypress.config.js_20250917_084838.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084838\\cypress.config.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\cypress.config_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\cypress.config.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084838\\verify\\cypress.config.ts.json",
+    "run_id": "20250917_084838"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_DisputeRadarWidget.testOld.jsx_20250917_084838.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084838\\DisputeRadarWidget.testOld.jsx.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\DisputeRadarWidget.testOld_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\DisputeRadarWidget.testOld.tsx",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084838\\verify\\DisputeRadarWidget.testOld.tsx.json",
+    "run_id": "20250917_084838"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_documentation_options.js_20250917_084839.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084839\\documentation_options.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\documentation_options_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\documentation_options.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084839\\verify\\documentation_options.ts.json",
+    "run_id": "20250917_084839"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_EquityIntelligenceHub.testOld.jsx_20250917_084840.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084840\\EquityIntelligenceHub.testOld.jsx.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\EquityIntelligenceHub.testOld_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\EquityIntelligenceHub.testOld.tsx",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084840\\verify\\EquityIntelligenceHub.testOld.tsx.json",
+    "run_id": "20250917_084840"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_escrow.js_20250917_084840.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084840\\escrow.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\escrow_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\escrow.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084840\\verify\\escrow.ts.json",
+    "run_id": "20250917_084840"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_escrow.model.js_20250917_084841.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084841\\escrow.model.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\escrow.model_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\escrow.model.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084841\\verify\\escrow.model.ts.json",
+    "run_id": "20250917_084841"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_escrow.repository.js_20250917_084842.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084842\\escrow.repository.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\escrow.repository_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\escrow.repository.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084842\\verify\\escrow.repository.ts.json",
+    "run_id": "20250917_084842"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_escrow.validation.js_20250917_084842.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084842\\escrow.validation.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\escrow.validation_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\escrow.validation.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084842\\verify\\escrow.validation.ts.json",
+    "run_id": "20250917_084842"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_escrowAuditLogRoutes.testOld.js_20250917_084843.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084843\\escrowAuditLogRoutes.testOld.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\escrowAuditLogRoutes.testOld_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\escrowAuditLogRoutes.testOld.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084843\\verify\\escrowAuditLogRoutes.testOld.ts.json",
+    "run_id": "20250917_084843"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_escrowNotifyRoutes.testOld.js_20250917_084843.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084843\\escrowNotifyRoutes.testOld.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\escrowNotifyRoutes.testOld_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\escrowNotifyRoutes.testOld.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084843\\verify\\escrowNotifyRoutes.testOld.ts.json",
+    "run_id": "20250917_084843"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_escrow-transactions.js_20250917_084844.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084844\\escrow-transactions.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\escrow-transactions_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\escrow-transactions.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084844\\verify\\escrow-transactions.ts.json",
+    "run_id": "20250917_084844"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_eslint.config.js_20250917_084845.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084845\\eslint.config.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\eslint.config_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\eslint.config.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084845\\verify\\eslint.config.ts.json",
+    "run_id": "20250917_084845"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_ets-partners.js_20250917_084845.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084845\\ets-partners.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\ets-partners_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\ets-partners.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084845\\verify\\ets-partners.ts.json",
+    "run_id": "20250917_084845"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_ets-requests.js_20250917_084846.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084846\\ets-requests.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\ets-requests_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\ets-requests.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084846\\verify\\ets-requests.ts.json",
+    "run_id": "20250917_084846"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_export.js_20250917_084846.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084846\\export.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\export_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\export.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084846\\verify\\export.ts.json",
+    "run_id": "20250917_084846"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_folder-down.js_20250917_084847.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084847\\folder-down.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\folder-down_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\folder-down.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084847\\verify\\folder-down.ts.json",
+    "run_id": "20250917_084847"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_foldl.js_20250917_084848.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084848\\foldl.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\foldl_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\foldl.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084848\\verify\\foldl.ts.json",
+    "run_id": "20250917_084848"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_foldr.js_20250917_084848.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084848\\foldr.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\foldr_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\foldr.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084848\\verify\\foldr.ts.json",
+    "run_id": "20250917_084848"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_forum.js_20250917_084849.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084849\\forum.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\forum_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\forum.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084849\\verify\\forum.ts.json",
+    "run_id": "20250917_084849"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_fraud.js_20250917_084850.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084850\\fraud.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\fraud_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\fraud.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084850\\verify\\fraud.ts.json",
+    "run_id": "20250917_084850"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_get-folder-size.js_20250917_084850.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084850\\get-folder-size.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\get-folder-size_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\get-folder-size.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084850\\verify\\get-folder-size.ts.json",
+    "run_id": "20250917_084850"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_github-email-test.js_20250917_084851.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084851\\github-email-test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\github-email-test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\github-email-test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084851\\verify\\github-email-test.ts.json",
+    "run_id": "20250917_084851"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_glossary_search.js_20250917_084852.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084852\\glossary_search.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\glossary_search_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\glossary_search.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084852\\verify\\glossary_search.ts.json",
+    "run_id": "20250917_084852"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_hash.js_20250917_084852.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_084852\\hash.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\hash_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\hash.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_084852\\verify\\hash.ts.json",
+    "run_id": "20250917_084852"
+  }
+]

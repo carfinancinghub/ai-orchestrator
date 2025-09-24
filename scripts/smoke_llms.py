@@ -1,4 +1,6 @@
-﻿import os, importlib, sys
+﻿import os
+import importlib
+import sys
 
 def check(sdk_name, import_name, env_keys):
     print(f"\n== {sdk_name} ==")

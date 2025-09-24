@@ -1,0 +1,30 @@
+{
+  "results": [
+    {
+      "base": "10 files BidHeatmapEngine",
+      "files": [
+        "C:\\c\\ai-orchestrator\\artifacts\\_workspace_collect\\snapshot_20250906_005627\\backend\\services\\10 files BidHeatmapEngine.js",
+        "C:\\c\\ai-orchestrator\\artifacts\\_workspace_collect\\snapshot_20250906_005627\\backend\\services\\10 files BidHeatmapEngine.ts",
+        "C:\\c\\ai-orchestrator\\artifacts\\_workspace_collect\\snapshot_20250906_005627\\backend\\services\\10 files BidHeatmapEngine.js",
+        "C:\\c\\ai-orchestrator\\artifacts\\_workspace_collect\\snapshot_20250906_005627\\backend\\services\\10 files BidHeatmapEngine.ts"
+      ],
+      "functions": [
+        "generateBidHeatmapData",
+        "suggestStartingBid",
+        "saveTemplate",
+        "getTemplate",
+        "HeatmapChart",
+        "BlockchainSnapshotViewer",
+        "SellerBadgePanel",
+        "AuctionListingForm",
+        "generateSuggestion",
+        "handleSaveTemplate",
+        "AuctionHistoryTracker"
+      ],
+      "worth_score": 55,
+      "recommendation": "keep",
+      "generated": null,
+      "staged": null
+    }
+  ]
+}

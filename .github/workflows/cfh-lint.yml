@@ -1,0 +1,45 @@
+env:
+  CFH_LINT_SOFT: 0
+name: CFH Lint Gates
+
+on:
+  pull_request:
+    paths:
+      - '**/*.ts'
+      - '**/*.tsx'
+      - '.github/workflows/cfh-lint.yml'
+      - 'scripts/cfh_lint.ps1'
+  push:
+    branches: ['*']
+    paths:
+      - '**/*.ts'
+      - '**/*.tsx'
+      - '.github/workflows/cfh-lint.yml'
+      - 'scripts/cfh_lint.ps1'
+
+jobs:
+  cfh-lint:
+    if: ${{ !cancelled() && hashFiles('**/*.ts','**/*.tsx') != '' && hashFiles('scripts/cfh_lint.ps1') != '' }}
+    runs-on: ubuntu-latest
+    concurrency:
+      group: cfh-lint-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run CFH lint (non-interactive)
+        shell: pwsh
+        run: pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/cfh_lint.ps1
+
+      - name: Upload CFH lint summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cfh-lint-summary
+          path: reports/cfh_lint_summary.json
+          if-no-files-found: ignore
+
+
+
+

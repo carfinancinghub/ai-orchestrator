@@ -1,398 +1,896 @@
-# Path: C:\c\ai-orchestrator\app\ops.py
-# Version: 0.3.8
-# Last Updated: 2025-08-31 01:55 PDT
-# Purpose: Core operations for scanning and processing .js/.jsx files for TypeScript migration
-from __future__ import annotations
-import json, os, logging
-from datetime import datetime, timezone
-from pathlib import Path
-from typing import Dict, List, Optional
-from github import Github, GithubException
+# ==== 0) AIO-OPS | STANDARD FILE HEADER - START ===============================
+# File: app/ops.py
+# Purpose: Orchestrator for CFH TypeScript migration automation.
+# Loop: scan → review → generate → gates → upload → report
+#
+# Environment (key vars)
+# - AIO_TARGET_REPO        : e.g. "carfinancinghub/cfh"
+# - AIO_FRONTEND_DIR       : local path to CFH frontend (vite project)
+# - AIO_RUN_GATES          : "1" to run build/test/lint gates
+# - AIO_UPLOAD_TS          : "1" = timestamp branches, "0" = rolling branch
+# - AIO_UPLOAD_BRANCH      : branch name when using rolling mode
+# - OPENAI_API_KEY         : (present check only)
+# - GEMINI_API_KEY         : (present check only)
+# - GROK_API_KEY           : (present check only)
+# - GITHUB_TOKEN           : required for uploads/comments/labels
+# - AIO_NPM_BIN            : optional full path to npm(.cmd) if npm not in PATH
+#
+# Rolling PR logic (Cod1)
+# - If AIO_UPLOAD_TS == "0" and AIO_UPLOAD_BRANCH is non-empty,
+#   uploader uses the rolling branch and appends commits to a single PR.
+# - Otherwise defaults to per-run timestamp branches.
+#
+# Reports / artifacts
+# - reports/upload_<run_id>.txt   : PR URL for a run (used by helpers)
+# - reports/gates_<run_id>.json   : build/test/lint results
+# - reports/debug/*.md            : human-readable status bundles
+# - reports/inv_*.csv             : inventories (when generated)
+#
+# Sections (by marker):
+#   0) STANDARD FILE HEADER
+#   1) IMPORTS & CONSTANTS
+#   2) HELPERS
+#   3) GROUPING & FILTERS
+#   4) FUNCTION EXTRACTION
+#   5) ACORN EXTRACTOR
+#   6) WORTH SCORE & RECOMMENDATION
+#   7) GATES
+#   8) SPECIAL SCAN & PROCESS
+#   9) COMPAT: fetch_candidates
+#  10) MULTI-AI REVIEW / GENERATE
+#  11) GITHUB UPLOAD
+#  12) SG-Man multi-AI review hook
+#  13) ECOSYSTEM HELPERS
+#
+# Notes
+# - Keep UTF-8 (no BOM); ensure console + Python encoding are UTF-8.
+# - Never print secrets; only presence-check keys.
+# - Batches limited to 25 files per append.
+# - Post gates summary as PR comment after each append.
+# ==== 0) AIO-OPS | STANDARD FILE HEADER - END =================================
+
+# ==== 1) AIO-OPS | IMPORTS & CONSTANTS - START ================================
+import os
+import re
+import sys
+import csv
+import json
 import time
-import glob
-from ratelimit import limits, sleep_and_retry
-from dataclasses import dataclass
-from app.utils import emit_migration_list
+import shlex
+import queue
+import hashlib
+import logging
+import random
+import string
+import subprocess
+from pathlib import Path
+from typing import List, Dict, Any, Optional, Tuple
 
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+# GitHub API (PyGithub)
+from github import Github, Auth
 
-REPORTS_ROOT = Path("reports"); REPORTS_ROOT.mkdir(parents=True, exist_ok=True)
-ARTIFACTS_ROOT = Path("artifacts"); ARTIFACTS_ROOT.mkdir(parents=True, exist_ok=True)
-STAGING_ROOT = ARTIFACTS_ROOT / "staging"; STAGING_ROOT.mkdir(parents=True, exist_ok=True)
+# Constants
+AIO_REPO   = os.environ.get("AIO_TARGET_REPO", "carfinancinghub/cfh")
+FRONTEND   = Path(os.environ.get("AIO_FRONTEND_DIR", "C:/Backup_Projects/CFH/frontend"))
+REPORTS    = Path("reports")
+DEBUG_DIR  = REPORTS / "debug"
+BATCH_SIZE = int(os.environ.get("AIO_BATCH_SIZE", "25"))
 
-CALLS = 60
-PERIOD = 60
-EXCLUDE_DIRS = {"node_modules", ".git", ".venv", ".github", "cypress", "vite"}
-EXCLUDE_FILES = {"cypress.config.js", "vite.config.js", "vite.config.ts", "jest.config.js"}
+# Ensure dirs
+REPORTS.mkdir(exist_ok=True)
+DEBUG_DIR.mkdir(parents=True, exist_ok=True)
 
-@dataclass
-class Candidate:
-    repo: str
-    branch: str
-    src_path: str
-    mtime: float
+# Initialize GitHub client
+_gh = Github(auth=Auth.Token(os.environ["GITHUB_TOKEN"])) if os.environ.get("GITHUB_TOKEN") else None
+_repo = _gh.get_repo(AIO_REPO) if _gh else None
 
-def stage_file(repo: str, branch: str, src_path: str, content: str) -> Path:
-    target = (STAGING_ROOT / repo.replace("/", "__") / branch / src_path.replace("\\", "/"))
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(content, encoding="utf-8")
-    return target
+# ==== 1) AIO-OPS | IMPORTS & CONSTANTS - END ==================================
+# ==== 2) AIO-OPS | HELPERS - START ===========================================
+def log(msg: str) -> None:
+    """Lightweight logger with UTC timestamp."""
+    ts = time.strftime("%Y-%m-%d %H:%M:%SZ", time.gmtime())
+    print(f"[{ts}] {msg}", flush=True)
 
-def _path_is_excluded(p: str | Path) -> bool:
-    path_str = str(p).replace("\\", "/").lower()
-    return any(excluded_dir in path_str.split("/") for excluded_dir in EXCLUDE_DIRS) or \
-           Path(path_str).name.lower() in EXCLUDE_FILES
 
-def _parse_inventory_md(md_path: Path) -> List[Path]:
-    paths: List[Path] = []
-    try:
-        text = md_path.read_text(encoding="utf-8", errors="ignore")
-    except Exception as e:
-        logger.warning(f"Failed to read inventory {md_path}: {e}")
-        return paths
-    for line in text.splitlines():
-        line = line.strip()
-        if not (line.startswith("|") and line.count("|") >= 4):
-            continue
-        content = line.replace("|", "").strip()
-        if set(content) <= set("-: "):
-            continue
-        cols = [c.strip() for c in line.strip("|").split("|")]
-        if not cols:
-            continue
-        file_path_str = cols[0].strip().strip('"').strip("'")
-        p = Path(file_path_str)
-        if p.exists() and p.is_file() and not _path_is_excluded(p):
-            paths.append(p)
-    return paths
+def sha1_of_file(path: Path) -> str:
+    """Return SHA1 hex digest of a file."""
+    h = hashlib.sha1()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(8192), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
-@sleep_and_retry
-@limits(calls=CALLS, period=PERIOD)
-def list_repos_and_branches(user: str, platform: str, token: str) -> List[Dict]:
-    logger.info(f"Listing repos for user {user} on {platform}")
-    start_time = time.time()
-    try:
-        if platform == "github":
-            gh = Github(token)
-            allow = {"my-project-migration", "cfh", "converting", "ai-orchestrator"}
-            repos = []
-            for r in gh.get_user(user).get_repos():
-                if r.name in allow:
-                    branches = [b.name for b in gh.get_repo(f"{user}/{r.name}").get_branches()]
-                    repos.append({"repo": f"{user}/{r.name}", "branches": branches})
-                    logger.info(f"Found repo {r.name} with branches {branches}")
-            if not repos:
-                for name in sorted(allow):
-                    full = f"{user}/{name}"
-                    try:
-                        branches = [b.name for b in gh.get_repo(full).get_branches()]
-                        repos.append({"repo": full, "branches": branches})
-                        logger.info(f"Fallback: Found repo {full} with branches {branches}")
-                    except GithubException as e:
-                        logger.error(f"Failed to access repo {full}: {str(e)}")
-            logger.info(f"Completed repo listing in {time.time() - start_time:.2f}s")
-            return repos
+
+def write_json_report(obj: Any, dest: Path) -> None:
+    """Write a JSON report with UTF-8 encoding."""
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    with dest.open("w", encoding="utf-8") as f:
+        json.dump(obj, f, indent=2, ensure_ascii=False)
+
+
+def read_json_report(src: Path) -> Optional[Any]:
+    """Read JSON if exists, else None."""
+    if not src.exists():
+        return None
+    with src.open("r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def ensure_list(x: Any) -> List[Any]:
+    """Wrap non-list into a list."""
+    if x is None:
         return []
-    except GithubException as e:
-        logger.error(f"GitHub API error listing repos: {str(e)}")
-        raise
+    if isinstance(x, list):
+        return x
+    return [x]
 
-@sleep_and_retry
-@limits(calls=CALLS, period=PERIOD)
-def fetch_candidates(
-    org: Optional[str],
-    repo_name: Optional[str],
-    platform: str,
-    token: str,
-    run_id: str,
-    branches: Optional[List[str]],
-    local_inventory_paths: Optional[List[str]] = None,
-    user: Optional[str] = None,
-):
-    logger.info(f"Starting fetch_candidates for run_id {run_id}")
-    start_time = time.time()
-    candidates: List[Candidate] = []
-    bundle_by_src: Dict[str, Dict[str, str]] = {}
-    files: List[Dict] = []
-    exclusions: List[Dict] = []
-    js_count = 0
-    ts_tsx_list: List[str] = []
-    prefixes_env = os.getenv("CFH_SCAN_PATH_PREFIXES", "src/")
-    path_prefixes = [p.strip().lower() for p in prefixes_env.split(",") if p.strip()]
-    if path_prefixes:
-        logger.info(f"Using path prefix filter(s): {path_prefixes}")
+# ==== 2) AIO-OPS | HELPERS - END =============================================
+# ==== 3) AIO-OPS | GROUPING & FILTERS - START =================================
 
-    # Clear old inventory cache to avoid stale data
-    cache_file = REPORTS_ROOT / f"inventory_cache_{run_id}.json"
-    if cache_file.exists():
-        logger.info(f"Removing stale inventory cache: {cache_file}")
-        cache_file.unlink()
+def group_by_extension(files: List[Path]) -> Dict[str, List[Path]]:
+    """Group a list of Paths by their lowercase extension."""
+    groups: Dict[str, List[Path]] = {}
+    for p in files:
+        ext = p.suffix.lower()
+        groups.setdefault(ext, []).append(p)
+    return groups
 
-    # Auto-detect local inventories
-    if local_inventory_paths is None:
-        local_inventory_paths = [
-            str(p) for p in glob.glob(str(REPORTS_ROOT / "inventory*.{txt,list,csv,json}"), recursive=True) +
-            glob.glob(str(REPORTS_ROOT / "inventories/*.*")) + glob.glob(str(REPORTS_ROOT / "file_scan_results_*.md"))
-        ]
-        logger.info(f"Auto-detected local inventory paths: {local_inventory_paths}")
 
-    # Local inventory scanning
-    root_dir = Path(local_inventory_paths[0]) if local_inventory_paths else Path("C:\\Backup_Projects\\CFH\\frontend")
-    if root_dir and root_dir.exists() and root_dir.is_dir():
-        logger.info(f"Scanning root directory: {root_dir}")
-        for p in root_dir.rglob("*"):
-            path_str = str(p).replace("\\", "/").lower()
-            if _path_is_excluded(p):
-                continue
-            if p.is_file() and p.suffix.lower() in ('.js', '.jsx', '.ts', '.tsx'):
-                if path_prefixes and not any(path_str.startswith(pref) for pref in path_prefixes):
-                    continue
-                files.append({"repo": "local", "branch": "main", "path": path_str})
-                if p.suffix.lower() in ('.js', '.jsx'):
-                    candidates.append(Candidate(repo="local", branch="main", src_path=path_str, mtime=p.stat().st_mtime))
-                    js_count += 1
-                    logger.info(f"Added local candidate: {path_str}")
-                elif p.suffix.lower() in ('.ts', '.tsx'):
-                    ts_tsx_list.append(path_str)
-                    logger.info(f"Found local TS/TSX: {path_str}")
+def filter_source_like(files: List[Path]) -> List[Path]:
+    """Keep only .js/.jsx/.ts/.tsx files."""
+    return [f for f in files if f.suffix.lower() in (".js", ".jsx", ".ts", ".tsx")]
 
-    # Markdown inventory scanning
-    for p_str in local_inventory_paths:
-        p = Path(p_str)
-        if p.exists() and p.suffix.lower() == ".md":
-            for md_path in _parse_inventory_md(p):
-                path_str = str(md_path).replace("\\", "/").lower()
-                if _path_is_excluded(md_path):
-                    continue
-                if path_prefixes and not any(path_str.startswith(pref) for pref in path_prefixes):
-                    continue
-                files.append({"repo": "local", "branch": "main", "path": path_str})
-                if md_path.suffix.lower() in (".js", ".jsx"):
-                    mtime = md_path.stat().st_mtime if md_path.exists() else 0.0
-                    candidates.append(Candidate(repo="local", branch="main", src_path=path_str, mtime=mtime))
-                    js_count += 1
-                    logger.info(f"Added markdown candidate: {path_str}")
-                elif md_path.suffix.lower() in (".ts", ".tsx"):
-                    ts_tsx_list.append(path_str)
-                    logger.info(f"Found markdown TS/TSX: {path_str}")
 
-    # GitHub repo scanning
-    if platform == "github":
-        repos_info = list_repos_and_branches(user or "carfinancinghub", platform, token)
-        gh = Github(token)
-        for repo_info in repos_info:
-            repo_name = repo_info["repo"].split("/")[-1]
-            logger.info(f"Scanning repo {repo_name}")
-            repo_start = time.time()
-            timeout = 120 if repo_name == "cfh" else 60
-            try:
-                repo = gh.get_repo(f"{user or 'carfinancinghub'}/{repo_name}")
-                for branch in repo_info["branches"]:
-                    try:
-                        contents = repo.get_contents("", ref=branch)
-                        batch_size = 50
-                        for i in range(0, len(contents), batch_size):
-                            batch = contents[i:i + batch_size]
-                            for file_content in batch:
-                                path_str = file_content.path.lower()
-                                if _path_is_excluded(file_content.path):
-                                    continue
-                                if file_content.type == "dir":
-                                    sub_contents = repo.get_contents(file_content.path, ref=branch)
-                                    for sub_file in sub_contents:
-                                        sub_path_str = sub_file.path.lower()
-                                        if _path_is_excluded(sub_file.path):
-                                            continue
-                                        if sub_file.path.endswith(('.js', '.jsx', '.ts', '.tsx')):
-                                            if path_prefixes and not any(sub_path_str.startswith(pref) for pref in path_prefixes):
-                                                continue
-                                            try:
-                                                repo.get_contents(sub_file.path, ref=branch)
-                                                files.append({"repo": repo.full_name, "branch": branch, "path": sub_file.path})
-                                                if sub_file.path.endswith(('.js', '.jsx')):
-                                                    candidates.append(Candidate(repo=repo.full_name, branch=branch, src_path=sub_file.path, mtime=0))
-                                                    js_count += 1
-                                                    logger.info(f"Added GitHub candidate: {sub_file.path}")
-                                                elif sub_file.path.endswith(('.ts', '.tsx')):
-                                                    ts_tsx_list.append(sub_file.path)
-                                                    logger.info(f"Found GitHub TS/TSX: {sub_file.path}")
-                                            except GithubException as e:
-                                                exclusions.append({"repo": repo_name, "branch": branch, "path": sub_file.path, "error": f"File not found: {str(e)}"})
-                                elif file_content.path.endswith(('.js', '.jsx', '.ts', '.tsx')):
-                                    if path_prefixes and not any(path_str.startswith(pref) for pref in path_prefixes):
-                                        continue
-                                    try:
-                                        repo.get_contents(file_content.path, ref=branch)
-                                        files.append({"repo": repo.full_name, "branch": branch, "path": file_content.path})
-                                        if file_content.path.endswith(('.js', '.jsx')):
-                                            candidates.append(Candidate(repo=repo.full_name, branch=branch, src_path=file_content.path, mtime=0))
-                                            js_count += 1
-                                            logger.info(f"Added GitHub candidate: {file_content.path}")
-                                        elif file_content.path.endswith(('.ts', '.tsx')):
-                                            ts_tsx_list.append(file_content.path)
-                                            logger.info(f"Found GitHub TS/TSX: {file_content.path}")
-                                    except GithubException as e:
-                                        exclusions.append({"repo": repo_name, "branch": branch, "path": file_content.path, "error": f"File not found: {str(e)}"})
-                            if time.time() - repo_start > timeout:
-                                logger.warning(f"Timeout scanning {repo_name} after {timeout}s")
-                                exclusions.append({"repo": repo_name, "error": f"Timeout after {timeout}s"})
-                                break
-                    except GithubException as e:
-                        logger.error(f"Error scanning branch {branch} in {repo_name}: {str(e)}")
-                        exclusions.append({"repo": repo_name, "branch": branch, "error": str(e)})
-            except GithubException as e:
-                logger.error(f"Error scanning repo {repo_name}: {str(e)}")
-                exclusions.append({"repo": repo_name, "error": str(e)})
-            logger.info(f"Scanned repo {repo_name} in {time.time() - repo_start:.2f}s")
+def exclude_node_modules(files: List[Path]) -> List[Path]:
+    """Remove files inside node_modules directories."""
+    return [f for f in files if "node_modules" not in f.parts]
 
-    discrepancies: Dict[str, int] = {r: sum(1 for c in candidates if c.repo == r) for r in {c.repo for c in candidates}}
-    logger.info(f"Discrepancies: {discrepancies}")
+# ==== 3) AIO-OPS | GROUPING & FILTERS - END ===================================
+# ==== 4) AIO-OPS | FUNCTION EXTRACTION - START ================================
 
-    payload = {
+import re as _re
+
+_FUNC_PATTERN = _re.compile(r'function\s+([A-Za-z0-9_]+)\s*\(')
+
+def extract_functions_js(src: str) -> List[str]:
+    """
+    Extract function names from a JavaScript/TypeScript source string.
+    Uses a naive regex that matches `function name(...)`.
+    """
+    return _FUNC_PATTERN.findall(src)
+
+def extract_functions_from_file(path: Path) -> List[str]:
+    """Read a file and extract function names if it's source-like."""
+    try:
+        text = path.read_text(encoding="utf-8", errors="ignore")
+    except Exception:
+        return []
+    return extract_functions_js(text)
+
+# ==== 4) AIO-OPS | FUNCTION EXTRACTION - END ==================================
+# ==== 5) AIO-OPS | ACORN EXTRACTOR - START ====================================
+
+import subprocess as _subp
+
+def acorn_extract(path: Path) -> Dict[str, Any]:
+    """
+    Run acorn (JS parser) on a given file path and return parsed JSON AST.
+    Requires `acorn` installed globally or locally in node_modules/.bin.
+    """
+    acorn_bin = "npx"
+    args = ["acorn", "--ecma2020", "--locations", "--sourceType", "module", "--json", str(path)]
+    try:
+        result = _subp.run([acorn_bin] + args, capture_output=True, text=True, check=True)
+        return json.loads(result.stdout)
+    except Exception as e:
+        return {"error": str(e), "file": str(path)}
+
+def acorn_extract_safe(path: Path) -> Dict[str, Any]:
+    """Safe wrapper that never raises, returns dict with 'functions' if possible."""
+    ast = acorn_extract(path)
+    if "error" in ast:
+        return ast
+    funcs = []
+    for node in ast.get("body", []):
+        if node.get("type") == "FunctionDeclaration":
+            funcs.append(node.get("id", {}).get("name"))
+    return {"file": str(path), "functions": funcs}
+
+# ==== 5) AIO-OPS | ACORN EXTRACTOR - END ======================================
+# ==== 6) AIO-OPS | WORTH SCORE & RECOMMENDATION - START =======================
+
+def worth_score(path: Path, functions: Optional[List[str]] = None) -> float:
+    """
+    Naive heuristic:
+      + ext weight: .ts/.tsx > .js/.jsx
+      + size penalty beyond 50 KB
+      + bonus per discovered function (capped)
+    """
+    ext = path.suffix.lower()
+    ext_w = {".tsx": 1.0, ".ts": 0.9, ".jsx": 0.7, ".js": 0.6}.get(ext, 0.3)
+
+    try:
+        size_kb = path.stat().st_size / 1024.0
+    except Exception:
+        size_kb = 0.0
+
+    size_pen = max(0.0, (size_kb - 50.0) / 200.0)  # gentle penalty
+    fn_bonus = min(0.4, 0.04 * (len(functions or [])))  # cap at +0.4
+
+    return round(ext_w + fn_bonus - size_pen, 4)
+
+
+def recommend(files: List[Path]) -> List[Tuple[Path, float]]:
+    """
+    Return files sorted by descending worth score.
+    Uses regex extraction (fast) as function signal.
+    """
+    scored: List[Tuple[Path, float]] = []
+    for p in files:
+        fns = extract_functions_from_file(p)
+        scored.append((p, worth_score(p, fns)))
+    return sorted(scored, key=lambda t: t[1], reverse=True)
+
+# ==== 6) AIO-OPS | WORTH SCORE & RECOMMENDATION - END =========================
+# ==== 7) AIO-OPS | GATES - START ==============================================
+
+def _run_cmd(cmd: List[str], cwd: Path) -> Dict[str, Any]:
+    """Run a command and capture output/exit status."""
+    try:
+        p = subprocess.run(cmd, cwd=str(cwd), text=True, capture_output=True)
+        return {
+            "cmd": " ".join(cmd),
+            "exit": p.returncode,
+            "stdout": p.stdout[-10000:],  # cap to keep report light
+            "stderr": p.stderr[-10000:],
+            "pass": p.returncode == 0,
+        }
+    except FileNotFoundError as e:
+        return {"cmd": " ".join(cmd), "exit": 127, "stdout": "", "stderr": str(e), "pass": False}
+    except Exception as e:
+        return {"cmd": " ".join(cmd), "exit": 1, "stdout": "", "stderr": repr(e), "pass": False}
+
+
+def run_gates(run_id: str) -> Path:
+    """
+    Run build/test/lint gates (when AIO_RUN_GATES == '1') in FRONTEND.
+    Writes reports/gates_<run_id>.json and returns that path.
+    """
+    gates_path = REPORTS / f"gates_{run_id}.json"
+
+    should_run = (os.environ.get("AIO_RUN_GATES", "0") == "1")
+    npm_bin = os.environ.get("AIO_NPM_BIN", "npm")
+
+    data: Dict[str, Any] = {
         "run_id": run_id,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "user": user, "org": org, "repo_name": repo_name, "branches": branches,
-        "found_total": len(files),
-        "found_js_jsx": js_count,
-        "repos": repos_info if platform == "github" else [],
-        "candidates": [{"repo": c.repo, "branch": c.branch, "path": c.src_path, "mtime": c.mtime} for c in candidates],
-        "bundles": bundle_by_src,
-        "exclusions": exclusions,
-        "ts_tsx_seen": [{"repo": f["repo"], "branch": f["branch"], "path": f["path"]} for f in files if f["path"] in ts_tsx_list],
-        "discrepancies": discrepancies,
+        "frontend": str(FRONTEND),
+        "tooling": {"npm_bin": npm_bin},
+        "steps": {},
     }
-    (REPORTS_ROOT / f"scan_{run_id}.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    (REPORTS_ROOT / "scan_latest.json").write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    cache_payload = {
-        "candidates": [{"repo": c.repo, "branch": c.branch, "path": c.src_path, "mtime": c.mtime} for c in candidates],
-        "files": files,
-        "found_js_jsx": js_count,
-        "ts_tsx_seen": [{"repo": f["repo"], "branch": f["branch"], "path": f["path"]} for f in files if f["path"] in ts_tsx_list],
-        "bundles": bundle_by_src,
-        "exclusions": exclusions,
-        "repos": repos_info if platform == "github" else []
-    }
-    cache_file.write_text(json.dumps(cache_payload, indent=2), encoding="utf-8")
-    logger.info(f"Saved inventory cache to {cache_file}")
 
-    logger.info(f"Completed fetch_candidates in {time.time() - start_time:.2f}s")
-    return candidates, bundle_by_src, repos_info if platform == "github" else []
+    if not should_run:
+        data["skipped"] = True
+        write_json_report(data, gates_path)
+        return gates_path
 
-def process_batch(
-    platform: str,
-    token: str,
-    candidates: List[Candidate],
-    bundle_by_src: Dict[str, Dict[str, str]],
-    run_id: str,
-    max_workers: int = 50,
-    rate_per_sec: float = 5.0,
-    quarantine_dir: str = "artifacts_quarantine",
-    metrics_path: str = "audit_metrics.jsonl",
-    batch_offset: int = 0,
-    batch_limit: Optional[int] = None,
-    evaluate_paths: Optional[List[Dict]] = None,
-):
-    logger.info(f"Starting process_batch for run_id {run_id}")
-    results: List[Dict] = []
-    gh = Github(token) if platform == "github" else None
+    # Ensure node_modules present (best effort)
+    if not (FRONTEND / "node_modules").exists():
+        data["steps"]["ci"] = _run_cmd([npm_bin, "ci", "--no-audit", "--no-fund"], FRONTEND)
 
-    for c in candidates[batch_offset:batch_offset + (batch_limit or len(candidates))]:
+    # Build
+    data["steps"]["build"] = _run_cmd([npm_bin, "run", "build", "--silent"], FRONTEND)
+
+    # Test (vitest, allow project scripts to wire it)
+    data["steps"]["test"] = _run_cmd([npm_bin, "run", "test", "--silent", "--", "-r"], FRONTEND)
+
+    # Lint (eslint, allow project scripts)
+    data["steps"]["lint"] = _run_cmd([npm_bin, "run", "lint", "--silent"], FRONTEND)
+
+    write_json_report(data, gates_path)
+    return gates_path
+
+# ==== 7) AIO-OPS | GATES - END ================================================
+# ==== 8) AIO-OPS | SPECIAL SCAN & PROCESS - START =============================
+
+PREFERRED_EXT_RANK = {".ts": 0, ".tsx": 0, ".js": 1, ".jsx": 1}
+
+def _dedupe_prefer_ts(paths: List[Path]) -> List[Path]:
+    """
+    Group by (basename,size). Within each group prefer .ts/.tsx over .js/.jsx.
+    """
+    groups: Dict[Tuple[str, int], List[Path]] = {}
+    for p in paths:
         try:
-            if c.repo == "local":
-                src_path = Path(c.src_path)
-                if not src_path.exists():
-                    results.append({
-                        "repo": c.repo,
-                        "branch": c.branch,
-                        "path": c.src_path,
-                        "status": "ERROR",
-                        "error": "Source file not found"
-                    })
+            size = p.stat().st_size
+        except Exception:
+            size = -1
+        key = (p.stem.lower(), size)
+        groups.setdefault(key, []).append(p)
+
+    kept: List[Path] = []
+    for key, items in groups.items():
+        # Rank by preferred extension, then shortest path for determinism
+        items_sorted = sorted(
+            items,
+            key=lambda ip: (PREFERRED_EXT_RANK.get(ip.suffix.lower(), 99), len(str(ip)))
+        )
+        kept.append(items_sorted[0])
+    return kept
+
+
+def _load_conversion_candidates_list() -> Optional[List[Path]]:
+    """
+    Optional override list from reports/conversion_candidates.txt (absolute paths).
+    One path per line. Non-existent paths are ignored.
+    """
+    cand_file = REPORTS / "conversion_candidates.txt"
+    if not cand_file.exists():
+        return None
+    out: List[Path] = []
+    for line in cand_file.read_text(encoding="utf-8", errors="ignore").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        p = Path(line)
+        if p.exists():
+            out.append(p)
+    return out or None
+
+
+def scan_frontend_sources(limit: int = BATCH_SIZE) -> List[Path]:
+    """
+    Scan FRONTEND/src for source-like files, exclude node_modules and dist,
+    dedupe by (basename,size) preferring TS/TSX, and return up to `limit`.
+    """
+    src_root = FRONTEND / "src"
+    if not src_root.exists():
+        log(f"scan_frontend_sources: missing {src_root}")
+        return []
+
+    # 1) Start from explicit candidate list if present
+    explicit = _load_conversion_candidates_list()
+    if explicit:
+        base = explicit
+    else:
+        # 2) Walk src tree
+        all_files: List[Path] = [
+            p for p in src_root.rglob("*")
+            if p.is_file()
+               and p.suffix.lower() in (".js", ".jsx", ".ts", ".tsx")
+               and "node_modules" not in p.parts
+               and "dist" not in p.parts
+        ]
+        base = all_files
+
+    # 3) Dedupe and sort by heuristic score
+    uniques = _dedupe_prefer_ts(base)
+    scored = recommend(uniques)
+    chosen = [p for (p, _s) in scored[:limit]]
+
+    log(f"scan_frontend_sources: selected {len(chosen)} (of {len(uniques)} uniques)")
+    return chosen
+
+# ==== 8) AIO-OPS | SPECIAL SCAN & PROCESS - END ===============================
+# ==== 9) AIO-OPS | COMPAT: fetch_candidates - START ===========================
+
+def _parse_scan_roots() -> List[Path]:
+    """
+    Parse AIO_SCAN_ROOTS (CSV of absolute/relative dirs). Non-existent paths ignored.
+    """
+    envv = os.environ.get("AIO_SCAN_ROOTS", "")
+    roots: List[Path] = []
+    for raw in (envv.split(",") if envv else []):
+        p = Path(raw.strip())
+        if p.exists():
+            roots.append(p)
+    return roots
+
+def fetch_candidates(limit: Optional[int] = None,
+                     roots: Optional[List[Path]] = None) -> List[Path]:
+    """
+    Compatibility API returning a list of candidate source files.
+    - If roots provided/AIO_SCAN_ROOTS set: scan those trees similarly to scan_frontend_sources.
+    - Else: use scan_frontend_sources(FRONTEND/src).
+    """
+    lim = limit or BATCH_SIZE
+
+    # Prefer explicit roots if provided or via env
+    scan_roots = roots or _parse_scan_roots()
+    if not scan_roots:
+        return scan_frontend_sources(limit=lim)
+
+    files: List[Path] = []
+    for root in scan_roots:
+        if not root.exists():
+            continue
+        for p in root.rglob("*"):
+            if p.is_file() and p.suffix.lower() in (".js", ".jsx", ".ts", ".tsx"):
+                if "node_modules" in p.parts or "dist" in p.parts:
                     continue
-                content = src_path.read_text(encoding="utf-8")
-            else:
-                repo = gh.get_repo(c.repo)
+                files.append(p)
+
+    uniques = _dedupe_prefer_ts(files)
+    scored  = recommend(uniques)
+    chosen  = [p for (p, _s) in scored[:lim]]
+
+    log(f"fetch_candidates: selected {len(chosen)} from {len(uniques)} uniques across {len(scan_roots)} roots")
+    return chosen
+
+# ==== 9) AIO-OPS | COMPAT: fetch_candidates - END =============================
+# ==== 10) AIO-OPS | MULTI-AI REVIEW / GENERATE - START ========================
+
+ARTIFACTS_DIR = Path("artifacts")
+REVIEWS_DIR   = ARTIFACTS_DIR / "reviews"
+
+def _norm_paths(cands: List[Any]) -> List[Path]:
+    out: List[Path] = []
+    for c in cands or []:
+        p = Path(str(c))
+        if p.exists() and p.is_file():
+            out.append(p)
+    return out
+
+def _rel_from_frontend(p: Path) -> str:
+    """Return a stable repo-side relative path (prefer under FRONTEND/src)."""
+    try:
+        p = p.resolve()
+        src = (FRONTEND / "src").resolve()
+        if str(p).startswith(str(src)):
+            rel = p.relative_to(src).as_posix()
+            return rel
+    except Exception:
+        pass
+    # fallback: filename only
+    return p.name
+
+def _draft_stub_for(path: Path) -> str:
+    """
+    Produce a minimal TypeScript stub body.
+    Later we can replace this with actual AST-guided synthesis + model calls.
+    """
+    banner = "// Auto-generated stub by Cod1 — safe placeholder\n"
+    note   = f"// source: {path.as_posix()}\n"
+    body   = "export {};\n"
+    return banner + note + "\n" + body
+
+def _write_stub(staging_root: Path, rel_repo_path: str) -> Path:
+    """
+    Create a .ts file inside staging_root mirroring rel_repo_path (extension forced to .ts).
+    """
+    rel = Path(rel_repo_path)
+    # change extension to .ts
+    if rel.suffix.lower() not in (".ts", ".tsx"):
+        rel = rel.with_suffix(".ts")
+    out_path = staging_root / rel
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text("// placeholder\nexport {};\n", encoding="utf-8")
+    return out_path
+
+def _stage_stubs(run_id: str, files: List[Path]) -> Tuple[Path, List[Tuple[str, Path]]]:
+    """
+    Create stubs under artifacts/stubs/<run_id>/... and return (staging_root, [(repo_rel, local_path), ...]).
+    """
+    staging_root = ARTIFACTS_DIR / "stubs" / run_id
+    staged: List[Tuple[str, Path]] = []
+    for p in files:
+        rel = _rel_from_frontend(p)
+        out = _write_stub(staging_root, rel)
+        # overwrite with more informative content
+        out.write_text(_draft_stub_for(p), encoding="utf-8")
+        staged.append((Path(rel).as_posix(), out))
+    return staging_root, staged
+
+def _save_run_review(run_id: str, staged: List[Tuple[str, Path]]) -> None:
+    """
+    Save a light review index (we’ll expand with model outputs later).
+    """
+    run_dir = REVIEWS_DIR / run_id / "Free"    # Free tier first
+    run_dir.mkdir(parents=True, exist_ok=True)
+    index = {
+        "run_id": run_id,
+        "count": len(staged),
+        "items": [{"repo_rel": a, "local": str(b)} for (a, b) in staged],
+        "tier": "Free",
+        "ts": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+    write_json_report(index, run_dir / "index.json")
+
+def process_batch_ext(source: str,
+                      roots: Optional[List[str]],
+                      cands: List[Any],
+                      opts: Dict[str, Any],
+                      run_id: str,
+                      batch_limit: int = 999,
+                      mode: str = "generate") -> List[Dict[str, Any]]:
+    """
+    Main entrypoint used by Cod1 scripts.
+
+    Modes:
+      - "cod1"     : delegate to the Cod1 continuity dispatcher (review→suggest→spec→generate→verify).
+      - "generate" : default stub generation + upload to rolling/timestamp PR.
+
+    Steps (generate mode): scan/normalize → dedupe/limit → generate stubs → save review → upload → return summary.
+    """
+
+    # Normalize and/or discover candidates
+    paths = _norm_paths(cands)
+    if not paths:
+        # If no cands provided, fall back to scan_frontend_sources
+        paths = scan_frontend_sources(limit=BATCH_SIZE)
+
+    # Cap per run
+    cap = min(BATCH_SIZE, int(batch_limit or BATCH_SIZE))
+    paths = paths[:cap]
+
+    if not paths:
+        log("process_batch_ext: no candidates after filtering.")
+        return []
+
+    # ---- Mode dispatch -------------------------------------------------------
+    if mode == "cod1":
+        # Use Cod1 continuity pipeline dispatcher (defined at end of file).
+        # It expects absolute file paths.
+        gh_repo = opts.get("gh_repo") if isinstance(opts, dict) else None
+        try:
+            res = cod1([str(p) for p in paths], gh_repo=gh_repo)  # returns list of dicts
+        except NameError:
+            log("process_batch_ext[cod1]: cod1 dispatcher not available; falling back to no-op.")
+            res = []
+        return res
+    # -------------------------------------------------------------------------
+
+    # Default: stub generation + upload
+    staging_root, staged = _stage_stubs(run_id, paths)
+
+    # Persist a simple review bundle for this run
+    _save_run_review(run_id, staged)
+
+    # Upload stubs to GitHub (rolling PR logic handled in Section 11)
+    repo_files: List[Tuple[str, Path]] = [(f"generated/{rel}", lp) for (rel, lp) in staged]
+    try:
+        upload_to_github(run_id, repo_files)  # defined in Section 11
+    except NameError:
+        log("WARN: upload_to_github not available at call-time; skipping upload.")
+    except Exception as e:
+        log(f"ERROR: upload_to_github failed: {e!r}")
+
+    # Return concise group summary
+    return [{
+        "run_id": run_id,
+        "source": source,
+        "mode": mode,
+        "count": len(paths),
+        "staging": str(staging_root),
+    }]
+
+# ==== 10) AIO-OPS | MULTI-AI REVIEW / GENERATE - END ==========================
+
+# ==== 11) AIO-OPS | GITHUB UPLOAD - START =====================================
+def _gh_required():
+    if not _repo:
+        raise RuntimeError("GITHUB_TOKEN not set or repo init failed; cannot upload.")
+
+
+def upload_to_github(run_id: str,
+                     repo_files: List[Tuple[str, Path]],
+                     base_branch: str = os.environ.get("AIO_BASE_BRANCH", "main"),
+                     pr_title: Optional[str] = None,
+                     pr_body: Optional[str] = None) -> str:
+    """
+    Push `repo_files` ([(repo_rel_path, local_path), ...]) to GitHub under
+    either a per-run timestamp branch or a rolling branch, then open/reuse a draft PR.
+    Returns the PR URL and writes it to reports/upload_<run_id>.txt.
+    """
+    _gh_required()
+
+    # 0) Sanity
+    repo_files = [(str(rp).replace("\\", "/"), Path(lp)) for (rp, lp) in repo_files]
+    repo_files = [(rp, lp) for (rp, lp) in repo_files if lp.exists() and lp.is_file()]
+    if not repo_files:
+        raise ValueError("upload_to_github: no valid repo_files to upload")
+
+    # 1) Resolve base commit
+    base_ref = _repo.get_branch(base_branch)
+    base_commit = base_ref.commit
+    base_tree = base_commit.commit.tree
+
+    # 2) Prepare blobs and tree elements
+    from github import InputGitTreeElement as _IGTE  # local import to avoid top-level dependency
+    elements = []
+    for repo_rel, local_path in repo_files:
+        content = local_path.read_text(encoding="utf-8", errors="ignore")
+        blob = _repo.create_git_blob(content, "utf-8")
+        elements.append(_IGTE(repo_rel, "100644", "blob", sha=blob.sha))
+
+    new_tree = _repo.create_git_tree(elements, base_tree=base_tree)
+
+    # 3) Create commit
+    msg = pr_title or f"TS migration stubs (run {run_id})"
+    new_commit = _repo.create_git_commit(msg, new_tree, [base_commit.commit])
+
+    # 4) Decide head branch (rolling vs timestamp) — uses Cod1 chooser
+    default_head = f"ts-migration/generated-{run_id}"
+    head_branch = _cod1_branch_for_run(default_head, run_id)
+
+    # 5) Move branch ref to our new commit (create if missing)
+    ref_name = f"heads/{head_branch}"
+    try:
+        ref = _repo.get_git_ref(ref_name)              # OK to use "heads/<...>" for GET
+        ref.edit(sha=new_commit.sha, force=True)
+    except Exception:
+        full_ref = ref_name if ref_name.startswith("refs/") else f"refs/{ref_name}"
+        ref = _repo.create_git_ref(ref=full_ref, sha=new_commit.sha)  # MUST be "refs/heads/<...>"
+
+    # 6) Reuse or open a draft PR
+    existing = None
+    for pr in _repo.get_pulls(state="open"):
+        if pr.head.ref == head_branch and pr.base.ref == base_branch:
+            existing = pr
+            break
+
+    if existing:
+        pr = existing
+    else:
+        pr = _repo.create_pull(
+            title=msg if head_branch == default_head else "TS migration stubs (rolling)",
+            body=pr_body or f"Automated stubs upload for run {run_id}",
+            head=head_branch,
+            base=base_branch,
+            draft=True,
+        )
+
+    # 7) Record PR URL for this run
+    (REPORTS / f"upload_{run_id}.txt").write_text(pr.html_url, encoding="utf-8")
+
+    log(f"upload_to_github: PR #{pr.number}  head={head_branch}  base={base_branch}")
+    return pr.html_url
+# ==== 11) AIO-OPS | GITHUB UPLOAD - END =======================================
+# ==== 12) AIO-OPS | SG-Man multi-AI review hook - START =======================
+
+def _latest_upload_txt() -> Optional[Path]:
+    """Return the newest reports/upload_*.txt path (if any)."""
+    if not REPORTS.exists():
+        return None
+    files = sorted(REPORTS.glob("upload_*.txt"), key=lambda p: p.stat().st_mtime, reverse=True)
+    return files[0] if files else None
+
+
+def _read_pr_number_from_url(url: str) -> Optional[int]:
+    """Extract PR number from a GitHub PR URL."""
+    try:
+        parts = url.rstrip("/").split("/")
+        return int(parts[-1])
+    except Exception:
+        return None
+
+
+def _comment_gates_to_pr(pr_number: int, run_id: str) -> None:
+    """Post a summary of gates_<run_id>.json as a PR comment."""
+    _gh_required()
+    gates_path = REPORTS / f"gates_{run_id}.json"
+    data = read_json_report(gates_path)
+    if not data:
+        log(f"_comment_gates_to_pr: gates file missing for run {run_id}: {gates_path}")
+        return
+
+    b = data["steps"].get("build", {})
+    t = data["steps"].get("test", {})
+    l = data["steps"].get("lint", {})
+
+    body = (
+        f"**Gates report {run_id}**\n\n"
+        f"- build: pass={b.get('pass')} exit={b.get('exit')}\n"
+        f"- test : pass={t.get('pass')} exit={t.get('exit')}\n"
+        f"- lint : pass={l.get('pass')} exit={l.get('exit')}\n\n"
+        f"(Frontend: `{data.get('frontend','?')}`; npm: `{(data.get('tooling') or {}).get('npm_bin','?')}`)"
+    )
+
+    pr = _repo.get_pull(pr_number)
+    pr.create_issue_comment(body)
+    log(f"commented gates on PR #{pr.number}")
+
+
+def sgman_after_append(run_id: str, also_label: bool = True) -> None:
+    """
+    Run gates (if enabled) and comment the summary on the newest upload PR.
+    Optionally ensure labels: ts-migration, analysis.
+    """
+    _gh_required()
+
+    # 1) Run gates (honors AIO_RUN_GATES)
+    gates_path = run_gates(run_id)
+    log(f"sgman_after_append: wrote {gates_path}")
+
+    # 2) Resolve newest upload PR URL
+    up = _latest_upload_txt()
+    if not up:
+        log("sgman_after_append: no upload_*.txt files found; cannot comment.")
+        return
+    pr_url = up.read_text(encoding="utf-8").strip()
+    pr_num = _read_pr_number_from_url(pr_url)
+    if not pr_num:
+        log(f"sgman_after_append: cannot parse PR number from {pr_url!r}")
+        return
+
+    # 3) Comment gates summary
+    _comment_gates_to_pr(pr_num, run_id)
+
+    # 4) Labels (idempotent)
+    if also_label:
+        try:
+            def _ensure_label(name: str, color: str):
                 try:
-                    file_content = repo.get_contents(c.src_path, ref=c.branch)
-                    content = file_content.decoded_content.decode("utf-8")
-                except GithubException as e:
-                    results.append({
-                        "repo": c.repo,
-                        "branch": c.branch,
-                        "path": c.src_path,
-                        "status": "ERROR",
-                        "error": f"GitHubException: {str(e)}"
-                    })
-                    continue
-
-            # Basic conversion: append TypeScript types
-            ts_content = f"// TypeScript conversion of {c.src_path}\n{content}\n// @ts-nocheck"
-            ts_path = c.src_path.rsplit(".", 1)[0] + (".ts" if c.src_path.endswith(".js") else ".tsx")
-            staged = stage_file(c.repo, c.branch, ts_path, ts_content)
-            # Generate basic test file
-            test_content = f"import {{ describe, it, expect }} from 'vitest';\n" \
-                          f"describe('{Path(c.src_path).name}', () => {{\n" \
-                          f"  it('should exist', () => {{\n" \
-                          f"    expect(true).toBe(true);\n" \
-                          f"  }});\n" \
-                          f"}});\n"
-            test_path = c.src_path.rsplit(".", 1)[0] + ".test" + (".ts" if c.src_path.endswith(".js") else ".tsx")
-            stage_file(c.repo, c.branch, test_path, test_content)
-            results.append({
-                "repo": c.repo,
-                "branch": c.branch,
-                "path": c.src_path,
-                "status": "CONVERTED",
-                "staged_path": str(staged),
-                "test_path": str(test_path)
-            })
+                    return _repo.get_label(name)
+                except Exception:
+                    return _repo.create_label(name=name, color=color)
+            pr = _repo.get_pull(pr_num)
+            pr.add_to_labels(_ensure_label("ts-migration", "0E8A16"),
+                             _ensure_label("analysis", "5319E7"))
+            log(f"sgman_after_append: labeled PR #{pr.number}")
         except Exception as e:
-            results.append({
-                "repo": c.repo,
-                "branch": c.branch,
-                "path": c.src_path,
-                "status": "ERROR",
-                "error": f"{type(e).__name__}: {str(e)}"
-            })
+            log(f"sgman_after_append: label step skipped ({e!r})")
 
-    if evaluate_paths:
-        for item in evaluate_paths:
+# ==== 12) AIO-OPS | SG-Man multi-AI review hook - END =========================
+
+# ==== 13) AIO-OPS | ECOSYSTEM HELPERS — START =================================
+
+# --- Cod1: rolling-PR chooser (import-safe; no run_id at import) ---------------
+def _cod1_branch_for_run(default_branch: str, run_id: str) -> str:
+    """
+    Decide which head branch to use for uploads.
+    - If AIO_UPLOAD_TS == "0" and AIO_UPLOAD_BRANCH is non-empty, return that.
+    - Else fall back to `default_branch` (usually the timestamped one).
+    """
+    _env = os.environ
+    rolling_on = (_env.get("AIO_UPLOAD_TS", "1").strip() == "0")
+    rolling_nm = (_env.get("AIO_UPLOAD_BRANCH") or "").strip()
+    if rolling_on and rolling_nm:
+        return rolling_nm
+    return default_branch
+# ------------------------------------------------------------------------------
+
+
+def env_keys_presence() -> Dict[str, bool]:
+    """
+    Presence-only check (never prints values).
+    Keys: OPENAI_API_KEY, GEMINI_API_KEY, GROK_API_KEY, GITHUB_TOKEN.
+    """
+    keys = ["OPENAI_API_KEY", "GEMINI_API_KEY", "GROK_API_KEY", "GITHUB_TOKEN"]
+    return {k: bool(os.environ.get(k)) for k in keys}
+
+
+def write_cod1_status(run_id: str, pr_url: Optional[str]) -> Path:
+    """
+    Write a concise Cod1 status markdown in reports/debug/.
+    """
+    DEBUG_DIR.mkdir(parents=True, exist_ok=True)
+    p = DEBUG_DIR / f"cod1_report_{run_id[:12]}.md"
+    gates_json = REPORTS / f"gates_{run_id}.json"
+    gates = read_json_report(gates_json) or {}
+    steps = gates.get("steps", {})
+    build = steps.get("build", {})
+    test  = steps.get("test", {})
+    lint  = steps.get("lint", {})
+
+    lines = [
+        f"# Cod1 Report ({run_id})",
+        "",
+        "**Task:** 25-file batch to rolling PR + gates comment",
+        f"**Run ID:** {run_id}",
+        f"**PR URL:** {pr_url or 'n/a'}",
+        "",
+        f"**Gates JSON:** {gates_json.as_posix()}",
+        f"- build.pass = {build.get('pass')}",
+        f"- test.pass  = {test.get('pass')}",
+        f"- lint.pass  = {lint.get('pass')}",
+        "",
+        "**Notes:**",
+        f"- Rolling PR branch env: AIO_UPLOAD_TS={os.environ.get('AIO_UPLOAD_TS','?')} AIO_UPLOAD_BRANCH={os.environ.get('AIO_UPLOAD_BRANCH','?')}",
+        f"- Frontend dir: `{FRONTEND}`",
+        "- Encoding: UTF-8 (no BOM)",
+        "",
+    ]
+    p.write_text("\n".join(lines), encoding="utf-8")
+    return p
+
+
+def _parse_csv_list(s: Optional[str]) -> List[str]:
+    if not s:
+        return []
+    return [x.strip() for x in s.split(",") if x.strip()]
+
+
+def _now_run_id() -> str:
+    return time.strftime("%Y%m%d_%H%M%S", time.gmtime())
+
+
+def _cli() -> int:
+    r"""
+    Minimal CLI:
+      python -m app.ops --mode generate --limit 25 --files "C:\path\one.tsx,C:\path\two.ts"
+    If --files omitted, falls back to scan_frontend_sources().
+    After upload, runs sgman_after_append(run_id) to post gates comment and labels.
+    """
+    import argparse
+    ap = argparse.ArgumentParser(prog="cod1-ops", description="CFH TS migration orchestrator")
+    ap.add_argument("--mode", default="generate", choices=["generate"])
+    ap.add_argument("--limit", type=int, default=BATCH_SIZE)
+    ap.add_argument("--files", type=str, default="")
+    ap.add_argument("--roots", type=str, default="")  # CSV of roots (optional)
+    ap.add_argument("--run-id", type=str, default=_now_run_id())
+    args = ap.parse_args()
+
+    run_id = args.run_id
+    files  = _parse_csv_list(args.files)
+    roots  = _parse_csv_list(args.roots)
+
+    # Normalize files -> Paths
+    cands: List[str] = files
+    group = process_batch_ext(
+        source="cli",
+        roots=roots or None,
+        cands=cands,
+        opts={},
+        run_id=run_id,
+        batch_limit=args.limit,
+        mode=args.mode,
+    )
+
+    # Try to find the PR URL written by upload_to_github
+    upload_txt = REPORTS / f"upload_{run_id}.txt"
+    pr_url = upload_txt.read_text(encoding="utf-8").strip() if upload_txt.exists() else None
+
+    # Gates + comment + labels
+    try:
+        sgman_after_append(run_id)
+    except Exception as e:
+        log(f"sgman_after_append failed: {e!r}")
+
+    # Final status file
+    status_md = write_cod1_status(run_id, pr_url)
+    log(f"cod1 status: {status_md.as_posix()}")
+    return 0
+
+
+if __name__ == "__main__":
+    # Only execute when run as a script, never at import.
+    try:
+        sys.exit(_cli())
+    except KeyboardInterrupt:
+        sys.exit(130)
+
+# ==== 13) AIO-OPS | ECOSYSTEM HELPERS — END ===================================
+
+
+# ==== 14) AIO-OPS | COD1 CONTINUITY HOOKS - START ============================
+
+# Import-safe: we only wire the pipeline if the helper module is present.
+try:
+    from app.cod1_continuity import cod1_pipeline_for_file
+except Exception as _e:
+    cod1_pipeline_for_file = None  # fallback if module missing
+
+# Lightweight dispatcher used by process_batch_ext(mode="cod1").
+# Accepts absolute file paths and optional gh_repo.
+if "cod1" not in globals():
+    from typing import Optional, List
+
+    def cod1(file_paths: List[str], gh_repo: Optional[str] = None) -> List[Dict[str, Any]]:
+        results: List[Dict[str, Any]] = []
+        if cod1_pipeline_for_file is None:
+            return results
+        for fp in file_paths:
             try:
-                repo_full = item["repo"]
-                branch = item["branch"]
-                path = item["path"]
-                eval_res = {"action": "no-op"}
-                if eval_res.get("action") == "update":
-                    updated = "/* Updated */"
-                    staged = stage_file(repo_full, branch, path, updated)
-                    branch_name = f"ts-migration-{run_id}-{repo_full.split('/')[-1]}-{branch}"
-                    results.append({"repo": repo_full, "branch": branch, "path": path, "status": "UPDATED", "staged_path": str(staged)})
+                res = cod1_pipeline_for_file(Path(fp), gh_repo=gh_repo)
+                # ensure a dict result shape
+                if isinstance(res, dict):
+                    results.append(res)
                 else:
-                    results.append({"repo": repo_full, "branch": branch, "path": path, "status": "NO-OP"})
+                    results.append({"file": fp, "result": res})
             except Exception as e:
-                results.append({
-                    "repo": item.get("repo"),
-                    "branch": item.get("branch"),
-                    "path": item.get("path"),
-                    "status": "ERROR",
-                    "error": f"{type(e).__name__}: {e}"
-                })
+                results.append({"error": str(e), "file": fp})
+        return results
 
-    # Generate migration list
-    emit_migration_list(run_id, candidates)
-    generate_error_summary(run_id, results)
-    logger.info(f"Completed process_batch for run_id {run_id}")
-    return results
+# ==== 14) AIO-OPS | COD1 CONTINUITY HOOKS - END ==============================
 
-def generate_error_summary(run_id: str, results: List[Dict]):
-    logger.info(f"Generating error summary for run_id {run_id}")
-    def sev(r: Dict) -> str:
-        txt = (r.get("error") or "").lower()
-        if any(k in txt for k in ("429", "rate limit", "ratelimit", "conflict", "merge conflict", "githubexception", "gitlab", "timeout")):
-            return "critical"
-        if r.get("status") in ("FAIL",) or r.get("reasons"):
-            return "warning"
-        return "warning"
-    errs = [{"severity": sev(r), **r} for r in results if r.get("status") in ("ERROR", "FAIL")]
-    (REPORTS_ROOT / f"errors_{run_id}.json").write_text(json.dumps(errs, indent=2), encoding="utf-8")
+rn# NOTE(Cod1/20250923_084351): Supports AI-driven loan type inference and CFH lint-gate friendly LoanTerms/PaymentSchedule scaffolds.rn

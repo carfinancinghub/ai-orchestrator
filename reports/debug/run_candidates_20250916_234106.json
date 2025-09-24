@@ -1,0 +1,202 @@
+﻿[
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_10 files BidHeatmapEngine.js_20250916_234054.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234054\\10 files BidHeatmapEngine.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\10 files BidHeatmapEngine_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\10 files BidHeatmapEngine.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234054\\verify\\10 files BidHeatmapEngine.ts.json",
+    "run_id": "20250916_234054"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_3i4h.js_20250916_234054.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234054\\3i4h.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\3i4h_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\3i4h.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234054\\verify\\3i4h.ts.json",
+    "run_id": "20250916_234054"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_actions.cy.js_20250916_234055.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234055\\actions.cy.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\actions.cy_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\actions.cy.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234055\\verify\\actions.cy.ts.json",
+    "run_id": "20250916_234055"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_addin.js_20250916_234055.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234055\\addin.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\addin_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\addin.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234055\\verify\\addin.ts.json",
+    "run_id": "20250916_234055"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AdminAuctionOverview.test.jsx_20250916_234056.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234056\\AdminAuctionOverview.test.jsx.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AdminAuctionOverview.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AdminAuctionOverview.test.tsx",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234056\\verify\\AdminAuctionOverview.test.tsx.json",
+    "run_id": "20250916_234056"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AIAuctionSimulator.test.js_20250916_234056.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234056\\AIAuctionSimulator.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AIAuctionSimulator.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AIAuctionSimulator.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234056\\verify\\AIAuctionSimulator.test.ts.json",
+    "run_id": "20250916_234056"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AIBadgeOverlay.testOld.js_20250916_234057.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234057\\AIBadgeOverlay.testOld.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AIBadgeOverlay.testOld_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AIBadgeOverlay.testOld.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234057\\verify\\AIBadgeOverlay.testOld.ts.json",
+    "run_id": "20250916_234057"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AIInsightBuyer.test.js_20250916_234057.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234057\\AIInsightBuyer.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AIInsightBuyer.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AIInsightBuyer.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234057\\verify\\AIInsightBuyer.test.ts.json",
+    "run_id": "20250916_234057"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AIInsightSeller.test.js_20250916_234058.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234058\\AIInsightSeller.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AIInsightSeller.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AIInsightSeller.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234058\\verify\\AIInsightSeller.test.ts.json",
+    "run_id": "20250916_234058"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_aliasing.cy.js_20250916_234058.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234058\\aliasing.cy.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\aliasing.cy_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\aliasing.cy.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234058\\verify\\aliasing.cy.ts.json",
+    "run_id": "20250916_234058"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_analytics.service.test.js_20250916_234058.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234058\\analytics.service.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\analytics.service.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\analytics.service.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234058\\verify\\analytics.service.test.ts.json",
+    "run_id": "20250916_234058"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_arbitrator-performance.test.js_20250916_234059.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234059\\arbitrator-performance.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\arbitrator-performance.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\arbitrator-performance.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234059\\verify\\arbitrator-performance.test.ts.json",
+    "run_id": "20250916_234059"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_ar-plex-strings-json.fefdfd0a.chunk.js_20250916_234059.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234059\\ar-plex-strings-json.fefdfd0a.chunk.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\ar-plex-strings-json.fefdfd0a.chunk_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\ar-plex-strings-json.fefdfd0a.chunk.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234059\\verify\\ar-plex-strings-json.fefdfd0a.chunk.ts.json",
+    "run_id": "20250916_234059"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_ARVehicleView.test.js_20250916_234100.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234100\\ARVehicleView.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\ARVehicleView.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\ARVehicleView.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234100\\verify\\ARVehicleView.test.ts.json",
+    "run_id": "20250916_234100"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_assertions.cy.js_20250916_234101.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234101\\assertions.cy.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\assertions.cy_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\assertions.cy.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234101\\verify\\assertions.cy.ts.json",
+    "run_id": "20250916_234101"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AuctionConfig.test.js_20250916_234101.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234101\\AuctionConfig.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AuctionConfig.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AuctionConfig.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234101\\verify\\AuctionConfig.test.ts.json",
+    "run_id": "20250916_234101"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_auctionExportUtils.test.jsx_20250916_234102.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234102\\auctionExportUtils.test.jsx.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\auctionExportUtils.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\auctionExportUtils.test.tsx",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234102\\verify\\auctionExportUtils.test.tsx.json",
+    "run_id": "20250916_234102"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AuctionHistory.test.js_20250916_234102.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234102\\AuctionHistory.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AuctionHistory.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AuctionHistory.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234102\\verify\\AuctionHistory.test.ts.json",
+    "run_id": "20250916_234102"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AuctionHistoryTracker.test.jsx_20250916_234103.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234103\\AuctionHistoryTracker.test.jsx.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AuctionHistoryTracker.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AuctionHistoryTracker.test.tsx",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234103\\verify\\AuctionHistoryTracker.test.tsx.json",
+    "run_id": "20250916_234103"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AuctionListingForm.test.jsx_20250916_234103.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234103\\AuctionListingForm.test.jsx.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AuctionListingForm.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AuctionListingForm.test.tsx",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234103\\verify\\AuctionListingForm.test.tsx.json",
+    "run_id": "20250916_234103"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AuctionManager.test.js_20250916_234104.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234104\\AuctionManager.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AuctionManager.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AuctionManager.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234104\\verify\\AuctionManager.test.ts.json",
+    "run_id": "20250916_234104"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AuctionMetrics.test.js_20250916_234104.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234104\\AuctionMetrics.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AuctionMetrics.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AuctionMetrics.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234104\\verify\\AuctionMetrics.test.ts.json",
+    "run_id": "20250916_234104"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AuctionNotifier.test.js_20250916_234105.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234105\\AuctionNotifier.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AuctionNotifier.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AuctionNotifier.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234105\\verify\\AuctionNotifier.test.ts.json",
+    "run_id": "20250916_234105"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_AuctionReputationTracker.test.js_20250916_234105.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234105\\AuctionReputationTracker.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\AuctionReputationTracker.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\AuctionReputationTracker.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234105\\verify\\AuctionReputationTracker.test.ts.json",
+    "run_id": "20250916_234105"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_auctions.test.js_20250916_234106.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250916_234106\\auctions.test.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\auctions.test_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\auctions.test.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250916_234106\\verify\\auctions.test.ts.json",
+    "run_id": "20250916_234106"
+  }
+]

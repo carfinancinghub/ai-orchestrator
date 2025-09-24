@@ -1,7 +1,7 @@
 # Path: app/services/llm/grok_client.py
 from __future__ import annotations
-import os, json
-from typing import Dict
+import os
+import json
 
 try:
     import requests

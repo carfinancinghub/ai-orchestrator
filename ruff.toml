@@ -1,0 +1,11 @@
+line-length = 120
+target-version = "py311"
+exclude = [
+  "reports",
+  "_aio_app_parked",
+  "venv",
+  ".venv",
+]
+
+[lint]
+select = ["E", "F"]

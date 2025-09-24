@@ -6,7 +6,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Optional
 
 HEADER_TS = """// Converted by AI-Orchestrator\n// Source: {src}\n// Timestamp: {ts}\n// Note: This is a scaffold. Replace `any` with strict types.\n"""
 

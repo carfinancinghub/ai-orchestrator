@@ -1,0 +1,6 @@
+{
+  "op": "convert",
+  "file_path": "sample.jsx",
+  "code": "function add(a,b){return a+b}",
+  "env": {}
+}
