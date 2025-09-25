@@ -81,3 +81,4 @@ if ($HARD -and $fail) {
 }
 
 Write-Host "CFH lint gate complete."
+
