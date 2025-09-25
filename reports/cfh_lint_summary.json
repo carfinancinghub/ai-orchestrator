@@ -1,0 +1,7 @@
+{
+  "mode": "hard",
+  "eslint": "skipped",
+  "tsc": "pass",
+  "prettier": "skipped",
+  "notes": []
+}
