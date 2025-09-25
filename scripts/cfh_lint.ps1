@@ -1,274 +1,83 @@
-# scripts\upload_to_github.ps1
-<# 
-Upload batch artifacts summary to a PR, with optional commit/push in the same repo.
+Param()
 
-Usage:
-  # Same-repo (ai-orchestrator) commit + push + comment
-  pwsh -File scripts\upload_to_github.ps1 -Pr 4 -AttachReports
+$ErrorActionPreference = "Stop"
+Set-StrictMode -Version Latest
 
-  # Cross-repo comment-only (CFH PR #17), no git operations
-  pwsh -File scripts\upload_to_github.ps1 -Pr 17 -Repo 'carfinancinghub/cfh' -AttachReports -CommentOnly
-#>
+# -------- config --------
+$HARD = ($env:CFH_LINT_SOFT -ne "1")  # default hard
+$SummaryPath = Join-Path (Resolve-Path ".") "reports\cfh_lint_summary.json"
+New-Item -ItemType Directory -Force -Path (Split-Path $SummaryPath) | Out-Null
 
-[CmdletBinding()]
-param(
-  [Parameter(Mandatory = $true)]
-  [int]$Pr,
-
-  [switch]$AttachReports,
-
-  # Target repository in "owner/name" form
-  [string]$Repo = 'carfinancinghub/ai-orchestrator',
-
-  # If set, skip any git checkout/add/commit/push. Only comment/labels will be posted.
-  [switch]$CommentOnly
-)
-
-$ErrorActionPreference = 'Stop'
-
-function Write-Info([string]$msg) { Write-Host $msg -ForegroundColor Cyan }
-function Write-Warn([string]$msg) { Write-Warning $msg }
-function Write-Good([string]$msg) { Write-Host $msg -ForegroundColor Green }
-function Path-Exists($p) { Test-Path $p -PathType Leaf -or Test-Path $p -PathType Container }
-
-# 1) Read PR info
-Write-Info ("Reading PR #{0} in repo {1}…" -f $Pr, $Repo)
-try {
-  $prJson = gh pr view $Pr --repo $Repo --json number,state,mergeable,headRefName,baseRefName,headRepository,files `
-    --jq '{num:.number,state:.state,mergeable:.mergeable,head:.headRefName,base:.baseRefName,files:[.files[].path]}'
-  if (-not $prJson) { throw "Empty PR info" }
-  $pr = $prJson | ConvertFrom-Json
-} catch {
-  throw ("Unable to get PR info for {0} #{1}. {2}" -f $Repo, $Pr, $_)
+$results = [ordered]@{
+  mode     = if ($HARD) { "hard" } else { "soft" }
+  eslint   = "skipped"
+  tsc      = "skipped"
+  prettier = "skipped"
 }
-$head = $pr.head
-Write-Host ("PR #{0}  state={1}  mergeable={2}  head={3}  base={4}" -f $pr.num,$pr.state,$pr.mergeable,$pr.head,$pr.base) -ForegroundColor Gray
 
-# 2) Collect run metadata from current workspace (ai-orchestrator)
-$runIdPath  = Join-Path 'reports' 'latest_run_id.txt'
-$runId      = (Get-Content $runIdPath -ErrorAction SilentlyContinue | Select-Object -First 1)
-if (-not $runId) { $runId = (Get-Date -Format 'yyyyMMdd_HHmmss') }
+function Has-File([string]$glob) {
+  return @(Get-ChildItem -Path $glob -File -ErrorAction Ignore).Count -gt 0
+}
 
-$genRoot    = 'artifacts\generated'
-$reviewRoot = Join-Path 'artifacts\reviews' $runId
+function Run {
+  param([string]$Name, [string]$Cmd, [string[]]$Args)
 
-$genCount    = (Path-Exists $genRoot)    ? ((Get-ChildItem $genRoot -Recurse -File -Include *.ts,*.tsx).Count) : 0
-$reviewCount = (Path-Exists $reviewRoot) ? ((Get-ChildItem $reviewRoot -Recurse -File -Include *.json | Where-Object { $_.Length -gt 3 }).Count) : 0
+  Write-Host "• $Name → $Cmd $($Args -join ' ')" -ForegroundColor Cyan
+  $psi = New-Object System.Diagnostics.ProcessStartInfo
+  $psi.FileName  = $Cmd
+  $psi.Arguments = ($Args -join " ")
+  $psi.RedirectStandardOutput = $true
+  $psi.RedirectStandardError  = $true
+  $psi.UseShellExecute = $false
+  $p = [System.Diagnostics.Process]::Start($psi)
+  $stdout = $p.StandardOutput.ReadToEnd()
+  $stderr = $p.StandardError.ReadToEnd()
+  $p.WaitForExit()
 
-# 3) Same-repo commit/push (skipped in CommentOnly mode)
-if (-not $CommentOnly) {
-  Write-Info ("Same-repo mode: committing to {0} on branch {1}" -f $Repo, $head)
+  return [pscustomobject]@{
+    code   = $p.ExitCode
+    out    = $stdout.Trim()
+    err    = $stderr.Trim()
+  }
+}
+
+$fail = $false
+
+# -------- ESLint --------
+$eslintConfig = @(".eslintrc","*.eslintrc.*","eslint.config.*") | ForEach-Object { Get-ChildItem $_ -ErrorAction Ignore } | Select-Object -First 1
+if ($null -ne $eslintConfig) {
   try {
-    git fetch origin $head | Out-Null
-    git checkout $head 2>$null | Out-Null
-  } catch {
-    Write-Warn ("Unable to checkout branch '{0}'. Switching to comment-only mode. {1}" -f $head, $_)
-    $CommentOnly = $true
-  }
-
-  if (-not $CommentOnly) {
-    $toAdd = @()
-    if (Path-Exists $genRoot) { $toAdd += $genRoot }
-
-    if ($AttachReports) {
-      $candSel = 'reports\selected_candidates_25.txt'
-      $feedMd  = 'reports\feed_review_20250922.md'
-      $gates   = Get-ChildItem 'reports' -File -Filter 'gates_*.json' -ErrorAction SilentlyContinue
-      $debugs  = Get-ChildItem 'reports\debug' -File -Filter 'run_candidates_*.json' -ErrorAction SilentlyContinue
-
-      foreach($p in @($candSel, $feedMd)) { if (Path-Exists $p) { $toAdd += $p } }
-      if ($gates)  { $toAdd += $gates.FullName }
-      if ($debugs) { $toAdd += $debugs.FullName }
-    }
-
-    if ($toAdd.Count -gt 0) { git add -- $toAdd } else { Write-Warn "Nothing to add. Skipping commit/push." }
-
-    $hasStaged = ((git diff --cached --name-only) | Measure-Object).Count -gt 0
-    if ($hasStaged) {
-      $msg = "chore(ts): add batch artifacts (run $runId) — $genCount files; $reviewCount reviews"
-      git commit -m $msg | Out-Null
-      Write-Good ("Committed: {0}" -f $msg)
-      git push origin $head | Out-Null
-      Write-Good ("Pushed to origin/{0}" -f $head)
-    } else {
-      Write-Host "No staged changes to commit." -ForegroundColor Yellow
-    }
-  }
-} else {
-  Write-Host ("Comment-only mode: will not git commit/push (target repo {0})." -f $Repo) -ForegroundColor Yellow
+    $r = Run -Name "eslint" -Cmd "npx" -Args @("--yes","eslint",".","--ext",".ts,.tsx")
+    if ($r.code -eq 0) { $results.eslint = "pass" } else { $results.eslint = "fail"; $fail = $true; Write-Host $r.err -ForegroundColor Red }
+  } catch { $results.eslint = "error"; $fail = $true; Write-Host $_ -ForegroundColor Red }
 }
 
-# 4) Post PR comment
-New-Item -ItemType Directory -Force -Path 'reports\debug' | Out-Null
-$tmp = "reports\debug\pr_comment_$runId.md"
-
-$body = @"
-**Cod1 Batch Upload** — run `$runId`
-
-- Generated TS/TSX files: **$genCount** (from ai-orchestrator workspace)
-- Review JSONs: **$reviewCount** (under `artifacts/reviews/$runId/`)
-- Selected candidates: `reports/selected_candidates_25.txt` $((Test-Path 'reports\selected_candidates_25.txt') ? '' : '(missing)')
-- Gates reports (if any): `reports/gates_*.json`
-"@
-
-Set-Content -Path $tmp -Encoding UTF8 -Value $body
-
-try {
-  gh pr comment $Pr --repo $Repo --body-file $tmp | Out-Null
-  Write-Good ("Posted PR comment to {0} #{1}." -f $Repo, $Pr)
-<# 
-Upload batch artifacts summary to a PR, with optional commit/push in the same repo.
-
-Usage:
-  # Same-repo (ai-orchestrator) commit + push + comment
-  pwsh -File scripts\upload_to_github.ps1 -Pr 4 -AttachReports
-
-  # Cross-repo comment-only (CFH PR #17), no git operations
-  pwsh -File scripts\upload_to_github.ps1 -Pr 17 -Repo 'carfinancinghub/cfh' -AttachReports -CommentOnly
-#>
-
-[CmdletBinding()]
-param(
-  [Parameter(Mandatory = $true)]
-  [int]$Pr,
-
-  [switch]$AttachReports,
-
-  # Target repository in "owner/name" form
-  [string]$Repo = 'carfinancinghub/ai-orchestrator',
-
-  # If set, skip any git checkout/add/commit/push. Only comment/labels will be posted.
-  [switch]$CommentOnly
-)
-
-$ErrorActionPreference = 'Stop'
-
-function Write-Info([string]$msg) { Write-Host $msg -ForegroundColor Cyan }
-function Write-Warn([string]$msg) { Write-Warning $msg }
-function Write-Good([string]$msg) { Write-Host $msg -ForegroundColor Green }
-function Path-Exists($p) { Test-Path $p -PathType Leaf -or Test-Path $p -PathType Container }
-
-# 1) Read PR info
-Write-Info ("Reading PR #{0} in repo {1}…" -f $Pr, $Repo)
-try {
-  $prJson = gh pr view $Pr --repo $Repo --json number,state,mergeable,headRefName,baseRefName,headRepository,files `
-    --jq '{num:.number,state:.state,mergeable:.mergeable,head:.headRefName,base:.baseRefName,files:[.files[].path]}'
-  if (-not $prJson) { throw "Empty PR info" }
-  $pr = $prJson | ConvertFrom-Json
-} catch {
-  throw ("Unable to get PR info for {0} #{1}. {2}" -f $Repo, $Pr, $_)
-}
-$head = $pr.head
-Write-Host ("PR #{0}  state={1}  mergeable={2}  head={3}  base={4}" -f $pr.num,$pr.state,$pr.mergeable,$pr.head,$pr.base) -ForegroundColor Gray
-
-# 2) Collect run metadata from current workspace (ai-orchestrator)
-$runIdPath  = Join-Path 'reports' 'latest_run_id.txt'
-$runId      = (Get-Content $runIdPath -ErrorAction SilentlyContinue | Select-Object -First 1)
-if (-not $runId) { $runId = (Get-Date -Format 'yyyyMMdd_HHmmss') }
-
-$genRoot    = 'artifacts\generated'
-$reviewRoot = Join-Path 'artifacts\reviews' $runId
-
-$genCount    = (Path-Exists $genRoot)    ? ((Get-ChildItem $genRoot -Recurse -File -Include *.ts,*.tsx).Count) : 0
-$reviewCount = (Path-Exists $reviewRoot) ? ((Get-ChildItem $reviewRoot -Recurse -File -Include *.json | Where-Object { $_.Length -gt 3 }).Count) : 0
-
-# 3) Same-repo commit/push (skipped in CommentOnly mode)
-if (-not $CommentOnly) {
-  Write-Info ("Same-repo mode: committing to {0} on branch {1}" -f $Repo, $head)
+# -------- TSC (typecheck) --------
+if (Has-File "tsconfig.json") {
   try {
-    git fetch origin $head | Out-Null
-    git checkout $head 2>$null | Out-Null
-  } catch {
-    Write-Warn ("Unable to checkout branch '{0}'. Switching to comment-only mode. {1}" -f $head, $_)
-    $CommentOnly = $true
-  }
-
-  if (-not $CommentOnly) {
-    $toAdd = @()
-    if (Path-Exists $genRoot) { $toAdd += $genRoot }
-
-    if ($AttachReports) {
-      $candSel = 'reports\selected_candidates_25.txt'
-      $feedMd  = 'reports\feed_review_20250922.md'
-      $gates   = Get-ChildItem 'reports' -File -Filter 'gates_*.json' -ErrorAction SilentlyContinue
-      $debugs  = Get-ChildItem 'reports\debug' -File -Filter 'run_candidates_*.json' -ErrorAction SilentlyContinue
-
-      foreach($p in @($candSel, $feedMd)) { if (Path-Exists $p) { $toAdd += $p } }
-      if ($gates)  { $toAdd += $gates.FullName }
-      if ($debugs) { $toAdd += $debugs.FullName }
-    }
-
-    if ($toAdd.Count -gt 0) { git add -- $toAdd } else { Write-Warn "Nothing to add. Skipping commit/push." }
-
-    $hasStaged = ((git diff --cached --name-only) | Measure-Object).Count -gt 0
-    if ($hasStaged) {
-      $msg = "chore(ts): add batch artifacts (run $runId) — $genCount files; $reviewCount reviews"
-      git commit -m $msg | Out-Null
-      Write-Good ("Committed: {0}" -f $msg)
-      git push origin $head | Out-Null
-      Write-Good ("Pushed to origin/{0}" -f $head)
-    } else {
-      Write-Host "No staged changes to commit." -ForegroundColor Yellow
-    }
-  }
-} else {
-  Write-Host ("Comment-only mode: will not git commit/push (target repo {0})." -f $Repo) -ForegroundColor Yellow
+    $r = Run -Name "tsc" -Cmd "npx" -Args @("--yes","tsc","-p",".","--noEmit")
+    if ($r.code -eq 0) { $results.tsc = "pass" } else { $results.tsc = "fail"; $fail = $true; Write-Host $r.err -ForegroundColor Red }
+  } catch { $results.tsc = "error"; $fail = $true; Write-Host $_ -ForegroundColor Red }
 }
 
-# 4) Post PR comment
-New-Item -ItemType Directory -Force -Path ''reports\debug'' | Out-Null
-$tmp = "reports\debug\pr_comment_$runId.md"
-@"
-**Cod1 Batch Upload** — run `$runId`
-
-- Generated TS/TSX files: **$genCount** (from ai-orchestrator workspace)
-- Review JSONs: **$reviewCount** (under `artifacts/reviews/$runId/`)
-- Selected candidates: `reports/selected_candidates_25.txt` $((Test-Path 'reports\selected_candidates_25.txt') ? '' : '(missing)')
-- Gates reports (if any): `reports/gates_*.json`
-"@ | Set-Content $tmp -Encoding UTF8
-
-try {
-  gh pr comment $Pr --repo $Repo --body-file $tmp | Out-Null
-  Write-Good ("Posted PR comment to {0} #{1}." -f $Repo, $Pr)Write-Good ("Posted PR comment to {0} #{1}." -f $Repo, $Pr)
-} catch {
-  Write-Warn ("Failed to post PR comment to {0} #{1}: {2}" -f $Repo, $Pr, $_)
-}
-
-# 5) Ensure labels exist, then add them (idempotent)
-$desiredLabels = @(
-  @{ name = 'finalization'; color = '2ea043'; desc = 'Ready for final polish/merge' },
-  @{ name = 'cfh-enhance';  color = '0e8a16'; desc = 'CFH-specific enhancement'   },
-  @{ name = 'ts-batch-25';  color = '5319e7'; desc = 'TS migration batch (≤25 files)' }
-)
-
-try {
-  $have = gh label list --repo $Repo --json name --jq '.[].name'
-} catch {
-  $have = @()
-  Write-Warn ("Could not list labels for {0}: {1}" -f $Repo, $_)
-}
-
-foreach($lbl in $desiredLabels){
-  $n = $lbl.name
-  if ($have -notcontains $n) {
-    try {
-      gh label create $n --repo $Repo --color $lbl.color --description $lbl.desc 2>$null | Out-Null
-      Write-Good ("Created label '{0}' in {1}." -f $n, $Repo)
-    } catch {
-      Write-Warn ("Could not create label '{0}' (may already exist or insufficient perms): {1}" -f $n, $_)
-    }
-  }
-}
-
-foreach($n in $desiredLabels.name){
+# -------- Prettier (format check) --------
+$prettierSignal = @(".prettierrc*","prettier.config.*") | ForEach-Object { Get-ChildItem $_ -ErrorAction Ignore } | Select-Object -First 1
+if ($null -ne $prettierSignal) {
   try {
-    gh pr edit $Pr --repo $Repo --add-label $n | Out-Null
-  } catch {
-    Write-Warn ("Could not add label '{0}' to PR #{1}: {2}" -f $n, $Pr, $_)
-  }
+    $r = Run -Name "prettier" -Cmd "npx" -Args @("--yes","prettier","-c",".")
+    if ($r.code -eq 0) { $results.prettier = "pass" } else { $results.prettier = "fail"; $fail = $true; Write-Host $r.err -ForegroundColor Red }
+  } catch { $results.prettier = "error"; $fail = $true; Write-Host $_ -ForegroundColor Red }
 }
 
-Write-Good ("Posted PR comment + labels to {0} #{1}." -f $Repo, $Pr)
+# -------- write summary --------
+($results | ConvertTo-Json -Depth 5) | Set-Content -Encoding UTF8 $SummaryPath
+Write-Host "Summary → $SummaryPath"
 
+if ($HARD -and $fail) {
+  Write-Error "CFH lint gate failed (hard mode)."
+  exit 1
+} elseif ($fail) {
+  Write-Warning "CFH lint gate had failures (soft mode)."
+}
 
-
+Write-Host "CFH lint gate complete."
