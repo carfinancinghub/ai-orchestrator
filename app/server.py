@@ -19,3 +19,15 @@ def orchestrator_status():
 def list_routes():
     return [getattr(r, "path", str(r)) for r in app.router.routes]
 # --- end helpers ---
+# --- app factory for uvicorn --factory ---
+def create_app():
+    """
+    Factory that returns the global FastAPI `app`.
+    Keeps backward compatibility with `app = FastAPI(...)`.
+    """
+    try:
+        return app  # type: ignore[name-defined]
+    except NameError:
+        a = FastAPI(title="AI Orchestrator")
+        return a
+# --- end factory ---
