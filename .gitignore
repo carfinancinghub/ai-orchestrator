@@ -25,3 +25,12 @@ Thumbs.db
 artifacts/
 reports/*_workspace_collect/
 fd
+.env*
+*-access.json
+org_access.json
+venv/
+.venv/
+.mypy_cache/
+.ruff_cache/
+__pycache__/
+fd
