@@ -1,0 +1,36 @@
+# --- BEGIN: normalization & linguist settings (patch) ---
+* text=auto eol=lf
+
+# Always treat these as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.zip binary
+*.gz binary
+*.tgz binary
+*.bz2 binary
+*.7z binary
+*.pdf binary
+*.wasm binary
+
+# Recurse correctly (use **/ for directories) and mark vendored
+**/node_modules/** linguist-vendored
+**/.venv/**        linguist-vendored
+**/venv/**         linguist-vendored
+**/dist/**         linguist-vendored
+**/build/**        linguist-vendored
+**/.next/**        linguist-vendored
+**/coverage/**     linguist-vendored
+*.min.js           linguist-vendored
+
+# Normalize common text file types
+*.ps1  text eol=lf
+*.py   text eol=lf
+*.ts   text eol=lf
+*.tsx  text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.md   text eol=lf
+# --- END: normalization & linguist settings (patch) ---
