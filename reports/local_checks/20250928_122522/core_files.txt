@@ -1,0 +1,7 @@
+
+FullName                                        Length LastWriteTime
+--------                                        ------ -------------
+C:\c\ai-orchestrator\src\core\greet.jsx             69 9/27/2025 2:53:55 PM
+C:\c\ai-orchestrator\src\core\loanCalculator.js    278 9/27/2025 2:53:55 PM
+C:\c\ai-orchestrator\src\core\userProfile.js        94 9/27/2025 2:53:55 PM
+
