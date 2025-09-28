@@ -1,0 +1,136 @@
+{
+  "exists": true,
+  "total_lines": 1138,
+  "top_20_extensions": [
+    {
+      "extension": ".md ",
+      "count": 765
+    },
+    {
+      "extension": ".py ",
+      "count": 147
+    },
+    {
+      "extension": ".ps1 ",
+      "count": 72
+    },
+    {
+      "extension": ".json ",
+      "count": 52
+    },
+    {
+      "extension": ".txt ",
+      "count": 27
+    },
+    {
+      "extension": ".yml ",
+      "count": 11
+    },
+    {
+      "extension": ".bak ",
+      "count": 10
+    },
+    {
+      "extension": ".csv ",
+      "count": 8
+    },
+    {
+      "extension": ".mjs ",
+      "count": 6
+    },
+    {
+      "extension": "(none)",
+      "count": 4
+    },
+    {
+      "extension": ".bak-20250904_070849 ",
+      "count": 3
+    },
+    {
+      "extension": ".bak-20250904_070936 ",
+      "count": 3
+    },
+    {
+      "extension": ".bak-20250904_071022 ",
+      "count": 3
+    },
+    {
+      "extension": ".cjs ",
+      "count": 3
+    },
+    {
+      "extension": ".log ",
+      "count": 3
+    },
+    {
+      "extension": ".ts ",
+      "count": 3
+    },
+    {
+      "extension": ".gitignore ",
+      "count": 2
+    },
+    {
+      "extension": ".yaml ",
+      "count": 2
+    },
+    {
+      "extension": ".gitkeep ",
+      "count": 2
+    },
+    {
+      "extension": ".example ",
+      "count": 1
+    }
+  ],
+  "selected_extension_counts": [
+    {
+      "extension": ".js",
+      "count": 0
+    },
+    {
+      "extension": ".jsx",
+      "count": 0
+    },
+    {
+      "extension": ".ts",
+      "count": 0
+    },
+    {
+      "extension": ".tsx",
+      "count": 0
+    },
+    {
+      "extension": ".py",
+      "count": 0
+    },
+    {
+      "extension": ".md",
+      "count": 0
+    },
+    {
+      "extension": ".json",
+      "count": 0
+    },
+    {
+      "extension": ".yml",
+      "count": 0
+    },
+    {
+      "extension": ".yaml",
+      "count": 0
+    },
+    {
+      "extension": ".ps1",
+      "count": 0
+    },
+    {
+      "extension": ".sh",
+      "count": 0
+    },
+    {
+      "extension": ".txt",
+      "count": 0
+    }
+  ]
+}

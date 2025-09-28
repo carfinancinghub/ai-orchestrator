@@ -1,0 +1,57 @@
+
+PSPath              : Microsoft.PowerShell.Core\FileSystem::C:\CFH\frontend
+PSParentPath        : Microsoft.PowerShell.Core\FileSystem::C:\CFH
+PSChildName         : frontend
+PSDrive             : C
+PSProvider          : Microsoft.PowerShell.Core\FileSystem
+PSIsContainer       : True
+Mode                : d-r--
+ModeWithoutHardLink : d-r--
+BaseName            : frontend
+ResolvedTarget      : C:\CFH\frontend
+Target              : 
+LinkType            : 
+Name                : frontend
+Parent              : C:\CFH
+Root                : C:\
+Exists              : True
+FullName            : C:\CFH\frontend
+Extension           : 
+CreationTime        : 4/17/2025 1:24:13 PM
+CreationTimeUtc     : 4/17/2025 8:24:13 PM
+LastAccessTime      : 9/27/2025 2:01:37 PM
+LastAccessTimeUtc   : 9/27/2025 9:01:37 PM
+LastWriteTime       : 9/27/2025 2:01:37 PM
+LastWriteTimeUtc    : 9/27/2025 9:01:37 PM
+LinkTarget          : 
+UnixFileMode        : -1
+Attributes          : ReadOnly, Directory, Compressed
+
+PSPath              : Microsoft.PowerShell.Core\FileSystem::C:\CFH\backend
+PSParentPath        : Microsoft.PowerShell.Core\FileSystem::C:\CFH
+PSChildName         : backend
+PSDrive             : C
+PSProvider          : Microsoft.PowerShell.Core\FileSystem
+PSIsContainer       : True
+Mode                : d-r--
+ModeWithoutHardLink : d-r--
+BaseName            : backend
+ResolvedTarget      : C:\CFH\backend
+Target              : 
+LinkType            : 
+Name                : backend
+Parent              : C:\CFH
+Root                : C:\
+Exists              : True
+FullName            : C:\CFH\backend
+Extension           : 
+CreationTime        : 4/17/2025 1:24:13 PM
+CreationTimeUtc     : 4/17/2025 8:24:13 PM
+LastAccessTime      : 7/23/2025 4:16:03 PM
+LastAccessTimeUtc   : 7/23/2025 11:16:03 PM
+LastWriteTime       : 7/23/2025 4:15:12 PM
+LastWriteTimeUtc    : 7/23/2025 11:15:12 PM
+LinkTarget          : 
+UnixFileMode        : -1
+Attributes          : ReadOnly, Directory, Compressed
+
