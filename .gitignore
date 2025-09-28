@@ -34,3 +34,11 @@ venv/
 .ruff_cache/
 __pycache__/
 fd
+.env*
+*-access.json
+org_access.json
+venv/
+.mypy_cache/
+.ruff_cache/
+__pycache__/
+fd
