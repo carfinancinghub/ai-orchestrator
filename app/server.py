@@ -3,8 +3,10 @@ from __future__ import annotations
 import os
 import json
 import time
+import re
+import logging
 from pathlib import Path
-from typing import List, Optional, Dict, Any, Literal
+from typing import List, Optional, Dict, Any
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
@@ -14,12 +16,11 @@ from pydantic import BaseModel, Field
 import httpx
 from openai import AsyncOpenAI
 
-# ── Env / app ──────────────────────────────────────────────────────────────────
+# ── Env / App ──────────────────────────────────────────────────────────────────
 load_dotenv()
 
-app = FastAPI(title="CFH AI Orchestrator", version="0.3.0")
+app = FastAPI(title="CFH AI Orchestrator", version="0.4.0")
 
-# CORS (adjust origins if needed)
 ALLOWED_ORIGINS = [
     os.getenv("VITE_ORIGIN", "http://127.0.0.1:8020"),
     "http://localhost:8020",
@@ -33,54 +34,96 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Providers: OpenAI + xAI (Grok via OpenAI-compatible) + Gemini (REST)
+# Provider env
 OPENAI_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_BASE = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 
 XAI_KEY = os.getenv("XAI_GROK_API_KEY") or os.getenv("GROK_API_KEY") or os.getenv("XAI_API_KEY")
-XAI_BASE_URL = os.getenv("XAI_BASE_URL", "https://api.x.ai/v1")
+XAI_BASE = os.getenv("GROK_BASE_URL") or os.getenv("XAI_BASE_URL", "https://api.x.ai/v1")
+XAI_MODEL = os.getenv("GROK_MODEL", "grok-2-latest")
 
 GOOGLE_KEY = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
 GEMINI_BASE = os.getenv("GEMINI_BASE", "https://generativelanguage.googleapis.com/v1beta")
+GOOGLE_MODEL = os.getenv("GOOGLE_MODEL", "gemini-1.5-pro")
+
+PROVIDER_ORDER = [p.strip().lower() for p in (os.getenv("PROVIDER_ORDER") or "grok,google,openai").split(",") if p.strip()]
+RETRY_MAX = int(os.getenv("RETRY_MAX", "3"))
+RETRY_BASE_DELAY = float(os.getenv("RETRY_BASE_DELAY", "1.2"))
 
 # Clients (created only if keys exist)
-openai_client: Optional[AsyncOpenAI] = AsyncOpenAI(api_key=OPENAI_KEY) if OPENAI_KEY else None
-xai_client: Optional[AsyncOpenAI] = (
-    AsyncOpenAI(api_key=XAI_KEY, base_url=XAI_BASE_URL) if XAI_KEY else None
-)
+openai_client: Optional[AsyncOpenAI] = AsyncOpenAI(api_key=OPENAI_KEY, base_url=OPENAI_BASE) if OPENAI_KEY else None
+xai_client: Optional[AsyncOpenAI] = AsyncOpenAI(api_key=XAI_KEY, base_url=XAI_BASE) if XAI_KEY else None
+
+# ── Secret Redaction (logs & error text) ───────────────────────────────────────
+_REDACT_PATTERNS = [
+    (re.compile(r'(?:\?|&)(?:key|api_key)=([^&\s]+)', re.I), r'\g<0>[REDACTED]'),
+    (re.compile(r'Authorization:\s*Bearer\s+[A-Za-z0-9._-]+', re.I), 'Authorization: Bearer [REDACTED]'),
+    (re.compile(r'sk-[A-Za-z0-9]{20,}', re.I), 'sk-[REDACTED]'),            # OpenAI-like
+    (re.compile(r'AIza[0-9A-Za-z\-_]{20,}', re.I), 'AIza[REDACTED]'),       # Google-like
+    (re.compile(r'(?<=XAI_API_KEY=)[^\s]+', re.I), '[REDACTED]'),
+]
+
+def redact_secret(s: str) -> str:
+    out = s
+    for pat, repl in _REDACT_PATTERNS:
+        out = pat.sub(repl, out)
+    return out
+
+class RedactFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        if isinstance(record.msg, str):
+            record.msg = redact_secret(record.msg)
+        if record.args:
+            record.args = tuple(redact_secret(str(a)) for a in record.args)
+        return True
+
+logging.getLogger("uvicorn.error").addFilter(RedactFilter())
+logging.getLogger("uvicorn.access").addFilter(RedactFilter())
+logging.getLogger("httpx").addFilter(RedactFilter())
 
 # ── Schemas ───────────────────────────────────────────────────────────────────
 class ConvertRequest(BaseModel):
     file_path: str = Field(..., description="Path to a .js or .jsx file")
-    provider: Optional[str] = Field(None, description="openai | grok | google | anthropic")
-    model: Optional[str] = Field(None, description="Provider-specific model")
+    provider: Optional[str] = Field(None, description="openai | grok | google | anthropic | auto/None for fallback")
+    model: Optional[str] = Field(None, description="Provider-specific model or auto")
 
 class ConvertResponse(BaseModel):
     saved_to: str
     bytes: int
 
-# Batch conversion request/response
 class ConvertTreeRequest(BaseModel):
     root: str = Field(default="src")
-    provider: Literal["openai", "grok", "google", "anthropic"] = "openai"
-    model: str | None = None
-    limit: int | None = Field(default=None, description="Optional max files to convert this run")
+    provider: Optional[str] = Field(default=None, description="openai | grok | google | anthropic | auto/None for fallback")
+    model: Optional[str] = Field(default=None)
+    limit: Optional[int] = Field(default=None, description="Optional max files to convert this run")
     dry_run: bool = Field(default=False, description="If true, do not write files; just preview")
 
 class ConvertTreeResponse(BaseModel):
     ok: bool
-    provider: str
-    model: str | None
+    provider: Optional[str]
+    model: Optional[str]
     converted: list[str]
     skipped: list[str]
     dry_run: bool
     metrics: Dict[str, Any]
 
-# ── Utils ─────────────────────────────────────────────────────────────────────
-SkipDirs = {"node_modules", ".venv", "venv", "dist", "build", ".git", "__pycache__", ".next", "coverage", "out", "release", "tmp", "temp"}
+# ── Utils: discovery & helpers ────────────────────────────────────────────────
+# Directory name excludes and filename patterns
+EXCLUDE_DIRS = {
+    "node_modules", ".venv", "venv", "dist", "build", ".git", "__pycache__", ".next",
+    "coverage", "out", "release", "tmp", "temp", "__mocks__", "storybook", "stories", "tests"
+}
+EXCLUDE_SUBSTR = (".test.", ".spec.", "stories", "storybook")
 
-def should_skip(path: Path) -> bool:
-    parts = {p.lower() for p in path.parts}
-    return any(sd in parts for sd in SkipDirs)
+def _is_excluded(p: Path) -> bool:
+    parts = {seg.lower() for seg in p.parts}
+    if any(d in parts for d in EXCLUDE_DIRS):
+        return True
+    sp = str(p).lower()
+    if any(tok in sp for tok in EXCLUDE_SUBSTR):
+        return True
+    return False
 
 def find_js_targets(root: Path) -> list[Path]:
     targets: list[Path] = []
@@ -89,12 +132,11 @@ def find_js_targets(root: Path) -> list[Path]:
     for p in root.rglob("*"):
         if p.is_dir():
             continue
-        if should_skip(p):
+        if _is_excluded(p):
             continue
         ext = p.suffix.lower()
         if ext not in (".js", ".jsx"):
             continue
-        # skip if sibling .ts/.tsx already exists
         sibling_ts = p.with_suffix(".ts" if ext == ".js" else ".tsx")
         if sibling_ts.exists():
             continue
@@ -119,11 +161,13 @@ def _build_prompt(js_code: str) -> str:
         "```"
     )
 
-async def _convert_openai(model: str, prompt: str) -> str:
+# ── Provider Calls (sanitized errors) ─────────────────────────────────────────
+async def _call_openai(prompt: str, model: Optional[str]) -> str:
     if not openai_client:
         raise RuntimeError("OPENAI_API_KEY not configured")
+    m = model or OPENAI_MODEL
     resp = await openai_client.chat.completions.create(
-        model=model,
+        model=m,
         messages=[
             {"role": "system", "content": "You are a senior TypeScript migration assistant."},
             {"role": "user", "content": prompt},
@@ -132,11 +176,12 @@ async def _convert_openai(model: str, prompt: str) -> str:
     )
     return resp.choices[0].message.content or ""
 
-async def _convert_grok(model: str, prompt: str) -> str:
+async def _call_grok(prompt: str, model: Optional[str]) -> str:
     if not xai_client:
-        raise RuntimeError("XAI_GROK_API_KEY not configured")
+        raise RuntimeError("GROK/XAI key not configured")
+    m = model or XAI_MODEL
     resp = await xai_client.chat.completions.create(
-        model=model,
+        model=m,
         messages=[
             {"role": "system", "content": "You are a senior TypeScript migration assistant."},
             {"role": "user", "content": prompt},
@@ -145,66 +190,76 @@ async def _convert_grok(model: str, prompt: str) -> str:
     )
     return resp.choices[0].message.content or ""
 
-async def _convert_gemini(model: str, prompt: str) -> str:
+async def _call_gemini(prompt: str, model: Optional[str]) -> str:
     if not GOOGLE_KEY:
         raise RuntimeError("GOOGLE_API_KEY/GEMINI_API_KEY not configured")
-    url = f"{GEMINI_BASE}/models/{model}:generateContent?key={GOOGLE_KEY}"
-    payload = {
+    m = model or GOOGLE_MODEL
+    url = f"{GEMINI_BASE}/models/{m}:generateContent?key={GOOGLE_KEY}"
+    body = {
         "contents": [
             {"parts": [{"text": "You are a senior TypeScript migration assistant."}]},
             {"parts": [{"text": prompt}]},
         ]
     }
     async with httpx.AsyncClient(timeout=60) as client:
-        r = await client.post(url, json=payload)
-        r.raise_for_status()
-        data = r.json()
-    # Extract first candidate text
+        r = await client.post(url, json=body)
+    if r.status_code == 429:
+        raise HTTPException(429, "Google quota/429")
+    if r.status_code >= 400:
+        # return minimal status, do not leak full URL with key
+        raise HTTPException(r.status_code, f"Google HTTP {r.status_code}")
+    data = r.json()
     try:
-        return (
-            data["candidates"][0]["content"]["parts"][0]["text"]  # type: ignore[index]
-        )
+        return data["candidates"][0]["content"]["parts"][0]["text"]  # type: ignore[index]
     except Exception:
-        # If schema differs, dump for debugging
-        return f"// gemini response parse error\n/* {json.dumps(data)[:2000]} */"
+        return "// gemini response parse error"
 
-async def _convert_with_provider_js_to_ts(
-    src_path: Path,
-    provider: str,
-    model: str | None,
-) -> str:
+async def _convert_with_provider_js_to_ts(src_path: Path, provider: Optional[str], model: Optional[str]) -> str:
     """
-    Returns TS/TSX code string (without banner).
-    If provider key missing, returns original code as a no-op fallback.
+    Convert JS/JSX → TS/TSX using a specific provider, or fallback chain when provider is None/'auto'.
+    Returns TS/TSX code string (without banner). If keys are missing, returns original JS as no-op.
     """
     js_code = src_path.read_text(encoding="utf-8")
-
-    # Provider-key checks
-    have_openai = bool(OPENAI_KEY)
-    have_grok = bool(XAI_KEY)
-    have_google = bool(GOOGLE_KEY)
-    have_anthropic = False  # reserved
-
-    key_missing = (
-        (provider == "openai" and not have_openai) or
-        (provider == "grok" and not have_grok) or
-        (provider == "google" and not have_google) or
-        (provider == "anthropic" and not have_anthropic)
-    )
-    if key_missing:
-        return js_code  # offline fallback
-
     prompt = _build_prompt(js_code)
 
-    # Minimal provider switch; reuse existing helpers
-    if provider == "openai":
-        return await _convert_openai(model or "gpt-4o-mini", prompt)
-    if provider == "grok":
-        return await _convert_grok(model or "grok-2-latest", prompt)
-    if provider == "google":
-        return await _convert_gemini(model or "gemini-1.5-pro", prompt)
+    # explicit provider
+    if provider and provider != "auto":
+        p = provider.lower()
+        try:
+            if p == "openai":
+                return await _call_openai(prompt, model)
+            if p == "grok":
+                return await _call_grok(prompt, model)
+            if p == "google":
+                return await _call_gemini(prompt, model)
+        except HTTPException as he:
+            # For 429 or provider errors we fall back to bannered no-op at the caller
+            raise he
+        except Exception as e:
+            raise RuntimeError(redact_secret(str(e)))
 
-    # TODO: Anthropic when ready. For now: no-op.
+        # unknown provider → return original code
+        return js_code
+
+    # fallback chain
+    last_err: Optional[Exception] = None
+    for p in PROVIDER_ORDER:
+        try:
+            if p == "grok":
+                return await _call_grok(prompt, model)
+            if p == "google":
+                return await _call_gemini(prompt, model)
+            if p == "openai":
+                return await _call_openai(prompt, model)
+        except HTTPException as he:
+            # on 429 or 4xx skip to next provider
+            last_err = he
+        except Exception as e:
+            last_err = e
+    # All failed → return original JS
+    if last_err:
+        # Note: caller may persist a no-op artifact with banner recording provider failure
+        raise RuntimeError(redact_secret(str(last_err)))
     return js_code
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────
@@ -223,14 +278,63 @@ async def providers_list():
         "grok": bool(XAI_KEY),
         "google": bool(GOOGLE_KEY),
         "anthropic": False,  # reserved
+        "order": PROVIDER_ORDER,
     }
 
+# Self-test (sanitized)
+@app.get("/providers/selftest")
+async def providers_selftest():
+    msg = "hello-orchestrator"
+    out: Dict[str, str] = {}
+
+    async def grok():
+        try:
+            return await _call_grok(msg, None)
+        except HTTPException as he:
+            return f"ERROR: Grok {he.detail}"
+        except Exception as e:
+            return f"ERROR: {redact_secret(str(e))}"
+
+    async def google():
+        try:
+            return await _call_gemini(msg, None)
+        except HTTPException as he:
+            return f"ERROR: Google {he.detail}"
+        except Exception as e:
+            return f"ERROR: {redact_secret(str(e))}"
+
+    async def openai():
+        try:
+            return await _call_openai(msg, None)
+        except HTTPException as he:
+            return f"ERROR: OpenAI {he.detail}"
+        except Exception as e:
+            return f"ERROR: {redact_secret(str(e))}"
+
+    for p in PROVIDER_ORDER:
+        if p == "grok":
+            out["grok"] = (await grok())[:160]
+        elif p == "google":
+            out["google"] = (await google())[:160]
+        elif p == "openai":
+            out["openai"] = (await openai())[:160]
+        else:
+            out[p] = "skipped"
+    # also include any not in order but configured
+    if "grok" not in out and XAI_KEY:
+        out["grok"] = (await grok())[:160]
+    if "google" not in out and GOOGLE_KEY:
+        out["google"] = (await google())[:160]
+    if "openai" not in out and OPENAI_KEY:
+        out["openai"] = (await openai())[:160]
+    return out
+
 @app.get("/orchestrator/scan")
-async def scan_files():
-    root = Path("src")
-    if not root.exists():
+async def scan_files(root: Optional[str] = None):
+    base = Path(root or "src")
+    if not base.exists():
         return {"files": [], "count": 0}
-    files: List[str] = [str(p) for p in root.rglob("*.js")] + [str(p) for p in root.rglob("*.jsx")]
+    files: List[str] = [str(p) for p in find_js_targets(base)]
     return {"files": files, "count": len(files)}
 
 @app.post("/convert/file", response_model=ConvertResponse)
@@ -239,41 +343,18 @@ async def convert_file(req: ConvertRequest):
     if not path.exists() or path.suffix.lower() not in (".js", ".jsx"):
         raise HTTPException(status_code=404, detail="File not found or not JS/JSX")
 
-    js_code = path.read_text(encoding="utf-8")
-    prompt = _build_prompt(js_code)
-
-    provider = (req.provider or os.getenv("LLM_PROVIDER") or "openai").lower()
-    model = req.model or os.getenv("LLM_MODEL") or (
-        "gpt-4o-mini" if provider == "openai"
-        else "grok-2-latest" if provider == "grok"
-        else "gemini-1.5-pro"
-    )
-
+    provider = (req.provider or os.getenv("LLM_PROVIDER") or "auto").lower()
+    model = req.model or os.getenv("LLM_MODEL")
     try:
-        if provider == "openai" and OPENAI_KEY:
-            ts_code = await _convert_openai(model, prompt)
-            banner = "// @ai-generated by OpenAI\n"
-        elif provider == "grok" and XAI_KEY:
-            ts_code = await _convert_grok(model, prompt)
-            banner = "// @ai-generated by xAI Grok\n"
-        elif provider == "google" and GOOGLE_KEY:
-            ts_code = await _convert_gemini(model, prompt)
-            banner = "// @ai-generated by Google Gemini\n"
-        else:
-            # Unknown provider or missing key → offline fallback
-            ts_path = _offline_write(path, js_code, provider_note=provider)
-            return ConvertResponse(saved_to=str(ts_path), bytes=ts_path.stat().st_size)
-
+        ts_code = await _convert_with_provider_js_to_ts(path, provider, model)
         ts_path = _ts_path_for(path)
+        banner = f"// @ai-generated via ai-orchestrator (provider={provider})\n"
         ts_path.write_text(banner + (ts_code or ""), encoding="utf-8")
         return ConvertResponse(saved_to=str(ts_path), bytes=ts_path.stat().st_size)
-
     except Exception as e:
-        # If provider request fails, fall back to offline copy to keep you moving.
-        ts_path = _offline_write(path, js_code, provider_note=f"{provider}-error:{type(e).__name__}")
+        ts_path = _offline_write(path, path.read_text(encoding="utf-8"), provider_note=f"{provider}-error")
         return ConvertResponse(saved_to=str(ts_path), bytes=ts_path.stat().st_size)
 
-# NEW: Batch conversion endpoint ------------------------------------------------
 @app.post("/convert/tree", response_model=ConvertTreeResponse)
 async def convert_tree(req: ConvertTreeRequest):
     started = time.time()
@@ -284,39 +365,40 @@ async def convert_tree(req: ConvertTreeRequest):
 
     converted: list[str] = []
     skipped: list[str] = []
-    banner = "// @ai-generated\n"
+    banner = "// @ai-generated via ai-orchestrator\n"
+
+    provider = (req.provider or "auto").lower()
+    model = req.model
 
     for p in targets:
         try:
-            ts_ext = ".ts" if p.suffix.lower() == ".js" else ".tsx"
-            out_path = p.with_suffix(ts_ext)
-            ts_code = await _convert_with_provider_js_to_ts(p, req.provider, req.model)
+            ts_code = await _convert_with_provider_js_to_ts(p, provider, model)
             if req.dry_run:
                 skipped.append(str(p))
                 continue
+            out_path = _ts_path_for(p)
             out_path.write_text(banner + ts_code, encoding="utf-8")
             converted.append(str(out_path))
         except Exception as e:
-            skipped.append(f"{p} :: {e}")
+            skipped.append(f"{p} :: {redact_secret(str(e))}")
 
     metrics = {
         "files_considered": len(targets),
         "converted_count": len(converted),
         "skipped_count": len(skipped),
         "elapsed_sec": round(time.time() - started, 3),
-        "provider": req.provider,
-        "model": req.model,
+        "provider": provider,
+        "model": model,
     }
     return ConvertTreeResponse(
         ok=True,
-        provider=req.provider,
-        model=req.model,
+        provider=provider,
+        model=model,
         converted=converted,
         skipped=skipped,
         dry_run=req.dry_run,
         metrics=metrics,
     )
-
 
 def create_app():
     return app
