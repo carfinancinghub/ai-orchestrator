@@ -72,10 +72,22 @@ def redact_secret(s: str) -> str:
 
 class RedactFilter(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
+        # scrub the message text
         if isinstance(record.msg, str):
             record.msg = redact_secret(record.msg)
+        # scrub only string args; preserve original types for %d, %f, etc.
         if record.args:
-            record.args = tuple(redact_secret(str(a)) for a in record.args)
+            try:
+                new_args = []
+                for a in record.args:
+                    if isinstance(a, str):
+                        new_args.append(redact_secret(a))
+                    else:
+                        new_args.append(a)  # keep numbers/objects untouched
+                record.args = tuple(new_args)
+            except Exception:
+                # if anything odd happens, just leave args alone
+                pass
         return True
 
 logging.getLogger("uvicorn.error").addFilter(RedactFilter())
