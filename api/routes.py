@@ -1,3 +1,7 @@
+from fastapi import HTTPException
+import httpx
+import asyncio
+import os
 # Path: api/routes.py
 from __future__ import annotations
 from typing import Any, Dict, List, Optional
@@ -273,3 +277,179 @@ def audit_commit(req: CommitRequest) -> Dict[str, Any]:
 @router.get("/_health")
 def health() -> Dict[str, Any]:
     return {"ok": True}
+
+# ===== CFH PROVIDERS & CONVERT (AUTOGEN) - START =====
+# Provider order / retry config via environment
+def _env_list(name: str, default: str) -> list[str]:
+    raw = os.getenv(name, default)
+    return [x.strip().lower() for x in raw.split(",") if x.strip()]
+
+_PROVIDER_ORDER = _env_list("PROVIDER_ORDER", "grok,google,openai")
+_RETRY_MAX = int(os.getenv("RETRY_MAX", "3"))
+_RETRY_BASE_DELAY = float(os.getenv("RETRY_BASE_DELAY", "1.2"))
+
+_EXCLUDES = ["__mocks__", "tests", ".test.", ".spec.", "stories", "storybook",
+             "node_modules", "dist", "build", ".next", "coverage", "out", "release", "tmp", "temp"]
+
+# ---- Providers: list + selftest -------------------------------------------------------
+@router.get("/providers/list")
+def _providers_list() -> Dict[str, Any]:
+    return {
+        "grok":   bool(os.getenv("GROK_API_KEY") or os.getenv("XAI_GROK_API_KEY") or os.getenv("XAI_API_KEY")),
+        "google": bool(os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")),
+        "openai": bool(os.getenv("OPENAI_API_KEY")),
+        "order":  _PROVIDER_ORDER,
+    }
+
+async def _call_grok(text: str, model: Optional[str] = None) -> str:
+    api_key = os.getenv("GROK_API_KEY") or os.getenv("XAI_GROK_API_KEY") or os.getenv("XAI_API_KEY")
+    base = os.getenv("GROK_BASE_URL") or os.getenv("XAI_BASE_URL", "https://api.x.ai/v1")
+    mdl  = model or os.getenv("GROK_MODEL", "grok-2-latest")
+    if not api_key:
+        raise RuntimeError("GROK_API_KEY missing")
+    payload = {"model": mdl, "messages":[{"role":"user","content": text}], "temperature": 0.0}
+    headers = {"Authorization": f"Bearer {api_key}"}
+    async with httpx.AsyncClient(timeout=60.0) as client:
+        r = await client.post(f"{base}/chat/completions", headers=headers, json=payload)
+        if r.status_code == 429:
+            raise HTTPException(429, "Grok quota/429")
+        r.raise_for_status()
+        data = r.json()
+    return data["choices"][0]["message"]["content"]
+
+async def _call_google(text: str, model: Optional[str] = None) -> str:
+    api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+    mdl  = model or os.getenv("GOOGLE_MODEL", "gemini-1.5-pro-latest")
+    if not api_key:
+        raise RuntimeError("GOOGLE_API_KEY/GEMINI_API_KEY missing")
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{mdl}:generateContent?key={api_key}"
+    body = {"contents":[{"parts":[{"text": text}]}]}
+    async with httpx.AsyncClient(timeout=60.0) as client:
+        r = await client.post(url, json=body)
+        if r.status_code == 429:
+            raise HTTPException(429, "Google quota/429")
+        r.raise_for_status()
+        data = r.json()
+    return data["candidates"][0]["content"]["parts"][0]["text"]
+
+async def _call_openai(text: str, model: Optional[str] = None) -> str:
+    api_key = os.getenv("OPENAI_API_KEY")
+    base = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
+    mdl  = model or os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+    if not api_key:
+        raise RuntimeError("OPENAI_API_KEY missing")
+    payload = {"model": mdl, "messages":[{"role":"user","content": text}], "temperature": 0.0}
+    headers = {"Authorization": f"Bearer {api_key}"}
+    async with httpx.AsyncClient(timeout=60.0) as client:
+        r = await client.post(f"{base}/chat/completions", headers=headers, json=payload)
+        if r.status_code == 429:
+            raise HTTPException(429, "OpenAI quota/429")
+        r.raise_for_status()
+        data = r.json()
+    return data["choices"][0]["message"]["content"]
+
+@router.get("/providers/selftest")
+async def _providers_selftest() -> Dict[str, Any]:
+    msg = "hello-orchestrator"
+    out: Dict[str, Any] = {}
+    for p in _PROVIDER_ORDER:
+        try:
+            if   p == "grok":   txt = await _call_grok(msg)
+            elif p == "google": txt = await _call_google(msg)
+            elif p == "openai": txt = await _call_openai(msg)
+            else: txt = f"skipped({p})"
+            out[p] = str(txt)[:160]
+        except Exception as e:
+            out[p] = f"ERROR: {e}"
+    return out
+
+# ---- Orchestrator: scan + convert with fallback ---------------------------------------
+def _list_js(root: str) -> list[str]:
+    rp = Path(root)
+    files: list[str] = []
+    for f in rp.rglob("*"):
+        s = str(f)
+        if f.is_file() and (s.endswith(".js") or s.endswith(".jsx")) and not any(x in s for x in _EXCLUDES):
+            if s.endswith(".js") and Path(s[:-3] + ".ts").exists():
+                continue
+            if s.endswith(".jsx") and Path(s[:-4] + ".tsx").exists():
+                continue
+            files.append(s)
+    return files
+
+def _build_prompt(js_code: str) -> str:
+    return (
+        "Convert the following JavaScript to clean, typed TypeScript (or TSX if JSX). "
+        "Preserve logic, avoid 'any', add interfaces/generics where clear.\n"
+        "`javascript\n" + js_code + "\n`"
+    )
+
+async def _convert_with_fallback(js_code: str, provider: Optional[str], model: Optional[str]) -> str:
+    order = _PROVIDER_ORDER if (provider in [None, "", "auto"]) else [provider]
+    prompt = _build_prompt(js_code)
+    last_err: Optional[Exception] = None
+    for p in order:
+        for i in range(_RETRY_MAX):
+            try:
+                if   p == "grok":   return await _call_grok(prompt, model)
+                elif p == "google": return await _call_google(prompt, model)
+                elif p == "openai": return await _call_openai(prompt, model)
+                else: break
+            except HTTPException as he:
+                if getattr(he, "status_code", 500) == 429:
+                    last_err = he
+                    break  # try next provider
+                last_err = he
+            except Exception as e:
+                last_err = e
+                await asyncio.sleep(_RETRY_BASE_DELAY * (2 ** i))
+    raise HTTPException(503, f"All providers failed: {last_err}")
+
+class ConvertFileReq(BaseModel):
+    file_path: str
+    provider: Optional[str] = None
+    model: Optional[str] = None
+    dry_run: bool = False
+
+@router.get("/orchestrator/scan")
+def _scan_files(root: str = "src") -> Dict[str, Any]:
+    files = _list_js(root)
+    return {"files": files, "count": len(files)}
+
+@router.post("/convert/file")
+async def _convert_file(req: ConvertFileReq) -> Dict[str, Any]:
+    fp = Path(req.file_path)
+    if not fp.exists():
+        raise HTTPException(404, "File not found")
+    js = fp.read_text(encoding="utf-8")
+    ts = await _convert_with_fallback(js, req.provider or "auto", req.model)
+    ts_path = str(fp).replace(".js", ".ts").replace(".jsx", ".tsx")
+    if not req.dry_run:
+        Path(ts_path).write_text("// @ai-generated via ai-orchestrator\n" + ts, encoding="utf-8")
+    return {"saved_to": (None if req.dry_run else ts_path), "preview_len": len(ts)}
+
+class ConvertTreeReq(BaseModel):
+    root: str
+    provider: Optional[str] = None
+    model: Optional[str] = None
+    dry_run: bool = False
+    limit: int = 100
+
+@router.post("/convert/tree")
+async def _convert_tree(req: ConvertTreeReq) -> Dict[str, Any]:
+    files = _list_js(req.root)
+    out = {"converted": [], "skipped": [], "errors": []}
+    for fp in files[: max(0, req.limit)]:
+        try:
+            js = Path(fp).read_text(encoding="utf-8")
+            ts = await _convert_with_fallback(js, req.provider or "auto", req.model)
+            ts_path = fp.replace(".js", ".ts").replace(".jsx", ".tsx")
+            if req.dry_run:
+                out["skipped"].append({"file": fp, "reason": "dry_run"})
+            else:
+                Path(ts_path).write_text("// @ai-generated via ai-orchestrator\n" + ts, encoding="utf-8")
+                out["converted"].append({"file": fp, "ts_path": ts_path})
+        except Exception as e:
+            out["errors"].append({"file": fp, "error": str(e)})
+    return out
+# ===== CFH PROVIDERS & CONVERT (AUTOGEN) - END =====
