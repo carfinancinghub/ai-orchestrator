@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "provider": "auto",
+  "model": null,
+  "converted": [
+    "C:\\CFH\\backend\\socket.ts",
+    "C:\\CFH\\backend\\routes\\users.ts",
+    "C:\\CFH\\backend\\services\\10 files BidHeatmapEngine.ts",
+    "C:\\CFH\\backend\\socket\\index.ts",
+    "C:\\CFH\\backend\\socket\\taskSocketEmitter.ts"
+  ],
+  "skipped": [],
+  "dry_run": false,
+  "metrics": {
+    "files_considered": 5,
+    "converted_count": 5,
+    "skipped_count": 0,
+    "elapsed_sec": 110.026,
+    "provider": "auto",
+    "model": null
+  }
+}
