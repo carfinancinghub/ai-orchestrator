@@ -6,7 +6,7 @@ import time
 import re
 import logging
 from pathlib import Path
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Tuple
 
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
@@ -19,7 +19,7 @@ from openai import AsyncOpenAI
 # ── Env / App ──────────────────────────────────────────────────────────────────
 load_dotenv()
 
-app = FastAPI(title="CFH AI Orchestrator", version="0.4.0")
+app = FastAPI(title="CFH AI Orchestrator", version="0.5.0")
 
 ALLOWED_ORIGINS = [
     os.getenv("VITE_ORIGIN", "http://127.0.0.1:8020"),
@@ -45,7 +45,8 @@ XAI_MODEL = os.getenv("GROK_MODEL", "grok-2-latest")
 
 GOOGLE_KEY = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
 GEMINI_BASE = os.getenv("GEMINI_BASE", "https://generativelanguage.googleapis.com/v1beta")
-GOOGLE_MODEL = os.getenv("GOOGLE_MODEL", "gemini-1.5-pro")
+# default to flash-latest unless overridden in .env
+GOOGLE_MODEL = os.getenv("GOOGLE_MODEL", "gemini-flash-latest")
 
 PROVIDER_ORDER = [p.strip().lower() for p in (os.getenv("PROVIDER_ORDER") or "grok,google,openai").split(",") if p.strip()]
 RETRY_MAX = int(os.getenv("RETRY_MAX", "3"))
@@ -59,8 +60,8 @@ xai_client: Optional[AsyncOpenAI] = AsyncOpenAI(api_key=XAI_KEY, base_url=XAI_BA
 _REDACT_PATTERNS = [
     (re.compile(r'(?:\?|&)(?:key|api_key)=([^&\s]+)', re.I), r'\g<0>[REDACTED]'),
     (re.compile(r'Authorization:\s*Bearer\s+[A-Za-z0-9._-]+', re.I), 'Authorization: Bearer [REDACTED]'),
-    (re.compile(r'sk-[A-Za-z0-9]{20,}', re.I), 'sk-[REDACTED]'),         # OpenAI-like
-    (re.compile(r'AIza[0-9A-Za-z\-_]{20,}', re.I), 'AIza[REDACTED]'),       # Google-like
+    (re.compile(r'sk-[A-Za-z0-9]{20,}', re.I), 'sk-[REDACTED]'),              # OpenAI-like
+    (re.compile(r'AIza[0-9A-Za-z\-_]{20,}', re.I), 'AIza[REDACTED]'),         # Google-like
     (re.compile(r'(?<=XAI_API_KEY=)[^\s]+', re.I), '[REDACTED]'),
 ]
 
@@ -90,6 +91,7 @@ class RedactFilter(logging.Filter):
                 pass
         return True
 
+# attach redact filter to common noisy loggers
 logging.getLogger("uvicorn.error").addFilter(RedactFilter())
 logging.getLogger("uvicorn.access").addFilter(RedactFilter())
 logging.getLogger("httpx").addFilter(RedactFilter())
@@ -97,7 +99,7 @@ logging.getLogger("httpx").addFilter(RedactFilter())
 # ── Schemas ───────────────────────────────────────────────────────────────────
 class ConvertRequest(BaseModel):
     file_path: str = Field(..., description="Path to a .js or .jsx file")
-    provider: Optional[str] = Field(None, description="openai | grok | google | anthropic | auto/None for fallback")
+    provider: Optional[str] = Field(None, description="openai | grok | google | auto/None for fallback")
     model: Optional[str] = Field(None, description="Provider-specific model or auto")
 
 class ConvertResponse(BaseModel):
@@ -106,7 +108,7 @@ class ConvertResponse(BaseModel):
 
 class ConvertTreeRequest(BaseModel):
     root: str = Field(default="src")
-    provider: Optional[str] = Field(default=None, description="openai | grok | google | anthropic | auto/None for fallback")
+    provider: Optional[str] = Field(default=None, description="openai | grok | google | auto/None for fallback")
     model: Optional[str] = Field(default=None)
     limit: Optional[int] = Field(default=None, description="Optional max files to convert this run")
     dry_run: bool = Field(default=False, description="If true, do not write files; just preview")
@@ -208,7 +210,7 @@ async def _call_gemini(prompt: str, model: Optional[str]) -> str:
     m = model or GOOGLE_MODEL
     url = f"{GEMINI_BASE}/models/{m}:generateContent?key={GOOGLE_KEY}"
 
-    # CORRECTED request body structure
+    # CORRECT request body structure
     body = {
         "contents": [{
             "role": "user",
@@ -228,16 +230,14 @@ async def _call_gemini(prompt: str, model: Optional[str]) -> str:
         raise HTTPException(429, "Google quota/429")
 
     if r.status_code >= 400:
-        # This is where your 404 error was being triggered
+        # surfacing the HTTP status keeps behavior clear if model/base/url is off
         raise HTTPException(r.status_code, f"Google HTTP {r.status_code}")
 
     data = r.json()
     try:
-        # Check for candidates and parts before accessing
         if data.get("candidates") and data["candidates"][0].get("content", {}).get("parts"):
             return data["candidates"][0]["content"]["parts"][0]["text"]
         else:
-            # Handle cases where the response is valid but empty or blocked
             return f"// gemini response empty or blocked. Raw: {json.dumps(data)}"
     except Exception:
         return f"// gemini response parse error. Raw: {json.dumps(data)}"
@@ -261,7 +261,7 @@ async def _convert_with_provider_js_to_ts(src_path: Path, provider: Optional[str
             if p == "google":
                 return await _call_gemini(prompt, model)
         except HTTPException as he:
-            # For 429 or provider errors we fall back to bannered no-op at the caller
+            # propagate so caller can handle (e.g., bannered no-op)
             raise he
         except Exception as e:
             raise RuntimeError(redact_secret(str(e)))
@@ -280,13 +280,11 @@ async def _convert_with_provider_js_to_ts(src_path: Path, provider: Optional[str
             if p == "openai":
                 return await _call_openai(prompt, model)
         except HTTPException as he:
-            # on 429 or 4xx skip to next provider
-            last_err = he
+            last_err = he  # e.g., 429 → try next
         except Exception as e:
             last_err = e
     # All failed → return original JS
     if last_err:
-        # Note: caller may persist a no-op artifact with banner recording provider failure
         raise RuntimeError(redact_secret(str(last_err)))
     return js_code
 
@@ -317,7 +315,8 @@ async def providers_selftest():
 
     async def grok():
         try:
-            return await _call_grok(msg, None)
+            resp = await _call_grok(msg, None)
+            return f"MODEL: {XAI_MODEL} | RESPONSE: {resp}"
         except HTTPException as he:
             return f"ERROR: Grok {he.detail}"
         except Exception as e:
@@ -325,7 +324,8 @@ async def providers_selftest():
 
     async def google():
         try:
-            return await _call_gemini(msg, None)
+            resp = await _call_gemini(msg, None)
+            return f"MODEL: {GOOGLE_MODEL} | RESPONSE: {resp}"
         except HTTPException as he:
             return f"ERROR: Google {he.detail}"
         except Exception as e:
@@ -333,7 +333,8 @@ async def providers_selftest():
 
     async def openai():
         try:
-            return await _call_openai(msg, None)
+            resp = await _call_openai(msg, None)
+            return f"MODEL: {OPENAI_MODEL} | RESPONSE: {resp}"
         except HTTPException as he:
             return f"ERROR: OpenAI {he.detail}"
         except Exception as e:
@@ -341,20 +342,20 @@ async def providers_selftest():
 
     for p in PROVIDER_ORDER:
         if p == "grok":
-            out["grok"] = (await grok())[:160]
+            out["grok"] = (await grok())[:200]
         elif p == "google":
-            out["google"] = (await google())[:160]
+            out["google"] = (await google())[:200]
         elif p == "openai":
-            out["openai"] = (await openai())[:160]
+            out["openai"] = (await openai())[:200]
         else:
             out[p] = "skipped"
     # also include any not in order but configured
     if "grok" not in out and XAI_KEY:
-        out["grok"] = (await grok())[:160]
+        out["grok"] = (await grok())[:200]
     if "google" not in out and GOOGLE_KEY:
-        out["google"] = (await google())[:160]
+        out["google"] = (await google())[:200]
     if "openai" not in out and OPENAI_KEY:
-        out["openai"] = (await openai())[:160]
+        out["openai"] = (await openai())[:200]
     return out
 
 @app.get("/orchestrator/scan")
@@ -428,5 +429,132 @@ async def convert_tree(req: ConvertTreeRequest):
         metrics=metrics,
     )
 
+# ── Review: stitch-and-rank (3-tier suggestions) ──────────────────────────────
+_TIER_KEYS = ("free", "premium", "wow_plus")
+
+class ReviewPayload(BaseModel):
+    ts_files: List[Dict[str, Any]] = Field(default_factory=list, description='[{"path":"C:/.../X.tsx","size":1234}, ...]')
+    md_spec: str = Field(default="", description="Snippet from ai_review_*.md or any spec text")
+    alloc: Optional[Dict[str, int]] = Field(default=None, description='{"gemini":2,"openai":2,"grok":1}')
+
+def _dedupe_by_path_and_size(items: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    seen: set[Tuple[str, int]] = set()
+    out: List[Dict[str, Any]] = []
+    for i in items:
+        p = str(i.get("path", "")).strip()
+        try:
+            s = int(i.get("size", -1))
+        except Exception:
+            s = -1
+        key = (p.lower(), s)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append({"path": p, "size": s})
+    return out
+
+def _classify_tiers(file_path: str) -> Dict[str, List[str]]:
+    """
+    3-tier policy:
+    - FREE: safety, typing, README/docs, accessibility, basic error-handling
+    - PREMIUM: performance, caching, observability, feature flags, i18n
+    - WOW++: AI-assisted flows, multi-agent orchestration, offline sync, predictive UX
+    """
+    tiers = {"free": [], "premium": [], "wow_plus": []}
+    # Always apply typed-interfaces & strict null checks
+    tiers["free"] += [
+        "add explicit interfaces/types; avoid 'any'",
+        "runtime guards for nullable/undefined props",
+        "a11y: aria-* on interactive elements",
+        "docs: module header + usage notes",
+    ]
+    # If it's a React component or route, add premium/wow items
+    if re.search(r"(components|pages|routes|views)", file_path.replace("\\", "/"), re.I):
+        tiers["premium"] += [
+            "memoization where safe (React.memo / useMemo)",
+            "lightweight logging wrapper",
+            "extract constants/enums; remove magic strings",
+            "i18n-ready: wrap user-facing text",
+        ]
+        tiers["wow_plus"] += [
+            "instrumentation hooks for AI hints on empty/error states",
+            "structured telemetry event (RUM/OTel-ready)",
+        ]
+    else:
+        tiers["premium"] += [
+            "avoid repeated fs/net calls; cache hot paths",
+            "centralize error shapes; Result<T,E> style returns",
+        ]
+        tiers["wow_plus"] += [
+            "pre-commit AI validation that explains public API deltas",
+            "predictive prefetch behind a feature flag",
+        ]
+    return tiers
+
+def _render_markdown(date_utc: str, files: List[Dict[str, Any]], md_spec: str, alloc: Dict[str, int]) -> str:
+    lines: List[str] = []
+    lines.append(f"# CFH Review & Suggestions ({date_utc}Z)")
+    lines.append("")
+    lines.append("## Provider Allocation (Tier 2)")
+    lines.append("")
+    lines.append(f"- Gemini (discover): {alloc.get('gemini',0)} files")
+    lines.append(f"- OpenAI (gen): {alloc.get('openai',0)} files")
+    lines.append(f"- Grok (fallback): {alloc.get('grok',0)} files")
+    lines.append("")
+    if md_spec.strip():
+        lines.append("## Spec Input (from ai_review_*.md)")
+        lines.append("")
+        lines.append("```md")
+        lines.append(md_spec.strip())
+        lines.append("```")
+        lines.append("")
+    lines.append("## File Suggestions (3-tier)")
+    lines.append("")
+    for f in files:
+        tiers = _classify_tiers(f["path"])
+        lines.append(f"### {f['path']}  _(size: {f['size']})_")
+        for key in _TIER_KEYS:
+            title = "WOW++" if key == "wow_plus" else key.capitalize()
+            lines.append(f"**{title}**")
+            for bullet in tiers[key]:
+                lines.append(f"- {bullet}")
+            lines.append("")
+    return "\n".join(lines)
+
+@app.post("/review/stitch-and-rank")
+async def review_stitch_and_rank(payload: ReviewPayload):
+    """
+    Body example:
+      {
+        "ts_files": [{"path":"C:/CFH/frontend/src/components/X.tsx","size":1234}],
+        "md_spec": "from ai_review_20250923_084351.md: ...",
+        "alloc": {"gemini":2,"openai":2,"grok":1}  # optional; computed if missing
+      }
+    Returns JSON with output .md path and echoes allocation.
+    """
+    files = _dedupe_by_path_and_size(payload.ts_files)
+    if not isinstance(payload.alloc, dict):
+        n = max(1, len(files))
+        payload.alloc = {
+            "gemini": max(0, int(round(n * 0.30))),
+            "openai": max(0, int(round(n * 0.50))),
+            "grok":   max(0, n - int(round(n * 0.30)) - int(round(n * 0.50))),
+        }
+    out_dir = Path("reports") / "suggestions"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    ts = time.strftime("%Y%m%d_%H%M%S")
+    md_path = out_dir / f"suggestions_{ts}.md"
+
+    body = _render_markdown(time.strftime("%Y-%m-%dT%H:%M:%S"), files, payload.md_spec, payload.alloc)
+    md_path.write_text(body, encoding="utf-8")
+
+    return {
+        "ok": True,
+        "count": len(files),
+        "alloc": payload.alloc,
+        "output_md": str(md_path),
+    }
+
+# ── Factory ───────────────────────────────────────────────────────────────────
 def create_app():
     return app
