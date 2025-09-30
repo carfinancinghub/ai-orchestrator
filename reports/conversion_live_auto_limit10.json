@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "provider": "auto",
+  "model": null,
+  "converted": [
+    "C:\\CFH\\frontend\\src\\utils\\RewardHelper.ts",
+    "C:\\CFH\\frontend\\src\\utils\\SocialShareHelper.ts",
+    "C:\\CFH\\frontend\\src\\utils\\useAuth.ts",
+    "C:\\CFH\\frontend\\src\\utils\\auction\\auctionExportUtils.tsx",
+    "C:\\CFH\\frontend\\src\\utils\\graph\\GraphExportService.ts",
+    "C:\\CFH\\frontend\\src\\utils\\inspection\\submitInspectionToBackend.ts",
+    "C:\\CFH\\frontend\\src\\hooks\\escrow\\EscrowOfficerHook.ts",
+    "C:\\CFH\\frontend\\src\\components\\ai\\ValuationAssistant.tsx",
+    "C:\\CFH\\frontend\\src\\components\\ai\\ValuationLiveFeed.tsx",
+    "C:\\CFH\\frontend\\src\\components\\arbitrator\\ArbitratorAnalyticsPanel.tsx"
+  ],
+  "skipped": [],
+  "dry_run": false,
+  "metrics": {
+    "files_considered": 10,
+    "converted_count": 10,
+    "skipped_count": 0,
+    "elapsed_sec": 127.254,
+    "provider": "auto",
+    "model": null
+  }
+}
