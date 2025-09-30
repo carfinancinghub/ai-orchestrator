@@ -59,7 +59,7 @@ xai_client: Optional[AsyncOpenAI] = AsyncOpenAI(api_key=XAI_KEY, base_url=XAI_BA
 _REDACT_PATTERNS = [
     (re.compile(r'(?:\?|&)(?:key|api_key)=([^&\s]+)', re.I), r'\g<0>[REDACTED]'),
     (re.compile(r'Authorization:\s*Bearer\s+[A-Za-z0-9._-]+', re.I), 'Authorization: Bearer [REDACTED]'),
-    (re.compile(r'sk-[A-Za-z0-9]{20,}', re.I), 'sk-[REDACTED]'),            # OpenAI-like
+    (re.compile(r'sk-[A-Za-z0-9]{20,}', re.I), 'sk-[REDACTED]'),         # OpenAI-like
     (re.compile(r'AIza[0-9A-Za-z\-_]{20,}', re.I), 'AIza[REDACTED]'),       # Google-like
     (re.compile(r'(?<=XAI_API_KEY=)[^\s]+', re.I), '[REDACTED]'),
 ]
@@ -207,24 +207,40 @@ async def _call_gemini(prompt: str, model: Optional[str]) -> str:
         raise RuntimeError("GOOGLE_API_KEY/GEMINI_API_KEY not configured")
     m = model or GOOGLE_MODEL
     url = f"{GEMINI_BASE}/models/{m}:generateContent?key={GOOGLE_KEY}"
+
+    # CORRECTED request body structure
     body = {
-        "contents": [
-            {"parts": [{"text": "You are a senior TypeScript migration assistant."}]},
-            {"parts": [{"text": prompt}]},
-        ]
+        "contents": [{
+            "role": "user",
+            "parts": [{
+                "text": (
+                    "You are a senior TypeScript migration assistant.\n\n"
+                    f"{prompt}"
+                )
+            }]
+        }]
     }
+
     async with httpx.AsyncClient(timeout=60) as client:
         r = await client.post(url, json=body)
+
     if r.status_code == 429:
         raise HTTPException(429, "Google quota/429")
+
     if r.status_code >= 400:
-        # return minimal status, do not leak full URL with key
+        # This is where your 404 error was being triggered
         raise HTTPException(r.status_code, f"Google HTTP {r.status_code}")
+
     data = r.json()
     try:
-        return data["candidates"][0]["content"]["parts"][0]["text"]  # type: ignore[index]
+        # Check for candidates and parts before accessing
+        if data.get("candidates") and data["candidates"][0].get("content", {}).get("parts"):
+            return data["candidates"][0]["content"]["parts"][0]["text"]
+        else:
+            # Handle cases where the response is valid but empty or blocked
+            return f"// gemini response empty or blocked. Raw: {json.dumps(data)}"
     except Exception:
-        return "// gemini response parse error"
+        return f"// gemini response parse error. Raw: {json.dumps(data)}"
 
 async def _convert_with_provider_js_to_ts(src_path: Path, provider: Optional[str], model: Optional[str]) -> str:
     """
