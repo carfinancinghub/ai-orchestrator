@@ -1,0 +1,20 @@
+{
+  "ok": true,
+  "provider": "google",
+  "model": null,
+  "converted": [
+    "C:\\CFH\\frontend\\src\\components\\ai\\AIBadgeOverlay.ts",
+    "C:\\CFH\\frontend\\src\\components\\ai\\AIPredictorDashboard.tsx",
+    "C:\\CFH\\frontend\\src\\components\\ai\\AIScorePanel.ts"
+  ],
+  "skipped": [],
+  "dry_run": false,
+  "metrics": {
+    "files_considered": 3,
+    "converted_count": 3,
+    "skipped_count": 0,
+    "elapsed_sec": 36.817,
+    "provider": "google",
+    "model": null
+  }
+}
