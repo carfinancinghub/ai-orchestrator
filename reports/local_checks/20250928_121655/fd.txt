@@ -1,0 +1,15 @@
+== fd ==
+
+    Directory: C:\c\ai-orchestrator
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           9/26/2025 11:27 PM            715 fd
+
+
+    Directory: C:\c\ai-orchestrator\reports\debug
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a---           9/27/2025  8:49 PM             50 fd_listing.txt
+
