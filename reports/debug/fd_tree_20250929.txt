@@ -1,0 +1,12 @@
+fd is a directory. Listing:
+C:\c\ai-orchestrator\fd
+C:\c\ai-orchestrator\.git\objects\fd
+C:\c\ai-orchestrator\app\services\llm\node_modules\cfh-llm-bridge\fd
+C:\c\ai-orchestrator\app\services\llm\node_modules\cfh-llm-bridge\.git\objects\fd
+C:\c\ai-orchestrator\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\fd
+C:\c\ai-orchestrator\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\.git\objects\fd
+C:\c\ai-orchestrator\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\fd
+C:\c\ai-orchestrator\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\.git\objects\fd
+C:\c\ai-orchestrator\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\fd
+C:\c\ai-orchestrator\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\.git\objects\fd
+C:\c\ai-orchestrator\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\app\services\llm\node_modules\cfh-llm-bridge\fd
