@@ -1,0 +1,13 @@
+[
+  {
+    "file": "C:\\CFH\\frontend\\src\\components\\buyer\\BuyerCommunityForum.tsx",
+    "plan_md": "# Migration Plan \u2014 BuyerCommunityForum.tsx\n\n## Goals\n- Convert legacy file to **TypeScript, type-safe**.\n- Preserve functionality and intent.\n- Align with 3-tier model: **free**, **premium**, **wow++**.\n\n## Detected Functions\n- *(none detected; UI-only or declarative component?)*\n\n## Tier Assignments (heuristic)\n- **free**: *(none)*\n- **premium**: *(none)*\n- **wow++**: *(none)*\n\n## TypeScript Contract\n- Prefer explicit props types and return types.\n- Use discriminated unions where applicable.\n- No `any`; use `unknown` and narrow.\n\n## File Actions\n- Generate `.md` spec (this document).\n- Generate `.ts`/`.tsx` candidate that matches this spec.\n- Run reviewer pass to verify the candidate matches spec.\n\n## Non-Functional\n- Keep imports relative and stable.\n- Avoid side effects in module scope.\n- Ensure testability.\n",
+    "summary": "Plan for BuyerCommunityForum.tsx: 0 functions detected. Tier allocation heuristic applied.",
+    "detected_functions": [],
+    "inferred_tiers": {
+      "free": [],
+      "premium": [],
+      "wow++": []
+    }
+  }
+]
