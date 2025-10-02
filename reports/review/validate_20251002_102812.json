@@ -1,0 +1,10 @@
+{
+  "pass": 1,
+  "fail": 0,
+  "details": [
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\BuyerCommunityForum.tsx",
+      "status": "pass"
+    }
+  ]
+}
