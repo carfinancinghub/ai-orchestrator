@@ -1,0 +1,11 @@
+{
+  "pass": 0,
+  "fail": 1,
+  "details": [
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\BuyerCommunityForum.tsx",
+      "status": "fail",
+      "reason": "interface=False, banner=True"
+    }
+  ]
+}
