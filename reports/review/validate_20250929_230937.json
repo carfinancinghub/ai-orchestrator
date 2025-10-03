@@ -1,0 +1,538 @@
+{
+  "input_md": "C:\\c\\ai-orchestrator\\reports\\suggestions\\suggestions_20250929_230441.md",
+  "summary": {
+    "files": 12,
+    "ok": 0,
+    "pct_ok": 0.0
+  },
+  "results": [
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\arbitrator\\ArbitratorAnalyticsPanel.tsx",
+      "exists": true,
+      "checks": {
+        "free": {
+          "has_interface": true,
+          "no_any": true,
+          "has_doc_header": true,
+          "has_a11y": false
+        },
+        "premium": {
+          "memoization": false,
+          "constants_enums": false,
+          "logging": true
+        },
+        "wow_plus": {
+          "ai_ux_hooks": false,
+          "otlp_ready": false
+        }
+      },
+      "score": {
+        "free": {
+          "pass": 3,
+          "total": 4,
+          "ok": false
+        },
+        "premium": {
+          "pass": 1,
+          "total": 3,
+          "ok": false
+        },
+        "wow_plus": {
+          "pass": 0,
+          "total": 2,
+          "ok": false
+        },
+        "totals": {
+          "pass": 4,
+          "total": 9,
+          "pct": 44.44444444444444
+        }
+      },
+      "ok": false
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\ai\\ValuationLiveFeed.tsx",
+      "exists": true,
+      "checks": {
+        "free": {
+          "has_interface": true,
+          "no_any": false,
+          "has_doc_header": true,
+          "has_a11y": false
+        },
+        "premium": {
+          "memoization": false,
+          "constants_enums": false,
+          "logging": true
+        },
+        "wow_plus": {
+          "ai_ux_hooks": false,
+          "otlp_ready": false
+        }
+      },
+      "score": {
+        "free": {
+          "pass": 2,
+          "total": 4,
+          "ok": false
+        },
+        "premium": {
+          "pass": 1,
+          "total": 3,
+          "ok": false
+        },
+        "wow_plus": {
+          "pass": 0,
+          "total": 2,
+          "ok": false
+        },
+        "totals": {
+          "pass": 3,
+          "total": 9,
+          "pct": 33.333333333333336
+        }
+      },
+      "ok": false
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\ai\\ValuationAssistant.tsx",
+      "exists": true,
+      "checks": {
+        "free": {
+          "has_interface": true,
+          "no_any": true,
+          "has_doc_header": true,
+          "has_a11y": false
+        },
+        "premium": {
+          "memoization": false,
+          "constants_enums": false,
+          "logging": true
+        },
+        "wow_plus": {
+          "ai_ux_hooks": true,
+          "otlp_ready": false
+        }
+      },
+      "score": {
+        "free": {
+          "pass": 3,
+          "total": 4,
+          "ok": false
+        },
+        "premium": {
+          "pass": 1,
+          "total": 3,
+          "ok": false
+        },
+        "wow_plus": {
+          "pass": 1,
+          "total": 2,
+          "ok": false
+        },
+        "totals": {
+          "pass": 5,
+          "total": 9,
+          "pct": 55.55555555555556
+        }
+      },
+      "ok": false
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\hooks\\escrow\\EscrowOfficerHook.ts",
+      "exists": true,
+      "checks": {
+        "free": {
+          "has_interface": true,
+          "no_any": false,
+          "has_doc_header": true,
+          "has_a11y": false
+        },
+        "premium": {
+          "memoization": false,
+          "constants_enums": false,
+          "logging": false
+        },
+        "wow_plus": {
+          "ai_ux_hooks": false,
+          "otlp_ready": false
+        }
+      },
+      "score": {
+        "free": {
+          "pass": 2,
+          "total": 4,
+          "ok": false
+        },
+        "premium": {
+          "pass": 0,
+          "total": 3,
+          "ok": false
+        },
+        "wow_plus": {
+          "pass": 0,
+          "total": 2,
+          "ok": false
+        },
+        "totals": {
+          "pass": 2,
+          "total": 9,
+          "pct": 22.22222222222222
+        }
+      },
+      "ok": false
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\utils\\inspection\\submitInspectionToBackend.ts",
+      "exists": true,
+      "checks": {
+        "free": {
+          "has_interface": true,
+          "no_any": true,
+          "has_doc_header": true,
+          "has_a11y": false
+        },
+        "premium": {
+          "memoization": false,
+          "constants_enums": false,
+          "logging": true
+        },
+        "wow_plus": {
+          "ai_ux_hooks": false,
+          "otlp_ready": false
+        }
+      },
+      "score": {
+        "free": {
+          "pass": 3,
+          "total": 4,
+          "ok": false
+        },
+        "premium": {
+          "pass": 1,
+          "total": 3,
+          "ok": false
+        },
+        "wow_plus": {
+          "pass": 0,
+          "total": 2,
+          "ok": false
+        },
+        "totals": {
+          "pass": 4,
+          "total": 9,
+          "pct": 44.44444444444444
+        }
+      },
+      "ok": false
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\utils\\graph\\GraphExportService.ts",
+      "exists": true,
+      "checks": {
+        "free": {
+          "has_interface": true,
+          "no_any": true,
+          "has_doc_header": true,
+          "has_a11y": false
+        },
+        "premium": {
+          "memoization": false,
+          "constants_enums": false,
+          "logging": true
+        },
+        "wow_plus": {
+          "ai_ux_hooks": false,
+          "otlp_ready": false
+        }
+      },
+      "score": {
+        "free": {
+          "pass": 3,
+          "total": 4,
+          "ok": false
+        },
+        "premium": {
+          "pass": 1,
+          "total": 3,
+          "ok": false
+        },
+        "wow_plus": {
+          "pass": 0,
+          "total": 2,
+          "ok": false
+        },
+        "totals": {
+          "pass": 4,
+          "total": 9,
+          "pct": 44.44444444444444
+        }
+      },
+      "ok": false
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\utils\\auction\\auctionExportUtils.tsx",
+      "exists": true,
+      "checks": {
+        "free": {
+          "has_interface": true,
+          "no_any": false,
+          "has_doc_header": true,
+          "has_a11y": false
+        },
+        "premium": {
+          "memoization": false,
+          "constants_enums": false,
+          "logging": true
+        },
+        "wow_plus": {
+          "ai_ux_hooks": false,
+          "otlp_ready": false
+        }
+      },
+      "score": {
+        "free": {
+          "pass": 2,
+          "total": 4,
+          "ok": false
+        },
+        "premium": {
+          "pass": 1,
+          "total": 3,
+          "ok": false
+        },
+        "wow_plus": {
+          "pass": 0,
+          "total": 2,
+          "ok": false
+        },
+        "totals": {
+          "pass": 3,
+          "total": 9,
+          "pct": 33.333333333333336
+        }
+      },
+      "ok": false
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\utils\\useAuth.ts",
+      "exists": true,
+      "checks": {
+        "free": {
+          "has_interface": false,
+          "no_any": true,
+          "has_doc_header": true,
+          "has_a11y": false
+        },
+        "premium": {
+          "memoization": false,
+          "constants_enums": false,
+          "logging": false
+        },
+        "wow_plus": {
+          "ai_ux_hooks": false,
+          "otlp_ready": false
+        }
+      },
+      "score": {
+        "free": {
+          "pass": 2,
+          "total": 4,
+          "ok": false
+        },
+        "premium": {
+          "pass": 0,
+          "total": 3,
+          "ok": false
+        },
+        "wow_plus": {
+          "pass": 0,
+          "total": 2,
+          "ok": false
+        },
+        "totals": {
+          "pass": 2,
+          "total": 9,
+          "pct": 22.22222222222222
+        }
+      },
+      "ok": false
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\utils\\SocialShareHelper.ts",
+      "exists": true,
+      "checks": {
+        "free": {
+          "has_interface": true,
+          "no_any": false,
+          "has_doc_header": true,
+          "has_a11y": false
+        },
+        "premium": {
+          "memoization": false,
+          "constants_enums": false,
+          "logging": true
+        },
+        "wow_plus": {
+          "ai_ux_hooks": false,
+          "otlp_ready": false
+        }
+      },
+      "score": {
+        "free": {
+          "pass": 2,
+          "total": 4,
+          "ok": false
+        },
+        "premium": {
+          "pass": 1,
+          "total": 3,
+          "ok": false
+        },
+        "wow_plus": {
+          "pass": 0,
+          "total": 2,
+          "ok": false
+        },
+        "totals": {
+          "pass": 3,
+          "total": 9,
+          "pct": 33.333333333333336
+        }
+      },
+      "ok": false
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\utils\\RewardHelper.ts",
+      "exists": true,
+      "checks": {
+        "free": {
+          "has_interface": false,
+          "no_any": true,
+          "has_doc_header": true,
+          "has_a11y": false
+        },
+        "premium": {
+          "memoization": false,
+          "constants_enums": false,
+          "logging": true
+        },
+        "wow_plus": {
+          "ai_ux_hooks": false,
+          "otlp_ready": false
+        }
+      },
+      "score": {
+        "free": {
+          "pass": 2,
+          "total": 4,
+          "ok": false
+        },
+        "premium": {
+          "pass": 1,
+          "total": 3,
+          "ok": false
+        },
+        "wow_plus": {
+          "pass": 0,
+          "total": 2,
+          "ok": false
+        },
+        "totals": {
+          "pass": 3,
+          "total": 9,
+          "pct": 33.333333333333336
+        }
+      },
+      "ok": false
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\ai\\TrustScoreViewer.tsx",
+      "exists": true,
+      "checks": {
+        "free": {
+          "has_interface": true,
+          "no_any": true,
+          "has_doc_header": true,
+          "has_a11y": false
+        },
+        "premium": {
+          "memoization": false,
+          "constants_enums": false,
+          "logging": true
+        },
+        "wow_plus": {
+          "ai_ux_hooks": false,
+          "otlp_ready": false
+        }
+      },
+      "score": {
+        "free": {
+          "pass": 3,
+          "total": 4,
+          "ok": false
+        },
+        "premium": {
+          "pass": 1,
+          "total": 3,
+          "ok": false
+        },
+        "wow_plus": {
+          "pass": 0,
+          "total": 2,
+          "ok": false
+        },
+        "totals": {
+          "pass": 4,
+          "total": 9,
+          "pct": 44.44444444444444
+        }
+      },
+      "ok": false
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\ai\\SmartInsightsWidget.tsx",
+      "exists": true,
+      "checks": {
+        "free": {
+          "has_interface": true,
+          "no_any": true,
+          "has_doc_header": true,
+          "has_a11y": false
+        },
+        "premium": {
+          "memoization": false,
+          "constants_enums": false,
+          "logging": true
+        },
+        "wow_plus": {
+          "ai_ux_hooks": false,
+          "otlp_ready": false
+        }
+      },
+      "score": {
+        "free": {
+          "pass": 3,
+          "total": 4,
+          "ok": false
+        },
+        "premium": {
+          "pass": 1,
+          "total": 3,
+          "ok": false
+        },
+        "wow_plus": {
+          "pass": 0,
+          "total": 2,
+          "ok": false
+        },
+        "totals": {
+          "pass": 4,
+          "total": 9,
+          "pct": 44.44444444444444
+        }
+      },
+      "ok": false
+    }
+  ]
+}
