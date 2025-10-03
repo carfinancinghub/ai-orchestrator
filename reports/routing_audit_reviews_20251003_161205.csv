@@ -1,0 +1,31 @@
+src,dest,confidence,reason,applied
+C:\CFH\frontend\src\components\needsHome\AutomationAgent.js,C:\CFH\frontend\src\components\common\AutomationAgent.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\BadgeDisplay.js,C:\CFH\frontend\src\components\common\BadgeDisplay.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\Button.js,C:\CFH\frontend\src\components\common\Button.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\CommunityHub.js,C:\CFH\frontend\src\components\common\CommunityHub.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\CommunityHubEnhanced.js,C:\CFH\frontend\src\components\common\CommunityHubEnhanced.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\CommunityModeratorDashboard.js,C:\CFH\frontend\src\components\common\CommunityModeratorDashboard.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\ComplianceReviewerDashboard.js,C:\CFH\frontend\src\components\common\ComplianceReviewerDashboard.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\CrossBorderFinancing.js,C:\CFH\frontend\src\components\common\CrossBorderFinancing.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\DynamicPricing.js,C:\CFH\frontend\src\components\common\DynamicPricing.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\FraudDetection.js,C:\CFH\frontend\src\components\common\FraudDetection.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\Leaderboard.js,C:\CFH\frontend\src\components\common\Leaderboard.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\LoadingSpinner.js,C:\CFH\frontend\src\components\common\LoadingSpinner.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\LoyaltyQuests.js,C:\CFH\frontend\src\components\common\LoyaltyQuests.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\ProtectedRoute.js,C:\CFH\frontend\src\components\auth\ProtectedRoute.js,0.7,"Matched keyword rule ""\buser\b|\bauth\b|\blogin\b|\bsign[- ]?up\b"" → ""auth""",False
+C:\CFH\frontend\src\components\needsHome\ReferralAnalytics.js,C:\CFH\frontend\src\components\common\ReferralAnalytics.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\Register.js,C:\CFH\frontend\src\components\buyer\Register.js,0.7,"Matched keyword rule ""\bbuyer\b|\bcheckout\b|\bbid\b"" → ""buyer""",False
+C:\CFH\frontend\src\components\needsHome\RegisterForm.js,C:\CFH\frontend\src\components\chat\RegisterForm.js,0.7,"Matched keyword rule ""\bchat\b|\bmessage\b|\bthread\b"" → ""chat""",False
+C:\CFH\frontend\src\components\needsHome\ReputationBadgeTier.js,C:\CFH\frontend\src\components\common\ReputationBadgeTier.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\RoleActivityCharts.js,C:\CFH\frontend\src\components\lender\RoleActivityCharts.js,0.7,"Matched keyword rule ""\blender\b|\bloan\b|\bapr\b|\bcredit\b"" → ""lender""",False
+C:\CFH\frontend\src\components\needsHome\RoleSwitchWrapper.js,C:\CFH\frontend\src\components\auth\RoleSwitchWrapper.js,0.7,"Matched keyword rule ""\buser\b|\bauth\b|\blogin\b|\bsign[- ]?up\b"" → ""auth""",False
+C:\CFH\frontend\src\components\needsHome\SellerCreateListing.js,C:\CFH\frontend\src\components\seller\SellerCreateListing.js,0.7,"Matched keyword rule ""\bseller\b|\blisting\b|\binventory\b"" → ""seller""",False
+C:\CFH\frontend\src\components\needsHome\SellerDashboard.js,C:\CFH\frontend\src\components\seller\SellerDashboard.js,0.7,"Matched keyword rule ""\bseller\b|\blisting\b|\binventory\b"" → ""seller""",False
+C:\CFH\frontend\src\components\needsHome\SmartRecommendations.js,C:\CFH\frontend\src\components\buyer\SmartRecommendations.js,0.7,"Matched keyword rule ""\bbuyer\b|\bcheckout\b|\bbid\b"" → ""buyer""",False
+C:\CFH\frontend\src\components\needsHome\SupportCenter.js,C:\CFH\frontend\src\components\common\SupportCenter.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\TradeInForm.js,C:\CFH\frontend\src\components\chat\TradeInForm.js,0.7,"Matched keyword rule ""\bchat\b|\bmessage\b|\bthread\b"" → ""chat""",False
+C:\CFH\frontend\src\components\needsHome\useAuth.js,C:\CFH\frontend\src\components\auth\useAuth.js,0.7,"Matched keyword rule ""\buser\b|\bauth\b|\blogin\b|\bsign[- ]?up\b"" → ""auth""",False
+C:\CFH\frontend\src\components\needsHome\UserProfile.js,C:\CFH\frontend\src\components\chat\UserProfile.js,0.7,"Matched keyword rule ""\bchat\b|\bmessage\b|\bthread\b"" → ""chat""",False
+C:\CFH\frontend\src\components\needsHome\UserReviewList.js,C:\CFH\frontend\src\components\auth\UserReviewList.js,0.7,"Matched keyword rule ""\buser\b|\bauth\b|\blogin\b|\bsign[- ]?up\b"" → ""auth""",False
+C:\CFH\frontend\src\components\needsHome\VoiceInteraction.js,C:\CFH\frontend\src\components\common\VoiceInteraction.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\VRViewer.js,C:\CFH\frontend\src\components\common\VRViewer.js,0.3,Default to common (no strong signals).,False
