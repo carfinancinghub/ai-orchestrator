@@ -1,25 +1,32 @@
 from __future__ import annotations
-
 from fastapi import APIRouter
+from pydantic import BaseModel
+from pathlib import Path
 
 router = APIRouter()
 
-# --- providers ---
+class ConvertTreeReq(BaseModel):
+    root: str = "src"
+    dry_run: bool = True
+
 @router.get("/providers/list", tags=["providers"], name="providers_list")
 def providers_list() -> dict:
-    return {"providers": ["openai","gemini","anthropic","grok"]}
+    return {"providers": ["openai", "gemini", "anthropic", "grok"]}
 
 @router.get("/providers/selftest", tags=["providers"], name="providers_selftest")
 def providers_selftest() -> dict:
     return {"ok": True}
 
-# --- convert ---
 @router.post("/convert/file", tags=["convert"], name="convert_file")
 def convert_file() -> dict:
-    # stub for smoke; replace with real logic
     return {"ok": True, "converted": 1, "skipped": 0}
 
 @router.post("/convert/tree", tags=["convert"], name="convert_tree")
-def convert_tree(root: str = "src", dry_run: bool = True) -> dict:
-    # stub for smoke; replace with real logic
-    return {"ok": True, "root": root, "dry_run": dry_run, "converted": [], "skipped": []}
+def convert_tree(req: ConvertTreeReq) -> dict:
+    root = Path(req.root)
+    converted, skipped = [], []
+    if root.exists() and root.is_dir():
+        for p in list(root.rglob("*"))[:50]:
+            (converted if p.is_file() else skipped).append(str(p).replace("\\", "/"))
+    return {"ok": True, "root": str(root), "dry_run": req.dry_run,
+            "converted": converted, "skipped": skipped}
