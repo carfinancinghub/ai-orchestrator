@@ -1,0 +1,282 @@
+{
+  "root": "C:\\CFH\\frontend\\src\\components\\needsHome",
+  "generated_at": 1759531679,
+  "count": 25,
+  "items": [
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\ARExperience.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\seller\\ARExperience.js",
+          "confidence": 0.7,
+          "reason": "Matched keyword rule \"\\bseller\\b|\\blisting\\b|\\binventory\\b\" \u2192 \"seller\""
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\ARExperience.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\AutomationAgent.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\AutomationAgent.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\AutomationAgent.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\BadgeDisplay.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\BadgeDisplay.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\BadgeDisplay.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\BulkUpload.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\chat\\BulkUpload.js",
+          "confidence": 0.7,
+          "reason": "Matched keyword rule \"\\bchat\\b|\\bmessage\\b|\\bthread\\b\" \u2192 \"chat\""
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\BulkUpload.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\Button.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\Button.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\Button.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\CommunityDashboard.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\auth\\CommunityDashboard.js",
+          "confidence": 0.7,
+          "reason": "Matched keyword rule \"\\buser\\b|\\bauth\\b|\\blogin\\b|\\bsign[- ]?up\\b\" \u2192 \"auth\""
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\CommunityDashboard.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\CommunityHub.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\CommunityHub.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\CommunityHub.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\CommunityHubEnhanced.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\CommunityHubEnhanced.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\CommunityHubEnhanced.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\CommunityModeratorDashboard.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\CommunityModeratorDashboard.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\CommunityModeratorDashboard.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\ComplianceReviewerDashboard.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\ComplianceReviewerDashboard.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\ComplianceReviewerDashboard.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\CrossBorderFinancing.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\CrossBorderFinancing.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\CrossBorderFinancing.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\DynamicPricing.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\DynamicPricing.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\DynamicPricing.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\FinancingCalculator.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\finance\\FinancingCalculator.js",
+          "confidence": 0.7,
+          "reason": "Matched keyword rule \"\\bfinance\\b|\\bpayment\\b|\\binvoice\\b\" \u2192 \"finance\""
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\FinancingCalculator.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\FraudDetection.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\FraudDetection.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\FraudDetection.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\integrationReportValidation.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\marketplace\\integrationReportValidation.js",
+          "confidence": 0.7,
+          "reason": "Matched keyword rule \"\\bmarketplace\\b|\\bsearch\\b|\\bresults?\\b\" \u2192 \"marketplace\""
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\integrationReportValidation.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\Leaderboard.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\Leaderboard.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\Leaderboard.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\LeaveReview.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\chat\\LeaveReview.js",
+          "confidence": 0.7,
+          "reason": "Matched keyword rule \"\\bchat\\b|\\bmessage\\b|\\bthread\\b\" \u2192 \"chat\""
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\LeaveReview.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\LoadingSpinner.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\LoadingSpinner.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\LoadingSpinner.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\LoanComparison.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\lender\\LoanComparison.js",
+          "confidence": 0.7,
+          "reason": "Matched keyword rule \"\\blender\\b|\\bloan\\b|\\bapr\\b|\\bcredit\\b\" \u2192 \"lender\""
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\LoanComparison.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\LoyaltyQuests.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\common\\LoyaltyQuests.js",
+          "confidence": 0.3,
+          "reason": "Default to common (no strong signals)."
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\LoyaltyQuests.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\MarketplaceInsights.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\marketplace\\MarketplaceInsights.js",
+          "confidence": 0.7,
+          "reason": "Matched keyword rule \"\\bmarketplace\\b|\\bsearch\\b|\\bresults?\\b\" \u2192 \"marketplace\""
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\MarketplaceInsights.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\Messaging.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\chat\\Messaging.js",
+          "confidence": 0.7,
+          "reason": "Matched keyword rule \"\\bchat\\b|\\bmessage\\b|\\bthread\\b\" \u2192 \"chat\""
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\Messaging.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\Navbar.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\buyer\\Navbar.js",
+          "confidence": 0.7,
+          "reason": "Matched keyword rule \"\\bbuyer\\b|\\bcheckout\\b|\\bbid\\b\" \u2192 \"buyer\""
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\Navbar.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\NotificationCenter.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\chat\\NotificationCenter.js",
+          "confidence": 0.7,
+          "reason": "Matched keyword rule \"\\bchat\\b|\\bmessage\\b|\\bthread\\b\" \u2192 \"chat\""
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\NotificationCenter.md"
+    },
+    {
+      "src": "C:\\CFH\\frontend\\src\\components\\needsHome\\PaymentForm.js",
+      "suggested_moves": [
+        {
+          "dest": "C:\\CFH\\frontend\\src\\components\\chat\\PaymentForm.js",
+          "confidence": 0.7,
+          "reason": "Matched keyword rule \"\\bchat\\b|\\bmessage\\b|\\bthread\\b\" \u2192 \"chat\""
+        }
+      ],
+      "doc_mirror": "C:\\CFH\\docs\\frontend\\src\\components\\needsHome\\PaymentForm.md"
+    }
+  ]
+}
