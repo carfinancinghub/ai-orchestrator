@@ -1,6 +1,5 @@
 from __future__ import annotations
 from pathlib import Path
-
 from fastapi import APIRouter, Body
 
 router = APIRouter()
@@ -10,18 +9,15 @@ router = APIRouter()
 def providers_list() -> dict:
     return {"providers": ["openai", "gemini", "anthropic", "grok"]}
 
-
 @router.get("/providers/selftest", tags=["providers"], name="providers_selftest")
 def providers_selftest() -> dict:
     return {"ok": True}
 
-
 # --- convert ---
 @router.post("/convert/file", tags=["convert"], name="convert_file")
 def convert_file() -> dict:
-    # stub for smoke; replace with real logic
+    # stub: replace with real logic when ready
     return {"ok": True, "converted": 1, "skipped": 0}
-
 
 @router.post("/convert/tree", tags=["convert"], name="convert_tree")
 def convert_tree(
@@ -31,12 +27,10 @@ def convert_tree(
     p = Path(root)
     converted: list[str] = []
     skipped: list[str] = []
-
     if p.exists() and p.is_dir():
-        # keep output small & deterministic
+        # cap output to keep responses small and predictable
         for item in list(p.rglob("*"))[:50]:
             (converted if item.is_file() else skipped).append(str(item).replace("\\", "/"))
-
     return {
         "ok": True,
         "root": str(p),
