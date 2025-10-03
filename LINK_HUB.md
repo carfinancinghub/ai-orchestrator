@@ -1,27 +1,16 @@
-# Link Hub — carfinancinghub/ai-orchestrator
+# Link Hub — carfinancinghub/ai-orchestrator (branch: feat/server-cleanup-20251002)
 
-## Branch-pinned (/main)
+* app/server.py  
+  - https://raw.githubusercontent.com/carfinancinghub/ai-orchestrator/feat/server-cleanup-20251002/app/server.py
+* app/routers/  
+  - https://github.com/carfinancinghub/ai-orchestrator/tree/feat/server-cleanup-20251002/app/routers
+* app/validators/  
+  - https://github.com/carfinancinghub/ai-orchestrator/tree/feat/server-cleanup-20251002/app/validators
+* app/stitch/  
+  - https://github.com/carfinancinghub/ai-orchestrator/tree/feat/server-cleanup-20251002/app/stitch
+* scripts/  
+  - https://github.com/carfinancinghub/ai-orchestrator/tree/feat/server-cleanup-20251002/scripts
+* review artifacts  
+  - https://github.com/carfinancinghub/ai-orchestrator/tree/feat/server-cleanup-20251002/reports/review
 
-* server.py  *(missing locally — skipped)*
-
-* routers  *(missing locally — skipped)*
-
-* validators  *(missing locally — skipped)*
-
-* stitch  *(missing locally — skipped)*
-
-* scripts/run-one-batch.ps1  *(missing locally — skipped)*
-
-* scripts/utils.ps1  *(missing locally — skipped)*
-
-* scripts/gen-master-list.ps1
-  - https://raw.githubusercontent.com/carfinancinghub/ai-orchestrator/main/scripts/gen-master-list.ps1
-  - (commit-pinned) https://raw.githubusercontent.com/carfinancinghub/ai-orchestrator/fea0baee5b5c38f1d6fc973c2556f8add23168ed/scripts/gen-master-list.ps1
-
-* scripts/make-worklists.ps1
-  - https://raw.githubusercontent.com/carfinancinghub/ai-orchestrator/main/scripts/make-worklists.ps1
-  - (commit-pinned) https://raw.githubusercontent.com/carfinancinghub/ai-orchestrator/fea0baee5b5c38f1d6fc973c2556f8add23168ed/scripts/make-worklists.ps1
-
-* reports/review/
-  - https://github.com/carfinancinghub/ai-orchestrator/tree/main/reports/review
-
+Pull Request: https://github.com/carfinancinghub/ai-orchestrator/pull/10
