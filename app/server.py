@@ -59,6 +59,8 @@ def _register_health_endpoints(app: FastAPI) -> None:
         checks["router_loaded"] = router is not None
         if router is None and '_IMPORT_ERROR' in globals():
             checks["router_error"] = repr(_IMPORT_ERROR)
+
+        # reports dir
         try:
             REPORTS_DIR.mkdir(parents=True, exist_ok=True)
             writable = os.access(REPORTS_DIR, os.W_OK)
@@ -67,9 +69,31 @@ def _register_health_endpoints(app: FastAPI) -> None:
             checks["reports_dir_error"] = repr(e)
         checks["reports_dir"] = str(REPORTS_DIR)
         checks["reports_dir_writable"] = bool(writable)
+
+        # provider env hints
         missing_envs = [k for k in PROVIDER_ENV_HINTS if not os.getenv(k)]
         checks["provider_env_missing"] = missing_envs
-        ok = bool(checks["router_loaded"]) and bool(checks["reports_dir_writable"])
+
+        # --- NEW: local SDK import checks (no network calls)
+        def _try_import(name: str) -> bool:
+            try:
+                __import__(name)
+                return True
+            except Exception:
+                return False
+        checks["sdk_openai"] = _try_import("openai")
+        checks["sdk_gemini"] = _try_import("google.generativeai")
+        checks["sdk_anthropic"] = _try_import("anthropic")
+        # Grok/X.ai SDKs vary; try a couple of plausible names:
+        checks["sdk_grok_xai"] = _try_import("xai") or _try_import("grok")
+
+        # --- NEW: CFH-specific probe
+        checks["cfh_root"] = os.path.exists(r"C:\CFH\frontend")
+
+        ok = (
+            bool(checks["router_loaded"]) and
+            bool(checks["reports_dir_writable"])
+        )
         return {"ok": ok, "checks": checks}
 
     @app.get("/_meta/routes", tags=["meta"])
