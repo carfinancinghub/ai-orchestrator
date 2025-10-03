@@ -1,0 +1,10 @@
+205000	ok
+305000	ok
+355000	ok
+380000	error:error code: 429 - {'error': {'message': 'rate limit reached for gpt-4o-mini in organization org-dsjghf89ujzjxtkvygzqwkyv on tokens per min (tpm): limit 200000, used 132879, requested 95008. please try
+367500	ok
+373750	ok
+max_ok_chars=373750
+message': 'rate limit reached for gpt-4o-mini in organization org-dsjghf89ujzjxtkvygzqwkyv on tokens per min (tpm): limit 200000, used 132644, requested 91883. please try
+361250	ok
+max_ok_chars=361250
