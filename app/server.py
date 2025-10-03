@@ -1,3 +1,5 @@
+# C:\c\ai-orchestrator\app\server.py
+
 from __future__ import annotations
 
 import os, sys, logging
@@ -32,7 +34,14 @@ REPORTS_DIR = Path(os.getenv("REPORTS_DIR", _REPO_ROOT / "reports"))
 def create_app() -> FastAPI:
     _configure_logging()
     app = FastAPI(title="AI Orchestrator", version=os.getenv("ORCHESTRATOR_VERSION","0.1.0"))
-    app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+    # If you want to honor ALLOWED_ORIGINS exactly, replace ["*"] with ALLOWED_ORIGINS
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     if router is not None:
         app.include_router(router)
     _register_health_endpoints(app)
@@ -42,8 +51,15 @@ def create_app() -> FastAPI:
 def _register_health_endpoints(app: FastAPI) -> None:
     @app.get("/", tags=["meta"])
     def root() -> Dict[str, Any]:
-        return {"ok": True, "service": SERVICE_NAME, "version": app.version, "docs": "/docs",
-                "routes": "/_meta/routes", "status": "/orchestrator/status", "readyz": "/readyz"}
+        return {
+            "ok": True,
+            "service": SERVICE_NAME,
+            "version": app.version,
+            "docs": "/docs",
+            "routes": "/_meta/routes",
+            "status": "/orchestrator/status",
+            "readyz": "/readyz",
+        }
 
     @app.get("/_health", tags=["meta"])
     def health() -> Dict[str, Any]:
@@ -56,11 +72,13 @@ def _register_health_endpoints(app: FastAPI) -> None:
     @app.get("/readyz", tags=["meta"])
     def readyz() -> Dict[str, Any]:
         checks: Dict[str, Any] = {}
+
+        # Router import status
         checks["router_loaded"] = router is not None
-        if router is None and '_IMPORT_ERROR' in globals():
+        if router is None and "_IMPORT_ERROR" in globals():
             checks["router_error"] = repr(_IMPORT_ERROR)
 
-        # reports dir
+        # Reports directory availability & writability
         try:
             REPORTS_DIR.mkdir(parents=True, exist_ok=True)
             writable = os.access(REPORTS_DIR, os.W_OK)
@@ -70,30 +88,50 @@ def _register_health_endpoints(app: FastAPI) -> None:
         checks["reports_dir"] = str(REPORTS_DIR)
         checks["reports_dir_writable"] = bool(writable)
 
-        # provider env hints
-        missing_envs = [k for k in PROVIDER_ENV_HINTS if not os.getenv(k)]
+        # --- Provider checks: require SDK import AND API key to be True ---
+        import importlib
+
+        def _has_sdk(*import_names: str) -> bool:
+            for name in import_names:
+                try:
+                    importlib.import_module(name)
+                    return True
+                except Exception:
+                    continue
+            return False
+
+        def _has_key(env_var: str) -> bool:
+            v = os.getenv(env_var)
+            return bool(v and v.strip())
+
+        def _provider_status(import_names, env_var):
+            sdk = _has_sdk(*import_names)
+            key = _has_key(env_var)
+            return {"sdk": sdk, "key": key, "ok": (sdk and key)}
+
+        providers = {
+            "openai":     _provider_status(["openai"],                     "OPENAI_API_KEY"),
+            "gemini":     _provider_status(["google.generativeai"],        "GEMINI_API_KEY"),
+            "grok":       _provider_status(["xai", "xai_sdk", "grok"],     "GROK_API_KEY"),
+            "anthropic":  _provider_status(["anthropic"],                  "ANTHROPIC_API_KEY"),
+        }
+        checks["providers"] = providers
+
+        # Back-compat flat flags (ok only when both SDK+key are present)
+        checks["sdk_openai"]   = providers["openai"]["ok"]
+        checks["sdk_gemini"]   = providers["gemini"]["ok"]
+        checks["sdk_grok_xai"] = providers["grok"]["ok"]
+        checks["sdk_anthropic"]= providers["anthropic"]["ok"]
+
+        # Provider env hint list (still useful for quick setup)
+        missing_envs = [k for k in PROVIDER_ENV_HINTS if not _has_key(k)]
         checks["provider_env_missing"] = missing_envs
 
-        # --- NEW: local SDK import checks (no network calls)
-        def _try_import(name: str) -> bool:
-            try:
-                __import__(name)
-                return True
-            except Exception:
-                return False
-        checks["sdk_openai"] = _try_import("openai")
-        checks["sdk_gemini"] = _try_import("google.generativeai")
-        checks["sdk_anthropic"] = _try_import("anthropic")
-        # Grok/X.ai SDKs vary; try a couple of plausible names:
-        checks["sdk_grok_xai"] = _try_import("xai") or _try_import("grok")
-
-        # --- NEW: CFH-specific probe
+        # --- CFH-specific probe
         checks["cfh_root"] = os.path.exists(r"C:\CFH\frontend")
 
-        ok = (
-            bool(checks["router_loaded"]) and
-            bool(checks["reports_dir_writable"])
-        )
+        # Overall ready flag (unchanged logic)
+        ok = bool(checks["router_loaded"]) and bool(checks["reports_dir_writable"])
         return {"ok": ok, "checks": checks}
 
     @app.get("/_meta/routes", tags=["meta"])
@@ -102,7 +140,8 @@ def _register_health_endpoints(app: FastAPI) -> None:
         for r in app.router.routes:
             try:
                 path = getattr(r, "path", None)
-                if not path: continue
+                if not path:
+                    continue
                 methods = sorted(m for m in (getattr(r, "methods", []) or []) if m != "HEAD")
                 name = getattr(r, "name", None)
                 tags = getattr(r, "tags", None) or []
@@ -117,18 +156,35 @@ def _register_error_handlers(app: FastAPI) -> None:
     @app.exception_handler(RequestValidationError)
     async def on_validation_error(_: Request, exc: RequestValidationError) -> JSONResponse:
         logger.warning("validation_error: %s", exc)
-        return JSONResponse(status_code=422, content={"ok": False, "error": "validation_error", "details": exc.errors()})
+        return JSONResponse(
+            status_code=422,
+            content={"ok": False, "error": "validation_error", "details": exc.errors()},
+        )
 
     @app.exception_handler(Exception)
     async def on_unexpected_error(_: Request, exc: Exception) -> JSONResponse:
         logger.exception("unhandled_exception")
-        return JSONResponse(status_code=500, content={"ok": False, "error": "internal_error", "detail": repr(exc)})
+        return JSONResponse(
+            status_code=500,
+            content={"ok": False, "error": "internal_error", "detail": repr(exc)},
+        )
 
 def _configure_logging() -> None:
     level = getattr(logging, LOG_LEVEL, logging.INFO)
-    logging.basicConfig(level=level, format="%(asctime)s %(levelname)s [%(name)s] %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+    logging.basicConfig(
+        level=level,
+        format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
     logging.getLogger("uvicorn.access").setLevel(level)
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app.server:create_app", factory=True, host=DEFAULT_HOST, port=DEFAULT_PORT, log_level=LOG_LEVEL.lower(), reload=bool(os.getenv("RELOAD","0")=="1"))
+    uvicorn.run(
+        "app.server:create_app",
+        factory=True,
+        host=DEFAULT_HOST,
+        port=DEFAULT_PORT,
+        log_level=LOG_LEVEL.lower(),
+        reload=bool(os.getenv("RELOAD", "0") == "1"),
+    )
