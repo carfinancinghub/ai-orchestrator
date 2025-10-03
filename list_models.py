@@ -2,7 +2,10 @@ import requests
 import json
 
 # Paste your Google API Key here.
-API_KEY = "GOOGLE_API_KEY_DEMO"
+# API_KEY = "GOOGLE_API_KEY_DEMO"
+
+# Google 2.5 pro or 1.5 pro key
+API_KEY="GOOGLE_API_KEY_DEMO"
 
 # This is the endpoint to list available models.
 URL = f"https://generativelanguage.googleapis.com/v1beta/models?key={API_KEY}"
