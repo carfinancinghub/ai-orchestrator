@@ -126,7 +126,7 @@ def _register_health_endpoints(app: FastAPI) -> None:
         # Provider env hint list (still useful for quick setup)
         missing_envs = [k for k in PROVIDER_ENV_HINTS if not _has_key(k)]
         checks["provider_env_missing"] = missing_envs
-
+        checks["providers_enabled"] = [name for name, st in providers.items() if st.get("ok")]
         # --- CFH-specific probe
         checks["cfh_root"] = os.path.exists(r"C:\CFH\frontend")
 
@@ -188,3 +188,6 @@ if __name__ == "__main__":
         log_level=LOG_LEVEL.lower(),
         reload=bool(os.getenv("RELOAD", "0") == "1"),
     )
+
+
+
