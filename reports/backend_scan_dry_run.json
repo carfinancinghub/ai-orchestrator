@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "provider": "auto",
+  "model": null,
+  "converted": [],
+  "skipped": [
+    "C:\\CFH\\backend\\socket.js",
+    "C:\\CFH\\backend\\routes\\users.js",
+    "C:\\CFH\\backend\\services\\10 files BidHeatmapEngine.js",
+    "C:\\CFH\\backend\\socket\\index.js",
+    "C:\\CFH\\backend\\socket\\taskSocketEmitter.js",
+    "C:\\CFH\\backend\\tasks\\equityFlowTasks.js",
+    "C:\\CFH\\backend\\tools\\aliasCheck.js",
+    "C:\\CFH\\backend\\services\\ai\\Heatmap.js",
+    "C:\\CFH\\backend\\services\\ai\\insights.js",
+    "C:\\CFH\\backend\\services\\ai\\MLModel.js"
+  ],
+  "dry_run": true,
+  "metrics": {
+    "files_considered": 10,
+    "converted_count": 0,
+    "skipped_count": 10,
+    "elapsed_sec": 293.143,
+    "provider": "auto",
+    "model": null
+  }
+}

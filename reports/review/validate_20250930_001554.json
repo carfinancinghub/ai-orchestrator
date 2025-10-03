@@ -1,0 +1,88 @@
+{
+  "pass": 18,
+  "fail": 2,
+  "details": [
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\BuyerCarCompare.ts",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\BuyerBidModal.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\BuyerBidHistory.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\BuyerBehaviorTracker.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\BuyerAuctionHistory.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\BuyerAuctionHistory.ts",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\BuyerAnalyticsDashboard.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\BuyerAISuggestionEngine.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\BidAssistantSimulator.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\AuctionResultsViewer.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\ARCarPreview.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\buyer\\AdminSmartAlertEngine.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\blockchain\\CryptoPaymentOption.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\auth\\Unauthorized.tsx",
+      "status": "fail",
+      "reason": "interface=False, banner=True"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\auth\\Register.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\auth\\ProtectedRoute.ts",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\auth\\LoginForm.tsx",
+      "status": "fail",
+      "reason": "interface=False, banner=True"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\auth\\Login.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\auction\\SellerBadgePanel.tsx",
+      "status": "pass"
+    },
+    {
+      "path": "C:\\CFH\\frontend\\src\\components\\auction\\AuctionSEOHead.tsx",
+      "status": "pass"
+    }
+  ]
+}
