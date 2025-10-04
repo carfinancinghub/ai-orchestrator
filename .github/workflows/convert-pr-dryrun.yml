@@ -1,0 +1,131 @@
+name: convert-dryrun-on-pr
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  dryrun:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      HOST: 127.0.0.1
+      PORT: 8121
+      LOG_LEVEL: INFO
+      ORCHESTRATOR_VERSION: ci
+      REPORTS_DIR: ${{ github.workspace }}/reports
+      # Optional SDK keys (set in repo secrets). Not strictly required for /readyz ok.
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GROK_API_KEY:   ${{ secrets.GROK_API_KEY }}
+      # Where your frontend lives (used by /convert/tree reviewer)
+      FRONTEND_ROOT:  C:\CFH\frontend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          # Use what your app runs on locally (you’ve been using 3.11)
+          python-version: '3.11'
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install fastapi uvicorn pydantic
+          fi
+          pip install jq
+
+      - name: Start server (background)
+        run: |
+          python -m uvicorn --factory app.server:create_app \
+            --host $HOST --port $PORT &
+          echo $! > uvicorn.pid
+
+      - name: Wait for /readyz
+        shell: bash
+        run: |
+          for i in {1..45}; do
+            if curl -s "http://$HOST:$PORT/readyz" | jq -e '.ok==true' >/dev/null; then
+              echo "server ready"; exit 0
+            fi
+            sleep 1
+          done
+          echo "server not ready" >&2
+          exit 1
+
+      - name: Run labeled convert.tree
+        id: run_convert
+        env:
+          PR_NUM: ${{ github.event.number }}
+        run: |
+          mkdir -p "$REPORTS_DIR"
+          BODY=$(jq -n \
+            --arg root "C:\\CFH\\frontend\\src" \
+            --arg label "pr-${PR_NUM}" \
+            --argjson dry_run true \
+            --argjson batch_cap 10 \
+            '{root:$root, dry_run:$dry_run, batch_cap:$batch_cap, label:$label}')
+          curl -sS -X POST "http://$HOST:$PORT/convert/tree" \
+               -H "Content-Type: application/json" \
+               --data "$BODY" \
+               -o convert_response.json
+          cat convert_response.json
+          echo "summary=$(jq -r '.summary // ""' convert_response.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Fetch latest labeled summary (sanity)
+        id: latest
+        env:
+          PR_NUM: ${{ github.event.number }}
+        run: |
+          curl -sS "http://$HOST:$PORT/reports/latest?label=pr-${PR_NUM}" -o latest.json
+          cat latest.json
+          echo "path=$(jq -r '.path' latest.json)" >> "$GITHUB_OUTPUT"
+          echo "preview=$(jq -r '.preview' latest.json | head -n 30)" >> "$GITHUB_OUTPUT"
+
+      - name: Comment summary to PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const path = `${{ steps.latest.outputs.path }}`;
+            const preview = `${{ steps.latest.outputs.preview }}`;
+            const body = [
+              "### Convert Dry-Run (labeled) ✅",
+              "",
+              "**Summary path**",
+              "```",
+              path,
+              "```",
+              "",
+              "**Preview**",
+              "```md",
+              preview,
+              "```"
+            ].join("\n");
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body
+            });
+
+      - name: Upload summary artifact (optional)
+        if: ${{ steps.latest.outputs.path != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: convert-summary
+          path: ${{ steps.latest.outputs.path }}
+
+      - name: Teardown
+        if: always()
+        run: |
+          if [ -f uvicorn.pid ]; then kill $(cat uvicorn.pid) || true; fi
