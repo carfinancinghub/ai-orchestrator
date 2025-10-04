@@ -576,16 +576,51 @@ def build_ts(req: "BuildTsReq" = Body(...)) -> dict:
             )
     except Exception:
         out_dir = ""
+# --- derive out_dir (robust) and return ---
+out_dir = ""
+try:
+    from pathlib import Path
 
-    return {
-        "ok": len(errors) == 0,
-        "written": out_paths,
-        "errors": errors,
-        "label": req.label or "",
-        "out_dir": out_dir,
-        # helpful probe while we’re iterating
-        "impl_file": __file__,
-    }
+    candidates: list[str] = []
+
+    # 1) from first written file
+    if out_paths:
+        first_parent = Path(out_paths[0]).parent
+        candidates.append(
+            str((Path.cwd() / first_parent).resolve())
+            if not first_parent.is_absolute()
+            else str(first_parent)
+        )
+
+    # 2) conventional fallbacks
+    for guess in ("src/_ai_out", "_ai_out", "build/_ai_out"):
+        p = Path(guess)
+        if p.exists():
+            candidates.append(str(p.resolve()))
+
+    # 3) pick the first existing folder that looks populated
+    def _has_generated_files(root: Path) -> bool:
+        # accept either *.plan.ts or *.plan.tsx or anything written in this run
+        return any(root.rglob("*.plan.ts")) or any(root.rglob("*.plan.tsx")) or bool(out_paths)
+
+    for c in candidates:
+        cp = Path(c)
+        if cp.exists() and cp.is_dir() and _has_generated_files(cp):
+            out_dir = str(cp)
+            break
+except Exception:
+    out_dir = ""
+
+result = {
+    "ok": len(errors) == 0,
+    "written": out_paths,
+    "errors": errors,
+    "label": req.label or "",
+    "out_dir": out_dir,
+    "impl_file": __file__,  # remove once you're done verifying
+}
+return result
+
 
 # === BEGIN: /convert/prep (auctions pilot) ===
 from pydantic import BaseModel
