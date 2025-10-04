@@ -98,3 +98,55 @@ jobs:
         run: |
           python -m pip install pytest
           python -m pytest -q
+  probes:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Install deps & start orchestrator (background)
+        run: |
+          python -m pip install -U pip
+          if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
+          uvicorn app.server:create_app --factory --host 127.0.0.1 --port 8121 --log-level warning &
+          echo $! > uvicorn.pid
+          # simple wait for boot
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8121/_health >/dev/null; then break; fi
+            sleep 1
+          done
+
+      - name: Probe endpoints
+        run: |
+          set -euo pipefail
+          curl -fsS http://127.0.0.1:8121/_health
+          curl -fsS http://127.0.0.1:8121/_meta/routes > routes.json
+          test $(python - <<'PY'
+          import json; print(len(json.load(open("routes.json"))["routes"]))
+          PY
+          ) -ge 1
+          curl -fsS http://127.0.0.1:8121/readyz > readyz.json
+          python - <<'PY'
+          import json, sys
+          j = json.load(open("readyz.json"))
+          assert j.get("ok") is True, "readyz.ok != true"
+          checks = j.get("checks", {})
+          enabled = set(checks.get("providers_enabled", []))
+          if not (("grok" in enabled) or checks.get("sdk_grok_xai") is True):
+              raise SystemExit("grok provider not enabled in readyz")
+          print("readyz OK; grok present")
+          PY
+
+      - name: Teardown
+        if: always()
+        run: |
+          if [ -f uvicorn.pid ]; then kill $(cat uvicorn.pid) || true; fi
+
