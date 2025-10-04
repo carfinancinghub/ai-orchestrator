@@ -6,6 +6,57 @@ import os
 import re
 import subprocess
 from datetime import datetime
+# === BEGIN: Batch Prep helpers (auctions pilot) ===
+import csv, hashlib, re
+from typing import Iterable, Tuple
+
+BLOAT_DIRS = {".git", "node_modules", "dist", "build", ".mypy_cache", ".next", "logs"}
+
+def _sha1sum(path: Path) -> str:
+    h = hashlib.sha1()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024*1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+def _iter_candidates(frontend_root: Path, module: str) -> Iterable[Path]:
+    # Module-aware patterns (extend as you grow)
+    patterns = {
+        "auctions": r"(auction|bid|lot|reserve|seller|buyer|escrow)",
+    }
+    rx = re.compile(patterns.get(module, re.escape(module)), re.I)
+    for p in frontend_root.rglob("*"):
+        if any(seg in BLOAT_DIRS for seg in p.parts): 
+            continue
+        if p.is_file() and rx.search(str(p).replace("\\","/")):
+            yield p
+
+def _collect_batch_rows(frontend_root: Path, module: str, min_size: int = 1024):
+    seen = {}
+    for p in _iter_candidates(frontend_root, module):
+        st = p.stat()
+        if st.st_size < min_size:
+            continue
+        digest = _sha1sum(p)
+        if digest in seen:
+            continue
+        seen[digest] = (str(p), st.st_size, int(st.st_mtime), digest)
+    return list(seen.values())
+
+def _write_batches(rows, module: str, out_dir: Path, chunk_size: int = 30):
+    out_dir.mkdir(parents=True, exist_ok=True)
+    outs = []
+    for i in range(0, len(rows), chunk_size):
+        group = rows[i:i+chunk_size]
+        outp = out_dir / f"Batch_{module}_{(i//chunk_size)+1}.csv"
+        with outp.open("w", newline="", encoding="utf-8") as f:
+            w = csv.writer(f)
+            w.writerow(["path","size","mtime","sha1"])
+            for (path, size, mtime, sha1) in group:
+                w.writerow([path, size, mtime, sha1])
+        outs.append(outp)
+    return outs
+# === END: Batch Prep helpers ===
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -258,7 +309,13 @@ def reports_latest(label: Optional[str] = None):
 
 # ------------------------------ convert entrypoint ----------------------------
 @router.post("/convert/tree", tags=["convert"], name="convert_tree")
-def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
+def convert_tree(
+  root: str = Body("src", embed=True),  # {"root": "..."}
+  dry_run: bool = Body(True, embed=True),  # {"dry_run": true}
+  batch_cap: int = Body(25, embed=True),  # optional cap for reviews
+  prep_mode: bool = Body(False, embed=True),  # NEW: batch prep switch
+  module: str | None = Body(None, embed=True),  # NEW: module hint, e.g. "auctions"
+) -> dict:
     root = Path(req.root)
     converted: List[str] = []
     skipped: List[str] = []
@@ -498,3 +555,4 @@ def build_ts(req: BuildTsReq = Body(...)) -> dict:
         "errors": errors,
         "label": req.label or "",
     }
+
