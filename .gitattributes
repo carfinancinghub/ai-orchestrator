@@ -1,21 +1,49 @@
-# Normalize text files to LF in repo; Windows will check out as CRLF automatically
+# =========================
+# Line endings (normalize in repo)
+# =========================
+# Default: normalize to LF in repo
 * text=auto eol=lf
 
-# Always treat these as binary
-*.png binary
-*.jpg binary
+# Windows-native scripts → CRLF on checkout (still LF-normalized in repo)
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Explicit LF for common text (helps if the filetype isn't auto-detected)
+*.sh   text eol=lf
+*.py   text eol=lf
+*.ts   text eol=lf
+*.tsx  text eol=lf
+*.js   text eol=lf
+*.jsx  text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.css  text eol=lf
+*.scss text eol=lf
+*.html text eol=lf
+*.svg  text eol=lf   # keep SVG as text for better diffs
+
+# =========================
+# Binary files (no EOL conversions, no diffs)
+# =========================
+*.png  binary
+*.jpg  binary
 *.jpeg binary
-*.gif binary
+*.gif  binary
 *.webp binary
-*.zip binary
-*.gz binary
-*.tgz binary
-*.bz2 binary
-*.7z binary
-*.pdf binary
+*.zip  binary
+*.gz   binary
+*.tgz  binary
+*.bz2  binary
+*.7z   binary
+*.pdf  binary
 *.wasm binary
 
-# Treat vendor/build outputs as vendored for GitHub linguist
+# =========================
+# GitHub Linguist (treat vendor/build as vendored)
+# =========================
 **/node_modules/** linguist-vendored
 **/.venv/**        linguist-vendored
 **/venv/**         linguist-vendored
