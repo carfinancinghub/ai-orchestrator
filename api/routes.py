@@ -1,28 +1,44 @@
 # api/routes.py
 from __future__ import annotations
 
+"""
+Routes for AI Orchestrator:
+- Providers info (placeholder)
+- Convert endpoints (tree/file)
+- Reports helper to fetch latest summary
+"""
+
 import json
 import os
 import re
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, Body
+from fastapi import APIRouter, Body, Query
 from pydantic import BaseModel
 
 from app.ai.reviewer import review_file
 
 router = APIRouter()
 
+# ---------------------------
+# Request Models
+# ---------------------------
 
 class ConvertTreeReq(BaseModel):
     root: str = "src"
     dry_run: bool = True
     batch_cap: int = 25  # how many files to review per call (safety)
+    # Optional label to group artifacts under reports/<label>/...
+    # e.g., "pr-16" or "nightly-2025-10-03"
+    label: Optional[str] = None
 
 
-# --- constants (module scope) ---
+# ---------------------------
+# Constants / Filters
+# ---------------------------
+
 CODE_EXTS = {".ts", ".tsx", ".js", ".jsx"}
 
 # file/dir noise filters
@@ -41,7 +57,7 @@ def _is_noise(p: Path) -> bool:
         return True
     if name_l.endswith(IGNORE_SUFFIXES):
         return True
-    if TEST_NAME_RE.search(name_l):  # inline tests
+    if TEST_NAME_RE.search(name_l):  # inline tests like foo.test.tsx
         return True
     # path-based directory filters
     ppos = p.as_posix().lower()
@@ -50,6 +66,10 @@ def _is_noise(p: Path) -> bool:
             return True
     return False
 
+
+# ---------------------------
+# Provider endpoints (placeholders)
+# ---------------------------
 
 @router.get("/providers/list", tags=["providers"], name="providers_list")
 def providers_list() -> dict:
@@ -61,6 +81,10 @@ def providers_selftest() -> dict:
     return {"ok": True}
 
 
+# ---------------------------
+# Convert endpoints
+# ---------------------------
+
 @router.post("/convert/file", tags=["convert"], name="convert_file")
 def convert_file() -> dict:
     # Placeholder for single-file conversion
@@ -69,51 +93,58 @@ def convert_file() -> dict:
 
 @router.post("/convert/tree", tags=["convert"], name="convert_tree")
 def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
+    """
+    Walk the tree rooted at `req.root`, filter noise, return a capped list of items,
+    and run lightweight "review" on up to `batch_cap` code files.
+    Write artifacts into REPORTS_DIR (optionally under a `label` subfolder).
+    """
     root = Path(req.root)
+    if not root.exists() or not root.is_dir():
+        return {"ok": False, "error": "root_not_found", "root": str(root)}
+
     converted: List[str] = []
     skipped: List[str] = []
     reviews: List[Dict[str, Any]] = []
 
-    if root.exists() and root.is_dir():
-        # Gather and filter once
-        all_items = list(root.rglob("*"))
-        items: List[Path] = []
-        for p in all_items:
-            if _is_noise(p):
-                continue
-            items.append(p)
+    # Gather and filter once
+    all_items = list(root.rglob("*"))
+    items: List[Path] = []
+    for p in all_items:
+        if _is_noise(p):
+            continue
+        items.append(p)
 
-        # Response-friendly listing (cap 200)
-        for p in items[:200]:
-            (converted if p.is_file() else skipped).append(str(p).replace("\\", "/"))
+    # Response-friendly listing (cap 200)
+    for p in items[:200]:
+        (converted if p.is_file() else skipped).append(str(p).replace("\\", "/"))
 
-        # Review only code files (cap per request)
-        cap = max(0, int(req.batch_cap))
-        code_files = [p for p in items if p.is_file() and p.suffix.lower() in CODE_EXTS]
-        for p in code_files[:cap]:
-            try:
-                r = review_file(
-                    str(p),
-                    repo_root=os.getenv("FRONTEND_ROOT", r"C:\CFH\frontend"),
-                )
-                reviews.append(
-                    {
-                        "file": str(p).replace("\\", "/"),
-                        "routing": r["routing"],
-                        "markdown": r["markdown"],
-                    }
-                )
-            except Exception as e:
-                reviews.append(
-                    {
-                        "file": str(p).replace("\\", "/"),
-                        "error": repr(e),
-                        "routing": {"suggested_moves": []},
-                        "markdown": "",
-                    }
-                )
+    # Review only code files (cap per request)
+    cap = max(0, int(req.batch_cap))
+    code_files = [p for p in items if p.is_file() and p.suffix.lower() in CODE_EXTS]
+    for p in code_files[:cap]:
+        try:
+            r = review_file(
+                str(p),
+                repo_root=os.getenv("FRONTEND_ROOT", r"C:\CFH\frontend"),
+            )
+            reviews.append(
+                {
+                    "file": str(p).replace("\\", "/"),
+                    "routing": r["routing"],
+                    "markdown": r["markdown"],
+                }
+            )
+        except Exception as e:
+            reviews.append(
+                {
+                    "file": str(p).replace("\\", "/"),
+                    "error": repr(e),
+                    "routing": {"suggested_moves": []},
+                    "markdown": "",
+                }
+            )
 
-    resp = {
+    resp: Dict[str, Any] = {
         "ok": True,
         "root": str(root),
         "dry_run": req.dry_run,
@@ -123,20 +154,23 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
         "reviews": reviews,
     }
 
-    # Save artifact
-    reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
+    # Resolve reports dir, optionally under label (e.g., reports/pr-16)
+    base_reports = Path(os.getenv("REPORTS_DIR", "reports"))
+    reports_dir = (base_reports / req.label) if req.label else base_reports
     reports_dir.mkdir(parents=True, exist_ok=True)
+
+    # Save JSON artifact
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    out = reports_dir / f"convert_dryrun_{stamp}.json"
+    out_json = reports_dir / f"convert_dryrun_{stamp}.json"
     try:
-        out.write_text(json.dumps(resp, ensure_ascii=False, indent=2), encoding="utf-8")
-        resp["artifact"] = str(out)
+        out_json.write_text(json.dumps(resp, ensure_ascii=False, indent=2), encoding="utf-8")
+        resp["artifact"] = str(out_json)
     except Exception as e:
         resp["artifact_error"] = repr(e)
 
-    # --- NEW: write a concise Markdown summary (commit-friendly) ---
+    # Save Markdown summary (commit-friendly)
     try:
-        summary_path = reports_dir / f"convert_dryrun_{stamp}.summary.md"
+        out_md = reports_dir / f"convert_dryrun_{stamp}.summary.md"
         lines: List[str] = []
         lines.append(f"# Convert Dry-Run Summary — {stamp}\n")
         lines.append(f"- Root: `{resp['root']}`")
@@ -157,9 +191,47 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
                 else:
                     lines.append(f"- `{file}` (no suggestion)")
 
-        summary_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-        resp["summary"] = str(summary_path)
+        out_md.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        resp["summary"] = str(out_md)
     except Exception as e:
         resp["summary_error"] = repr(e)
 
     return resp
+
+
+# ---------------------------
+# Reports helper
+# ---------------------------
+
+@router.get("/reports/latest", tags=["reports"], name="reports_latest")
+def reports_latest(
+    label: Optional[str] = Query(None, description="Optional label to scope lookup, e.g. pr-16"),
+    limit_preview_chars: int = Query(1200, ge=0, le=100_000, description="Preview character cap"),
+) -> Dict[str, Any]:
+    """
+    Return the newest convert_dryrun_*.summary.md with a short preview.
+    If `label` is provided, search under reports/<label>/ only.
+    """
+    base_reports = Path(os.getenv("REPORTS_DIR", "reports")).resolve()
+    reports_dir = (base_reports / label).resolve() if label else base_reports
+    reports_dir.mkdir(parents=True, exist_ok=True)
+
+    candidates = list(reports_dir.glob("convert_dryrun_*.summary.md"))
+    if not candidates:
+        return {"ok": False, "error": "no_summaries_found", "reports_dir": str(reports_dir)}
+
+    newest = max(candidates, key=lambda p: p.stat().st_mtime)
+    try:
+        text = newest.read_text(encoding="utf-8")
+    except Exception as e:
+        return {"ok": False, "error": "read_failed", "path": str(newest), "detail": repr(e)}
+
+    preview = text[:limit_preview_chars]
+    mtime = datetime.fromtimestamp(newest.stat().st_mtime).isoformat(timespec="seconds")
+    return {
+        "ok": True,
+        "path": str(newest),
+        "modified": mtime,
+        "preview": preview,
+        "label": label,
+    }
