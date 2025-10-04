@@ -1,23 +1,40 @@
 # api/routes.py
 from __future__ import annotations
 
+import csv
+import hashlib
 import json
 import os
 import re
 import subprocess
 from datetime import datetime
-# === BEGIN: Batch Prep helpers (auctions pilot) ===
-import csv, hashlib, re
-from typing import Iterable, Tuple
+from pathlib import Path
+from typing import Any, Dict, Iterable, List, Optional, Tuple
+
+from fastapi import APIRouter, Body, HTTPException, Request
+from pydantic import BaseModel
+
+router = APIRouter()
+
+# ------------------------------- constants -----------------------------------
+
+CODE_EXTS = {".ts", ".tsx", ".js", ".jsx"}
+IGNORE_NAMES = {"desktop.ini", ".ds_store", "thumbs.db"}
+IGNORE_SUFFIXES = (".bak", ".tmp", "~")
+IGNORE_DIR_PARTS = {"/__mocks__/", "/tests/", "/node_modules/"}
+TEST_NAME_RE = re.compile(r"\.(test|spec)\.[a-z0-9]+$", re.I)
 
 BLOAT_DIRS = {".git", "node_modules", "dist", "build", ".mypy_cache", ".next", "logs"}
+
+# --------------------------- batch prep helpers -------------------------------
 
 def _sha1sum(path: Path) -> str:
     h = hashlib.sha1()
     with path.open("rb") as f:
-        for chunk in iter(lambda: f.read(1024*1024), b""):
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
             h.update(chunk)
     return h.hexdigest()
+
 
 def _iter_candidates(frontend_root: Path, module: str) -> Iterable[Path]:
     # Module-aware patterns (extend as you grow)
@@ -26,13 +43,14 @@ def _iter_candidates(frontend_root: Path, module: str) -> Iterable[Path]:
     }
     rx = re.compile(patterns.get(module, re.escape(module)), re.I)
     for p in frontend_root.rglob("*"):
-        if any(seg in BLOAT_DIRS for seg in p.parts): 
+        if any(seg in BLOAT_DIRS for seg in p.parts):
             continue
-        if p.is_file() and rx.search(str(p).replace("\\","/")):
+        if p.is_file() and rx.search(str(p).replace("\\", "/")):
             yield p
 
+
 def _collect_batch_rows(frontend_root: Path, module: str, min_size: int = 1024):
-    seen = {}
+    seen: Dict[str, Tuple[str, int, int, str]] = {}
     for p in _iter_candidates(frontend_root, module):
         st = p.stat()
         if st.st_size < min_size:
@@ -43,39 +61,23 @@ def _collect_batch_rows(frontend_root: Path, module: str, min_size: int = 1024):
         seen[digest] = (str(p), st.st_size, int(st.st_mtime), digest)
     return list(seen.values())
 
+
 def _write_batches(rows, module: str, out_dir: Path, chunk_size: int = 30):
     out_dir.mkdir(parents=True, exist_ok=True)
-    outs = []
+    outs: List[Path] = []
     for i in range(0, len(rows), chunk_size):
-        group = rows[i:i+chunk_size]
-        outp = out_dir / f"Batch_{module}_{(i//chunk_size)+1}.csv"
+        group = rows[i : i + chunk_size]
+        outp = out_dir / f"Batch_{module}_{(i // chunk_size) + 1}.csv"
         with outp.open("w", newline="", encoding="utf-8") as f:
             w = csv.writer(f)
-            w.writerow(["path","size","mtime","sha1"])
+            w.writerow(["path", "size", "mtime", "sha1"])
             for (path, size, mtime, sha1) in group:
                 w.writerow([path, size, mtime, sha1])
         outs.append(outp)
     return outs
-# === END: Batch Prep helpers ===
-from pathlib import Path
-from typing import Any, Dict, List, Optional
-
-from fastapi import APIRouter, Body, HTTPException, Request
-from pydantic import BaseModel
-
-router = APIRouter()
-
-# ------------------------------- constants -----------------------------------
-# --- constants (module scope) ---
-CODE_EXTS = {".ts", ".tsx", ".js", ".jsx"}
-IGNORE_NAMES = {"desktop.ini", ".ds_store", "thumbs.db"}
-IGNORE_SUFFIXES = (".bak", ".tmp", "~")
-IGNORE_DIR_PARTS = {"/__mocks__/", "/tests/", "/node_modules/"}  # ← added node_modules
-TEST_NAME_RE = re.compile(r"\.(test|spec)\.[a-z0-9]+$", re.I)
-
-
 
 # --------------------------------- helpers -----------------------------------
+
 def _normalize_batch_artifacts(out_dir: Path, label: str, batch: Dict[str, Any]) -> Dict[str, Any]:
     """
     Ensure batch_md and per_file_mds live under out_dir and do not duplicate the label segment.
@@ -85,7 +87,6 @@ def _normalize_batch_artifacts(out_dir: Path, label: str, batch: Dict[str, Any])
     batch_md = batch.get("batch_md")
     if isinstance(batch_md, str) and batch_md:
         bp = Path(batch_md)
-        # keep only filename under out_dir to avoid any duplicated segments
         bp = out_dir / bp.name
         fixed["batch_md"] = bp.as_posix()
     else:
@@ -105,11 +106,7 @@ def _normalize_batch_artifacts(out_dir: Path, label: str, batch: Dict[str, Any])
 
     # dependencies passthrough
     deps = batch.get("dependencies")
-    if isinstance(deps, dict):
-        fixed["dependencies"] = deps
-    else:
-        fixed["dependencies"] = {}
-
+    fixed["dependencies"] = deps if isinstance(deps, dict) else {}
     return fixed
 
 
@@ -159,34 +156,39 @@ def _preview_text(rel: str, max_lines: int = 40) -> List[str]:
     try:
         p = Path(rel)
         if not p.exists():
-            # last resort: treat as filename within provided root
             p = Path(rel.strip("`").strip())
         txt = p.read_text(encoding="utf-8", errors="ignore").splitlines()[:max_lines]
         return txt
     except Exception:
         return ["(snippet unavailable)"]
 
-
 # ------------------------------ request models --------------------------------
+
 class ConvertTreeReq(BaseModel):
     root: str = "src"
     dry_run: bool = True
     batch_cap: int = 25
     # labeling & tiering
     label: Optional[str] = None
-    review_tier: str = "free"           # free | premium | wow
-    generate_mds: bool = False          # force batch .md even in dry_run
-    git_diff_base: Optional[str] = None # e.g., "main" or a SHA
-    md_first: bool = False              # when true, produce .mds then return early
+    review_tier: str = "free"            # free | premium | wow
+    generate_mds: bool = False           # force batch .md even in dry_run
+    git_diff_base: Optional[str] = None  # e.g., "main" or a SHA
+    md_first: bool = False               # when true, produce .mds then return early
+    # also acts as /convert/tree params surface
+    prep_mode: bool = False              # batch prep switch (pilot)
+    module: Optional[str] = None         # e.g., "auctions"
 
 
 class BuildTsReq(BaseModel):
     md_paths: List[str]
     apply_moves: bool = True
     label: Optional[str] = None
-
+    # extra fields tolerated for forward-compat:
+    module: Optional[str] = None
+    pruned_map: Optional[str] = None
 
 # --------------------------------- routes ------------------------------------
+
 @router.get("/", tags=["meta"])
 def root():
     return {"ok": True, "service": "ai-orchestrator", "hint": "see /docs"}
@@ -204,7 +206,7 @@ def status():
 
 @router.get("/_meta/routes", tags=["meta"])
 def list_routes(request: Request):
-    routes = []
+    routes: List[Dict[str, Any]] = []
     for r in request.app.routes:
         try:
             routes.append(
@@ -242,7 +244,7 @@ def readyz():
     providers = {
         "openai": {"sdk": False, "key": _has_env("OPENAI_API_KEY"), "ok": False},
         "gemini": {"sdk": False, "key": _has_env("GOOGLE_API_KEY") or _has_env("GEMINI_API_KEY"), "ok": False},
-        "grok":   {"sdk": False, "key": _has_env("XAI_API_KEY") or _has_env("GROK_API_KEY"), "ok": False},
+        "grok": {"sdk": False, "key": _has_env("XAI_API_KEY") or _has_env("GROK_API_KEY"), "ok": False},
         "anthropic": {"sdk": False, "key": _has_env("ANTHROPIC_API_KEY"), "ok": False},
     }
     try:
@@ -256,10 +258,9 @@ def readyz():
     except Exception:
         pass
     try:
-        import groq  # sometimes used for xAI/grok clients; tolerate absence
+        import groq  # type: ignore
         providers["grok"]["sdk"] = True
     except Exception:
-        # we only check env for grok/xai in this light probe
         pass
     try:
         import anthropic  # type: ignore
@@ -267,7 +268,6 @@ def readyz():
     except Exception:
         pass
 
-    # minimal ok
     for k, v in providers.items():
         v["ok"] = bool(v["key"] and v["sdk"])
 
@@ -306,16 +306,10 @@ def reports_latest(label: Optional[str] = None):
         "label": label or "",
     }
 
-
 # ------------------------------ convert entrypoint ----------------------------
+
 @router.post("/convert/tree", tags=["convert"], name="convert_tree")
-def convert_tree(
-  root: str = Body("src", embed=True),  # {"root": "..."}
-  dry_run: bool = Body(True, embed=True),  # {"dry_run": true}
-  batch_cap: int = Body(25, embed=True),  # optional cap for reviews
-  prep_mode: bool = Body(False, embed=True),  # NEW: batch prep switch
-  module: str | None = Body(None, embed=True),  # NEW: module hint, e.g. "auctions"
-) -> dict:
+def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
     root = Path(req.root)
     converted: List[str] = []
     skipped: List[str] = []
@@ -452,16 +446,14 @@ def convert_tree(
     try:
         should_batch = (not req.dry_run) or bool(req.generate_mds) or bool(req.md_first)
         if should_batch:
-            # prefer actual code_files; fallback to converted
             try:
                 cand_paths = [p.as_posix() for p in code_files]  # type: ignore[name-defined]
             except Exception:
-                cand_paths = [p for p in converted if p.endswith((".ts", ".tsx", ".js", ".jsx"))]
+                cand_paths = [p for p in converted if p.endswith(tuple(CODE_EXTS))]
             cand_paths = cand_paths[:max(1, int(req.batch_cap))]
 
             if not cand_paths:
-                # tiny fallback so CI has something to preview
-                batch_path = (out_dir / f"batch_review_{stamp}.md")
+                batch_path = out_dir / f"batch_review_{stamp}.md"
                 batch_path.write_text(
                     "# Batch Review — (no candidates)\n\n"
                     f"_Root:_ `{resp['root']}`  • _Label:_ `{req.label or ''}`\n\n"
@@ -478,24 +470,20 @@ def convert_tree(
 
                 if review_batch:
                     try:
-                        # IMPORTANT: avoid label duplication — we already use out_dir
                         batch = review_batch(
                             cand_paths,
                             tier=req.review_tier,
-                            label=None,
+                            label=None,               # avoid label dup, we use out_dir
                             reports_dir=out_dir,
                         ) or {}
                     except Exception as e:
                         resp.setdefault("errors", []).append({"where": "batch_mds/run", "error": repr(e)})
 
-                # --- after calling review_batch(...) and having `batch` in scope ---
-                # Normalize paths to live under out_dir and avoid label duplication
                 fixed = _normalize_batch_artifacts(out_dir, req.label or "", batch)
 
-                # If LLM didn't return a batch_md, write a heuristic fallback into out_dir
                 batch_md = fixed.get("batch_md")
                 if not batch_md:
-                    batch_path = (out_dir / f"batch_review_{stamp}.md")
+                    batch_path = out_dir / f"batch_review_{stamp}.md"
                     lines = [
                         f"# Fallback Heuristic Batch Review — {req.review_tier}",
                         "",
@@ -518,7 +506,6 @@ def convert_tree(
                     "deps": fixed.get("dependencies", {}),
                 }
 
-
             if req.md_first:
                 resp["next_step"] = "build_ts"
                 return resp
@@ -528,105 +515,118 @@ def convert_tree(
 
     return resp
 
-
-from pathlib import Path
-from pydantic import BaseModel
-from fastapi import APIRouter, Body
-import os
-
-router = APIRouter()
-
-# --- build_ts (replace your existing function body with this one) ---
+# ------------------------------ build_ts --------------------------------------
 
 @router.post("/build_ts", tags=["convert"], name="build_ts")
-def build_ts(req: "BuildTsReq" = Body(...)) -> dict:
+def build_ts(req: BuildTsReq = Body(...)) -> dict:
     """
-    Builds TS/TSX files from a list of .plan.md docs.
-
-    Expects your existing BuildTsReq pydantic model with:
-      - module: str
-      - md_paths: list[str]
-      - pruned_map: Optional[str]
-      - label: Optional[str]
+    Build TS/TSX files from a list of .plan.md docs.
+    - If your internal generator exists, it will be used.
+    - Otherwise a safe fallback writer creates .plan.tsx files in src/_ai_out.
     """
-    out_paths: list[str] = []
-    errors: list[str] = []
+    out_paths: List[str] = []
+    errors: List[str] = []
 
+    # choose output root
+    out_root = Path("src") / "_ai_out"
+    out_root.mkdir(parents=True, exist_ok=True)
+
+    # try call into your existing builder first
+    used_internal = False
     try:
-        # your existing logic that reads req.md_paths / req.pruned_map
-        # and writes .ts/.tsx files goes here. It should populate out_paths.
-        #
-        # NOTE: keep your current implementation; we only add out_dir below.
-        # out_paths should remain a list of relative paths like:
-        #   ["src/_ai_out/SomeFile.plan.tsx", ...]
-        pass
-    except Exception as e:
-        errors.append(str(e))
+        from app.ai.reviewer import build_ts_from_plans  # type: ignore[attr-defined]
+        internal = build_ts_from_plans(  # type: ignore[misc]
+            md_paths=req.md_paths,
+            apply_moves=req.apply_moves,
+            label=req.label,
+            module=req.module,
+            pruned_map=req.pruned_map,
+            out_dir=out_root,  # hint if your impl accepts it
+        )
+        if isinstance(internal, dict):
+            out_paths = [str(p) for p in internal.get("written", [])]
+            used_internal = True
+    except Exception:
+        used_internal = False
 
-    # --- derive out_dir from the first written file (parent folder) ---
+    # fallback: write simple TSX stubs next to sanitized names
+    def _sanitize_to_filename(p: str) -> str:
+        # mirror your observed pattern: replace separators/colon with "__"
+        safe = re.sub(r"[:/\\]+", "__", p)
+        return f"{safe}.plan.tsx"
+
+    if not used_internal:
+        for src in req.md_paths:
+            try:
+                src_path = Path(src)
+                try:
+                    content = src_path.read_text(encoding="utf-8", errors="ignore")
+                except Exception:
+                    content = ""
+                out_name = _sanitize_to_filename(str(src_path))
+                out_path = out_root / out_name
+                # very small, friendly stub
+                stamp = datetime.now().isoformat(timespec="seconds")
+                stub = (
+                    f"// Generated from: {src_path}\n"
+                    f"// When: {stamp}\n\n"
+                    "export default function PlanFile() {\n"
+                    "  return (\n"
+                    "    <pre>{String.raw`" + content.replace("`", "\\`") + "`}</pre>\n"
+                    "  );\n"
+                    "}\n"
+                )
+                out_path.write_text(stub, encoding="utf-8")
+                out_paths.append(_rel(out_path))
+            except Exception as e:
+                errors.append(f"{src}: {e}")
+
+    # --- derive out_dir robustly ---------------------------------------------
     out_dir = ""
     try:
-        first_written = next(iter(out_paths), "")
-        if first_written:
-            parent = Path(first_written).parent
-            out_dir = (
-                str((Path.cwd() / parent).resolve())
-                if not parent.is_absolute()
-                else str(parent)
+        candidates: List[str] = []
+
+        # 1) from first written file
+        if out_paths:
+            first_parent = Path(out_paths[0]).parent
+            candidates.append(
+                str((Path.cwd() / first_parent).resolve())
+                if not first_parent.is_absolute()
+                else str(first_parent)
             )
+
+        # 2) conventional fallbacks
+        for guess in ("src/_ai_out", "_ai_out", "build/_ai_out"):
+            p = Path(guess)
+            if p.exists():
+                candidates.append(str(p.resolve()))
+
+        # 3) pick the first existing folder that looks populated
+        def _has_generated_files(root: Path) -> bool:
+            return any(root.rglob("*.plan.ts")) or any(root.rglob("*.plan.tsx")) or bool(out_paths)
+
+        for c in candidates:
+            cp = Path(c)
+            if cp.exists() and cp.is_dir() and _has_generated_files(cp):
+                out_dir = str(cp)
+                break
     except Exception:
         out_dir = ""
-# --- derive out_dir (robust) and return ---
-out_dir = ""
-try:
-    from pathlib import Path
 
-    candidates: list[str] = []
+    result = {
+        "ok": len(errors) == 0,
+        "written": out_paths,
+        "errors": errors,
+        "label": req.label or "",
+        "out_dir": out_dir,
+        "impl_file": __file__,  # remove once you're done verifying
+    }
+    return result
 
-    # 1) from first written file
-    if out_paths:
-        first_parent = Path(out_paths[0]).parent
-        candidates.append(
-            str((Path.cwd() / first_parent).resolve())
-            if not first_parent.is_absolute()
-            else str(first_parent)
-        )
-
-    # 2) conventional fallbacks
-    for guess in ("src/_ai_out", "_ai_out", "build/_ai_out"):
-        p = Path(guess)
-        if p.exists():
-            candidates.append(str(p.resolve()))
-
-    # 3) pick the first existing folder that looks populated
-    def _has_generated_files(root: Path) -> bool:
-        # accept either *.plan.ts or *.plan.tsx or anything written in this run
-        return any(root.rglob("*.plan.ts")) or any(root.rglob("*.plan.tsx")) or bool(out_paths)
-
-    for c in candidates:
-        cp = Path(c)
-        if cp.exists() and cp.is_dir() and _has_generated_files(cp):
-            out_dir = str(cp)
-            break
-except Exception:
-    out_dir = ""
-
-result = {
-    "ok": len(errors) == 0,
-    "written": out_paths,
-    "errors": errors,
-    "label": req.label or "",
-    "out_dir": out_dir,
-    "impl_file": __file__,  # remove once you're done verifying
-}
-return result
-
-
-# === BEGIN: /convert/prep (auctions pilot) ===
-from pydantic import BaseModel
+# --------------------------- /convert/prep (pilot) ----------------------------
 
 class ConvertPrepReq(BaseModel):
-    module: str | None = None  # e.g., "auctions"
+    module: Optional[str] = None  # e.g., "auctions"
 
 @router.post("/convert/prep", tags=["convert"])
 def convert_prep(req: ConvertPrepReq) -> dict:
@@ -634,64 +634,4 @@ def convert_prep(req: ConvertPrepReq) -> dict:
     frontend = Path(os.getenv("FRONTEND_ROOT", r"C:\CFH\frontend"))
     batch_dir = Path(os.getenv("REPORTS_DIR", "reports")) / "batches"
     rows = _collect_batch_rows(frontend, mod, min_size=1024)
-    outs = _write_batches(rows, mod, batch_dir, chunk_size=30)
-    return {"ok": True, "module": mod, "count": len(rows), "batches": [str(o) for o in outs]}
-# === END: /convert/prep ===
-
-# === BEGIN: /prune (pilot keep-all) ===========================================
-from pydantic import BaseModel
-from pathlib import Path
-import os
-
-class PruneReq(BaseModel):
-    md_paths: list[str] = []
-    strategy: str = "keep_all"              # future: "gemini"
-    out_csv: str | None = None              # default: reports/prune/pruned_module_map.csv
-    reason: str | None = "pilot keep-all"
-
-@router.post("/prune", tags=["convert"], name="prune")
-def prune(req: PruneReq) -> dict:
-    """
-    Pilot prune: write CSV 'path,action,reason' marking each .md as keep.
-    """
-    reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
-    prune_dir = reports_dir / "prune"
-    prune_dir.mkdir(parents=True, exist_ok=True)
-    out_csv = Path(req.out_csv) if req.out_csv else (prune_dir / "pruned_module_map.csv")
-
-    # sanitize & de-dupe inputs; only keep files that actually exist
-    paths: list[str] = []
-    for p in req.md_paths:
-        try:
-            pp = Path(p)
-            if pp.exists() and pp.is_file():
-                paths.append(str(pp.resolve()))
-        except Exception:
-            continue
-    paths = sorted(set(paths))
-
-    # write CSV with LF for git friendliness (Windows will handle fine)
-    out_csv.parent.mkdir(parents=True, exist_ok=True)
-    with out_csv.open("w", encoding="utf-8", newline="\n") as f:
-        f.write("path,action,reason\n")
-        for p in paths:
-            f.write(f"\"{p}\",keep,\"{req.reason or 'pilot keep-all'}\"\n")
-
-    # return a repo-relative path if possible (nice for logs)
-    try:
-        csv_rel = out_csv.as_posix()
-        try:
-            csv_rel = str(out_csv.relative_to(Path.cwd())).replace("\\", "/")
-        except Exception:
-            pass
-    except Exception:
-        csv_rel = out_csv.as_posix()
-
-    return {
-        "ok": True,
-        "strategy": req.strategy,
-        "count": len(paths),
-        "csv": csv_rel,
-    }
-# === END: /prune ===============================================================
-
+    outs = _write_batches(rows, mod, ba
