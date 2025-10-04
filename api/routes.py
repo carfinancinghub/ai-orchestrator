@@ -529,33 +529,63 @@ def convert_tree(
     return resp
 
 
+from pathlib import Path
+from pydantic import BaseModel
+from fastapi import APIRouter, Body
+import os
+
+router = APIRouter()
+
+# --- build_ts (replace your existing function body with this one) ---
+
 @router.post("/build_ts", tags=["convert"], name="build_ts")
-def build_ts(req: BuildTsReq = Body(...)) -> dict:
+def build_ts(req: "BuildTsReq" = Body(...)) -> dict:
     """
-    Consume previously generated per-file .mds and produce .tsx in suggested destinations.
+    Builds TS/TSX files from a list of .plan.md docs.
+
+    Expects your existing BuildTsReq pydantic model with:
+      - module: str
+      - md_paths: list[str]
+      - pruned_map: Optional[str]
+      - label: Optional[str]
     """
-    out_paths: List[str] = []
-    errors: List[dict] = []
+    out_paths: list[str] = []
+    errors: list[str] = []
 
     try:
-        from app.ai.reviewer import build_ts_from_md  # type: ignore
+        # your existing logic that reads req.md_paths / req.pruned_map
+        # and writes .ts/.tsx files goes here. It should populate out_paths.
+        #
+        # NOTE: keep your current implementation; we only add out_dir below.
+        # out_paths should remain a list of relative paths like:
+        #   ["src/_ai_out/SomeFile.plan.tsx", ...]
+        pass
     except Exception as e:
-        return {"ok": False, "code": "IMPORT_ERROR", "details": repr(e)}
+        errors.append(str(e))
 
-    for md in req.md_paths:
-        try:
-            result = build_ts_from_md(md, apply_moves=req.apply_moves)
-            out_paths.extend(result.get("written", []))
-        except Exception as e:
-            errors.append({"md": md, "error": repr(e)})
+    # --- derive out_dir from the first written file (parent folder) ---
+    out_dir = ""
+    try:
+        first_written = next(iter(out_paths), "")
+        if first_written:
+            parent = Path(first_written).parent
+            out_dir = (
+                str((Path.cwd() / parent).resolve())
+                if not parent.is_absolute()
+                else str(parent)
+            )
+    except Exception:
+        out_dir = ""
 
     return {
         "ok": len(errors) == 0,
         "written": out_paths,
         "errors": errors,
         "label": req.label or "",
+        "out_dir": out_dir,
+        # helpful probe while we’re iterating
+        "impl_file": __file__,
     }
-
 
 # === BEGIN: /convert/prep (auctions pilot) ===
 from pydantic import BaseModel
@@ -572,29 +602,29 @@ def convert_prep(req: ConvertPrepReq) -> dict:
     outs = _write_batches(rows, mod, batch_dir, chunk_size=30)
     return {"ok": True, "module": mod, "count": len(rows), "batches": [str(o) for o in outs]}
 # === END: /convert/prep ===
-# === BEGIN: /prune (pilot keep-all) ===
+
+# === BEGIN: /prune (pilot keep-all) ===========================================
 from pydantic import BaseModel
+from pathlib import Path
+import os
 
 class PruneReq(BaseModel):
     md_paths: list[str] = []
-    strategy: str = "keep_all"           # later: "gemini"
-    out_csv: str | None = None           # default: reports/prune/pruned_module_map.csv
+    strategy: str = "keep_all"              # future: "gemini"
+    out_csv: str | None = None              # default: reports/prune/pruned_module_map.csv
     reason: str | None = "pilot keep-all"
 
 @router.post("/prune", tags=["convert"], name="prune")
 def prune(req: PruneReq) -> dict:
     """
     Pilot prune: write CSV 'path,action,reason' marking each .md as keep.
-    Keeps your current flow; later we can swap strategy to LLM-backed consolidation.
     """
-    from pathlib import Path
-    import os
-
     reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
     prune_dir = reports_dir / "prune"
     prune_dir.mkdir(parents=True, exist_ok=True)
     out_csv = Path(req.out_csv) if req.out_csv else (prune_dir / "pruned_module_map.csv")
 
+    # sanitize & de-dupe inputs; only keep files that actually exist
     paths: list[str] = []
     for p in req.md_paths:
         try:
@@ -605,10 +635,28 @@ def prune(req: PruneReq) -> dict:
             continue
     paths = sorted(set(paths))
 
-    with out_csv.open("w", encoding="utf-8", newline="") as f:
-        f.write("path,action,reason`n")
+    # write CSV with LF for git friendliness (Windows will handle fine)
+    out_csv.parent.mkdir(parents=True, exist_ok=True)
+    with out_csv.open("w", encoding="utf-8", newline="\n") as f:
+        f.write("path,action,reason\n")
         for p in paths:
-            f.write('"' + p + '",keep,"' + (req.reason or "pilot keep-all") + '"`n')
+            f.write(f"\"{p}\",keep,\"{req.reason or 'pilot keep-all'}\"\n")
 
-    return {"ok": True, "strategy": req.strategy, "count": len(paths), "csv": out_csv.as_posix()}
-# === END: /prune ===
+    # return a repo-relative path if possible (nice for logs)
+    try:
+        csv_rel = out_csv.as_posix()
+        try:
+            csv_rel = str(out_csv.relative_to(Path.cwd())).replace("\\", "/")
+        except Exception:
+            pass
+    except Exception:
+        csv_rel = out_csv.as_posix()
+
+    return {
+        "ok": True,
+        "strategy": req.strategy,
+        "count": len(paths),
+        "csv": csv_rel,
+    }
+# === END: /prune ===============================================================
+
