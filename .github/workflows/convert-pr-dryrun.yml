@@ -1,152 +1,73 @@
-name: convert-dryrun-on-pr
+name: Convert PR Dry-Run
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
-
-permissions:
-  contents: read
-  issues: write
-  pull-requests: write
+    branches: [ "main" ]
 
 jobs:
   dryrun:
-    name: Convert dry-run + PR comment
     runs-on: ubuntu-latest
-
-    env:
-      # FastAPI server settings
-      HOST: 127.0.0.1
-      PORT: 8121
-      LOG_LEVEL: INFO
-      REPORTS_DIR: ${{ github.workspace }}/reports
-
-      # Optional provider keys (if you add them in repo/org secrets)
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
-
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          else
-            # minimal set for FastAPI/uvicorn if reqs not present
-            pip install fastapi uvicorn pydantic "typing-extensions>=4.6"
-          fi
+          pip install -r requirements.txt
 
       - name: Start server (background)
+        env:
+          HOST: 127.0.0.1
+          PORT: 8121
+          REPORTS_DIR: reports
+          LOG_LEVEL: INFO
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          XAI_API_KEY:     ${{ secrets.XAI_API_KEY }}
         run: |
-          mkdir -p "$REPORTS_DIR"
-          python -m uvicorn --factory app.server:create_app \
-            --host "$HOST" --port "$PORT" \
-            --log-level "${LOG_LEVEL,,}" &
+          python -m uvicorn --factory app.server:create_app --host 127.0.0.1 --port 8121 &
           echo $! > uvicorn.pid
-          echo "PID $(cat uvicorn.pid)"
+          sleep 2
+          curl -sSf http://127.0.0.1:8121/readyz
 
-      - name: Wait for /readyz
-        shell: bash
-        run: |
-          set -e
-          t=0
-          until curl -fsS "http://$HOST:$PORT/readyz" | jq -e '.ok == true' >/dev/null 2>&1; do
-            t=$((t+1))
-            if [ $t -gt 60 ]; then
-              echo "Server not ready after 60s"
-              echo "Last /readyz:"
-              curl -sS "http://$HOST:$PORT/readyz" || true
-              exit 1
-            fi
-            sleep 1
-          done
-          echo "Server ready."
-
-      - name: Run labeled convert.tree
-        id: run_convert
-        shell: bash
+      - name: Dry-run convert on diff
+        id: convert
         env:
-          PR_NUM: ${{ github.event.number }}
+          GH_PR_NUMBER: ${{ github.event.number }}
+          GH_BASE_SHA:  ${{ github.event.pull_request.base.sha }}
         run: |
-          # Pick a root that exists in the repo (Linux paths)
-          if [ -d "./frontend/src" ]; then
-            ROOT="./frontend/src"
-          elif [ -d "./src" ]; then
-            ROOT="./src"
-          else
-            ROOT="."
-          fi
-          echo "Using root: $ROOT"
-
           BODY=$(jq -n \
-            --arg root "$ROOT" \
-            --arg label "pr-${PR_NUM}" \
+            --arg root "src" \
             --argjson dry_run true \
-            --argjson batch_cap 10 \
-            '{root:$root, dry_run:$dry_run, batch_cap:$batch_cap, label:$label}')
+            --arg label "pr-${GH_PR_NUMBER}" \
+            --arg base "${GH_BASE_SHA}" \
+            --argjson cap 25 \
+            '{root:$root,dry_run:$dry_run,label:$label,git_diff_base:$base,batch_cap:$cap}')
+          curl -sS -X POST "http://127.0.0.1:8121/convert/tree" \
+            -H "Content-Type: application/json" \
+            -d "${BODY}" | tee convert_resp.json
+          SUMMARY=$(curl -sS "http://127.0.0.1:8121/reports/latest?label=pr-${GH_PR_NUMBER}" | jq -r '.path // ""')
+          echo "path=${SUMMARY}" >> $GITHUB_OUTPUT
 
-          curl -sS -X POST "http://$HOST:$PORT/convert/tree" \
-               -H "Content-Type: application/json" \
-               --data "$BODY" \
-               -o convert_response.json
-
-          echo "Server response:"
-          cat convert_response.json
-
-          echo "summary=$(jq -r '.summary // ""' convert_response.json)" >> "$GITHUB_OUTPUT"
-
-      - name: Fetch latest labeled summary
-        id: latest
-        shell: bash
-        env:
-          PR_NUM: ${{ github.event.number }}
-        run: |
-          curl -sS "http://$HOST:$PORT/reports/latest?label=pr-${PR_NUM}" -o latest.json || echo "{}" > latest.json
-          cat latest.json
-          LATEST_PATH=$(jq -r '.path // ""' latest.json)
-          PREVIEW=$(jq -r '.preview // ""' latest.json)
-
-          echo "path=${LATEST_PATH}"   >> "$GITHUB_OUTPUT"
-          # Trim preview to keep the comment compact
-          echo "preview<<EOF"          >> "$GITHUB_OUTPUT"
-          echo "${PREVIEW}"            >> "$GITHUB_OUTPUT"
-          echo "EOF"                   >> "$GITHUB_OUTPUT"
-
-      - name: Upload summary artifact
-        if: steps.latest.outputs.path != ''
-        uses: actions/upload-artifact@v4
-        with:
-          name: pr-summary-${{ github.event.number }}
-          path: ${{ steps.latest.outputs.path }}
-
-      - name: Post PR comment with summary
+      - name: Comment on PR
+        if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PREVIEW: ${{ steps.latest.outputs.preview }}
-          LATEST_PATH: ${{ steps.latest.outputs.path }}
         run: |
-          # Build markdown body safely with jq
-          jq -n --arg p "${PREVIEW}" --arg path "${LATEST_PATH}" \
-            '{body: ("### Convert dry-run summary\n\n**Summary path:** `\($path)`\n\n<details><summary>Preview</summary>\n\n```\n\($p)\n```\n\n</details>")}' > body.json
+          PATH_LINE="${{ steps.convert.outputs.path }}"
+          if [ -z "$PATH_LINE" ] || [ "$PATH_LINE" = "null" ]; then
+            gh pr comment ${{ github.event.number }} --body "convert/tree dry-run completed, but no summary was found."
+          else
+            gh pr comment ${{ github.event.number }} --body "Review summary: \`$PATH_LINE\`"
+          fi
 
-          curl -sS -X POST \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments" \
-            -d @body.json
-
-      - name: Always stop server
+      - name: Stop server
         if: always()
         run: |
-          if [ -f uvicorn.pid ]; then
-            kill $(cat uvicorn.pid) || true
-            rm -f uvicorn.pid
-          fi
+          if [ -f uvicorn.pid ]; then kill $(cat uvicorn.pid) || true; fi
