@@ -15,14 +15,53 @@ from pydantic import BaseModel
 router = APIRouter()
 
 # ------------------------------- constants -----------------------------------
+# --- constants (module scope) ---
 CODE_EXTS = {".ts", ".tsx", ".js", ".jsx"}
 IGNORE_NAMES = {"desktop.ini", ".ds_store", "thumbs.db"}
 IGNORE_SUFFIXES = (".bak", ".tmp", "~")
-IGNORE_DIR_PARTS = {"/__mocks__/", "/tests/","/node_modules/"}
+IGNORE_DIR_PARTS = {"/__mocks__/", "/tests/", "/node_modules/"}  # ← added node_modules
 TEST_NAME_RE = re.compile(r"\.(test|spec)\.[a-z0-9]+$", re.I)
 
 
+
 # --------------------------------- helpers -----------------------------------
+def _normalize_batch_artifacts(out_dir: Path, label: str, batch: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Ensure batch_md and per_file_mds live under out_dir and do not duplicate the label segment.
+    """
+    fixed: Dict[str, Any] = {}
+    # batch_md
+    batch_md = batch.get("batch_md")
+    if isinstance(batch_md, str) and batch_md:
+        bp = Path(batch_md)
+        # keep only filename under out_dir to avoid any duplicated segments
+        bp = out_dir / bp.name
+        fixed["batch_md"] = bp.as_posix()
+    else:
+        fixed["batch_md"] = None
+
+    # per-file mds
+    mds = batch.get("per_file_mds") or []
+    fixed_mds: List[str] = []
+    for m in mds:
+        try:
+            mp = Path(m)
+            mp = out_dir / mp.name
+            fixed_mds.append(mp.as_posix())
+        except Exception:
+            pass
+    fixed["per_file_mds"] = fixed_mds
+
+    # dependencies passthrough
+    deps = batch.get("dependencies")
+    if isinstance(deps, dict):
+        fixed["dependencies"] = deps
+    else:
+        fixed["dependencies"] = {}
+
+    return fixed
+
+
 def _is_noise(p: Path) -> bool:
     name_l = p.name.lower()
     if name_l in IGNORE_NAMES:
@@ -392,7 +431,12 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
                     except Exception as e:
                         resp.setdefault("errors", []).append({"where": "batch_mds/run", "error": repr(e)})
 
-                batch_md = batch.get("batch_md")
+                # --- after calling review_batch(...) and having `batch` in scope ---
+                # Normalize paths to live under out_dir and avoid label duplication
+                fixed = _normalize_batch_artifacts(out_dir, req.label or "", batch)
+
+                # If LLM didn't return a batch_md, write a heuristic fallback into out_dir
+                batch_md = fixed.get("batch_md")
                 if not batch_md:
                     batch_path = (out_dir / f"batch_review_{stamp}.md")
                     lines = [
@@ -412,10 +456,11 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
                     batch_md = batch_path.as_posix()
 
                 resp["artifacts"] = {
-                    "mds": batch.get("per_file_mds", []),
+                    "mds": fixed.get("per_file_mds", []),
                     "batch_md": batch_md,
-                    "deps": batch.get("dependencies", {}),
+                    "deps": fixed.get("dependencies", {}),
                 }
+
 
             if req.md_first:
                 resp["next_step"] = "build_ts"
