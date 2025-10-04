@@ -1,39 +1,38 @@
 name: convert-dryrun-on-pr
-
 on:
   pull_request:
     types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
+  issues: write
   pull-requests: write
 
 jobs:
   dryrun:
+    name: Convert dry-run + PR comment
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+
     env:
+      # FastAPI server settings
       HOST: 127.0.0.1
       PORT: 8121
       LOG_LEVEL: INFO
-      ORCHESTRATOR_VERSION: ci
       REPORTS_DIR: ${{ github.workspace }}/reports
-      # Optional SDK keys (set in repo secrets). Not strictly required for /readyz ok.
+
+      # Optional provider keys (if you add them in repo/org secrets)
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      GROK_API_KEY:   ${{ secrets.GROK_API_KEY }}
-      # Where your frontend lives (used by /convert/tree reviewer)
-      FRONTEND_ROOT:  C:\CFH\frontend
+      GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          # Use what your app runs on locally (you’ve been using 3.11)
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install deps
         run: |
@@ -41,91 +40,113 @@ jobs:
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           else
-            pip install fastapi uvicorn pydantic
+            # minimal set for FastAPI/uvicorn if reqs not present
+            pip install fastapi uvicorn pydantic "typing-extensions>=4.6"
           fi
-          pip install jq
 
       - name: Start server (background)
         run: |
+          mkdir -p "$REPORTS_DIR"
           python -m uvicorn --factory app.server:create_app \
-            --host $HOST --port $PORT &
+            --host "$HOST" --port "$PORT" \
+            --log-level "${LOG_LEVEL,,}" &
           echo $! > uvicorn.pid
+          echo "PID $(cat uvicorn.pid)"
 
       - name: Wait for /readyz
         shell: bash
         run: |
-          for i in {1..45}; do
-            if curl -s "http://$HOST:$PORT/readyz" | jq -e '.ok==true' >/dev/null; then
-              echo "server ready"; exit 0
+          set -e
+          t=0
+          until curl -fsS "http://$HOST:$PORT/readyz" | jq -e '.ok == true' >/dev/null 2>&1; do
+            t=$((t+1))
+            if [ $t -gt 60 ]; then
+              echo "Server not ready after 60s"
+              echo "Last /readyz:"
+              curl -sS "http://$HOST:$PORT/readyz" || true
+              exit 1
             fi
             sleep 1
           done
-          echo "server not ready" >&2
-          exit 1
+          echo "Server ready."
 
       - name: Run labeled convert.tree
         id: run_convert
+        shell: bash
         env:
           PR_NUM: ${{ github.event.number }}
         run: |
-          mkdir -p "$REPORTS_DIR"
+          # Pick a root that exists in the repo (Linux paths)
+          if [ -d "./frontend/src" ]; then
+            ROOT="./frontend/src"
+          elif [ -d "./src" ]; then
+            ROOT="./src"
+          else
+            ROOT="."
+          fi
+          echo "Using root: $ROOT"
+
           BODY=$(jq -n \
-            --arg root "C:\\CFH\\frontend\\src" \
+            --arg root "$ROOT" \
             --arg label "pr-${PR_NUM}" \
             --argjson dry_run true \
             --argjson batch_cap 10 \
             '{root:$root, dry_run:$dry_run, batch_cap:$batch_cap, label:$label}')
+
           curl -sS -X POST "http://$HOST:$PORT/convert/tree" \
                -H "Content-Type: application/json" \
                --data "$BODY" \
                -o convert_response.json
+
+          echo "Server response:"
           cat convert_response.json
+
           echo "summary=$(jq -r '.summary // ""' convert_response.json)" >> "$GITHUB_OUTPUT"
 
-      - name: Fetch latest labeled summary (sanity)
+      - name: Fetch latest labeled summary
         id: latest
+        shell: bash
         env:
           PR_NUM: ${{ github.event.number }}
         run: |
-          curl -sS "http://$HOST:$PORT/reports/latest?label=pr-${PR_NUM}" -o latest.json
+          curl -sS "http://$HOST:$PORT/reports/latest?label=pr-${PR_NUM}" -o latest.json || echo "{}" > latest.json
           cat latest.json
-          echo "path=$(jq -r '.path' latest.json)" >> "$GITHUB_OUTPUT"
-          echo "preview=$(jq -r '.preview' latest.json | head -n 30)" >> "$GITHUB_OUTPUT"
+          LATEST_PATH=$(jq -r '.path // ""' latest.json)
+          PREVIEW=$(jq -r '.preview // ""' latest.json)
 
-      - name: Comment summary to PR
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const path = `${{ steps.latest.outputs.path }}`;
-            const preview = `${{ steps.latest.outputs.preview }}`;
-            const body = [
-              "### Convert Dry-Run (labeled) ✅",
-              "",
-              "**Summary path**",
-              "```",
-              path,
-              "```",
-              "",
-              "**Preview**",
-              "```md",
-              preview,
-              "```"
-            ].join("\n");
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body
-            });
+          echo "path=${LATEST_PATH}"   >> "$GITHUB_OUTPUT"
+          # Trim preview to keep the comment compact
+          echo "preview<<EOF"          >> "$GITHUB_OUTPUT"
+          echo "${PREVIEW}"            >> "$GITHUB_OUTPUT"
+          echo "EOF"                   >> "$GITHUB_OUTPUT"
 
-      - name: Upload summary artifact (optional)
-        if: ${{ steps.latest.outputs.path != '' }}
+      - name: Upload summary artifact
+        if: steps.latest.outputs.path != ''
         uses: actions/upload-artifact@v4
         with:
-          name: convert-summary
+          name: pr-summary-${{ github.event.number }}
           path: ${{ steps.latest.outputs.path }}
 
-      - name: Teardown
+      - name: Post PR comment with summary
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PREVIEW: ${{ steps.latest.outputs.preview }}
+          LATEST_PATH: ${{ steps.latest.outputs.path }}
+        run: |
+          # Build markdown body safely with jq
+          jq -n --arg p "${PREVIEW}" --arg path "${LATEST_PATH}" \
+            '{body: ("### Convert dry-run summary\n\n**Summary path:** `\($path)`\n\n<details><summary>Preview</summary>\n\n```\n\($p)\n```\n\n</details>")}' > body.json
+
+          curl -sS -X POST \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments" \
+            -d @body.json
+
+      - name: Always stop server
         if: always()
         run: |
-          if [ -f uvicorn.pid ]; then kill $(cat uvicorn.pid) || true; fi
+          if [ -f uvicorn.pid ]; then
+            kill $(cat uvicorn.pid) || true
+            rm -f uvicorn.pid
+          fi
