@@ -1,7 +1,6 @@
 # =========================
 # Line endings (normalize in repo)
 # =========================
-# Default: normalize to LF in repo
 * text=auto eol=lf
 
 # Windows-native scripts → CRLF on checkout (still LF-normalized in repo)
@@ -9,7 +8,7 @@
 *.bat text eol=crlf
 *.cmd text eol=crlf
 
-# Explicit LF for common text (helps if the filetype isn't auto-detected)
+# Explicit LF for common text
 *.sh   text eol=lf
 *.py   text eol=lf
 *.ts   text eol=lf
@@ -23,7 +22,7 @@
 *.css  text eol=lf
 *.scss text eol=lf
 *.html text eol=lf
-*.svg  text eol=lf   # keep SVG as text for better diffs
+*.svg  text eol=lf
 
 # =========================
 # Binary files (no EOL conversions, no diffs)
