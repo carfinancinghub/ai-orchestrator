@@ -1,40 +1,137 @@
+# api/routes.py
 from __future__ import annotations
+
+import json
+import os
+import re
+from datetime import datetime
 from pathlib import Path
+from typing import Any, Dict, List
+
 from fastapi import APIRouter, Body
+from pydantic import BaseModel
+
+from app.ai.reviewer import review_file
 
 router = APIRouter()
 
-# --- providers ---
+
+class ConvertTreeReq(BaseModel):
+    root: str = "src"
+    dry_run: bool = True
+    batch_cap: int = 25  # how many files to review per call (safety)
+
+
+# --- constants (module scope) ---
+CODE_EXTS = {".ts", ".tsx", ".js", ".jsx"}
+
+# file/dir noise filters
+IGNORE_NAMES = {"desktop.ini", ".ds_store", "thumbs.db"}
+IGNORE_SUFFIXES = (".bak", ".tmp", "~")
+IGNORE_DIR_PARTS = {"/__mocks__/", "/tests/"}  # hide these directories from listings/reviews
+
+# inline test name patterns (e.g., foo.test.tsx, bar.spec.js)
+TEST_NAME_RE = re.compile(r"\.(test|spec)\.[a-z0-9]+$", re.I)
+
+
+def _is_noise(p: Path) -> bool:
+    """Return True for files/dirs we want to hide from listings/reviews."""
+    name_l = p.name.lower()
+    if name_l in IGNORE_NAMES:
+        return True
+    if name_l.endswith(IGNORE_SUFFIXES):
+        return True
+    if TEST_NAME_RE.search(name_l):  # inline tests
+        return True
+    # path-based directory filters
+    ppos = p.as_posix().lower()
+    for part in IGNORE_DIR_PARTS:
+        if part in ppos:
+            return True
+    return False
+
+
 @router.get("/providers/list", tags=["providers"], name="providers_list")
 def providers_list() -> dict:
-    return {"providers": ["openai", "gemini", "anthropic", "grok"]}
+    return {"providers": ["openai", "gemini", "grok", "anthropic"]}
+
 
 @router.get("/providers/selftest", tags=["providers"], name="providers_selftest")
 def providers_selftest() -> dict:
     return {"ok": True}
 
-# --- convert ---
+
 @router.post("/convert/file", tags=["convert"], name="convert_file")
 def convert_file() -> dict:
-    # stub: replace with real logic when ready
+    # Placeholder for single-file conversion
     return {"ok": True, "converted": 1, "skipped": 0}
 
+
 @router.post("/convert/tree", tags=["convert"], name="convert_tree")
-def convert_tree(
-    root: str = Body("src", embed=True),        # expects {"root": "..."}
-    dry_run: bool = Body(True, embed=True),     # expects {"dry_run": true}
-) -> dict:
-    p = Path(root)
-    converted: list[str] = []
-    skipped: list[str] = []
-    if p.exists() and p.is_dir():
-        # cap output to keep responses small and predictable
-        for item in list(p.rglob("*"))[:50]:
-            (converted if item.is_file() else skipped).append(str(item).replace("\\", "/"))
-    return {
+def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
+    root = Path(req.root)
+    converted: List[str] = []
+    skipped: List[str] = []
+    reviews: List[Dict[str, Any]] = []
+
+    if root.exists() and root.is_dir():
+        # Gather and filter once
+        all_items = list(root.rglob("*"))
+        items: List[Path] = []
+        for p in all_items:
+            if _is_noise(p):
+                continue
+            items.append(p)
+
+        # Response-friendly listing (cap 200)
+        for p in items[:200]:
+            (converted if p.is_file() else skipped).append(str(p).replace("\\", "/"))
+
+        # Review only code files (cap per request)
+        cap = max(0, int(req.batch_cap))
+        code_files = [p for p in items if p.is_file() and p.suffix.lower() in CODE_EXTS]
+        for p in code_files[:cap]:
+            try:
+                r = review_file(
+                    str(p),
+                    repo_root=os.getenv("FRONTEND_ROOT", r"C:\CFH\frontend"),
+                )
+                reviews.append(
+                    {
+                        "file": str(p).replace("\\", "/"),
+                        "routing": r["routing"],
+                        "markdown": r["markdown"],
+                    }
+                )
+            except Exception as e:
+                reviews.append(
+                    {
+                        "file": str(p).replace("\\", "/"),
+                        "error": repr(e),
+                        "routing": {"suggested_moves": []},
+                        "markdown": "",
+                    }
+                )
+
+    resp = {
         "ok": True,
-        "root": str(p),
-        "dry_run": bool(dry_run),
+        "root": str(root),
+        "dry_run": req.dry_run,
         "converted": converted,
         "skipped": skipped,
+        "reviews_count": len(reviews),
+        "reviews": reviews,
     }
+
+    # Save artifact
+    reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out = reports_dir / f"convert_dryrun_{stamp}.json"
+    try:
+        out.write_text(json.dumps(resp, ensure_ascii=False, indent=2), encoding="utf-8")
+        resp["artifact"] = str(out)
+    except Exception as e:
+        resp["artifact_error"] = repr(e)
+
+    return resp
