@@ -2,52 +2,103 @@
 
 from __future__ import annotations
 
-import os, sys, logging
+import os
+import sys
+import logging
 from pathlib import Path
 from typing import Any, Dict, List
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 
+# --------------------------------------------------------------------------------------
+# Repo location & import path
+# --------------------------------------------------------------------------------------
 _THIS_FILE = Path(__file__).resolve()
 _REPO_ROOT = _THIS_FILE.parents[1]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
+# --------------------------------------------------------------------------------------
+# Optional: auto-load .env at startup (so you don't need --env-file each time)
+# Requires: pip install python-dotenv
+# --------------------------------------------------------------------------------------
+try:
+    from dotenv import load_dotenv  # type: ignore
+    load_dotenv(dotenv_path=_REPO_ROOT / ".env", override=False)
+except Exception:
+    # It's okay if python-dotenv isn't installed or .env is missing.
+    pass
+
+# --------------------------------------------------------------------------------------
+# Import router (may fail at dev time; we surface error via /readyz)
+# --------------------------------------------------------------------------------------
 try:
     from api.routes import router
-except Exception as e:
-    router = None
+except Exception as e:  # pragma: no cover
+    router = None  # type: ignore[assignment]
     _IMPORT_ERROR = e
 else:
     _IMPORT_ERROR = None
 
+# --------------------------------------------------------------------------------------
+# Environment / config
+# --------------------------------------------------------------------------------------
 SERVICE_NAME = "orchestrator"
 DEFAULT_HOST = os.getenv("HOST", "127.0.0.1")
 DEFAULT_PORT = int(os.getenv("PORT", "8121"))
 ALLOWED_ORIGINS = os.getenv("CORS_ALLOW_ORIGINS", "*").split(",")
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
-PROVIDER_ENV_HINTS = ["OPENAI_API_KEY","GEMINI_API_KEY","ANTHROPIC_API_KEY","GROK_API_KEY"]
-REPORTS_DIR = Path(os.getenv("REPORTS_DIR", _REPO_ROOT / "reports"))
 
+# Provider hints we show in /readyz
+PROVIDER_ENV_HINTS = [
+    "OPENAI_API_KEY",
+    "GEMINI_API_KEY",
+    "ANTHROPIC_API_KEY",
+    "GROK_API_KEY",
+]
+
+# Robust REPORTS_DIR resolution: make absolute even if a relative value is given
+_env_reports = os.getenv("REPORTS_DIR")
+if _env_reports:
+    _reports_path = Path(_env_reports)
+    if not _reports_path.is_absolute():
+        _reports_path = (_REPO_ROOT / _reports_path).resolve()
+else:
+    _reports_path = (_REPO_ROOT / "reports").resolve()
+REPORTS_DIR: Path = _reports_path
+
+# --------------------------------------------------------------------------------------
+# App factory
+# --------------------------------------------------------------------------------------
 def create_app() -> FastAPI:
     _configure_logging()
-    app = FastAPI(title="AI Orchestrator", version=os.getenv("ORCHESTRATOR_VERSION","0.1.0"))
-    # If you want to honor ALLOWED_ORIGINS exactly, replace ["*"] with ALLOWED_ORIGINS
+    app = FastAPI(
+        title="AI Orchestrator",
+        version=os.getenv("ORCHESTRATOR_VERSION", "0.1.0"),
+    )
+
+    # CORS: honor the env list (comma-separated). Use ["*"] during prototyping if needed.
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=[o.strip() for o in ALLOWED_ORIGINS if o.strip()],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
     if router is not None:
         app.include_router(router)
+
     _register_health_endpoints(app)
     _register_error_handlers(app)
     return app
 
+# --------------------------------------------------------------------------------------
+# Meta / health endpoints
+# --------------------------------------------------------------------------------------
 def _register_health_endpoints(app: FastAPI) -> None:
     @app.get("/", tags=["meta"])
     def root() -> Dict[str, Any]:
@@ -110,24 +161,24 @@ def _register_health_endpoints(app: FastAPI) -> None:
             return {"sdk": sdk, "key": key, "ok": (sdk and key)}
 
         providers = {
-            "openai":     _provider_status(["openai"],                     "OPENAI_API_KEY"),
-            "gemini":     _provider_status(["google.generativeai"],        "GEMINI_API_KEY"),
-            "grok":       _provider_status(["xai", "xai_sdk", "grok"],     "GROK_API_KEY"),
-            "anthropic":  _provider_status(["anthropic"],                  "ANTHROPIC_API_KEY"),
+            "openai": _provider_status(["openai"], "OPENAI_API_KEY"),
+            "gemini": _provider_status(["google.generativeai"], "GEMINI_API_KEY"),
+            "grok": _provider_status(["xai", "xai_sdk", "grok"], "GROK_API_KEY"),
+            "anthropic": _provider_status(["anthropic"], "ANTHROPIC_API_KEY"),
         }
         checks["providers"] = providers
 
-        # Back-compat flat flags (ok only when both SDK+key are present)
-        checks["sdk_openai"]   = providers["openai"]["ok"]
-        checks["sdk_gemini"]   = providers["gemini"]["ok"]
+        # Back-compat flat flags (true only when both SDK+key are present)
+        checks["sdk_openai"] = providers["openai"]["ok"]
+        checks["sdk_gemini"] = providers["gemini"]["ok"]
         checks["sdk_grok_xai"] = providers["grok"]["ok"]
-        checks["sdk_anthropic"]= providers["anthropic"]["ok"]
+        checks["sdk_anthropic"] = providers["anthropic"]["ok"]
 
-        # Provider env hint list (still useful for quick setup)
+        # Provider env hint list (useful for quick setup)
         missing_envs = [k for k in PROVIDER_ENV_HINTS if not _has_key(k)]
         checks["provider_env_missing"] = missing_envs
-        checks["providers_enabled"] = [name for name, st in providers.items() if st.get("ok")]
-        # --- CFH-specific probe
+
+        # CFH-specific probe (as requested)
         checks["cfh_root"] = os.path.exists(r"C:\CFH\frontend")
 
         # Overall ready flag (unchanged logic)
@@ -142,14 +193,21 @@ def _register_health_endpoints(app: FastAPI) -> None:
                 path = getattr(r, "path", None)
                 if not path:
                     continue
-                methods = sorted(m for m in (getattr(r, "methods", []) or []) if m != "HEAD")
+                methods = sorted(
+                    m for m in (getattr(r, "methods", []) or []) if m != "HEAD"
+                )
                 name = getattr(r, "name", None)
                 tags = getattr(r, "tags", None) or []
-                items.append({"path": path, "methods": methods, "name": name, "tags": tags})
+                items.append(
+                    {"path": path, "methods": methods, "name": name, "tags": tags}
+                )
             except Exception as e:
                 items.append({"path": "<error>", "err": repr(e)})
         return {"count": len(items), "routes": items}
 
+# --------------------------------------------------------------------------------------
+# Error handlers
+# --------------------------------------------------------------------------------------
 def _register_error_handlers(app: FastAPI) -> None:
     logger = logging.getLogger("uvicorn.error")
 
@@ -169,6 +227,9 @@ def _register_error_handlers(app: FastAPI) -> None:
             content={"ok": False, "error": "internal_error", "detail": repr(exc)},
         )
 
+# --------------------------------------------------------------------------------------
+# Logging
+# --------------------------------------------------------------------------------------
 def _configure_logging() -> None:
     level = getattr(logging, LOG_LEVEL, logging.INFO)
     logging.basicConfig(
@@ -178,8 +239,12 @@ def _configure_logging() -> None:
     )
     logging.getLogger("uvicorn.access").setLevel(level)
 
+# --------------------------------------------------------------------------------------
+# Entrypoint
+# --------------------------------------------------------------------------------------
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(
         "app.server:create_app",
         factory=True,
@@ -188,6 +253,3 @@ if __name__ == "__main__":
         log_level=LOG_LEVEL.lower(),
         reload=bool(os.getenv("RELOAD", "0") == "1"),
     )
-
-
-
