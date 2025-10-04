@@ -1,7 +1,4 @@
-# --- api/routes.py -----------------------------------------------------------
-# NOTE: This is a full replacement file. Paste it as-is.
-# Major sections are marked with banner comments to make future edits easier.
-
+# api/routes.py
 from __future__ import annotations
 
 import json
@@ -10,25 +7,22 @@ import re
 import subprocess
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, Body, HTTPException, Query, Request
+from fastapi import APIRouter, Body, HTTPException, Request
 from pydantic import BaseModel
 
-# Router instance (mounted by app.server:create_app)
 router = APIRouter()
 
-# =============================================================================
-# Constants & Helpers
-# =============================================================================
-
+# ------------------------------- constants -----------------------------------
 CODE_EXTS = {".ts", ".tsx", ".js", ".jsx"}
 IGNORE_NAMES = {"desktop.ini", ".ds_store", "thumbs.db"}
 IGNORE_SUFFIXES = (".bak", ".tmp", "~")
-IGNORE_DIR_PARTS = {"/__mocks__/", "/tests/", "/node_modules/"}
+IGNORE_DIR_PARTS = {"/__mocks__/", "/tests/","/node_modules/"}
 TEST_NAME_RE = re.compile(r"\.(test|spec)\.[a-z0-9]+$", re.I)
 
 
+# --------------------------------- helpers -----------------------------------
 def _is_noise(p: Path) -> bool:
     name_l = p.name.lower()
     if name_l in IGNORE_NAMES:
@@ -45,9 +39,7 @@ def _is_noise(p: Path) -> bool:
 
 
 def _rel(p: Path, base: Optional[Path] = None) -> str:
-    """
-    Repo-relative (POSIX) path for consistent matching in git-diff filters.
-    """
+    """Repo-relative POSIX path."""
     base = base or Path.cwd()
     try:
         return p.resolve().relative_to(base.resolve()).as_posix()
@@ -56,10 +48,7 @@ def _rel(p: Path, base: Optional[Path] = None) -> str:
 
 
 def _git_changed_files(base_ref: str, cwd: Optional[Path] = None) -> List[str]:
-    """
-    Best-effort: return repo-relative file paths changed vs base_ref.
-    Uses: git diff --name-only base_ref...HEAD
-    """
+    """best-effort: git diff --name-only base_ref...HEAD"""
     try:
         cwd = cwd or Path.cwd()
         result = subprocess.run(
@@ -75,118 +64,30 @@ def _git_changed_files(base_ref: str, cwd: Optional[Path] = None) -> List[str]:
         return []
 
 
-def _preview_text(path_like: str, max_lines: int = 40) -> List[str]:
-    """
-    Best-effort head-of-file preview. Accepts repo-relative or absolute paths.
-    """
+def _preview_text(rel: str, max_lines: int = 40) -> List[str]:
+    """Read up to max_lines from a path; be forgiving about relative vs absolute."""
     try:
-        p = Path(path_like)
+        p = Path(rel)
         if not p.exists():
-            # fall back: try only the file name inside the provided root later
-            return ["(snippet unavailable)"]
-        lines = p.read_text(encoding="utf-8", errors="ignore").splitlines()[:max_lines]
-        return lines if lines else ["(empty file)"]
+            # last resort: treat as filename within provided root
+            p = Path(rel.strip("`").strip())
+        txt = p.read_text(encoding="utf-8", errors="ignore").splitlines()[:max_lines]
+        return txt
     except Exception:
         return ["(snippet unavailable)"]
 
 
-def _providers_status() -> Tuple[Dict[str, Any], List[str], List[str]]:
-    """
-    Quick provider SDK/key checks used by /readyz.
-    Returns (providers_map, enabled_list, missing_env_list)
-    """
-    providers = {}
-    missing = []
-
-    # OpenAI
-    try:
-        import openai  # noqa: F401
-        have_key = bool(os.getenv("OPENAI_API_KEY"))
-        providers["openai"] = {"sdk": True, "key": have_key, "ok": have_key}
-        if not have_key:
-            missing.append("OPENAI_API_KEY")
-    except Exception:
-        providers["openai"] = {"sdk": False, "key": False, "ok": False}
-
-    # Gemini
-    try:
-        import google.generativeai as genai  # noqa: F401
-        have_key = bool(os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY"))
-        providers["gemini"] = {"sdk": True, "key": have_key, "ok": have_key}
-        if not have_key:
-            missing.append("GOOGLE_API_KEY or GEMINI_API_KEY")
-    except Exception:
-        providers["gemini"] = {"sdk": False, "key": False, "ok": False}
-
-    # Grok (xAI) – just environment check for now
-    try:
-        have_key = bool(os.getenv("XAI_API_KEY") or os.getenv("GROK_API_KEY"))
-        providers["grok"] = {"sdk": True, "key": have_key, "ok": have_key}
-        if not have_key:
-            missing.append("XAI_API_KEY or GROK_API_KEY")
-    except Exception:
-        providers["grok"] = {"sdk": False, "key": False, "ok": False}
-
-    # Anthropic (optional)
-    try:
-        import anthropic  # noqa: F401
-        have_key = bool(os.getenv("ANTHROPIC_API_KEY"))
-        providers["anthropic"] = {"sdk": True, "key": have_key, "ok": have_key}
-        if not have_key:
-            missing.append("ANTHROPIC_API_KEY")
-    except Exception:
-        providers["anthropic"] = {"sdk": False, "key": False, "ok": False}
-
-    enabled = [k for k, v in providers.items() if v.get("ok")]
-    return providers, enabled, missing
-
-
-def _list_routes_for_meta(req: Request) -> List[Dict[str, Any]]:
-    out: List[Dict[str, Any]] = []
-    for r in req.app.routes:  # FastAPI mounts our router on the app
-        try:
-            path = getattr(r, "path")
-            methods = sorted(getattr(r, "methods", []))
-            name = getattr(r, "name", "")
-            tags = getattr(r, "tags", [])
-            out.append({"path": path, "methods": methods, "name": name, "tags": tags})
-        except Exception:
-            # ignore non-APIRoute objects
-            pass
-    # stable order
-    out.sort(key=lambda x: x["path"])
-    return out
-
-
-def _reports_latest_path(reports_dir: Path, label: Optional[str]) -> Optional[Path]:
-    """
-    Find the most-recent *.summary.md under reports_dir (optionally within label subdir).
-    """
-    base = reports_dir / (label or "")
-    if not base.exists():
-        return None
-    candidates = list(base.glob("*.summary.md"))
-    if not candidates:
-        return None
-    candidates.sort(key=lambda p: p.stat().st_mtime, reverse=True)
-    return candidates[0]
-
-
-# =============================================================================
-# Pydantic Models (Requests)
-# =============================================================================
-
+# ------------------------------ request models --------------------------------
 class ConvertTreeReq(BaseModel):
     root: str = "src"
     dry_run: bool = True
     batch_cap: int = 25
-    # Labeled artifacts / LLM routing
+    # labeling & tiering
     label: Optional[str] = None
-    review_tier: str = "free"            # free | premium | wow
-    generate_mds: bool = False           # force batch .mds even when dry_run=True
-    git_diff_base: Optional[str] = None  # e.g., "origin/main" or a SHA
-    # PR22: md-first switch (if True, you could short-circuit to .md generation first)
-    md_first: bool = False
+    review_tier: str = "free"           # free | premium | wow
+    generate_mds: bool = False          # force batch .md even in dry_run
+    git_diff_base: Optional[str] = None # e.g., "main" or a SHA
+    md_first: bool = False              # when true, produce .mds then return early
 
 
 class BuildTsReq(BaseModel):
@@ -195,95 +96,128 @@ class BuildTsReq(BaseModel):
     label: Optional[str] = None
 
 
-# =============================================================================
-# Meta & Health Endpoints
-# =============================================================================
-
-@router.get("/", tags=["meta"], name="root")
-def root() -> dict:
-    return {"ok": True, "service": "ai-orchestrator", "hint": "See /docs for API."}
+# --------------------------------- routes ------------------------------------
+@router.get("/", tags=["meta"])
+def root():
+    return {"ok": True, "service": "ai-orchestrator", "hint": "see /docs"}
 
 
-@router.get("/_health", tags=["meta"], name="health")
-def health() -> dict:
-    return {"ok": True, "time": datetime.utcnow().isoformat() + "Z"}
+@router.get("/_health", tags=["meta"])
+def health():
+    return {"ok": True}
 
 
-@router.get("/orchestrator/status", tags=["meta"], name="status")
-def status() -> dict:
+@router.get("/orchestrator/status", tags=["meta"])
+def status():
+    return {"ok": True, "ts": datetime.utcnow().isoformat() + "Z"}
+
+
+@router.get("/_meta/routes", tags=["meta"])
+def list_routes(request: Request):
+    routes = []
+    for r in request.app.routes:
+        try:
+            routes.append(
+                {
+                    "path": r.path,
+                    "methods": sorted(list(getattr(r, "methods", []) or [])),
+                    "name": getattr(r, "name", None),
+                    "tags": getattr(r, "tags", []),
+                }
+            )
+        except Exception:
+            pass
+    return {"count": len(routes), "routes": routes}
+
+
+@router.get("/readyz", tags=["meta"])
+def readyz():
+    # light provider surface check (env presence & import)
+    checks: Dict[str, Any] = {}
+    checks["router_loaded"] = True
     reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
-    return {
-        "ok": True,
-        "reports_dir": str(reports_dir),
-        "reports_dir_exists": reports_dir.exists(),
-    }
-
-
-@router.get("/readyz", tags=["meta"], name="readyz")
-def readyz() -> dict:
-    reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
-    providers, enabled, missing = _providers_status()
-    checks = {
-        "router_loaded": True,
-        "reports_dir": str(reports_dir),
-        "reports_dir_writable": True,
-        "providers": providers,
-        "sdk_openai": providers["openai"]["sdk"],
-        "sdk_gemini": providers["gemini"]["sdk"],
-        "sdk_grok_xai": providers["grok"]["sdk"],
-        "sdk_anthropic": providers["anthropic"]["sdk"],
-        "provider_env_missing": missing,
-        "providers_enabled": enabled,
-        "cfh_root": True,
-    }
+    checks["reports_dir"] = reports_dir.as_posix()
+    checks["reports_dir_writable"] = True
     try:
         reports_dir.mkdir(parents=True, exist_ok=True)
-        test = reports_dir / ".writable"
+        test = reports_dir / ".w"
         test.write_text("ok", encoding="utf-8")
         test.unlink(missing_ok=True)
     except Exception:
         checks["reports_dir_writable"] = False
 
-    return {"ok": checks["reports_dir_writable"], "checks": checks}
+    def _has_env(k: str) -> bool:
+        return bool(os.getenv(k))
 
+    providers = {
+        "openai": {"sdk": False, "key": _has_env("OPENAI_API_KEY"), "ok": False},
+        "gemini": {"sdk": False, "key": _has_env("GOOGLE_API_KEY") or _has_env("GEMINI_API_KEY"), "ok": False},
+        "grok":   {"sdk": False, "key": _has_env("XAI_API_KEY") or _has_env("GROK_API_KEY"), "ok": False},
+        "anthropic": {"sdk": False, "key": _has_env("ANTHROPIC_API_KEY"), "ok": False},
+    }
+    try:
+        import openai  # type: ignore
+        providers["openai"]["sdk"] = True
+    except Exception:
+        pass
+    try:
+        import google.generativeai as genai  # type: ignore
+        providers["gemini"]["sdk"] = True
+    except Exception:
+        pass
+    try:
+        import groq  # sometimes used for xAI/grok clients; tolerate absence
+        providers["grok"]["sdk"] = True
+    except Exception:
+        # we only check env for grok/xai in this light probe
+        pass
+    try:
+        import anthropic  # type: ignore
+        providers["anthropic"]["sdk"] = True
+    except Exception:
+        pass
 
-@router.get("/_meta/routes", tags=["meta"], name="list_routes")
-def list_routes(request: Request) -> dict:
-    routes = _list_routes_for_meta(request)
-    return {"count": len(routes), "routes": routes}
+    # minimal ok
+    for k, v in providers.items():
+        v["ok"] = bool(v["key"] and v["sdk"])
 
+    checks["providers"] = providers
+    checks["sdk_openai"] = providers["openai"]["sdk"]
+    checks["sdk_gemini"] = providers["gemini"]["sdk"]
+    checks["sdk_grok_xai"] = providers["grok"]["sdk"]
+    checks["sdk_anthropic"] = providers["anthropic"]["sdk"]
+    missing = [k for k, v in providers.items() if not v["key"]]
+    checks["provider_env_missing"] = [f"{m.upper()}_API_KEY" for m in missing]
+    checks["providers_enabled"] = [k for k, v in providers.items() if v["ok"]]
+    checks["cfh_root"] = True
+    return {"ok": True, "checks": checks}
 
-# =============================================================================
-# Reports Utilities
-# =============================================================================
 
 @router.get("/reports/latest", tags=["meta"], name="reports_latest")
-def reports_latest(label: Optional[str] = Query(None)) -> dict:
-    """
-    Return the latest *.summary.md path (optionally filtered by label subfolder),
-    plus a small preview snippet.
-    """
-    reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
-    p = _reports_latest_path(reports_dir, label)
-    if not p:
+def reports_latest(label: Optional[str] = None):
+    """Return the latest *.summary.md path (optionally within a label subfolder)."""
+    base = Path(os.getenv("REPORTS_DIR", "reports"))
+    if label:
+        base = base / label
+    if not base.exists():
         raise HTTPException(status_code=404, detail="Not Found")
-    try:
-        preview = "\n".join(p.read_text(encoding="utf-8", errors="ignore").splitlines()[:40])
-    except Exception:
-        preview = "(unavailable)"
+    latest: Optional[Path] = None
+    for p in base.rglob("*.summary.md"):
+        if (latest is None) or (p.stat().st_mtime > latest.stat().st_mtime):
+            latest = p
+    if not latest:
+        raise HTTPException(status_code=404, detail="Not Found")
+    preview = latest.read_text(encoding="utf-8", errors="ignore").splitlines()[:20]
     return {
         "ok": True,
-        "path": p.as_posix(),
-        "modified": datetime.fromtimestamp(p.stat().st_mtime).isoformat(),
-        "preview": preview,
+        "path": latest.as_posix(),
+        "modified": datetime.fromtimestamp(latest.stat().st_mtime).isoformat(),
+        "preview": "\n".join(preview),
         "label": label or "",
     }
 
 
-# =============================================================================
-# Core: Convert Tree (collect, summarize, and optionally generate batch .md)
-# =============================================================================
-
+# ------------------------------ convert entrypoint ----------------------------
 @router.post("/convert/tree", tags=["convert"], name="convert_tree")
 def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
     root = Path(req.root)
@@ -291,7 +225,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
     skipped: List[str] = []
     reviews: List[Dict[str, Any]] = []
 
-    # 0) collect filesystem items
+    # 1) Gather & filter
     if root.exists() and root.is_dir():
         all_items = list(root.rglob("*"))
         items: List[Path] = [p for p in all_items if not _is_noise(p)]
@@ -308,7 +242,6 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
             changed_rel = set(_git_changed_files(req.git_diff_base, cwd=Path.cwd()))
             if not changed_rel:
                 try:
-                    # optional fallback if present in reviewer.py
                     from app.ai.reviewer import get_changed_files  # type: ignore
                     changed_rel = set(get_changed_files(req.git_diff_base, cwd=Path.cwd()))
                 except Exception:
@@ -316,7 +249,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
             if changed_rel:
                 code_files = [p for p in code_files if _rel(p) in changed_rel]
 
-        # legacy per-file mini review to keep response shape stable
+        # legacy mini review (keep response stable; ignore if helper not present)
         cap = max(0, int(req.batch_cap))
         try:
             from app.ai.reviewer import review_file  # type: ignore
@@ -348,7 +281,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
                     }
                 )
 
-    # response scaffold
+    # 2) response scaffold
     resp: Dict[str, Any] = {
         "ok": True,
         "root": str(root),
@@ -361,7 +294,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
         "label": req.label or "",
     }
 
-    # persist JSON artifact
+    # 3) persist JSON
     reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
     reports_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -374,7 +307,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
     except Exception as e:
         resp["artifact_error"] = repr(e)
 
-    # markdown summary
+    # 4) summary markdown
     try:
         summary_path = out.with_suffix(".summary.md")
         lines: List[str] = []
@@ -386,9 +319,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
         if req.git_diff_base:
             lines.append(f"- Git diff base: `{req.git_diff_base}`")
         lines.append(f"- Reviews: `{resp['reviews_count']}`")
-        lines.append(
-            f"- Converted listed: `{len(resp['converted'])}`  • Skipped listed: `{len(resp['skipped'])}`\n"
-        )
+        lines.append(f"- Converted listed: `{len(resp['converted'])}`  • Skipped listed: `{len(resp['skipped'])}`\n")
 
         TOP = min(10, len(reviews))
         if TOP:
@@ -403,7 +334,6 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
                 else:
                     lines.append(f"- `{file}` (no suggestion)")
 
-        # optional: list changed files if we diff-filtered
         if req.git_diff_base:
             try:
                 changed_rel = _git_changed_files(req.git_diff_base, cwd=Path.cwd())
@@ -422,23 +352,20 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
     except Exception as e:
         resp["summary_error"] = repr(e)
 
-    # --- optional batch .md generation (Gemini/Grok/OpenAI) ------------------
-    # IMPORTANT: This block belongs OUTSIDE the summary try/except (right here).
+    # 5) optional batch .md generation (LLM + heuristic fallback)
     try:
         should_batch = (not req.dry_run) or bool(req.generate_mds) or bool(req.md_first)
         if should_batch:
-            # Prefer the real code_files set from above; fall back to 'converted'
+            # prefer actual code_files; fallback to converted
             try:
-                cand_paths = [p.as_posix() for p in code_files]  # from earlier in this function
+                cand_paths = [p.as_posix() for p in code_files]  # type: ignore[name-defined]
             except Exception:
                 cand_paths = [p for p in converted if p.endswith((".ts", ".tsx", ".js", ".jsx"))]
-
-            # Cap to batch_cap
             cand_paths = cand_paths[:max(1, int(req.batch_cap))]
 
-            # If no candidates, still emit a tiny fallback so CI has something to preview
             if not cand_paths:
-                batch_path = (out.parent / f"batch_review_{stamp}.md")
+                # tiny fallback so CI has something to preview
+                batch_path = (out_dir / f"batch_review_{stamp}.md")
                 batch_path.write_text(
                     "# Batch Review — (no candidates)\n\n"
                     f"_Root:_ `{resp['root']}`  • _Label:_ `{req.label or ''}`\n\n"
@@ -447,29 +374,27 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
                 )
                 resp["artifacts"] = {"mds": [], "batch_md": batch_path.as_posix()}
             else:
-                # Try LLM batch first (review_batch implemented in app.ai.reviewer)
                 batch: Dict[str, Any] = {}
                 try:
                     from app.ai.reviewer import review_batch  # type: ignore
-                except Exception as e:
+                except Exception:
                     review_batch = None  # type: ignore
-                    resp.setdefault("errors", []).append({"where": "batch_mds/import", "error": repr(e)})
 
                 if review_batch:
                     try:
+                        # IMPORTANT: avoid label duplication — we already use out_dir
                         batch = review_batch(
                             cand_paths,
                             tier=req.review_tier,
-                            label=req.label,
-                            reports_dir=out.parent,
+                            label=None,
+                            reports_dir=out_dir,
                         ) or {}
                     except Exception as e:
                         resp.setdefault("errors", []).append({"where": "batch_mds/run", "error": repr(e)})
 
-                # If LLM path didn’t produce a batch_md, write a heuristic fallback
                 batch_md = batch.get("batch_md")
                 if not batch_md:
-                    batch_path = (out.parent / f"batch_review_{stamp}.md")
+                    batch_path = (out_dir / f"batch_review_{stamp}.md")
                     lines = [
                         f"# Fallback Heuristic Batch Review — {req.review_tier}",
                         "",
@@ -480,9 +405,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
                         lines.append(f"### File: `{rel}`")
                         lines.append("")
                         lines.append("```")
-                        # best-effort preview head of file
-                        head_lines = _preview_text(rel, max_lines=40)
-                        lines.extend(head_lines)
+                        lines.extend(_preview_text(rel, max_lines=40))
                         lines.append("```")
                         lines.append("")
                     batch_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -491,9 +414,9 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
                 resp["artifacts"] = {
                     "mds": batch.get("per_file_mds", []),
                     "batch_md": batch_md,
+                    "deps": batch.get("dependencies", {}),
                 }
 
-            # If md_first was requested, tell the caller the next step is build_ts
             if req.md_first:
                 resp["next_step"] = "build_ts"
                 return resp
@@ -504,15 +427,10 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
     return resp
 
 
-# =============================================================================
-# Build from .md (optional follow-up step for PR22 flow)
-# =============================================================================
-
 @router.post("/build_ts", tags=["convert"], name="build_ts")
 def build_ts(req: BuildTsReq = Body(...)) -> dict:
     """
-    Consume previously generated per-file .mds and (optionally) write .tsx files to
-    suggested destinations. The actual builder lives in app.ai.reviewer.build_ts_from_md.
+    Consume previously generated per-file .mds and produce .tsx in suggested destinations.
     """
     out_paths: List[str] = []
     errors: List[dict] = []
@@ -535,5 +453,3 @@ def build_ts(req: BuildTsReq = Body(...)) -> dict:
         "errors": errors,
         "label": req.label or "",
     }
-
-# --- end of file -------------------------------------------------------------
