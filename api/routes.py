@@ -572,3 +572,43 @@ def convert_prep(req: ConvertPrepReq) -> dict:
     outs = _write_batches(rows, mod, batch_dir, chunk_size=30)
     return {"ok": True, "module": mod, "count": len(rows), "batches": [str(o) for o in outs]}
 # === END: /convert/prep ===
+# === BEGIN: /prune (pilot keep-all) ===
+from pydantic import BaseModel
+
+class PruneReq(BaseModel):
+    md_paths: list[str] = []
+    strategy: str = "keep_all"           # later: "gemini"
+    out_csv: str | None = None           # default: reports/prune/pruned_module_map.csv
+    reason: str | None = "pilot keep-all"
+
+@router.post("/prune", tags=["convert"], name="prune")
+def prune(req: PruneReq) -> dict:
+    """
+    Pilot prune: write CSV 'path,action,reason' marking each .md as keep.
+    Keeps your current flow; later we can swap strategy to LLM-backed consolidation.
+    """
+    from pathlib import Path
+    import os
+
+    reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
+    prune_dir = reports_dir / "prune"
+    prune_dir.mkdir(parents=True, exist_ok=True)
+    out_csv = Path(req.out_csv) if req.out_csv else (prune_dir / "pruned_module_map.csv")
+
+    paths: list[str] = []
+    for p in req.md_paths:
+        try:
+            pp = Path(p)
+            if pp.exists() and pp.is_file():
+                paths.append(str(pp.resolve()))
+        except Exception:
+            continue
+    paths = sorted(set(paths))
+
+    with out_csv.open("w", encoding="utf-8", newline="") as f:
+        f.write("path,action,reason`n")
+        for p in paths:
+            f.write('"' + p + '",keep,"' + (req.reason or "pilot keep-all") + '"`n')
+
+    return {"ok": True, "strategy": req.strategy, "count": len(paths), "csv": out_csv.as_posix()}
+# === END: /prune ===
