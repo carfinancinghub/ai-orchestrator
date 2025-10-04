@@ -134,4 +134,32 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
     except Exception as e:
         resp["artifact_error"] = repr(e)
 
+    # --- NEW: write a concise Markdown summary (commit-friendly) ---
+    try:
+        summary_path = reports_dir / f"convert_dryrun_{stamp}.summary.md"
+        lines: List[str] = []
+        lines.append(f"# Convert Dry-Run Summary — {stamp}\n")
+        lines.append(f"- Root: `{resp['root']}`")
+        lines.append(f"- Dry run: `{resp['dry_run']}`")
+        lines.append(f"- Reviews: `{resp['reviews_count']}`")
+        lines.append(f"- Converted listed: `{len(resp['converted'])}`  • Skipped listed: `{len(resp['skipped'])}`\n")
+
+        TOP = min(10, len(reviews))
+        if TOP:
+            lines.append("## Top Reviewed Files\n")
+            for r in reviews[:TOP]:
+                file = r.get("file", "")
+                moves = r.get("routing", {}).get("suggested_moves", [])
+                if moves:
+                    dest = moves[0].get("dest", "")
+                    conf = moves[0].get("confidence", "")
+                    lines.append(f"- `{file}` → `{dest}` (conf: {conf})")
+                else:
+                    lines.append(f"- `{file}` (no suggestion)")
+
+        summary_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        resp["summary"] = str(summary_path)
+    except Exception as e:
+        resp["summary_error"] = repr(e)
+
     return resp
