@@ -1,0 +1,950 @@
+[
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\admin",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/admin/AdminAuctionOverview.jsx",
+      "C:/CFH/frontend/src/components/admin/AdminAuctionOverview.tsx",
+      "C:/CFH/frontend/src/components/admin/AdminCustomWidgetLibrary.jsx",
+      "C:/CFH/frontend/src/components/admin/AdminCustomWidgetLibrary.tsx",
+      "C:/CFH/frontend/src/components/admin/desktop.ini",
+      "C:/CFH/frontend/src/components/admin/LiveDashboardHealthWidget.jsx",
+      "C:/CFH/frontend/src/components/admin/LiveDashboardHealthWidget.tsx",
+      "C:/CFH/frontend/src/components/admin/analytics/AdminEngagementAnalytics.jsx",
+      "C:/CFH/frontend/src/components/admin/analytics/AdminRoleAnalytics.jsx",
+      "C:/CFH/frontend/src/components/admin/analytics/desktop.ini",
+      "C:/CFH/frontend/src/components/admin/arbitration/AdminArbitrationDashboard.css",
+      "C:/CFH/frontend/src/components/admin/arbitration/AdminArbitrationDashboard.jsx",
+      "C:/CFH/frontend/src/components/admin/arbitration/desktop.ini",
+      "C:/CFH/frontend/src/components/admin/auction/AdminAuctionOverview.jsx",
+      "C:/CFH/frontend/src/components/admin/auction/desktop.ini",
+      "C:/CFH/frontend/src/components/admin/badges/AdminBadgeAuditLog.css",
+      "C:/CFH/frontend/src/components/admin/badges/AdminBadgeAuditLog.jsx",
+      "C:/CFH/frontend/src/components/admin/badges/desktop.ini",
+      "C:/CFH/frontend/src/components/admin/compliance/AdminComplianceDashboard.jsx",
+      "C:/CFH/frontend/src/components/admin/compliance/desktop.ini",
+      "C:/CFH/frontend/src/components/admin/contract/AdminContractTemplates.jsx",
+      "C:/CFH/frontend/src/components/admin/contract/desktop.ini",
+      "C:/CFH/frontend/src/components/admin/dashboard/AdminDashboard.jsx",
+      "C:/CFH/frontend/src/components/admin/dashboard/AdminKPIWidget.jsx",
+      "C:/CFH/frontend/src/components/admin/dashboard/AdminSummaryPanel.jsx",
+      "C:/CFH/frontend/src/components/admin/dashboard/desktop.ini",
+      "C:/CFH/frontend/src/components/admin/disputes/AdminDisputeAnalytics.jsx"
+    ],
+    "skipped": [
+      "C:/CFH/frontend/src/components/admin/analytics",
+      "C:/CFH/frontend/src/components/admin/arbitration",
+      "C:/CFH/frontend/src/components/admin/auction",
+      "C:/CFH/frontend/src/components/admin/badges",
+      "C:/CFH/frontend/src/components/admin/compliance",
+      "C:/CFH/frontend/src/components/admin/contract",
+      "C:/CFH/frontend/src/components/admin/dashboard",
+      "C:/CFH/frontend/src/components/admin/disputes",
+      "C:/CFH/frontend/src/components/admin/escrow",
+      "C:/CFH/frontend/src/components/admin/export",
+      "C:/CFH/frontend/src/components/admin/finance",
+      "C:/CFH/frontend/src/components/admin/health",
+      "C:/CFH/frontend/src/components/admin/insights",
+      "C:/CFH/frontend/src/components/admin/layout",
+      "C:/CFH/frontend/src/components/admin/leaderboard",
+      "C:/CFH/frontend/src/components/admin/logins",
+      "C:/CFH/frontend/src/components/admin/loyalty",
+      "C:/CFH/frontend/src/components/admin/moderation",
+      "C:/CFH/frontend/src/components/admin/notifications",
+      "C:/CFH/frontend/src/components/admin/payments",
+      "C:/CFH/frontend/src/components/admin/reports",
+      "C:/CFH/frontend/src/components/admin/support",
+      "C:/CFH/frontend/src/components/admin/users"
+    ]
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\ai",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/ai/AIBadgeOverlay.js",
+      "C:/CFH/frontend/src/components/ai/AIBadgeOverlay.ts",
+      "C:/CFH/frontend/src/components/ai/AIPredictorDashboard.jsx",
+      "C:/CFH/frontend/src/components/ai/AIPredictorDashboard.tsx",
+      "C:/CFH/frontend/src/components/ai/AIScorePanel.js",
+      "C:/CFH/frontend/src/components/ai/AIScorePanel.ts",
+      "C:/CFH/frontend/src/components/ai/BidConfidenceMeter.jsx",
+      "C:/CFH/frontend/src/components/ai/BidConfidenceMeter.tsx",
+      "C:/CFH/frontend/src/components/ai/BidStrategyAdvisor.jsx",
+      "C:/CFH/frontend/src/components/ai/BidStrategyAdvisor.tsx",
+      "C:/CFH/frontend/src/components/ai/desktop.ini",
+      "C:/CFH/frontend/src/components/ai/PredictiveComparison.jsx",
+      "C:/CFH/frontend/src/components/ai/PredictiveComparison.tsx",
+      "C:/CFH/frontend/src/components/ai/SmartInsightsWidget.js",
+      "C:/CFH/frontend/src/components/ai/SmartInsightsWidget.jsx",
+      "C:/CFH/frontend/src/components/ai/SmartInsightsWidget.ts",
+      "C:/CFH/frontend/src/components/ai/SmartInsightsWidget.tsx",
+      "C:/CFH/frontend/src/components/ai/TrustScoreViewer.jsx",
+      "C:/CFH/frontend/src/components/ai/TrustScoreViewer.tsx",
+      "C:/CFH/frontend/src/components/ai/ValuationAssistant.jsx",
+      "C:/CFH/frontend/src/components/ai/ValuationAssistant.tsx",
+      "C:/CFH/frontend/src/components/ai/ValuationLiveFeed.jsx",
+      "C:/CFH/frontend/src/components/ai/ValuationLiveFeed.tsx",
+      "C:/CFH/frontend/src/components/ai/bidding/CompetitiveBiddingInterface.jsx",
+      "C:/CFH/frontend/src/components/ai/bidding/desktop.ini"
+    ],
+    "skipped": [
+      "C:/CFH/frontend/src/components/ai/bidding"
+    ]
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\analytics",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/analytics/AnalyticsDashboard.tsx",
+      "C:/CFH/frontend/src/components/analytics/BIIntegrationPanel.tsx",
+      "C:/CFH/frontend/src/components/analytics/ChartWidget.tsx",
+      "C:/CFH/frontend/src/components/analytics/DataTable.tsx",
+      "C:/CFH/frontend/src/components/analytics/desktop.ini",
+      "C:/CFH/frontend/src/components/analytics/FilterPanel.tsx",
+      "C:/CFH/frontend/src/components/analytics/NLPQueryInput.tsx",
+      "C:/CFH/frontend/src/components/analytics/PredictiveGraph.tsx",
+      "C:/CFH/frontend/src/components/analytics/QualityCheckComponent.tsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\arbitrator",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/arbitrator/ArbitratorAnalyticsPanel.jsx",
+      "C:/CFH/frontend/src/components/arbitrator/ArbitratorAnalyticsPanel.tsx",
+      "C:/CFH/frontend/src/components/arbitrator/ArbitratorDashboard.jsx",
+      "C:/CFH/frontend/src/components/arbitrator/ArbitratorDashboard.tsx",
+      "C:/CFH/frontend/src/components/arbitrator/desktop.ini"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\auction",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/auction/AuctionAccessibilityWrapper.jsx",
+      "C:/CFH/frontend/src/components/auction/AuctionAccessibilityWrapper.tsx",
+      "C:/CFH/frontend/src/components/auction/AuctionIntelligenceDashboard.jsx",
+      "C:/CFH/frontend/src/components/auction/AuctionIntelligenceDashboard.tsx",
+      "C:/CFH/frontend/src/components/auction/AuctionItemListing.tsx",
+      "C:/CFH/frontend/src/components/auction/AuctionLiveBidTracker.jsx",
+      "C:/CFH/frontend/src/components/auction/AuctionLiveBidTracker.tsx",
+      "C:/CFH/frontend/src/components/auction/AuctionManagement.tsx",
+      "C:/CFH/frontend/src/components/auction/AuctionPremiumInsightsPanel.jsx",
+      "C:/CFH/frontend/src/components/auction/AuctionPremiumInsightsPanel.tsx",
+      "C:/CFH/frontend/src/components/auction/AuctionSEOHead.jsx",
+      "C:/CFH/frontend/src/components/auction/AuctionSEOHead.tsx",
+      "C:/CFH/frontend/src/components/auction/desktop.ini",
+      "C:/CFH/frontend/src/components/auction/LiveAuctionStream.tsx",
+      "C:/CFH/frontend/src/components/auction/SellerBadgePanel.jsx",
+      "C:/CFH/frontend/src/components/auction/SellerBadgePanel.tsx",
+      "C:/CFH/frontend/src/components/auction/core/6 File.txt",
+      "C:/CFH/frontend/src/components/auction/core/AuctionHistoryTracker.jsx",
+      "C:/CFH/frontend/src/components/auction/core/AuctionListingForm.jsx",
+      "C:/CFH/frontend/src/components/auction/core/desktop.ini",
+      "C:/CFH/frontend/src/components/auction/core/here are the 10 files just was made.txt"
+    ],
+    "skipped": [
+      "C:/CFH/frontend/src/components/auction/core"
+    ]
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\auth",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/auth/desktop.ini",
+      "C:/CFH/frontend/src/components/auth/Login.jsx",
+      "C:/CFH/frontend/src/components/auth/Login.tsx",
+      "C:/CFH/frontend/src/components/auth/LoginForm.jsx",
+      "C:/CFH/frontend/src/components/auth/LoginForm.tsx",
+      "C:/CFH/frontend/src/components/auth/ProtectedRoute.js",
+      "C:/CFH/frontend/src/components/auth/ProtectedRoute.ts",
+      "C:/CFH/frontend/src/components/auth/Register.jsx",
+      "C:/CFH/frontend/src/components/auth/Register.tsx",
+      "C:/CFH/frontend/src/components/auth/Unauthorized.jsx",
+      "C:/CFH/frontend/src/components/auth/Unauthorized.tsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\blockchain",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/blockchain/CryptoPaymentOption.jsx",
+      "C:/CFH/frontend/src/components/blockchain/CryptoPaymentOption.tsx",
+      "C:/CFH/frontend/src/components/blockchain/desktop.ini"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\body-shop",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/body-shop/AIDamageSummary.tsx",
+      "C:/CFH/frontend/src/components/body-shop/BodyShopDiscoveryPage.tsx",
+      "C:/CFH/frontend/src/components/body-shop/BodyShopProfileView.tsx",
+      "C:/CFH/frontend/src/components/body-shop/CompareShopsTable.tsx",
+      "C:/CFH/frontend/src/components/body-shop/desktop.ini",
+      "C:/CFH/frontend/src/components/body-shop/EstimateRequestForm.tsx",
+      "C:/CFH/frontend/src/components/body-shop/JobTrackingView.tsx",
+      "C:/CFH/frontend/src/components/body-shop/RepairJourneyShare.tsx",
+      "C:/CFH/frontend/src/components/body-shop/ShopOwnerDashboard.tsx",
+      "C:/CFH/frontend/src/components/body-shop/VirtualShopTour360.tsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\buyer",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/buyer/AdminSmartAlertEngine.jsx",
+      "C:/CFH/frontend/src/components/buyer/AdminSmartAlertEngine.tsx",
+      "C:/CFH/frontend/src/components/buyer/ARCarPreview.jsx",
+      "C:/CFH/frontend/src/components/buyer/ARCarPreview.tsx",
+      "C:/CFH/frontend/src/components/buyer/AuctionResultsViewer.jsx",
+      "C:/CFH/frontend/src/components/buyer/AuctionResultsViewer.tsx",
+      "C:/CFH/frontend/src/components/buyer/BidAssistantSimulator.jsx",
+      "C:/CFH/frontend/src/components/buyer/BidAssistantSimulator.tsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerAISuggestionEngine.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerAISuggestionEngine.tsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerAnalyticsDashboard.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerAnalyticsDashboard.tsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerAuctionHistory.js",
+      "C:/CFH/frontend/src/components/buyer/BuyerAuctionHistory.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerAuctionHistory.ts",
+      "C:/CFH/frontend/src/components/buyer/BuyerAuctionHistory.tsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerBehaviorTracker.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerBehaviorTracker.tsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerBidHistory.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerBidHistory.tsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerBidModal.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerBidModal.tsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerCarCompare.css",
+      "C:/CFH/frontend/src/components/buyer/BuyerCarCompare.js",
+      "C:/CFH/frontend/src/components/buyer/BuyerCarCompare.ts",
+      "C:/CFH/frontend/src/components/buyer/BuyerCommunityForum.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerCommunityForum.tsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerContractPreviewer.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerContractPreviewer.tsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerDashboard.css",
+      "C:/CFH/frontend/src/components/buyer/BuyerDashboard.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerDeliveryConfirmation.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerEmailSettings.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerEscrowStatus.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerFinancingModal.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerInspectionStatus.js",
+      "C:/CFH/frontend/src/components/buyer/BuyerLenderResults.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerLoyaltyDashboard.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerNotificationCenter.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerOnboardingGuide.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerPreferencesForm.css",
+      "C:/CFH/frontend/src/components/buyer/BuyerPreferencesForm.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerProgressBar.jsx",
+      "C:/CFH/frontend/src/components/buyer/BuyerSearchPreferences.jsx",
+      "C:/CFH/frontend/src/components/buyer/desktop.ini",
+      "C:/CFH/frontend/src/components/buyer/FinancingOffer.js",
+      "C:/CFH/frontend/src/components/buyer/FinancingOptionsChart.jsx",
+      "C:/CFH/frontend/src/components/buyer/ai/AIPredictorDashboard.jsx",
+      "C:/CFH/frontend/src/components/buyer/ai/desktop.ini"
+    ],
+    "skipped": [
+      "C:/CFH/frontend/src/components/buyer/ai"
+    ]
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\chat",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/chat/AuditTrail.jsx",
+      "C:/CFH/frontend/src/components/chat/ChatInterface.jsx",
+      "C:/CFH/frontend/src/components/chat/CollaborationChat.jsx",
+      "C:/CFH/frontend/src/components/chat/desktop.ini",
+      "C:/CFH/frontend/src/components/chat/MessageBubble.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\common",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/common/BlockchainSnapshotViewer.jsx",
+      "C:/CFH/frontend/src/components/common/Button.jsx",
+      "C:/CFH/frontend/src/components/common/Card.jsx",
+      "C:/CFH/frontend/src/components/common/ChatAttachmentPreviewer.jsx",
+      "C:/CFH/frontend/src/components/common/ChatAttachmentUploader.jsx",
+      "C:/CFH/frontend/src/components/common/CurrencyConverterWidget.jsx",
+      "C:/CFH/frontend/src/components/common/desktop.ini",
+      "C:/CFH/frontend/src/components/common/DocumentUploader.jsx",
+      "C:/CFH/frontend/src/components/common/ErrorBoundary.jsx",
+      "C:/CFH/frontend/src/components/common/ErrorBoundary.tsx",
+      "C:/CFH/frontend/src/components/common/FeedbackForm.jsx",
+      "C:/CFH/frontend/src/components/common/HeatmapChart.jsx",
+      "C:/CFH/frontend/src/components/common/ImageUploader.jsx",
+      "C:/CFH/frontend/src/components/common/Input.jsx",
+      "C:/CFH/frontend/src/components/common/LanguageSelector.jsx",
+      "C:/CFH/frontend/src/components/common/LoadingSpinner.jsx",
+      "C:/CFH/frontend/src/components/common/Messaging.jsx",
+      "C:/CFH/frontend/src/components/common/MobileUXEnhancer.jsx",
+      "C:/CFH/frontend/src/components/common/MultiLanguageSupport.jsx",
+      "C:/CFH/frontend/src/components/common/Navbar.css",
+      "C:/CFH/frontend/src/components/common/Navbar.jsx",
+      "C:/CFH/frontend/src/components/common/NavbarMobileToggle.jsx",
+      "C:/CFH/frontend/src/components/common/NotificationPreferences.jsx",
+      "C:/CFH/frontend/src/components/common/PDFPreviewModal.jsx",
+      "C:/CFH/frontend/src/components/common/PhotoProofUpload.jsx",
+      "C:/CFH/frontend/src/components/common/PredictiveGraph.jsx",
+      "C:/CFH/frontend/src/components/common/PremiumFeature.jsx",
+      "C:/CFH/frontend/src/components/common/ProtectedRoute.jsx",
+      "C:/CFH/frontend/src/components/common/SEOHead.jsx",
+      "C:/CFH/frontend/src/components/common/ToastManager.jsx",
+      "C:/CFH/frontend/src/components/common/ToastWrapper.jsx",
+      "C:/CFH/frontend/src/components/common/TrustAndAIExplainer.jsx",
+      "C:/CFH/frontend/src/components/common/UnifiedNotificationCenter.jsx",
+      "C:/CFH/frontend/src/components/common/UnreadNotificationBadge.jsx",
+      "C:/CFH/frontend/src/components/common/UserTrustBadges.jsx",
+      "C:/CFH/frontend/src/components/common/ValuationDisplay.jsx",
+      "C:/CFH/frontend/src/components/common/ValuationDisplay.tsx",
+      "C:/CFH/frontend/src/components/common/compliance/ComplianceConsentForm.jsx",
+      "C:/CFH/frontend/src/components/common/compliance/desktop.ini",
+      "C:/CFH/frontend/src/components/common/security/desktop.ini",
+      "C:/CFH/frontend/src/components/common/security/UserSecuritySettings.jsx"
+    ],
+    "skipped": [
+      "C:/CFH/frontend/src/components/common/compliance",
+      "C:/CFH/frontend/src/components/common/security"
+    ]
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\community",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/community/CommunityForum.jsx",
+      "C:/CFH/frontend/src/components/community/CommunityLeaderboard.jsx",
+      "C:/CFH/frontend/src/components/community/desktop.ini"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\contract",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/contract/ContractPDFViewer.jsx",
+      "C:/CFH/frontend/src/components/contract/ContractSignaturePad.jsx",
+      "C:/CFH/frontend/src/components/contract/ContractSummary.jsx",
+      "C:/CFH/frontend/src/components/contract/ContractViewer.jsx",
+      "C:/CFH/frontend/src/components/contract/desktop.ini"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\disputes",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/disputes/desktop.ini",
+      "C:/CFH/frontend/src/components/disputes/DisputeAnalytics.jsx",
+      "C:/CFH/frontend/src/components/disputes/DisputeSimulator.jsx",
+      "C:/CFH/frontend/src/components/disputes/DisputeTimelineViewer.js",
+      "C:/CFH/frontend/src/components/disputes/DownloadCaseBundleButton.js",
+      "C:/CFH/frontend/src/components/disputes/DownloadDisputePDFButton.js",
+      "C:/CFH/frontend/src/components/disputes/JudgeBadgeRenderer.js",
+      "C:/CFH/frontend/src/components/disputes/JudgeLeaderboard.js",
+      "C:/CFH/frontend/src/components/disputes/New folder/desktop.ini",
+      "C:/CFH/frontend/src/components/disputes/styles/desktop.ini"
+    ],
+    "skipped": [
+      "C:/CFH/frontend/src/components/disputes/New folder",
+      "C:/CFH/frontend/src/components/disputes/styles"
+    ]
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\equity-hub",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/equity-hub/desktop.ini",
+      "C:/CFH/frontend/src/components/equity-hub/EquityIntelligenceHub.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\escrow",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/escrow/desktop.ini",
+      "C:/CFH/frontend/src/components/escrow/EscrowAuditLogViewer.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowConditionChecklist.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowDashboard.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowDocumentGallery.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowDocumentUploader.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowInfoPanel.js",
+      "C:/CFH/frontend/src/components/escrow/EscrowOfficerDashboard.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowOfficerHook.js",
+      "C:/CFH/frontend/src/components/escrow/EscrowOfficerPremiumPanel.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowPaymentManager.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowPaymentManagerNeedsChecking.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowRoleGuard.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowSEOHead.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowStatusNotifier.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowStatusTracker.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowStatusViewer.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowSyncAdminPanel.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowTransaction.tsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowTransactionDetailModal.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowTransactionPDFExporter.js",
+      "C:/CFH/frontend/src/components/escrow/EscrowTransactionSearch.jsx",
+      "C:/CFH/frontend/src/components/escrow/EscrowUserAnalyticsPanel.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\finance",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/finance/desktop.ini",
+      "C:/CFH/frontend/src/components/finance/FinanceRiskAssessment.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\gamification",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/gamification/AchievementPopup.jsx",
+      "C:/CFH/frontend/src/components/gamification/BadgeStorefront.jsx",
+      "C:/CFH/frontend/src/components/gamification/desktop.ini",
+      "C:/CFH/frontend/src/components/gamification/LeaderboardWidget.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\guest",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/guest/desktop.ini",
+      "C:/CFH/frontend/src/components/guest/GuestDashboard.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\hauler",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/hauler/BookingModal.jsx",
+      "C:/CFH/frontend/src/components/hauler/BookingModal.tsx",
+      "C:/CFH/frontend/src/components/hauler/CarTransportCoordination.jsx",
+      "C:/CFH/frontend/src/components/hauler/desktop.ini",
+      "C:/CFH/frontend/src/components/hauler/GeoStatusPanel.js",
+      "C:/CFH/frontend/src/components/hauler/HaulerAuctionDelivery.jsx",
+      "C:/CFH/frontend/src/components/hauler/HaulerCommunityBoard.jsx",
+      "C:/CFH/frontend/src/components/hauler/HaulerDashboard.css",
+      "C:/CFH/frontend/src/components/hauler/HaulerJobUploadForm.js",
+      "C:/CFH/frontend/src/components/hauler/HaulerLoyaltyDashboard.jsx",
+      "C:/CFH/frontend/src/components/hauler/HaulerReputationTracker.js",
+      "C:/CFH/frontend/src/components/hauler/hauler_job_details_page.tsx",
+      "C:/CFH/frontend/src/components/hauler/MissionCompletionLeaderboard.jsx",
+      "C:/CFH/frontend/src/components/hauler/PhotoEvidenceViewer.js",
+      "C:/CFH/frontend/src/components/hauler/RouteRiskAnalysis.jsx",
+      "C:/CFH/frontend/src/components/hauler/TransporterJobStatus.js",
+      "C:/CFH/frontend/src/components/hauler/TransporterLiveTracking.js",
+      "C:/CFH/frontend/src/components/hauler/__tests__/desktop.ini",
+      "C:/CFH/frontend/src/components/hauler/__tests__/hauler_job_details_page_test.ts",
+      "C:/CFH/frontend/src/components/hauler/__tests__/user_profile_routes_test.ts"
+    ],
+    "skipped": [
+      "C:/CFH/frontend/src/components/hauler/__tests__"
+    ]
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\inspections",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/inspections/desktop.ini",
+      "C:/CFH/frontend/src/components/inspections/InspectionIndexPage.js",
+      "C:/CFH/frontend/src/components/inspections/InspectionReportList.js",
+      "C:/CFH/frontend/src/components/inspections/InspectionReportViewerPage.js",
+      "C:/CFH/frontend/src/components/inspections/InspectionSearchBar.js",
+      "C:/CFH/frontend/src/components/inspections/PhotoUpload.tsx",
+      "C:/CFH/frontend/src/components/inspections/VRInspection.js"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\insurance",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/insurance/ClaimsProcessor.jsx",
+      "C:/CFH/frontend/src/components/insurance/desktop.ini",
+      "C:/CFH/frontend/src/components/insurance/InsuranceAIModelPerformance.jsx",
+      "C:/CFH/frontend/src/components/insurance/InsuranceClaimsAnalytics.jsx",
+      "C:/CFH/frontend/src/components/insurance/InsuranceClaimsProcessor.jsx",
+      "C:/CFH/frontend/src/components/insurance/InsuranceComparison.js",
+      "C:/CFH/frontend/src/components/insurance/InsuranceDashboard.js",
+      "C:/CFH/frontend/src/components/insurance/InsuranceOfficerDashboard.jsx",
+      "C:/CFH/frontend/src/components/insurance/InsurancePolicyManager.jsx",
+      "C:/CFH/frontend/src/components/insurance/InsuranceRoleGuard.jsx",
+      "C:/CFH/frontend/src/components/insurance/InsuranceSEOHead.jsx",
+      "C:/CFH/frontend/src/components/insurance/InsuranceUnderwritingChecklist.jsx",
+      "C:/CFH/frontend/src/components/insurance/InsurerInsightsChart.jsx",
+      "C:/CFH/frontend/src/components/insurance/PolicyReviewQueue.js",
+      "C:/CFH/frontend/src/components/insurance/QuoteSubmissionForm.js"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\internal",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/internal/desktop.ini",
+      "C:/CFH/frontend/src/components/internal/TestRunnerDashboard.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\judge",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/judge/ArbitrationDashboard.js",
+      "C:/CFH/frontend/src/components/judge/desktop.ini",
+      "C:/CFH/frontend/src/components/judge/DisputeAnalyticsPanel.jsx",
+      "C:/CFH/frontend/src/components/judge/JudgeDashboard.js",
+      "C:/CFH/frontend/src/components/judge/JudgePanelControls.jsx",
+      "C:/CFH/frontend/src/components/judge/SmartVerdictHint.jsx",
+      "C:/CFH/frontend/src/components/judge/components/desktop.ini",
+      "C:/CFH/frontend/src/components/judge/components/DisputeCard.js"
+    ],
+    "skipped": [
+      "C:/CFH/frontend/src/components/judge/components"
+    ]
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\lender",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/lender/BidDetailViewer.js",
+      "C:/CFH/frontend/src/components/lender/contractReviewController.js",
+      "C:/CFH/frontend/src/components/lender/desktop.ini",
+      "C:/CFH/frontend/src/components/lender/FinancingOffer.js",
+      "C:/CFH/frontend/src/components/lender/LenderAnalyticsDashboard.js",
+      "C:/CFH/frontend/src/components/lender/LenderBidDetailCard.js",
+      "C:/CFH/frontend/src/components/lender/LenderBiddingDashboard.css",
+      "C:/CFH/frontend/src/components/lender/LenderBiddingDashboard.js",
+      "C:/CFH/frontend/src/components/lender/LenderContractReview.js",
+      "C:/CFH/frontend/src/components/lender/LenderContractSummary.js",
+      "C:/CFH/frontend/src/components/lender/LenderDashboard.js",
+      "C:/CFH/frontend/src/components/lender/LenderDashboard.jsx",
+      "C:/CFH/frontend/src/components/lender/LenderExportCenter.js",
+      "C:/CFH/frontend/src/components/lender/LenderExportPanel.js",
+      "C:/CFH/frontend/src/components/lender/LenderExportPanel.jsx",
+      "C:/CFH/frontend/src/components/lender/LenderInsightsPanel.js",
+      "C:/CFH/frontend/src/components/lender/LenderLoyaltyDashboard.jsx",
+      "C:/CFH/frontend/src/components/lender/LenderMatchListView.js",
+      "C:/CFH/frontend/src/components/lender/LenderMatchPreviewCard.js",
+      "C:/CFH/frontend/src/components/lender/LenderOnboardingForm.js",
+      "C:/CFH/frontend/src/components/lender/LenderPreApprovalDashboard.js",
+      "C:/CFH/frontend/src/components/lender/LenderProfilePage.js",
+      "C:/CFH/frontend/src/components/lender/lenderReputationController.js",
+      "C:/CFH/frontend/src/components/lender/LenderReputationSummary.js",
+      "C:/CFH/frontend/src/components/lender/LenderReputationTracker.js",
+      "C:/CFH/frontend/src/components/lender/LenderReviewDashboard.js",
+      "C:/CFH/frontend/src/components/lender/LenderTermsHistoryViewer.jsx",
+      "C:/CFH/frontend/src/components/lender/LoanComparison.css",
+      "C:/CFH/frontend/src/components/lender/LoanComparison.js"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\maas",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/maas/BulkTitleTransfer.jsx",
+      "C:/CFH/frontend/src/components/maas/desktop.ini",
+      "C:/CFH/frontend/src/components/maas/MaaSIntegration.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\marketplace",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/marketplace/ActivityOverview.jsx",
+      "C:/CFH/frontend/src/components/marketplace/BadgeDisplayPanel.jsx",
+      "C:/CFH/frontend/src/components/marketplace/BestFinancingDealCard.jsx",
+      "C:/CFH/frontend/src/components/marketplace/desktop.ini",
+      "C:/CFH/frontend/src/components/marketplace/HaulerSummaryCard.jsx",
+      "C:/CFH/frontend/src/components/marketplace/MarketplaceComponent.tsx",
+      "C:/CFH/frontend/src/components/marketplace/MarketplaceInsightsDashboard.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\mechanic",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/mechanic/AIDiagnosticsAssistant.jsx",
+      "C:/CFH/frontend/src/components/mechanic/desktop.ini",
+      "C:/CFH/frontend/src/components/mechanic/EscrowStatusSync.jsx",
+      "C:/CFH/frontend/src/components/mechanic/HaulerCollaboration.jsx",
+      "C:/CFH/frontend/src/components/mechanic/InspectionForm.js",
+      "C:/CFH/frontend/src/components/mechanic/InspectionPhotoPreviewer.jsx",
+      "C:/CFH/frontend/src/components/mechanic/InspectionReportPanel.jsx",
+      "C:/CFH/frontend/src/components/mechanic/InspectionReportViewer.js",
+      "C:/CFH/frontend/src/components/mechanic/LiveInspectionTaskFeed.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicBadgeConfettiPanel.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicBadgeDisplayPanel.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicBadgeImpactTracker.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicBadgeLeaderboard.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicBadgeProgressTracker.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicDashboard.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicInspectionDetail.js",
+      "C:/CFH/frontend/src/components/mechanic/MechanicInspectionForm.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicJobStatusBadge.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicMilestoneTracker.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicProgressReviewBoard.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicRepairHistoryTimeline.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicReportDashboard.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicReviewPanel.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicRewardConfetti.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicShiftPlanner.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicTaskHistoryTable.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicTaskOutcomeReporter.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicTaskReporter.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicTimelineCelebration.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicVRPhotoUploader.jsx",
+      "C:/CFH/frontend/src/components/mechanic/MechanicVRPreviewViewer.jsx",
+      "C:/CFH/frontend/src/components/mechanic/PremiumBadgeHintCard.jsx",
+      "C:/CFH/frontend/src/components/mechanic/RepairScheduler.jsx",
+      "C:/CFH/frontend/src/components/mechanic/SharedReportViewer.jsx",
+      "C:/CFH/frontend/src/components/mechanic/TaskCompletionButton.jsx",
+      "C:/CFH/frontend/src/components/mechanic/VehicleHealthTrendCharts.jsx",
+      "C:/CFH/frontend/src/components/mechanic/VehicleInspectionModule.jsx",
+      "C:/CFH/frontend/src/components/mechanic/VINDecoder.jsx",
+      "C:/CFH/frontend/src/components/mechanic/VRInspectionViewer.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\mobile",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/mobile/desktop.ini",
+      "C:/CFH/frontend/src/components/mobile/MobileAnalytics.jsx",
+      "C:/CFH/frontend/src/components/mobile/MobileAuctionView.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\mock",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/mock/desktop.ini",
+      "C:/CFH/frontend/src/components/mock/MockComponent.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\needsHome",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/needsHome/ARExperience.js",
+      "C:/CFH/frontend/src/components/needsHome/AutomationAgent.js",
+      "C:/CFH/frontend/src/components/needsHome/BadgeDisplay.js",
+      "C:/CFH/frontend/src/components/needsHome/BulkUpload.css",
+      "C:/CFH/frontend/src/components/needsHome/BulkUpload.js",
+      "C:/CFH/frontend/src/components/needsHome/Button.js",
+      "C:/CFH/frontend/src/components/needsHome/CommunityDashboard.css",
+      "C:/CFH/frontend/src/components/needsHome/CommunityDashboard.js",
+      "C:/CFH/frontend/src/components/needsHome/CommunityHub.js",
+      "C:/CFH/frontend/src/components/needsHome/CommunityHubEnhanced.js",
+      "C:/CFH/frontend/src/components/needsHome/CommunityModeratorDashboard.js",
+      "C:/CFH/frontend/src/components/needsHome/ComplianceReviewerDashboard.js",
+      "C:/CFH/frontend/src/components/needsHome/CrossBorderFinancing.js",
+      "C:/CFH/frontend/src/components/needsHome/desktop.ini",
+      "C:/CFH/frontend/src/components/needsHome/DynamicPricing.js",
+      "C:/CFH/frontend/src/components/needsHome/FinancingCalculator.css",
+      "C:/CFH/frontend/src/components/needsHome/FinancingCalculator.js",
+      "C:/CFH/frontend/src/components/needsHome/Forum.css",
+      "C:/CFH/frontend/src/components/needsHome/FraudDetection.js",
+      "C:/CFH/frontend/src/components/needsHome/integrationReportValidation.js",
+      "C:/CFH/frontend/src/components/needsHome/Leaderboard.css",
+      "C:/CFH/frontend/src/components/needsHome/Leaderboard.js",
+      "C:/CFH/frontend/src/components/needsHome/LeaveReview.css",
+      "C:/CFH/frontend/src/components/needsHome/LeaveReview.js",
+      "C:/CFH/frontend/src/components/needsHome/LoadingSpinner.js",
+      "C:/CFH/frontend/src/components/needsHome/LoanComparison.js",
+      "C:/CFH/frontend/src/components/needsHome/LoyaltyQuests.js",
+      "C:/CFH/frontend/src/components/needsHome/MarketplaceInsights.js",
+      "C:/CFH/frontend/src/components/needsHome/Messaging.css",
+      "C:/CFH/frontend/src/components/needsHome/Messaging.js",
+      "C:/CFH/frontend/src/components/needsHome/Navbar.js",
+      "C:/CFH/frontend/src/components/needsHome/NotificationCenter.css",
+      "C:/CFH/frontend/src/components/needsHome/NotificationCenter.js",
+      "C:/CFH/frontend/src/components/needsHome/PaymentForm.js",
+      "C:/CFH/frontend/src/components/needsHome/ProtectedRoute.js",
+      "C:/CFH/frontend/src/components/needsHome/ReferralAnalytics.js",
+      "C:/CFH/frontend/src/components/needsHome/Register.js",
+      "C:/CFH/frontend/src/components/needsHome/RegisterForm.js",
+      "C:/CFH/frontend/src/components/needsHome/ReputationBadgeTier.css",
+      "C:/CFH/frontend/src/components/needsHome/ReputationBadgeTier.js",
+      "C:/CFH/frontend/src/components/needsHome/RoleActivityCharts.css",
+      "C:/CFH/frontend/src/components/needsHome/RoleActivityCharts.js",
+      "C:/CFH/frontend/src/components/needsHome/RoleSwitchWrapper.js",
+      "C:/CFH/frontend/src/components/needsHome/SellerCreateListing.js",
+      "C:/CFH/frontend/src/components/needsHome/SellerDashboard.js",
+      "C:/CFH/frontend/src/components/needsHome/SmartRecommendations.css",
+      "C:/CFH/frontend/src/components/needsHome/SmartRecommendations.js",
+      "C:/CFH/frontend/src/components/needsHome/SupportCenter.js",
+      "C:/CFH/frontend/src/components/needsHome/TradeInForm.js",
+      "C:/CFH/frontend/src/components/needsHome/useAuth.js"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\notifications",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/notifications/AdminEmailNotifications.jsx",
+      "C:/CFH/frontend/src/components/notifications/desktop.ini",
+      "C:/CFH/frontend/src/components/notifications/NotificationCenter.jsx",
+      "C:/CFH/frontend/src/components/notifications/NotificationsComponent.tsx",
+      "C:/CFH/frontend/src/components/notifications/UnreadNotificationBadge.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\officer",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/officer/desktop.ini",
+      "C:/CFH/frontend/src/components/officer/DisputeRadarWidget.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\onboarding",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/onboarding/desktop.ini",
+      "C:/CFH/frontend/src/components/onboarding/FinancierOnboarding.js",
+      "C:/CFH/frontend/src/components/onboarding/OnboardingGuide.js",
+      "C:/CFH/frontend/src/components/onboarding/OnboardingTrigger.jsx",
+      "C:/CFH/frontend/src/components/onboarding/OnboardingWizard.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\partner",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/partner/desktop.ini",
+      "C:/CFH/frontend/src/components/partner/PartnerPortal.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\premium",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/premium/BadgeDisplay.jsx",
+      "C:/CFH/frontend/src/components/premium/desktop.ini",
+      "C:/CFH/frontend/src/components/premium/LeaderboardDisplay.jsx",
+      "C:/CFH/frontend/src/components/premium/LiveStreamViewer.jsx",
+      "C:/CFH/frontend/src/components/premium/PredictiveAssistant.jsx",
+      "C:/CFH/frontend/src/components/premium/PremiumDashboard.jsx",
+      "C:/CFH/frontend/src/components/premium/PricingInsights.jsx",
+      "C:/CFH/frontend/src/components/premium/RecommendedAuctions.jsx",
+      "C:/CFH/frontend/src/components/premium/SupportChatWidget.jsx",
+      "C:/CFH/frontend/src/components/premium/SustainabilityMetrics.jsx",
+      "C:/CFH/frontend/src/components/premium/VRTourLauncher.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\recommendations",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/recommendations/AdvancedSmartRecommendations.js",
+      "C:/CFH/frontend/src/components/recommendations/AIInsights.js",
+      "C:/CFH/frontend/src/components/recommendations/AIRecommendations.css",
+      "C:/CFH/frontend/src/components/recommendations/AIRecommendations.js",
+      "C:/CFH/frontend/src/components/recommendations/desktop.ini",
+      "C:/CFH/frontend/src/components/recommendations/loanRecommendationController.js",
+      "C:/CFH/frontend/src/components/recommendations/SustainabilityScoring.js"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\seller",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/seller/AISuggestionEngine.js",
+      "C:/CFH/frontend/src/components/seller/CreateListingForm.js",
+      "C:/CFH/frontend/src/components/seller/desktop.ini",
+      "C:/CFH/frontend/src/components/seller/SellerAchievementTracker.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerActionPanel.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerActivityInsights.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerActivityTimeline.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerAnalyticsChart.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerAuctionForm.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerAuctionStarter.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerAuctionStatus.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerBadgesPage.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerContractManager.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerCreateListing.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerCustomerTestimonials.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerDashboard.css",
+      "C:/CFH/frontend/src/components/seller/SellerDashboard.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerDeepAnalytics.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerDisputeCenter.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerDocVault.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerEditListing.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerEmailSettings.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerEngagementLeaderboard.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerEscrowStatus.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerExperienceLevel.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerExportPanel.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerGalleryManager.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerInventoryList.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerKPIWidget.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerListingEdit.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerListingGallery.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerManageListings.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerMarketTrendInsights.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerMilestoneCelebrator.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerMissionCenter.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerNotificationCenter.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerNotifications.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerOfferTracker.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerOnboardingGuide.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerPerformanceComparison.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerPricingTool.css",
+      "C:/CFH/frontend/src/components/seller/SellerPricingTool.js",
+      "C:/CFH/frontend/src/components/seller/SellerProfileCard.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerReputationDashboard.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerReviewSummary.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerRewardsBadgeDisplay.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerSalesAnalytics.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerSalesFunnelOverview.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerSmartBadgeSystem.jsx",
+      "C:/CFH/frontend/src/components/seller/SellerSuccessTips.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\storage",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/storage/desktop.ini",
+      "C:/CFH/frontend/src/components/storage/StorageARNavigationApp.jsx",
+      "C:/CFH/frontend/src/components/storage/StorageAssignmentForm.jsx",
+      "C:/CFH/frontend/src/components/storage/StorageHostDashboard.js",
+      "C:/CFH/frontend/src/components/storage/StorageInventoryTracker.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\support",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/support/desktop.ini",
+      "C:/CFH/frontend/src/components/support/File SellerAuctionStatus.jsx.txt",
+      "C:/CFH/frontend/src/components/support/SupportChatWidget.jsx",
+      "C:/CFH/frontend/src/components/support/SupportDashboard.jsx",
+      "C:/CFH/frontend/src/components/support/SupportTicketAnalytics.jsx",
+      "C:/CFH/frontend/src/components/support/SupportTicketForm.jsx",
+      "C:/CFH/frontend/src/components/support/SupportTicketFormInLineFromGrok.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\tinting",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/tinting/desktop.ini",
+      "C:/CFH/frontend/src/components/tinting/TintingServiceDiscovery.tsx",
+      "C:/CFH/frontend/src/components/tinting/WindowTintingScheduler.tsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\title",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/title/BulkTitleTransfer.jsx",
+      "C:/CFH/frontend/src/components/title/desktop.ini",
+      "C:/CFH/frontend/src/components/title/TitleAgentDashboard.js",
+      "C:/CFH/frontend/src/components/title/TitleTransferQueue.js",
+      "C:/CFH/frontend/src/components/title/TitleVerificationForm.js"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\user",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/user/desktop.ini",
+      "C:/CFH/frontend/src/components/user/PointsHistory.jsx",
+      "C:/CFH/frontend/src/components/user/UserProfilePage.jsx"
+    ],
+    "skipped": []
+  },
+  {
+    "root": "C:\\CFH\\frontend\\src\\components\\valuation",
+    "ok": true,
+    "dry_run": false,
+    "converted": [
+      "C:/CFH/frontend/src/components/valuation/ARConditionScanner.test.tsx",
+      "C:/CFH/frontend/src/components/valuation/ARConditionScanner.tsx",
+      "C:/CFH/frontend/src/components/valuation/desktop.ini",
+      "C:/CFH/frontend/src/components/valuation/ValuationPortfolio.test.tsx",
+      "C:/CFH/frontend/src/components/valuation/ValuationPortfolio.tsx",
+      "C:/CFH/frontend/src/components/valuation/ValuationReport.test.tsx",
+      "C:/CFH/frontend/src/components/valuation/ValuationReport.tsx",
+      "C:/CFH/frontend/src/components/valuation/VehicleValuation.test.tsx",
+      "C:/CFH/frontend/src/components/valuation/VehicleValuation.tsx"
+    ],
+    "skipped": []
+  }
+]

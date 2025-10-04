@@ -1,0 +1,16 @@
+Set-Location C:\c\ai-orchestrator
+
+# 1) Load .env into THIS tab
+Load-DotEnv   # (your helper is already defined)
+
+# Optional: explicitly disable Anthropic
+Remove-Item Env:ANTHROPIC_API_KEY -ErrorAction SilentlyContinue
+$env:ANTHROPIC_API_KEY = ""
+
+# 2) Kill any listener on the port
+$cons = Get-NetTCPConnection -LocalPort $env:PORT -State Listen -ErrorAction SilentlyContinue
+if ($cons) { ($cons | Select-Object -Expand OwningProcess -Unique) | % { Stop-Process -Id $_ -Force } }
+
+# 3) Start uvicorn in the foreground
+$py = "C:\c\ai-orchestrator\venv\Scripts\python.exe"
+& $py -m uvicorn app.server:create_app --factory --host $env:HOST --port $env:PORT --log-level info

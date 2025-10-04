@@ -1,0 +1,26 @@
+src,dest,confidence,reason,applied
+C:\CFH\frontend\src\components\needsHome\ARExperience.js,C:\CFH\frontend\src\components\seller\ARExperience.js,0.7,"Matched keyword rule ""\bseller\b|\blisting\b|\binventory\b"" → ""seller""",True
+C:\CFH\frontend\src\components\needsHome\AutomationAgent.js,C:\CFH\frontend\src\components\common\AutomationAgent.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\BadgeDisplay.js,C:\CFH\frontend\src\components\common\BadgeDisplay.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\BulkUpload.js,C:\CFH\frontend\src\components\chat\BulkUpload.js,0.7,"Matched keyword rule ""\bchat\b|\bmessage\b|\bthread\b"" → ""chat""",True
+C:\CFH\frontend\src\components\needsHome\Button.js,C:\CFH\frontend\src\components\common\Button.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\CommunityDashboard.js,C:\CFH\frontend\src\components\auth\CommunityDashboard.js,0.7,"Matched keyword rule ""\buser\b|\bauth\b|\blogin\b|\bsign[- ]?up\b"" → ""auth""",True
+C:\CFH\frontend\src\components\needsHome\CommunityHub.js,C:\CFH\frontend\src\components\common\CommunityHub.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\CommunityHubEnhanced.js,C:\CFH\frontend\src\components\common\CommunityHubEnhanced.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\CommunityModeratorDashboard.js,C:\CFH\frontend\src\components\common\CommunityModeratorDashboard.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\ComplianceReviewerDashboard.js,C:\CFH\frontend\src\components\common\ComplianceReviewerDashboard.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\CrossBorderFinancing.js,C:\CFH\frontend\src\components\common\CrossBorderFinancing.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\DynamicPricing.js,C:\CFH\frontend\src\components\common\DynamicPricing.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\FinancingCalculator.js,C:\CFH\frontend\src\components\finance\FinancingCalculator.js,0.7,"Matched keyword rule ""\bfinance\b|\bpayment\b|\binvoice\b"" → ""finance""",True
+C:\CFH\frontend\src\components\needsHome\FraudDetection.js,C:\CFH\frontend\src\components\common\FraudDetection.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\integrationReportValidation.js,C:\CFH\frontend\src\components\marketplace\integrationReportValidation.js,0.7,"Matched keyword rule ""\bmarketplace\b|\bsearch\b|\bresults?\b"" → ""marketplace""",True
+C:\CFH\frontend\src\components\needsHome\Leaderboard.js,C:\CFH\frontend\src\components\common\Leaderboard.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\LeaveReview.js,C:\CFH\frontend\src\components\chat\LeaveReview.js,0.7,"Matched keyword rule ""\bchat\b|\bmessage\b|\bthread\b"" → ""chat""",True
+C:\CFH\frontend\src\components\needsHome\LoadingSpinner.js,C:\CFH\frontend\src\components\common\LoadingSpinner.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\LoanComparison.js,C:\CFH\frontend\src\components\lender\LoanComparison.js,0.7,"Matched keyword rule ""\blender\b|\bloan\b|\bapr\b|\bcredit\b"" → ""lender""",True
+C:\CFH\frontend\src\components\needsHome\LoyaltyQuests.js,C:\CFH\frontend\src\components\common\LoyaltyQuests.js,0.3,Default to common (no strong signals).,False
+C:\CFH\frontend\src\components\needsHome\MarketplaceInsights.js,C:\CFH\frontend\src\components\marketplace\MarketplaceInsights.js,0.7,"Matched keyword rule ""\bmarketplace\b|\bsearch\b|\bresults?\b"" → ""marketplace""",True
+C:\CFH\frontend\src\components\needsHome\Messaging.js,C:\CFH\frontend\src\components\chat\Messaging.js,0.7,"Matched keyword rule ""\bchat\b|\bmessage\b|\bthread\b"" → ""chat""",True
+C:\CFH\frontend\src\components\needsHome\Navbar.js,C:\CFH\frontend\src\components\buyer\Navbar.js,0.7,"Matched keyword rule ""\bbuyer\b|\bcheckout\b|\bbid\b"" → ""buyer""",True
+C:\CFH\frontend\src\components\needsHome\NotificationCenter.js,C:\CFH\frontend\src\components\chat\NotificationCenter.js,0.7,"Matched keyword rule ""\bchat\b|\bmessage\b|\bthread\b"" → ""chat""",True
+C:\CFH\frontend\src\components\needsHome\PaymentForm.js,C:\CFH\frontend\src\components\chat\PaymentForm.js,0.7,"Matched keyword rule ""\bchat\b|\bmessage\b|\bthread\b"" → ""chat""",True
