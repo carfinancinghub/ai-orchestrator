@@ -556,3 +556,19 @@ def build_ts(req: BuildTsReq = Body(...)) -> dict:
         "label": req.label or "",
     }
 
+
+# === BEGIN: /convert/prep (auctions pilot) ===
+from pydantic import BaseModel
+
+class ConvertPrepReq(BaseModel):
+    module: str | None = None  # e.g., "auctions"
+
+@router.post("/convert/prep", tags=["convert"])
+def convert_prep(req: ConvertPrepReq) -> dict:
+    mod = (req.module or "auctions").lower()
+    frontend = Path(os.getenv("FRONTEND_ROOT", r"C:\CFH\frontend"))
+    batch_dir = Path(os.getenv("REPORTS_DIR", "reports")) / "batches"
+    rows = _collect_batch_rows(frontend, mod, min_size=1024)
+    outs = _write_batches(rows, mod, batch_dir, chunk_size=30)
+    return {"ok": True, "module": mod, "count": len(rows), "batches": [str(o) for o in outs]}
+# === END: /convert/prep ===
