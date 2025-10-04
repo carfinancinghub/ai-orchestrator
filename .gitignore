@@ -1,44 +1,66 @@
+# =========================
 # Dependencies & virtual envs
-**/node_modules/
+# =========================
+node_modules/
 **/.venv/
 **/venv/
 **/env/
-**/__pycache__/
+venv/
+.venv/
 
-# Python build artifacts
+# =========================
+# Python build/cache
+# =========================
+**/__pycache__/
 **/*.pyc
 **/*.pyo
 **/*.pyd
 **/.Python
-**/build/
-**/dist/
+build/
+dist/
 **/*.egg-info/
+.mypy_cache/
+.ruff_cache/
 
-# Reports that mirror filesystem inventories
-reports/*_orchestrator_files.csv
-
+# =========================
 # OS / editor cruft
+# =========================
 .DS_Store
 Thumbs.db
 .idea/
-.vscode/# Orchestrator/CI artifacts & snapshots
-artifacts/
+.vscode/
+
+# =========================
+# Environment files & secrets
+# (keep .env.example tracked)
+# =========================
+.env
+.env.*
+*.env
+*-access.json
+org_access.json
+
+# =========================
+# Orchestrator artifacts
+# =========================
+# Treat artifacts as build outputs; keep them via CI, not in Git.
+artifacts/**
+
+# =========================
+# Reports hygiene
+# Keep folder, allow Markdown summaries, ignore bulky churn
+# =========================
+# Existing special-case CSV from older workflows
+reports/*_orchestrator_files.csv
 reports/*_workspace_collect/
-fd
-.env*
-*-access.json
-org_access.json
-venv/
-.venv/
-.mypy_cache/
-.ruff_cache/
-__pycache__/
-fd
-.env*
-*-access.json
-org_access.json
-venv/
-.mypy_cache/
-.ruff_cache/
-__pycache__/
-fd
+
+# Ignore heavy formats by default
+reports/**/*.json
+reports/**/*.csv
+reports/**/*.log
+reports/**/*.html
+reports/**/*.txt
+
+# But DO keep curated Markdown reports/summaries
+!reports/**/*.md
+!reports/.gitkeep
