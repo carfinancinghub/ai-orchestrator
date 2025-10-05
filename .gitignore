@@ -1,11 +1,16 @@
-# Dependencies & virtual envs
+# --- Env files (keep template tracked) ---
+.env
+.env.*
+!.env.template
+
+# --- Dependencies & virtual envs (any depth) ---
 **/node_modules/
 **/.venv/
 **/venv/
 **/env/
-**/__pycache__/
 
-# Python build artifacts
+# --- Python cache & build (any depth) ---
+**/__pycache__/
 **/*.pyc
 **/*.pyo
 **/*.pyd
@@ -14,33 +19,23 @@
 **/dist/
 **/*.egg-info/
 
-# Reports that mirror filesystem inventories
+# --- Linters / test caches ---
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# --- Orchestrator/CI artifacts & snapshots ---
+artifacts/
+reports/*_workspace_collect/
 reports/*_orchestrator_files.csv
 
-# OS / editor cruft
+# --- OS / editor cruft ---
 .DS_Store
 Thumbs.db
 .idea/
-.vscode/# Orchestrator/CI artifacts & snapshots
-artifacts/
-reports/*_workspace_collect/
-fd
-.env*
-*-access.json
-org_access.json
-venv/
-.venv/
-.mypy_cache/
-.ruff_cache/
-__pycache__/
-fd
-.env*
-*-access.json
-org_access.json
-venv/
-.mypy_cache/
-.ruff_cache/
-__pycache__/
-fd
+.vscode/
 
+# --- Local tools / secrets-style files ---
 tools/cod1/
+*-access.json
+org_access.json
