@@ -317,7 +317,7 @@ def _resolve_alias_path(spec: str, alias_map: Dict[str, List[str]]) -> List[str]
     return list(dict.fromkeys(targets))
 
 
-@router.post("/resolve_deps", tags=["convert"], name="resolve_deps")
+@router.post("/resolve_deps", name="resolve_deps")
 def resolve_deps(req: ResolveDepsReq = Body(...)) -> dict:
     """
     Parse per-file review .mds (routing JSON, extracted via reviewer.parse_review_md),
@@ -394,3 +394,4 @@ def resolve_deps(req: ResolveDepsReq = Body(...)) -> dict:
         "orphans": sorted({d for arr in out_unresolved.values() for d in arr}),
         "tsconfig_used": tsconfig_used,
     }
+

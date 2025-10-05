@@ -1,0 +1,2 @@
+. scripts\gh-grounded.ps1
+Show-ContextPatch -Path "api/routes.py" -Find "prune" -Context 10
