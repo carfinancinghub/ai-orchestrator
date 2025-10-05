@@ -698,8 +698,8 @@ import json as _json_mod
 
 class ResolveDepsReq(BaseModel):
     md_paths: list[str] = []
-    tsconfig_path: str | None = None      # default: tsconfig.json at repo root
-    aliases: dict[str, list[str]] | None = None  # override/augment tsconfig paths
+    tsconfig_path: str | None = None
+    aliases: dict[str, list[str]] | None = None
 
 def _load_tsconfig_paths(tsconfig_file: Path) -> dict[str, list[str]]:
     if not tsconfig_file.exists():
