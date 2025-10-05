@@ -507,10 +507,13 @@ def build_ts(req: BuildTsReq = Body(...)) -> dict:
         "out_dir": out_dir,
     }
 
-@router.post("/prune", name="prune")
-def prune(req: PruneReq = Body(...)) -> dict:
+@router.post("/prune", tags=["convert"], name="prune")
+def prune(req: PruneReq) -> dict:
     """
-    Pilot prune: write CSV 'path,action,reason' marking each .md as keep.
+    Pilot prune:
+      - strategy="keep_all": write CSV 'path,action,reason' marking each .md as keep
+      - strategy="gemini"   : sample up to 10 .md files, ask Gemini to consolidate and
+                              emit CSV rows path,action,reason (keep|list|delete + why)
     """
     reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
     prune_dir = reports_dir / "prune"
@@ -518,7 +521,7 @@ def prune(req: PruneReq = Body(...)) -> dict:
     out_csv = Path(req.out_csv) if req.out_csv else (prune_dir / "pruned_module_map.csv")
 
     # sanitize & de-dupe inputs; only keep files that actually exist
-    paths: List[str] = []
+    paths: list[str] = []
     for p in req.md_paths:
         try:
             pp = Path(p)
@@ -528,17 +531,88 @@ def prune(req: PruneReq = Body(...)) -> dict:
             continue
     paths = sorted(set(paths))
 
-    # write CSV with LF for git friendliness
-    out_csv.parent.mkdir(parents=True, exist_ok=True)
-    with out_csv.open("w", encoding="utf-8", newline="\n") as f:
-        f.write("path,action,reason\n")
-        for p in paths:
-            f.write(f"\"{p}\",keep,\"{req.reason or 'pilot keep-all'}\"\n")
+    strat = (req.strategy or "keep_all").lower()
 
-    # nice, repo-relative path if possible
-    try:
-        csv_rel = str(out_csv.relative_to(Path.cwd())).replace("\\", "/")
-    except Exception:
-        csv_rel = out_csv.as_posix()
+    if strat == "keep_all":
+        # write CSV with LF for git friendliness
+        with out_csv.open("w", encoding="utf-8", newline="\n") as f:
+            f.write("path,action,reason\n")
+            for p in paths:
+                f.write(f"\"{p}\",keep,\"{req.reason or 'pilot keep-all'}\"\n")
+        # repo-relative if possible (nice for logs)
+        try:
+            csv_rel = str(out_csv.relative_to(Path.cwd())).replace("\\", "/")
+        except Exception:
+            csv_rel = out_csv.as_posix()
+        return {"ok": True, "strategy": "keep_all", "count": len(paths), "csv": csv_rel}
 
-    return {"ok": True, "strategy": req.strategy, "count": len(paths), "csv": csv_rel}
+    if strat == "gemini":
+        try:
+            import google.generativeai as genai  # type: ignore
+        except Exception as e:
+            return {"ok": False, "strategy": "gemini", "error": f"gemini_sdk_missing: {e!r}"}
+
+        api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+        model_name = os.getenv("GEMINI_MODEL", "gemini-1.5-flash-latest")
+        if not api_key:
+            return {"ok": False, "strategy": "gemini", "error": "missing GOOGLE_API_KEY/GEMINI_API_KEY"}
+
+        # sample up to 10 .md for consolidation (tune as you like)
+        sample = paths[:10]
+
+        def _read(p: str) -> str:
+            try:
+                return Path(p).read_text(encoding="utf-8", errors="ignore")
+            except Exception as e:
+                return f"(read error for {p}: {e!r})"
+
+        prompt_parts = [
+            "You are consolidating overlapping review markdown files from a codebase.",
+            "For each input file, decide an action: keep | list | delete.",
+            "If multiple files are duplicates or trivially overlapping, prefer a single canonical file and mark the others delete or list.",
+            "When you say 'list', it means keep temporarily, but mark reason why it isn't canonical.",
+            "Also unify shared types (e.g., BidProps) in your reasoning, but DO NOT output types—only the CSV rows.",
+            "",
+            "Output STRICT CSV body rows **without header**, columns: path,action,reason",
+            "Rules:",
+            "- No code fences.",
+            "- No commentary beyond the CSV rows.",
+            "- One file per line.",
+            "",
+        ]
+        for p in sample:
+            prompt_parts += [f"--- FILE: {p}", _read(p)]
+        prompt = "\n".join(prompt_parts)
+
+        try:
+            genai.configure(api_key=api_key)
+            model = genai.GenerativeModel(model_name)
+            resp = model.generate_content(
+                prompt,
+                generation_config={"max_output_tokens": 1500},
+                safety_settings=None,
+                request_options={"timeout": float(os.getenv("REVIEW_TIMEOUT_S", "30"))},
+            )
+            text = (getattr(resp, "text", "") or "").strip()
+        except Exception as e:
+            return {"ok": False, "strategy": "gemini", "error": f"gemini_call_error: {e!r}"}
+
+        # write header + LLM rows
+        out_csv.parent.mkdir(parents=True, exist_ok=True)
+        with out_csv.open("w", encoding="utf-8", newline="\n") as f:
+            f.write("path,action,reason\n")
+            for line in text.splitlines():
+                line = line.strip()
+                if not line or line.lower().startswith("path,"):
+                    continue
+                f.write(line + "\n")
+
+        try:
+            csv_rel = str(out_csv.relative_to(Path.cwd())).replace("\\", "/")
+        except Exception:
+            csv_rel = out_csv.as_posix()
+
+        return {"ok": True, "strategy": "gemini", "count": len(sample), "csv": csv_rel}
+
+    # unknown strategy
+    return {"ok": False, "strategy": strat, "error": "unknown strategy"}
