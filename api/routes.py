@@ -14,7 +14,7 @@ from typing import Any, Dict, Iterable, List, Optional
 from fastapi import APIRouter, Body, HTTPException, Request
 from pydantic import BaseModel
 
-router = APIRouter()
+router = APIRouter(tags=["convert"])  # meta routes live in app/server.py
 
 # ------------------------------- constants -----------------------------------
 
@@ -24,11 +24,55 @@ IGNORE_SUFFIXES = (".bak", ".tmp", "~")
 IGNORE_DIR_PARTS = {"/__mocks__/", "/tests/", "/node_modules/"}
 TEST_NAME_RE = re.compile(r"\.(test|spec)\.[a-z0-9]+$", re.I)
 
-# batch prep constants
 BLOAT_DIRS = {".git", "node_modules", "dist", "build", ".mypy_cache", ".next", "logs"}
 
+# ------------------------------- batch prep ----------------------------------
 
-# --------------------------------- helpers -----------------------------------
+def _sha1sum(path: Path) -> str:
+    h = hashlib.sha1()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+def _iter_candidates(frontend_root: Path, module: str) -> Iterable[Path]:
+    patterns = {
+        "auctions": r"(auction|bid|lot|reserve|seller|buyer|escrow)",
+    }
+    rx = re.compile(patterns.get(module, re.escape(module)), re.I)
+    for p in frontend_root.rglob("*"):
+        if any(seg in BLOAT_DIRS for seg in p.parts):
+            continue
+        if p.is_file() and rx.search(str(p).replace("\\", "/")):
+            yield p
+
+def _collect_batch_rows(frontend_root: Path, module: str, min_size: int = 1024):
+    seen = {}
+    for p in _iter_candidates(frontend_root, module):
+        st = p.stat()
+        if st.st_size < min_size:
+            continue
+        digest = _sha1sum(p)
+        if digest in seen:
+            continue
+        seen[digest] = (str(p), st.st_size, int(st.st_mtime), digest)
+    return list(seen.values())
+
+def _write_batches(rows, module: str, out_dir: Path, chunk_size: int = 30):
+    out_dir.mkdir(parents=True, exist_ok=True)
+    outs: List[Path] = []
+    for i in range(0, len(rows), chunk_size):
+        group = rows[i : i + chunk_size]
+        outp = out_dir / f"Batch_{module}_{(i // chunk_size) + 1}.csv"
+        with outp.open("w", newline="", encoding="utf-8") as f:
+            w = csv.writer(f)
+            w.writerow(["path", "size", "mtime", "sha1"])
+            for (path, size, mtime, sha1) in group:
+                w.writerow([path, size, mtime, sha1])
+        outs.append(outp)
+    return outs
+
+# ------------------------------- helpers -------------------------------------
 
 def _is_noise(p: Path) -> bool:
     name_l = p.name.lower()
@@ -44,14 +88,12 @@ def _is_noise(p: Path) -> bool:
             return True
     return False
 
-
 def _rel(p: Path, base: Optional[Path] = None) -> str:
     base = base or Path.cwd()
     try:
         return p.resolve().relative_to(base.resolve()).as_posix()
     except Exception:
         return p.as_posix()
-
 
 def _git_changed_files(base_ref: str, cwd: Optional[Path] = None) -> List[str]:
     try:
@@ -68,7 +110,6 @@ def _git_changed_files(base_ref: str, cwd: Optional[Path] = None) -> List[str]:
     except Exception:
         return []
 
-
 def _preview_text(rel: str, max_lines: int = 40) -> List[str]:
     try:
         p = Path(rel)
@@ -79,84 +120,57 @@ def _preview_text(rel: str, max_lines: int = 40) -> List[str]:
     except Exception:
         return ["(snippet unavailable)"]
 
-
-# ------------------------ batch-prep helpers (auctions) ----------------------
-
-def _sha1sum(path: Path) -> str:
-    h = hashlib.sha1()
-    with path.open("rb") as f:
-        for chunk in iter(lambda: f.read(1024 * 1024), b""):
-            h.update(chunk)
-    return h.hexdigest()
-
-
-def _iter_candidates(frontend_root: Path, module: str) -> Iterable[Path]:
-    patterns = {
-        "auctions": r"(auction|bid|lot|reserve|seller|buyer|escrow)",
-    }
-    rx = re.compile(patterns.get(module, re.escape(module)), re.I)
-    for p in frontend_root.rglob("*"):
-        if any(seg in BLOAT_DIRS for seg in p.parts):
-            continue
-        if p.is_file() and rx.search(str(p).replace("\\", "/")):
-            yield p
-
-
-def _collect_batch_rows(frontend_root: Path, module: str, min_size: int = 1024):
-    seen = {}
-    for p in _iter_candidates(frontend_root, module):
-        st = p.stat()
-        if st.st_size < min_size:
-            continue
-        digest = _sha1sum(p)
-        if digest in seen:
-            continue
-        seen[digest] = (str(p), st.st_size, int(st.st_mtime), digest)
-    return list(seen.values())
-
-
-def _write_batches(rows, module: str, out_dir: Path, chunk_size: int = 30) -> List[Path]:
-    out_dir.mkdir(parents=True, exist_ok=True)
-    outs: List[Path] = []
-    for i in range(0, len(rows), chunk_size):
-        group = rows[i : i + chunk_size]
-        outp = out_dir / f"Batch_{module}_{(i // chunk_size) + 1}.csv"
-        with outp.open("w", newline="", encoding="utf-8") as f:
-            w = csv.writer(f)
-            w.writerow(["path", "size", "mtime", "sha1"])
-            for (path, size, mtime, sha1) in group:
-                w.writerow([path, size, mtime, sha1])
-        outs.append(outp)
-    return outs
-
-
-def _normalize_batch_artifacts(out_dir: Path, label: str, batch: Dict[str, Any]) -> Dict[str, Any]:
+def _normalize_batch_artifacts(out_dir: Path, batch: Dict[str, Any]) -> Dict[str, Any]:
     fixed: Dict[str, Any] = {}
-
+    # batch_md
     batch_md = batch.get("batch_md")
     if isinstance(batch_md, str) and batch_md:
-        bp = Path(batch_md)
-        bp = out_dir / bp.name
-        fixed["batch_md"] = bp.as_posix()
+        fixed["batch_md"] = (out_dir / Path(batch_md).name).as_posix()
     else:
         fixed["batch_md"] = None
-
+    # per-file mds
     mds = batch.get("per_file_mds") or []
     fixed_mds: List[str] = []
     for m in mds:
         try:
-            mp = Path(m)
-            mp = out_dir / mp.name
-            fixed_mds.append(mp.as_posix())
+            fixed_mds.append((out_dir / Path(m).name).as_posix())
         except Exception:
             pass
     fixed["per_file_mds"] = fixed_mds
-
+    # deps passthrough
     deps = batch.get("dependencies")
     fixed["dependencies"] = deps if isinstance(deps, dict) else {}
-
     return fixed
 
+def _derive_out_dir(out_paths: List[str]) -> str:
+    out_dir = ""
+    try:
+        candidates: List[str] = []
+        # from first written file
+        if out_paths:
+            first_parent = Path(out_paths[0]).parent
+            candidates.append(
+                str((Path.cwd() / first_parent).resolve())
+                if not first_parent.is_absolute()
+                else str(first_parent)
+            )
+        # fallbacks
+        for guess in ("src/_ai_out", "_ai_out", "build/_ai_out"):
+            p = Path(guess)
+            if p.exists():
+                candidates.append(str(p.resolve()))
+
+        def _has_generated_files(root: Path) -> bool:
+            return any(root.rglob("*.plan.ts")) or any(root.rglob("*.plan.tsx")) or bool(out_paths)
+
+        for c in candidates:
+            cp = Path(c)
+            if cp.exists() and cp.is_dir() and _has_generated_files(cp):
+                out_dir = str(cp)
+                break
+    except Exception:
+        out_dir = ""
+    return out_dir
 
 # ------------------------------ request models --------------------------------
 
@@ -166,126 +180,26 @@ class ConvertTreeReq(BaseModel):
     batch_cap: int = 25
     label: Optional[str] = None
     review_tier: str = "free"           # free | premium | wow
-    generate_mds: bool = False
-    git_diff_base: Optional[str] = None
-    md_first: bool = False
-
+    generate_mds: bool = False          # force batch .md even in dry_run
+    git_diff_base: Optional[str] = None # e.g., "main" or a SHA
+    md_first: bool = False              # when true, produce .mds then return early
 
 class BuildTsReq(BaseModel):
-    module: Optional[str] = None
     md_paths: List[str]
     pruned_map: Optional[str] = None
     apply_moves: bool = True
     label: Optional[str] = None
 
-
 class ConvertPrepReq(BaseModel):
     module: Optional[str] = None  # e.g., "auctions"
 
-
 class PruneReq(BaseModel):
     md_paths: List[str] = []
-    strategy: str = "keep_all"
-    out_csv: Optional[str] = None
+    strategy: str = "keep_all"                 # future: "gemini"
+    out_csv: Optional[str] = None              # default: reports/prune/pruned_module_map.csv
     reason: Optional[str] = "pilot keep-all"
 
-
-# --------------------------------- meta ---------------------------------------
-
-@router.get("/", tags=["meta"])
-def root():
-    return {"ok": True, "service": "ai-orchestrator", "hint": "see /docs"}
-
-
-@router.get("/_health", tags=["meta"])
-def health():
-    return {"ok": True}
-
-
-@router.get("/orchestrator/status", tags=["meta"])
-def status():
-    return {"ok": True, "ts": datetime.utcnow().isoformat() + "Z"}
-
-
-@router.get("/_meta/routes", tags=["meta"])
-def list_routes(request: Request):
-    routes = []
-    for r in request.app.routes:
-        try:
-            routes.append(
-                {
-                    "path": r.path,
-                    "methods": sorted(list(getattr(r, "methods", []) or [])),
-                    "name": getattr(r, "name", None),
-                    "tags": getattr(r, "tags", []),
-                }
-            )
-        except Exception:
-            pass
-    return {"count": len(routes), "routes": routes}
-
-
-@router.get("/readyz", tags=["meta"])
-def readyz():
-    checks: Dict[str, Any] = {}
-    try:
-        checks["router_loaded"] = True
-        reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
-        checks["reports_dir"] = reports_dir.as_posix()
-        checks["reports_dir_writable"] = True
-        reports_dir.mkdir(parents=True, exist_ok=True)
-        t = reports_dir / ".w"
-        t.write_text("ok", encoding="utf-8")
-        t.unlink(missing_ok=True)
-
-        def _has(k: str) -> bool:
-            return bool(os.getenv(k))
-
-        providers = {
-            "openai": {"sdk": False, "key": _has("OPENAI_API_KEY"), "ok": False},
-            "gemini": {"sdk": False, "key": _has("GOOGLE_API_KEY") or _has("GEMINI_API_KEY"), "ok": False},
-            "grok": {"sdk": False, "key": _has("XAI_API_KEY") or _has("GROK_API_KEY"), "ok": False},
-            "anthropic": {"sdk": False, "key": _has("ANTHROPIC_API_KEY"), "ok": False},
-        }
-        try:
-            import openai  # type: ignore
-            providers["openai"]["sdk"] = True
-        except Exception:
-            pass
-        try:
-            import google.generativeai as genai  # type: ignore
-            providers["gemini"]["sdk"] = True
-        except Exception:
-            pass
-        try:
-            import groq  # type: ignore
-            providers["grok"]["sdk"] = True
-        except Exception:
-            pass
-        try:
-            import anthropic  # type: ignore
-            providers["anthropic"]["sdk"] = True
-        except Exception:
-            pass
-
-        for k, v in providers.items():
-            v["ok"] = bool(v["key"] and v["sdk"])
-
-        checks["providers"] = providers
-        checks["sdk_openai"] = providers["openai"]["sdk"]
-        checks["sdk_gemini"] = providers["gemini"]["sdk"]
-        checks["sdk_grok_xai"] = providers["grok"]["sdk"]
-        checks["sdk_anthropic"] = providers["anthropic"]["sdk"]
-        missing = [k for k, v in providers.items() if not v["key"]]
-        checks["provider_env_missing"] = [f"{m.upper()}_API_KEY" for m in missing]
-        checks["providers_enabled"] = [k for k, v in providers.items() if v["ok"]]
-        checks["cfh_root"] = True
-        return {"ok": True, "checks": checks}
-    except Exception as e:
-        checks["router_loaded"] = False
-        checks["router_error"] = repr(e)
-        return {"ok": False, "checks": checks}
-
+# --------------------------------- routes -------------------------------------
 
 @router.get("/reports/latest", tags=["meta"], name="reports_latest")
 def reports_latest(label: Optional[str] = None):
@@ -309,24 +223,35 @@ def reports_latest(label: Optional[str] = None):
         "label": label or "",
     }
 
+@router.post("/convert/prep", name="convert_prep")
+def convert_prep(req: ConvertPrepReq = Body(...)) -> dict:
+    mod = (req.module or "auctions").lower()
+    frontend = Path(os.getenv("FRONTEND_ROOT", r"C:\CFH\frontend"))
+    batch_dir = Path(os.getenv("REPORTS_DIR", "reports")) / "batches"
+    rows = _collect_batch_rows(frontend, mod, min_size=1024)
+    outs = _write_batches(rows, mod, batch_dir, chunk_size=30)
+    return {"ok": True, "module": mod, "count": len(rows), "batches": [str(o) for o in outs]}
 
-# ------------------------------ convert/tree ----------------------------------
-
-@router.post("/convert/tree", tags=["convert"], name="convert_tree")
+@router.post("/convert/tree", name="convert_tree")
 def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
     root = Path(req.root)
     converted: List[str] = []
     skipped: List[str] = []
     reviews: List[Dict[str, Any]] = []
 
+    # 1) Gather & filter
     if root.exists() and root.is_dir():
         all_items = list(root.rglob("*"))
         items: List[Path] = [p for p in all_items if not _is_noise(p)]
+
+        # friendly listing (cap 200)
         for p in items[:200]:
             (converted if p.is_file() else skipped).append(p.as_posix())
 
+        # candidate code files
         code_files = [p for p in items if p.is_file() and p.suffix.lower() in CODE_EXTS]
 
+        # optional git-diff filter
         if req.git_diff_base:
             changed_rel = set(_git_changed_files(req.git_diff_base, cwd=Path.cwd()))
             if not changed_rel:
@@ -338,6 +263,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
             if changed_rel:
                 code_files = [p for p in code_files if _rel(p) in changed_rel]
 
+        # optional mini review (ignore if helper not present)
         cap = max(0, int(req.batch_cap))
         try:
             from app.ai.reviewer import review_file  # type: ignore
@@ -369,6 +295,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
                     }
                 )
 
+    # 2) response scaffold
     resp: Dict[str, Any] = {
         "ok": True,
         "root": str(root),
@@ -381,6 +308,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
         "label": req.label or "",
     }
 
+    # 3) persist JSON
     reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
     reports_dir.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -393,6 +321,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
     except Exception as e:
         resp["artifact_error"] = repr(e)
 
+    # 4) summary markdown
     try:
         summary_path = out.with_suffix(".summary.md")
         lines: List[str] = []
@@ -437,6 +366,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
     except Exception as e:
         resp["summary_error"] = repr(e)
 
+    # 5) optional batch .md generation (Gemini-first happens inside reviewer)
     try:
         should_batch = (not req.dry_run) or bool(req.generate_mds) or bool(req.md_first)
         if should_batch:
@@ -467,13 +397,13 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
                         batch = review_batch(
                             cand_paths,
                             tier=req.review_tier,
-                            label=None,            # avoid dup label
-                            reports_dir=out_dir,
+                            label=None,          # avoid nested subdir duplication
+                            reports_dir=out_dir, # write into resolved out_dir
                         ) or {}
                     except Exception as e:
                         resp.setdefault("errors", []).append({"where": "batch_mds/run", "error": repr(e)})
 
-                fixed = _normalize_batch_artifacts(out_dir, req.label or "", batch)
+                fixed = _normalize_batch_artifacts(out_dir, batch)
 
                 batch_md = fixed.get("batch_md")
                 if not batch_md:
@@ -503,115 +433,90 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
             if req.md_first:
                 resp["next_step"] = "build_ts"
                 return resp
-
     except Exception as e:
         resp.setdefault("errors", []).append({"where": "batch_mds/top", "error": repr(e)})
 
     return resp
 
-
-# ------------------------------ convert/prep ----------------------------------
-
-@router.post("/convert/prep", tags=["convert"], name="convert_prep")
-def convert_prep(req: ConvertPrepReq = Body(...)) -> dict:
-    mod = (req.module or "auctions").lower()
-    frontend = Path(os.getenv("FRONTEND_ROOT", r"C:\CFH\frontend"))
-    batch_dir = Path(os.getenv("REPORTS_DIR", "reports")) / "batches"
-    rows = _collect_batch_rows(frontend, mod, min_size=1024)
-    outs = _write_batches(rows, mod, batch_dir, chunk_size=30)
-    return {"ok": True, "module": mod, "count": len(rows), "batches": [str(o) for o in outs]}
-
-
-# ------------------------------- build_ts -------------------------------------
-
-@router.post("/build_ts", tags=["convert"], name="build_ts")
+@router.post("/build_ts", name="build_ts")
 def build_ts(req: BuildTsReq = Body(...)) -> dict:
     """
-    Build TS/TSX files from .plan.md docs.
-    Writes to src/_ai_out and returns the list of written files.
+    Build TS/TSX files from a list of .plan.md docs.
+    - Returns { ok, written, errors, label, out_dir }
+    - If you already have a builder in your codebase, we call it.
+      Otherwise we fall back to a safe stub that writes .plan.tsx files
+      into src/_ai_out so downstream steps keep working.
     """
+    written: List[str] = []
     errors: List[str] = []
-    out_paths: List[str] = []
+
+    # 1) try your existing builder if present
+    used_native = False
     try:
+        # Example: app.prep.ts_builder.build_ts_from_plans(md_paths, pruned_map, label)
+        from app.prep.ts_builder import build_ts_from_plans  # type: ignore
+        res = build_ts_from_plans(req.md_paths, req.pruned_map, req.label)
+        # Expect either list[str] or dict with "written"
+        if isinstance(res, list):
+            written = [str(p) for p in res]
+        elif isinstance(res, dict):
+            written = [str(p) for p in res.get("written", [])]
+            errors.extend([str(e) for e in res.get("errors", [])])
+        used_native = True
+    except Exception as e:
+        # no native builder; we’ll fall back below
+        if os.getenv("ORCH_VERBOSE", "0") == "1":
+            errors.append(f"native_builder_unavailable: {repr(e)}")
+
+    # 2) safe fallback stub (keeps the pipeline usable)
+    if not used_native:
         out_root = Path("src") / "_ai_out"
         out_root.mkdir(parents=True, exist_ok=True)
-
-        for md in (req.md_paths or []):
-            mdp = Path(md)
-            if not mdp.exists():
-                errors.append(f"missing: {md}")
-                continue
-            name = mdp.name  # e.g., Something.plan.md
-            # produce a .tsx filename
-            tsx_name = re.sub(r"\.md$", ".tsx", name)
-            ts_path = out_root / tsx_name
-
+        for md in req.md_paths:
             try:
-                src = mdp.read_text(encoding="utf-8", errors="ignore")
-                # minimal scaffold; your real converter can replace this content
-                ts_code = f"""// generated from: {mdp.as_posix()}
-export default function Plan() {{
-  return (
-    <pre>
-{json.dumps(src)}
-    </pre>
-  );
-}}
-"""
-                ts_path.write_text(ts_code, encoding="utf-8")
-                out_paths.append(ts_path.as_posix())
+                mdp = Path(md)
+                name = mdp.name.replace(".plan.md", ".plan.tsx")
+                outp = out_root / name
+                header = (
+                    f"/**\n"
+                    f" * GENERATED STUB FROM PLAN\n"
+                    f" * plan: {mdp.as_posix()}\n"
+                    f" * date: {datetime.utcnow().isoformat()}Z\n"
+                    f" */\n\n"
+                )
+                # Minimal TSX that references the plan; real impl can replace this.
+                body = (
+                    f"{header}"
+                    f"export default function PlanStub() {{\n"
+                    f"  return <pre>{json.dumps(mdp.as_posix())}</pre>;\n"
+                    f"}}\n"
+                )
+                outp.write_text(body, encoding="utf-8")
+                written.append(_rel(outp))
             except Exception as e:
-                errors.append(f"{md}: {e}")
+                errors.append(f"{md}: {repr(e)}")
 
-    except Exception as e:
-        errors.append(repr(e))
-
-    # derive out_dir
-    out_dir = ""
-    try:
-        candidates: List[str] = []
-        if out_paths:
-            first_parent = Path(out_paths[0]).parent
-            candidates.append(
-                str((Path.cwd() / first_parent).resolve())
-                if not first_parent.is_absolute()
-                else str(first_parent)
-            )
-        for guess in ("src/_ai_out", "_ai_out", "build/_ai_out"):
-            p = Path(guess)
-            if p.exists():
-                candidates.append(str(p.resolve()))
-
-        def _has_generated_files(root: Path) -> bool:
-            return any(root.rglob("*.plan.tsx")) or any(root.rglob("*.plan.ts")) or bool(out_paths)
-
-        for c in candidates:
-            cp = Path(c)
-            if cp.exists() and cp.is_dir() and _has_generated_files(cp):
-                out_dir = str(cp)
-                break
-    except Exception:
-        out_dir = ""
+    out_dir = _derive_out_dir(written)
 
     return {
         "ok": len(errors) == 0,
-        "written": out_paths,
+        "written": written,
         "errors": errors,
         "label": req.label or "",
         "out_dir": out_dir,
-        "impl_file": __file__,
     }
 
-
-# --------------------------------- prune --------------------------------------
-
-@router.post("/prune", tags=["convert"], name="prune")
+@router.post("/prune", name="prune")
 def prune(req: PruneReq = Body(...)) -> dict:
+    """
+    Pilot prune: write CSV 'path,action,reason' marking each .md as keep.
+    """
     reports_dir = Path(os.getenv("REPORTS_DIR", "reports"))
     prune_dir = reports_dir / "prune"
     prune_dir.mkdir(parents=True, exist_ok=True)
     out_csv = Path(req.out_csv) if req.out_csv else (prune_dir / "pruned_module_map.csv")
 
+    # sanitize & de-dupe inputs; only keep files that actually exist
     paths: List[str] = []
     for p in req.md_paths:
         try:
@@ -622,16 +527,17 @@ def prune(req: PruneReq = Body(...)) -> dict:
             continue
     paths = sorted(set(paths))
 
+    # write CSV with LF for git friendliness
     out_csv.parent.mkdir(parents=True, exist_ok=True)
     with out_csv.open("w", encoding="utf-8", newline="\n") as f:
         f.write("path,action,reason\n")
         for p in paths:
             f.write(f"\"{p}\",keep,\"{req.reason or 'pilot keep-all'}\"\n")
 
+    # nice, repo-relative path if possible
     try:
         csv_rel = str(out_csv.relative_to(Path.cwd())).replace("\\", "/")
     except Exception:
         csv_rel = out_csv.as_posix()
 
     return {"ok": True, "strategy": req.strategy, "count": len(paths), "csv": csv_rel}
-
