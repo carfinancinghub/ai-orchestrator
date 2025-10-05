@@ -616,3 +616,64 @@ def prune(req: PruneReq) -> dict:
 
     # unknown strategy
     return {"ok": False, "strategy": strat, "error": "unknown strategy"}
+@router.post("/resolve_deps", tags=["convert"], name="resolve_deps")
+def resolve_deps(req: dict = Body(...)) -> dict:
+    """
+    Map alias-like deps (e.g., @services/*) to repo files using tsconfig paths and a scan.
+    Body may include { "aliases": { "@services/*": "src/services/*" }, "md_paths": [...] }.
+    Writes reports/deps/resolved_deps.json and returns summary.
+    """
+    try:
+        root = Path.cwd()
+        aliases = (req.get("aliases") if isinstance(req, dict) else None) or {}
+
+        # try tsconfig paths
+        ts = root / "tsconfig.json"
+        if ts.exists():
+            try:
+                cfg = json.loads(ts.read_text(encoding="utf-8", errors="ignore"))
+                paths = (((cfg.get("compilerOptions") or {}).get("paths")) or {})
+                for k, v in paths.items():
+                    if isinstance(v, list) and v:
+                        aliases.setdefault(k, v[0])
+                    elif isinstance(v, str):
+                        aliases.setdefault(k, v)
+            except Exception:
+                pass
+
+        # scan repo once
+        all_files = [p.as_posix() for p in root.rglob("*") if p.is_file()]
+        out = {"resolved": {}, "orphans": []}
+
+        def _glob_to_re(g: str):
+            return re.compile("^" + re.escape(g).replace("\\*",".*") + "$")
+
+        for alias, target in aliases.items():
+            re_target = _glob_to_re(target)
+            hits = [f for f in all_files if re_target.search(f)]
+            out["resolved"][alias] = hits
+
+        # find deps in md files and flag orphans
+        md_paths = (req.get("md_paths") if isinstance(req, dict) else None) or []
+        seen = set(sum(out["resolved"].values(), []))
+        wanted = set()
+        for md in md_paths[:50]:
+            try:
+                txt = Path(md).read_text(encoding="utf-8", errors="ignore")
+            except Exception:
+                txt = ""
+            for m in re.finditer(r'"dependencies"\s*:\s*\[(.*?)\]', txt, re.DOTALL):
+                inner = m.group(1)
+                for dep in re.findall(r'"([^"]+)"', inner):
+                    wanted.add(dep)
+
+        for dep in sorted(wanted):
+            if dep.startswith("@") and not any(dep.split("/")[-1] in Path(f).name for f in seen):
+                out["orphans"].append(dep)
+
+        out_path = Path(os.getenv("REPORTS_DIR","reports")) / "deps" / "resolved_deps.json"
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps(out, indent=2), encoding="utf-8")
+        return {"ok": True, "out": out_path.as_posix(), **out}
+    except Exception as e:
+        return {"ok": False, "error": repr(e)}
