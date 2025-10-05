@@ -690,3 +690,135 @@ def resolve_deps(req: ResolveDepsReq) -> dict:
         "orphans": sorted({d for arr in out_unresolved.values() for d in arr}),
     }
 # === END: /resolve_deps =======================================================
+
+# === BEGIN: /resolve_deps =====================================================
+from typing import DefaultDict
+from collections import defaultdict
+import json as _json_mod
+
+class ResolveDepsReq(BaseModel):
+    md_paths: list[str] = []
+    tsconfig_path: str | None = None      # default: tsconfig.json at repo root
+    aliases: dict[str, list[str]] | None = None  # override/augment tsconfig paths
+
+def _load_tsconfig_paths(tsconfig_file: Path) -> dict[str, list[str]]:
+    if not tsconfig_file.exists():
+        return {}
+    try:
+        data = _json_mod.loads(tsconfig_file.read_text(encoding="utf-8", errors="ignore"))
+        compiler = (data or {}).get("compilerOptions", {})
+        paths = compiler.get("paths", {}) or {}
+        base_url = compiler.get("baseUrl", "") or ""
+        base_root = (tsconfig_file.parent / base_url).resolve() if base_url else tsconfig_file.parent.resolve()
+        normalized: dict[str, list[str]] = {}
+        for alias, arr in paths.items():
+            patts = arr if isinstance(arr, list) else [arr]
+            norm = []
+            for patt in patts:
+                patt = patt.replace("*", "")
+                p = (base_root / patt).resolve()
+                norm.append(p.as_posix())
+            normalized[alias] = norm
+        return normalized
+    except Exception:
+        return {}
+
+def _resolve_alias_path(spec: str, alias_map: dict[str, list[str]]) -> list[str]:
+    targets: list[str] = []
+    for alias, roots in alias_map.items():
+        if spec.startswith(alias):
+            suffix = spec[len(alias):]
+        else:
+            continue
+        for root in roots:
+            guess = Path(root) / suffix
+            candidates = [
+                guess,
+                guess.with_suffix(".ts"),
+                guess.with_suffix(".tsx"),
+                guess.with_suffix(".js"),
+                guess.with_suffix(".jsx"),
+                guess / "index.ts",
+                guess / "index.tsx",
+                guess / "index.js",
+                guess / "index.jsx",
+            ]
+            for c in candidates:
+                if c.exists():
+                    targets.append(c.resolve().as_posix())
+    return list(dict.fromkeys(targets))  # de-dupe keep-order
+
+@router.post("/resolve_deps", tags=["convert"], name="resolve_deps")
+def resolve_deps(req: ResolveDepsReq) -> dict:
+    """
+    Parse per-file review .mds (routing JSON), map "dependencies" to real repo paths
+    via tsconfig.paths and/or explicit alias overrides. Writes an artifact in reports/deps/.
+    """
+    try:
+        from app.ai.reviewer import parse_review_md  # type: ignore
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"missing reviewer.parse_review_md: {e!r}")
+
+    alias_map: dict[str, list[str]] = {}
+    tsconfig_used = None
+    if req.tsconfig_path:
+        tsconfig_used = Path(req.tsconfig_path).resolve().as_posix()
+        alias_map.update(_load_tsconfig_paths(Path(req.tsconfig_path)))
+    else:
+        root_ts = Path("tsconfig.json")
+        if root_ts.exists():
+            tsconfig_used = root_ts.resolve().as_posix()
+            alias_map.update(_load_tsconfig_paths(root_ts))
+
+    if req.aliases:
+        for k, v in (req.aliases or {}).items():
+            arr = v if isinstance(v, list) else [v]
+            alias_map.setdefault(k, [])
+            alias_map[k].extend(arr)
+
+    resolved: DefaultDict[str, list[str]] = defaultdict(list)
+    unresolved: DefaultDict[str, list[str]] = defaultdict(list)
+
+    for md in req.md_paths:
+        try:
+            txt = Path(md).read_text(encoding="utf-8", errors="ignore")
+        except Exception:
+            unresolved[md].append("(md_read_error)")
+            continue
+        parsed = parse_review_md(txt)
+        deps = parsed.get("dependencies") or []
+        for dep in deps:
+            dep = str(dep).strip()
+            p = Path(dep)
+            if p.exists():
+                resolved[md].append(p.resolve().as_posix())
+                continue
+            if dep.startswith("@"):
+                hits = _resolve_alias_path(dep, alias_map)
+                if hits:
+                    resolved[md].extend(hits)
+                else:
+                    unresolved[md].append(dep)
+            else:
+                guess = Path(dep)
+                if guess.exists():
+                    resolved[md].append(guess.resolve().as_posix())
+                else:
+                    unresolved[md].append(dep)
+
+    out_resolved = {k: sorted(set(v)) for k, v in resolved.items()}
+    out_unresolved = {k: sorted(set(v)) for k, v in unresolved.items() if v}
+
+    reports_dir = Path(os.getenv("REPORTS_DIR", "reports")) / "deps"
+    reports_dir.mkdir(parents=True, exist_ok=True)
+    out_json = reports_dir / "resolved_deps.json"  # stable for CI diffs
+    out_json.write_text(_json_mod.dumps({"resolved": out_resolved, "unresolved": out_unresolved}, indent=2), encoding="utf-8")
+
+    return {
+        "ok": True,
+        "out": out_json.as_posix(),
+        "resolved": out_resolved,
+        "orphans": sorted({d for arr in out_unresolved.values() for d in arr}),
+        "tsconfig_used": tsconfig_used,
+    }
+# === END: /resolve_deps =======================================================
