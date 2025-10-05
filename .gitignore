@@ -42,3 +42,5 @@ venv/
 .ruff_cache/
 __pycache__/
 fd
+
+tools/cod1/
