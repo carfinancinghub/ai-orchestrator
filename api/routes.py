@@ -392,7 +392,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
                 except Exception:
                     review_batch = None  # type: ignore
 
-                if review_batch:
+                                if review_batch:
                     try:
                         batch = review_batch(
                             cand_paths,
@@ -403,7 +403,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
                     except Exception as e:
                         resp.setdefault("errors", []).append({"where": "batch_mds/run", "error": repr(e)})
 
-                fixed = _normalize_batch_artifacts(out_dir, batch)
+                fixed = _normalize_batch_artifacts(out_dir, req.label or "", batch)
 
                 batch_md = fixed.get("batch_md")
                 if not batch_md:
@@ -433,6 +433,7 @@ def convert_tree(req: ConvertTreeReq = Body(...)) -> dict:
             if req.md_first:
                 resp["next_step"] = "build_ts"
                 return resp
+
     except Exception as e:
         resp.setdefault("errors", []).append({"where": "batch_mds/top", "error": repr(e)})
 
