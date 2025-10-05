@@ -1,0 +1,116 @@
+{
+  "ok": true,
+  "root": "C:\\CFH\\frontend\\src\\components\\needsHome",
+  "dry_run": true,
+  "converted": [
+    "C:/CFH/frontend/src/components/needsHome/AutomationAgent.js",
+    "C:/CFH/frontend/src/components/needsHome/BadgeDisplay.js",
+    "C:/CFH/frontend/src/components/needsHome/BulkUpload.css",
+    "C:/CFH/frontend/src/components/needsHome/Button.js",
+    "C:/CFH/frontend/src/components/needsHome/CommunityDashboard.css",
+    "C:/CFH/frontend/src/components/needsHome/CommunityHub.js",
+    "C:/CFH/frontend/src/components/needsHome/CommunityHubEnhanced.js",
+    "C:/CFH/frontend/src/components/needsHome/CommunityModeratorDashboard.js",
+    "C:/CFH/frontend/src/components/needsHome/ComplianceReviewerDashboard.js",
+    "C:/CFH/frontend/src/components/needsHome/CrossBorderFinancing.js",
+    "C:/CFH/frontend/src/components/needsHome/DynamicPricing.js",
+    "C:/CFH/frontend/src/components/needsHome/FinancingCalculator.css",
+    "C:/CFH/frontend/src/components/needsHome/Forum.css",
+    "C:/CFH/frontend/src/components/needsHome/FraudDetection.js",
+    "C:/CFH/frontend/src/components/needsHome/Leaderboard.css",
+    "C:/CFH/frontend/src/components/needsHome/Leaderboard.js",
+    "C:/CFH/frontend/src/components/needsHome/LeaveReview.css",
+    "C:/CFH/frontend/src/components/needsHome/LoadingSpinner.js",
+    "C:/CFH/frontend/src/components/needsHome/LoyaltyQuests.js",
+    "C:/CFH/frontend/src/components/needsHome/Messaging.css",
+    "C:/CFH/frontend/src/components/needsHome/NotificationCenter.css",
+    "C:/CFH/frontend/src/components/needsHome/ProtectedRoute.js",
+    "C:/CFH/frontend/src/components/needsHome/ReferralAnalytics.js",
+    "C:/CFH/frontend/src/components/needsHome/Register.js",
+    "C:/CFH/frontend/src/components/needsHome/RegisterForm.js",
+    "C:/CFH/frontend/src/components/needsHome/ReputationBadgeTier.css",
+    "C:/CFH/frontend/src/components/needsHome/ReputationBadgeTier.js",
+    "C:/CFH/frontend/src/components/needsHome/RoleActivityCharts.css",
+    "C:/CFH/frontend/src/components/needsHome/RoleActivityCharts.js",
+    "C:/CFH/frontend/src/components/needsHome/RoleSwitchWrapper.js",
+    "C:/CFH/frontend/src/components/needsHome/SellerCreateListing.js",
+    "C:/CFH/frontend/src/components/needsHome/SellerDashboard.js",
+    "C:/CFH/frontend/src/components/needsHome/SmartRecommendations.css",
+    "C:/CFH/frontend/src/components/needsHome/SmartRecommendations.js",
+    "C:/CFH/frontend/src/components/needsHome/SupportCenter.js",
+    "C:/CFH/frontend/src/components/needsHome/TradeInForm.js",
+    "C:/CFH/frontend/src/components/needsHome/useAuth.js",
+    "C:/CFH/frontend/src/components/needsHome/UserProfile.js",
+    "C:/CFH/frontend/src/components/needsHome/UserReviewList.css",
+    "C:/CFH/frontend/src/components/needsHome/UserReviewList.js",
+    "C:/CFH/frontend/src/components/needsHome/VoiceInteraction.js",
+    "C:/CFH/frontend/src/components/needsHome/VRViewer.css",
+    "C:/CFH/frontend/src/components/needsHome/VRViewer.js"
+  ],
+  "skipped": [],
+  "reviews_count": 5,
+  "reviews": [
+    {
+      "file": "C:/CFH/frontend/src/components/needsHome/AutomationAgent.js",
+      "routing": {
+        "suggested_moves": [
+          {
+            "dest": "C:\\CFH\\frontend\\components\\common\\AutomationAgent.js",
+            "confidence": 0.1
+          }
+        ]
+      },
+      "markdown": "        # AutomationAgent.js\n\n        **Detected Type:** `.js`  |  **Suggested Dest:** `common`  |  **Confidence:** `0.10`\n\n        ## Purpose (heuristic)\n        - Lightweight legacy pass; LLM batch reviewer supersedes this.\n\n        ## Code Preview\n        ```\n        import React, { useState, useEffect } from 'react';\r\nimport axios from 'axios';\r\nimport Navbar from './Navbar';\r\n\r\nconst AutomationAgent = () => {\r\nconst [tasks, setTasks] = useState([]);\r\n\r\nuseEffect(() => {\r\naxios.get('/api/automation/tasks').then(res => setTasks(res.data));\r\n}, []);\r\n\r\nreturn (\r\n\r\n<div> <Navbar /> <div className=\"p-4\"> <h1 className=\"text-2xl font-bold mb-4\">Automation Agent</h1> <div className=\"grid gap-4\"> {tasks.map(task => ( <div key={task._id} className=\"border p-4 rounded\"> <h2 className=\"text-lg\">Task: {task.name}</h2> <p>Status: {task.status}</p> <button className=\"bg-blue-500 text-white px-4 py-2 rounded\">Run Task</button> </div> ))} </div> </div> </div> ); };\r\nexport default AutomationAgent;\n        ```\n"
+    },
+    {
+      "file": "C:/CFH/frontend/src/components/needsHome/BadgeDisplay.js",
+      "routing": {
+        "suggested_moves": [
+          {
+            "dest": "C:\\CFH\\frontend\\components\\common\\BadgeDisplay.js",
+            "confidence": 0.1
+          }
+        ]
+      },
+      "markdown": "        # BadgeDisplay.js\n\n        **Detected Type:** `.js`  |  **Suggested Dest:** `common`  |  **Confidence:** `0.10`\n\n        ## Purpose (heuristic)\n        - Lightweight legacy pass; LLM batch reviewer supersedes this.\n\n        ## Code Preview\n        ```\n        // File: BadgeDisplay.js\r\n// Path: frontend/src/components/BadgeDisplay.js\r\n\r\nimport React from 'react';\r\n\r\nconst badgeColors = {\r\n  Bronze: 'bg-yellow-600 text-white',\r\n  Silver: 'bg-gray-400 text-black',\r\n  Gold: 'bg-yellow-300 text-black',\r\n  Platinum: 'bg-blue-400 text-white',\r\n};\r\n\r\nconst BadgeDisplay = ({ level = 'Bronze', label }) => {\r\n  const badgeStyle = badgeColors[level] || 'bg-gray-200 text-black';\r\n\r\n  return (\r\n    <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${badgeStyle}`}> \r\n      {label || level} Badge\r\n    </span>\r\n  );\r\n};\r\n\r\nexport default BadgeDisplay;\r\n\n        ```\n"
+    },
+    {
+      "file": "C:/CFH/frontend/src/components/needsHome/Button.js",
+      "routing": {
+        "suggested_moves": [
+          {
+            "dest": "C:\\CFH\\frontend\\components\\common\\Button.js",
+            "confidence": 0.1
+          }
+        ]
+      },
+      "markdown": "        # Button.js\n\n        **Detected Type:** `.js`  |  **Suggested Dest:** `common`  |  **Confidence:** `0.10`\n\n        ## Purpose (heuristic)\n        - Lightweight legacy pass; LLM batch reviewer supersedes this.\n\n        ## Code Preview\n        ```\n        // File: Button.js\r\n// Path: frontend/src/components/common/Button.js\r\n\r\nimport React from 'react';\r\n\r\nconst Button = ({ children, onClick, disabled, type = 'button', className = '' }) => (\r\n  <button\r\n    type={type}\r\n    onClick={onClick}\r\n    disabled={disabled}\r\n    className={`px-4 py-2 bg-indigo-600 text-white rounded focus:outline-none focus:ring focus:ring-indigo-300 disabled:opacity-50 ${className}`}\r\n    aria-disabled={disabled}\r\n  >\r\n    {children}\r\n  </button>\r\n);\r\n\r\nexport default Button;\r\n\r\n\r\n// File: Card.js\r\n// Path: frontend/src/components/common/Card.js\r\n\r\nimport React from 'react';\r\n\r\nconst Card = ({ title, children, className = '' }) => (\r\n  <section className={`bg-white border rounded shadow p-4 ${className}`}>  \r\n    {title && <h3 className=\"text-lg font-semibold mb-2\n        ```\n"
+    },
+    {
+      "file": "C:/CFH/frontend/src/components/needsHome/CommunityHub.js",
+      "routing": {
+        "suggested_moves": [
+          {
+            "dest": "C:\\CFH\\frontend\\components\\common\\CommunityHub.js",
+            "confidence": 0.1
+          }
+        ]
+      },
+      "markdown": "        # CommunityHub.js\n\n        **Detected Type:** `.js`  |  **Suggested Dest:** `common`  |  **Confidence:** `0.10`\n\n        ## Purpose (heuristic)\n        - Lightweight legacy pass; LLM batch reviewer supersedes this.\n\n        ## Code Preview\n        ```\n        import React, { useState, useEffect } from 'react';\r\nimport axios from 'axios';\r\nimport Navbar from './Navbar';\r\n\r\nconst CommunityHub = () => {\r\nconst [posts, setPosts] = useState([]);\r\n\r\nuseEffect(() => {\r\naxios.get('/api/community').then(res => setPosts(res.data));\r\n}, []);\r\n\r\nreturn (\r\n\r\n<div> <Navbar /> <div className=\"p-4\"> <h1 className=\"text-2xl font-bold mb-4\">Community Hub</h1> <div className=\"grid gap-4\"> {posts.map(post => ( <div key={post._id} className=\"border p-4 rounded\"> <h2 className=\"text-lg\">{post.title}</h2> <p>By {post.author}</p> <p>{post.content}</p> <button className=\"bg-blue-500 text-white px-4 py-2 rounded\">Comment</button> </div> ))} </div> </div> </div> ); };\r\nexport default CommunityHub;\n        ```\n"
+    },
+    {
+      "file": "C:/CFH/frontend/src/components/needsHome/CommunityHubEnhanced.js",
+      "routing": {
+        "suggested_moves": [
+          {
+            "dest": "C:\\CFH\\frontend\\components\\common\\CommunityHubEnhanced.js",
+            "confidence": 0.1
+          }
+        ]
+      },
+      "markdown": "        # CommunityHubEnhanced.js\n\n        **Detected Type:** `.js`  |  **Suggested Dest:** `common`  |  **Confidence:** `0.10`\n\n        ## Purpose (heuristic)\n        - Lightweight legacy pass; LLM batch reviewer supersedes this.\n\n        ## Code Preview\n        ```\n        import React, { useState, useEffect } from 'react';\r\nimport axios from 'axios';\r\nimport Navbar from './Navbar';\r\n\r\nconst CommunityHubEnhanced = () => {\r\nconst [posts, setPosts] = useState([]);\r\n\r\nuseEffect(() => {\r\naxios.get('/api/community/enhanced').then(res => setPosts(res.data));\r\n}, []);\r\n\r\nreturn (\r\n\r\n<div> <Navbar /> <div className=\"p-4\"> <h1 className=\"text-2xl font-bold mb-4\">Enhanced Community Hub</h1> <div className=\"grid gap-4\"> {posts.map(post => ( <div key={post._id} className=\"border p-4 rounded\"> <h2 className=\"text-lg\">{post.title}</h2> <p>By {post.author}</p> <p>{post.content}</p> <div className=\"flex gap-2\"> <button className=\"bg-blue-500 text-white px-4 py-2 rounded\">Upvote</button> <button className=\"bg-blue-500 text-white px-4 py-2 rounded\">Comment</button> </div> </d\n        ```\n"
+    }
+  ],
+  "artifacts": {},
+  "label": "wave-smoke"
+}

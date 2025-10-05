@@ -1,0 +1,352 @@
+{
+  "ok": true,
+  "root": "C:\\CFH\\frontend\\src",
+  "dry_run": true,
+  "converted": [
+    "C:/CFH/frontend/src/App.jsx",
+    "C:/CFH/frontend/src/App.tsx",
+    "C:/CFH/frontend/src/index.css",
+    "C:/CFH/frontend/src/index.jsx",
+    "C:/CFH/frontend/src/index.tsx",
+    "C:/CFH/frontend/src/components/AdminEmailNotifications.jsx",
+    "C:/CFH/frontend/src/components/AdminEmailNotifications.tsx",
+    "C:/CFH/frontend/src/hooks/useMechanicSocket.js",
+    "C:/CFH/frontend/src/i18n/i18n.ts",
+    "C:/CFH/frontend/src/services/analyticsApi.ts",
+    "C:/CFH/frontend/src/services/escrowApi.ts",
+    "C:/CFH/frontend/src/styles/global.css",
+    "C:/CFH/frontend/src/styles/heartbeat.css",
+    "C:/CFH/frontend/src/styles/theme.js",
+    "C:/CFH/frontend/src/utils/export_delivery_pdf.ts",
+    "C:/CFH/frontend/src/utils/gamificationUtils.ts",
+    "C:/CFH/frontend/src/utils/logger.ts",
+    "C:/CFH/frontend/src/utils/RewardHelper.js",
+    "C:/CFH/frontend/src/utils/RewardHelper.ts",
+    "C:/CFH/frontend/src/utils/SocialShareHelper.js",
+    "C:/CFH/frontend/src/utils/SocialShareHelper.ts",
+    "C:/CFH/frontend/src/utils/useAuth.js",
+    "C:/CFH/frontend/src/utils/useAuth.ts",
+    "C:/CFH/frontend/src/utils/auction/auctionExportUtils.jsx",
+    "C:/CFH/frontend/src/utils/auction/auctionExportUtils.ts",
+    "C:/CFH/frontend/src/utils/auction/auctionExportUtils.tsx",
+    "C:/CFH/frontend/src/utils/graph/GraphExportService.js",
+    "C:/CFH/frontend/src/utils/graph/GraphExportService.ts",
+    "C:/CFH/frontend/src/utils/inspection/blurDetector.ts",
+    "C:/CFH/frontend/src/utils/inspection/submitInspectionToBackend.js",
+    "C:/CFH/frontend/src/utils/inspection/submitInspectionToBackend.ts",
+    "C:/CFH/frontend/src/utils/__tests__/embed_map_snapshot_pdf_test.ts",
+    "C:/CFH/frontend/src/utils/__tests__/export_delivery_pdf_test.ts",
+    "C:/CFH/frontend/src/services/api/auction.ts",
+    "C:/CFH/frontend/src/services/api/communication.ts",
+    "C:/CFH/frontend/src/services/api/financing.ts",
+    "C:/CFH/frontend/src/services/api/index.ts",
+    "C:/CFH/frontend/src/services/api/insurance.ts",
+    "C:/CFH/frontend/src/services/api/inventory.ts",
+    "C:/CFH/frontend/src/services/api/mechanic.ts",
+    "C:/CFH/frontend/src/services/api/storage.ts",
+    "C:/CFH/frontend/src/services/api/user.ts",
+    "C:/CFH/frontend/src/locales/translations/en_deprecated.json",
+    "C:/CFH/frontend/src/locales/translations/es_deprecated.json",
+    "C:/CFH/frontend/src/locales/translations/fr_deprecated.json",
+    "C:/CFH/frontend/src/i18n/locales/en.json",
+    "C:/CFH/frontend/src/i18n/locales/es.json",
+    "C:/CFH/frontend/src/i18n/locales/es.json.broken",
+    "C:/CFH/frontend/src/i18n/locales/fr.json",
+    "C:/CFH/frontend/src/i18n/locales/fr.json.broken",
+    "C:/CFH/frontend/src/hooks/escrow/EscrowOfficerHook.js",
+    "C:/CFH/frontend/src/hooks/escrow/EscrowOfficerHook.ts",
+    "C:/CFH/frontend/src/components/admin/AdminAuctionOverview.jsx",
+    "C:/CFH/frontend/src/components/admin/AdminAuctionOverview.tsx",
+    "C:/CFH/frontend/src/components/admin/AdminCustomWidgetLibrary.jsx",
+    "C:/CFH/frontend/src/components/admin/AdminCustomWidgetLibrary.tsx",
+    "C:/CFH/frontend/src/components/admin/LiveDashboardHealthWidget.jsx",
+    "C:/CFH/frontend/src/components/admin/LiveDashboardHealthWidget.tsx",
+    "C:/CFH/frontend/src/components/ai/AIBadgeOverlay.js",
+    "C:/CFH/frontend/src/components/ai/AIBadgeOverlay.ts",
+    "C:/CFH/frontend/src/components/ai/AIPredictorDashboard.jsx",
+    "C:/CFH/frontend/src/components/ai/AIPredictorDashboard.tsx",
+    "C:/CFH/frontend/src/components/ai/AIScorePanel.js",
+    "C:/CFH/frontend/src/components/ai/AIScorePanel.ts",
+    "C:/CFH/frontend/src/components/ai/BidConfidenceMeter.jsx",
+    "C:/CFH/frontend/src/components/ai/BidConfidenceMeter.tsx",
+    "C:/CFH/frontend/src/components/ai/BidStrategyAdvisor.jsx",
+    "C:/CFH/frontend/src/components/ai/BidStrategyAdvisor.tsx",
+    "C:/CFH/frontend/src/components/ai/PredictiveComparison.jsx",
+    "C:/CFH/frontend/src/components/ai/PredictiveComparison.tsx",
+    "C:/CFH/frontend/src/components/ai/SmartInsightsWidget.js",
+    "C:/CFH/frontend/src/components/ai/SmartInsightsWidget.jsx",
+    "C:/CFH/frontend/src/components/ai/SmartInsightsWidget.ts",
+    "C:/CFH/frontend/src/components/ai/SmartInsightsWidget.tsx",
+    "C:/CFH/frontend/src/components/ai/TrustScoreViewer.jsx",
+    "C:/CFH/frontend/src/components/ai/TrustScoreViewer.tsx",
+    "C:/CFH/frontend/src/components/ai/ValuationAssistant.jsx",
+    "C:/CFH/frontend/src/components/ai/ValuationAssistant.tsx",
+    "C:/CFH/frontend/src/components/ai/ValuationLiveFeed.jsx",
+    "C:/CFH/frontend/src/components/ai/ValuationLiveFeed.tsx",
+    "C:/CFH/frontend/src/components/analytics/AnalyticsDashboard.tsx",
+    "C:/CFH/frontend/src/components/analytics/BIIntegrationPanel.tsx",
+    "C:/CFH/frontend/src/components/analytics/ChartWidget.tsx",
+    "C:/CFH/frontend/src/components/analytics/DataTable.tsx",
+    "C:/CFH/frontend/src/components/analytics/FilterPanel.tsx",
+    "C:/CFH/frontend/src/components/analytics/NLPQueryInput.tsx",
+    "C:/CFH/frontend/src/components/analytics/PredictiveGraph.tsx",
+    "C:/CFH/frontend/src/components/analytics/QualityCheckComponent.tsx",
+    "C:/CFH/frontend/src/components/arbitrator/ArbitratorAnalyticsPanel.jsx",
+    "C:/CFH/frontend/src/components/arbitrator/ArbitratorAnalyticsPanel.tsx",
+    "C:/CFH/frontend/src/components/arbitrator/ArbitratorDashboard.jsx",
+    "C:/CFH/frontend/src/components/arbitrator/ArbitratorDashboard.tsx",
+    "C:/CFH/frontend/src/components/auction/AuctionAccessibilityWrapper.jsx",
+    "C:/CFH/frontend/src/components/auction/AuctionAccessibilityWrapper.tsx",
+    "C:/CFH/frontend/src/components/auction/AuctionIntelligenceDashboard.jsx",
+    "C:/CFH/frontend/src/components/auction/AuctionIntelligenceDashboard.tsx",
+    "C:/CFH/frontend/src/components/auction/AuctionItemListing.tsx",
+    "C:/CFH/frontend/src/components/auction/AuctionLiveBidTracker.jsx",
+    "C:/CFH/frontend/src/components/auction/AuctionLiveBidTracker.tsx",
+    "C:/CFH/frontend/src/components/auction/AuctionManagement.tsx",
+    "C:/CFH/frontend/src/components/auction/AuctionPremiumInsightsPanel.jsx",
+    "C:/CFH/frontend/src/components/auction/AuctionPremiumInsightsPanel.tsx",
+    "C:/CFH/frontend/src/components/auction/AuctionSEOHead.jsx",
+    "C:/CFH/frontend/src/components/auction/AuctionSEOHead.tsx",
+    "C:/CFH/frontend/src/components/auction/LiveAuctionStream.tsx",
+    "C:/CFH/frontend/src/components/auction/SellerBadgePanel.jsx",
+    "C:/CFH/frontend/src/components/auction/SellerBadgePanel.tsx",
+    "C:/CFH/frontend/src/components/auth/CommunityDashboard.js",
+    "C:/CFH/frontend/src/components/auth/Login.jsx",
+    "C:/CFH/frontend/src/components/auth/Login.tsx",
+    "C:/CFH/frontend/src/components/auth/LoginForm.jsx"
+  ],
+  "skipped": [
+    "C:/CFH/frontend/src/archive",
+    "C:/CFH/frontend/src/components",
+    "C:/CFH/frontend/src/hooks",
+    "C:/CFH/frontend/src/i18n",
+    "C:/CFH/frontend/src/locales",
+    "C:/CFH/frontend/src/services",
+    "C:/CFH/frontend/src/shims",
+    "C:/CFH/frontend/src/styles",
+    "C:/CFH/frontend/src/tests",
+    "C:/CFH/frontend/src/utils",
+    "C:/CFH/frontend/src/__mocks__",
+    "C:/CFH/frontend/src/archive/hauler",
+    "C:/CFH/frontend/src/components/admin",
+    "C:/CFH/frontend/src/components/ai",
+    "C:/CFH/frontend/src/components/analytics",
+    "C:/CFH/frontend/src/components/arbitrator",
+    "C:/CFH/frontend/src/components/auction",
+    "C:/CFH/frontend/src/components/auth",
+    "C:/CFH/frontend/src/components/blockchain",
+    "C:/CFH/frontend/src/components/body-shop",
+    "C:/CFH/frontend/src/components/buyer",
+    "C:/CFH/frontend/src/components/chat",
+    "C:/CFH/frontend/src/components/common",
+    "C:/CFH/frontend/src/components/community",
+    "C:/CFH/frontend/src/components/contract",
+    "C:/CFH/frontend/src/components/disputes",
+    "C:/CFH/frontend/src/components/equity-hub",
+    "C:/CFH/frontend/src/components/escrow",
+    "C:/CFH/frontend/src/components/finance",
+    "C:/CFH/frontend/src/components/gamification",
+    "C:/CFH/frontend/src/components/guest",
+    "C:/CFH/frontend/src/components/hauler",
+    "C:/CFH/frontend/src/components/inspections",
+    "C:/CFH/frontend/src/components/insurance",
+    "C:/CFH/frontend/src/components/internal",
+    "C:/CFH/frontend/src/components/judge",
+    "C:/CFH/frontend/src/components/lender",
+    "C:/CFH/frontend/src/components/maas",
+    "C:/CFH/frontend/src/components/marketplace",
+    "C:/CFH/frontend/src/components/mechanic",
+    "C:/CFH/frontend/src/components/mobile",
+    "C:/CFH/frontend/src/components/mock",
+    "C:/CFH/frontend/src/components/needsHome",
+    "C:/CFH/frontend/src/components/notifications",
+    "C:/CFH/frontend/src/components/officer",
+    "C:/CFH/frontend/src/components/onboarding",
+    "C:/CFH/frontend/src/components/partner",
+    "C:/CFH/frontend/src/components/premium",
+    "C:/CFH/frontend/src/components/recommendations",
+    "C:/CFH/frontend/src/components/seller",
+    "C:/CFH/frontend/src/components/storage",
+    "C:/CFH/frontend/src/components/support",
+    "C:/CFH/frontend/src/components/tinting",
+    "C:/CFH/frontend/src/components/title",
+    "C:/CFH/frontend/src/components/user",
+    "C:/CFH/frontend/src/components/valuation",
+    "C:/CFH/frontend/src/hooks/escrow",
+    "C:/CFH/frontend/src/i18n/locales",
+    "C:/CFH/frontend/src/locales/translations",
+    "C:/CFH/frontend/src/services/api",
+    "C:/CFH/frontend/src/utils/auction",
+    "C:/CFH/frontend/src/utils/graph",
+    "C:/CFH/frontend/src/utils/inspection",
+    "C:/CFH/frontend/src/utils/__tests__",
+    "C:/CFH/frontend/src/components/admin/analytics",
+    "C:/CFH/frontend/src/components/admin/arbitration",
+    "C:/CFH/frontend/src/components/admin/auction",
+    "C:/CFH/frontend/src/components/admin/badges",
+    "C:/CFH/frontend/src/components/admin/compliance",
+    "C:/CFH/frontend/src/components/admin/contract",
+    "C:/CFH/frontend/src/components/admin/dashboard",
+    "C:/CFH/frontend/src/components/admin/disputes",
+    "C:/CFH/frontend/src/components/admin/escrow",
+    "C:/CFH/frontend/src/components/admin/export",
+    "C:/CFH/frontend/src/components/admin/finance",
+    "C:/CFH/frontend/src/components/admin/health",
+    "C:/CFH/frontend/src/components/admin/insights",
+    "C:/CFH/frontend/src/components/admin/layout",
+    "C:/CFH/frontend/src/components/admin/leaderboard",
+    "C:/CFH/frontend/src/components/admin/logins",
+    "C:/CFH/frontend/src/components/admin/loyalty",
+    "C:/CFH/frontend/src/components/admin/moderation",
+    "C:/CFH/frontend/src/components/admin/notifications",
+    "C:/CFH/frontend/src/components/admin/payments",
+    "C:/CFH/frontend/src/components/admin/reports",
+    "C:/CFH/frontend/src/components/admin/support",
+    "C:/CFH/frontend/src/components/admin/users",
+    "C:/CFH/frontend/src/components/ai/bidding",
+    "C:/CFH/frontend/src/components/auction/core"
+  ],
+  "reviews_count": 10,
+  "reviews": [
+    {
+      "file": "C:/CFH/frontend/src/App.jsx",
+      "routing": {
+        "suggested_moves": [
+          {
+            "src": "C:\\CFH\\frontend\\src\\App.jsx",
+            "dest": "C:\\CFH\\frontend\\src\\components\\buyer\\App.jsx",
+            "confidence": 0.85,
+            "reason": "Matched pattern '\\bbuyer\\b|\\bcheckout\\b|\\bbidder\\b' → 'buyer'"
+          }
+        ]
+      },
+      "markdown": "# App.jsx\n\n**Detected Type:** `.jsx`  |  **Suggested Dest:** `buyer`  |  **Confidence:** `0.85`\n\n## Purpose (heuristic)\n- Matched pattern '\\bbuyer\\b|\\bcheckout\\b|\\bbidder\\b' → 'buyer'\n\n## Code Preview\n```\n/**\n * File: App.jsx\n * Path: frontend/src/App.jsx\n * Purpose: Main routing file for the Rivers Auction platform with escrow, admin, and equity routes\n * Author: Cod3 (05082151)\n * Date: May 08, 2025 (Updated)\n * Cod2 Crown Certified\n */\n\nimport React, { Suspense, lazy } from 'react';\nimport { Routes, Route, Navigate, Outlet } from 'react-router-dom';\n\n// --- Core Components ---\nimport Navbar from '@/components/common/Navbar.jsx';\nimport NavbarMobileToggle from '@/components/common/NavbarMobileToggle.jsx';\nimport LoadingSpinner from '@/components/common/LoadingSpinner.jsx';\nimport ProtectedRoute from '@/components/common/ProtectedRoute.jsx';\nimport NotificationCenter from '@/components/notifications/NotificationCenter.jsx';\n\n// --- Lazy-loaded Pages ---\n```\n\n> This summary is heuristic-only. Replace with LLM-backed analysis later."
+    },
+    {
+      "file": "C:/CFH/frontend/src/App.tsx",
+      "routing": {
+        "suggested_moves": [
+          {
+            "src": "C:\\CFH\\frontend\\src\\App.tsx",
+            "dest": "C:\\CFH\\frontend\\src\\components\\buyer\\App.tsx",
+            "confidence": 0.85,
+            "reason": "Matched pattern '\\bbuyer\\b|\\bcheckout\\b|\\bbidder\\b' → 'buyer'"
+          }
+        ]
+      },
+      "markdown": "# App.tsx\n\n**Detected Type:** `.tsx`  |  **Suggested Dest:** `buyer`  |  **Confidence:** `0.85`\n\n## Purpose (heuristic)\n- Matched pattern '\\bbuyer\\b|\\bcheckout\\b|\\bbidder\\b' → 'buyer'\n\n## Code Preview\n```\n// @ai-generated\n/**\n * File: App.jsx\n * Path: frontend/src/App.jsx\n * Purpose: Main routing file for the Rivers Auction platform with escrow, admin, and equity routes\n * Author: Cod3 (05082151)\n * Date: May 08, 2025 (Updated)\n * Cod2 Crown Certified\n */\n\nimport React, { Suspense, lazy } from 'react';\nimport { Routes, Route, Navigate, Outlet } from 'react-router-dom';\n\n// --- Core Components ---\nimport Navbar from '@/components/common/Navbar.jsx';\nimport NavbarMobileToggle from '@/components/common/NavbarMobileToggle.jsx';\nimport LoadingSpinner from '@/components/common/LoadingSpinner.jsx';\nimport ProtectedRoute from '@/components/common/ProtectedRoute.jsx';\nimport NotificationCenter from '@/components/notifications/NotificationCenter.jsx';\n\n```\n\n> This summary is heuristic-only. Replace with LLM-backed analysis later."
+    },
+    {
+      "file": "C:/CFH/frontend/src/index.jsx",
+      "routing": {
+        "suggested_moves": [
+          {
+            "src": "C:\\CFH\\frontend\\src\\index.jsx",
+            "dest": "",
+            "confidence": 0.0,
+            "reason": "No routing keyword match"
+          }
+        ]
+      },
+      "markdown": "# index.jsx\n\n**Detected Type:** `.jsx`  |  **Suggested Dest:** `unknown`  |  **Confidence:** `0.00`\n\n## Purpose (heuristic)\n- No routing keyword match\n\n## Code Preview\n```\n/**\n * @file index.jsx\n * @path C:\\CFH\\frontend\\src\\index.jsx\n * @author Mini Team\n * @created 2025-06-10 [0823]\n * @purpose Entry point for the React application, initializing routing and i18n.\n * @user_impact Renders the app with multi-language support for a global user base.\n * @version 1.0.0\n */\nimport React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport { BrowserRouter as Router } from 'react-router-dom';\nimport App from './App';\nimport './index.css';\nimport './i18n/i18n';\n\nconst root = ReactDOM.createRoot(document.getElementById('root'));\nroot.render(\n  <React.StrictMode>\n    <Router>\n```\n\n> This summary is heuristic-only. Replace with LLM-backed analysis later."
+    },
+    {
+      "file": "C:/CFH/frontend/src/index.tsx",
+      "routing": {
+        "suggested_moves": [
+          {
+            "src": "C:\\CFH\\frontend\\src\\index.tsx",
+            "dest": "",
+            "confidence": 0.0,
+            "reason": "No routing keyword match"
+          }
+        ]
+      },
+      "markdown": "# index.tsx\n\n**Detected Type:** `.tsx`  |  **Suggested Dest:** `unknown`  |  **Confidence:** `0.00`\n\n## Purpose (heuristic)\n- No routing keyword match\n\n## Code Preview\n```\n// @ai-generated\n/**\n * @file index.jsx\n * @path C:\\CFH\\frontend\\src\\index.jsx\n * @author Mini Team\n * @created 2025-06-10 [0823]\n * @purpose Entry point for the React application, initializing routing and i18n.\n * @user_impact Renders the app with multi-language support for a global user base.\n * @version 1.0.0\n */\nimport React from 'react';\nimport ReactDOM from 'react-dom/client';\nimport { BrowserRouter as Router } from 'react-router-dom';\nimport App from './App';\nimport './index.css';\nimport './i18n/i18n';\n\nconst root = ReactDOM.createRoot(document.getElementById('root'));\nroot.render(\n  <React.StrictMode>\n```\n\n> This summary is heuristic-only. Replace with LLM-backed analysis later."
+    },
+    {
+      "file": "C:/CFH/frontend/src/components/AdminEmailNotifications.jsx",
+      "routing": {
+        "suggested_moves": [
+          {
+            "src": "C:\\CFH\\frontend\\src\\components\\AdminEmailNotifications.jsx",
+            "dest": "C:\\CFH\\frontend\\src\\components\\admin\\AdminEmailNotifications.jsx",
+            "confidence": 0.75,
+            "reason": "Matched pattern '\\badmin\\b|\\btenant\\b|\\brole\\b|\\bpermission\\b' → 'admin'"
+          }
+        ]
+      },
+      "markdown": "# AdminEmailNotifications.jsx\n\n**Detected Type:** `.jsx`  |  **Suggested Dest:** `admin`  |  **Confidence:** `0.75`\n\n## Purpose (heuristic)\n- Matched pattern '\\badmin\\b|\\btenant\\b|\\brole\\b|\\bpermission\\b' → 'admin'\n\n## Code Preview\n```\n/**\n * AdminEmailNotifications.jsx\n * Path: frontend/src/components/admin/AdminEmailNotifications.jsx\n * Purpose: Manage admin email templates (e.g., user bans, system alerts) with table view.\n * 👑 Cod2 Crown Certified\n */\n\nimport React, { useState, useEffect } from 'react';\nimport axios from 'axios';\nimport { toast } from 'react-toastify';\nimport LoadingSpinner from '@/components/common/LoadingSpinner';\nimport ErrorBoundary from '@/components/common/ErrorBoundary';\n\nconst AdminEmailNotifications = ({ adminId }) => {\n  const [templates, setTemplates] = useState([]);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  // Fetch email templates\n  useEffect(() => {\n```\n\n> This summary is heuristic-only. Replace with LLM-backed analysis later."
+    },
+    {
+      "file": "C:/CFH/frontend/src/components/AdminEmailNotifications.tsx",
+      "routing": {
+        "suggested_moves": [
+          {
+            "src": "C:\\CFH\\frontend\\src\\components\\AdminEmailNotifications.tsx",
+            "dest": "C:\\CFH\\frontend\\src\\components\\admin\\AdminEmailNotifications.tsx",
+            "confidence": 0.75,
+            "reason": "Matched pattern '\\badmin\\b|\\btenant\\b|\\brole\\b|\\bpermission\\b' → 'admin'"
+          }
+        ]
+      },
+      "markdown": "# AdminEmailNotifications.tsx\n\n**Detected Type:** `.tsx`  |  **Suggested Dest:** `admin`  |  **Confidence:** `0.75`\n\n## Purpose (heuristic)\n- Matched pattern '\\badmin\\b|\\btenant\\b|\\brole\\b|\\bpermission\\b' → 'admin'\n\n## Code Preview\n```\n// @ai-generated\n/**\n * AdminEmailNotifications.jsx\n * Path: frontend/src/components/admin/AdminEmailNotifications.jsx\n * Purpose: Manage admin email templates (e.g., user bans, system alerts) with table view.\n * 👑 Cod2 Crown Certified\n */\n\nimport React, { useState, useEffect } from 'react';\nimport axios from 'axios';\nimport { toast } from 'react-toastify';\nimport LoadingSpinner from '@/components/common/LoadingSpinner';\nimport ErrorBoundary from '@/components/common/ErrorBoundary';\n\nconst AdminEmailNotifications = ({ adminId }) => {\n  const [templates, setTemplates] = useState([]);\n  const [loading, setLoading] = useState(true);\n  const [error, setError] = useState(null);\n\n  // Fetch email templates\n```\n\n> This summary is heuristic-only. Replace with LLM-backed analysis later."
+    },
+    {
+      "file": "C:/CFH/frontend/src/hooks/useMechanicSocket.js",
+      "routing": {
+        "suggested_moves": [
+          {
+            "src": "C:\\CFH\\frontend\\src\\hooks\\useMechanicSocket.js",
+            "dest": "",
+            "confidence": 0.0,
+            "reason": "No routing keyword match"
+          }
+        ]
+      },
+      "markdown": "# useMechanicSocket.js\n\n**Detected Type:** `.js`  |  **Suggested Dest:** `unknown`  |  **Confidence:** `0.00`\n\n## Purpose (heuristic)\n- No routing keyword match\n\n## Code Preview\n```\n// File: useMechanicSocket.js\n// Path: frontend/src/hooks/useMechanicSocket.js\n// Author: Cod1 (05051245)\n\nimport { useEffect, useState } from 'react';\n\nconst useMechanicSocket = () => {\n  const [tasks, setTasks] = useState([]);\n\n  useEffect(() => {\n    const timer = setInterval(() => {\n      const sample = {\n        id: 'task_' + Math.floor(Math.random() * 1000),\n        vehicleId: 'VIN' + Math.floor(Math.random() * 9000),\n        priority: ['Low', 'Medium', 'High'][Math.floor(Math.random() * 3)],\n        timestamp: new Date().toLocaleString()\n      };\n      setTasks(prev => [sample, ...prev].slice(0, 5));\n    }, 6000);\n\n```\n\n> This summary is heuristic-only. Replace with LLM-backed analysis later."
+    },
+    {
+      "file": "C:/CFH/frontend/src/i18n/i18n.ts",
+      "routing": {
+        "suggested_moves": [
+          {
+            "src": "C:\\CFH\\frontend\\src\\i18n\\i18n.ts",
+            "dest": "",
+            "confidence": 0.0,
+            "reason": "No routing keyword match"
+          }
+        ]
+      },
+      "markdown": "# i18n.ts\n\n**Detected Type:** `.ts`  |  **Suggested Dest:** `unknown`  |  **Confidence:** `0.00`\n\n## Purpose (heuristic)\n- No routing keyword match\n\n## Code Preview\n```\n/**\n * @file i18n.ts\n * @path C:\\CFH\\frontend\\src\\i18n\\i18n.ts\n * @author Mini Team\n * @created 2025-06-10 [0823]\n * @purpose Configures internationalization for the frontend using react-i18next.\n * @user_impact Enables multi-language support for a global user base.\n * @version 1.0.0\n */\nimport i18n from 'i18next';\nimport { initReactI18next } from 'react-i18next';\nimport en from './locales/en.json';\nimport es from './locales/es.json';\nimport fr from './locales/fr.json';\n\ni18n\n  .use(initReactI18next)\n  .init({\n    resources: {\n      en: { translation: en },\n```\n\n> This summary is heuristic-only. Replace with LLM-backed analysis later."
+    },
+    {
+      "file": "C:/CFH/frontend/src/services/analyticsApi.ts",
+      "routing": {
+        "suggested_moves": [
+          {
+            "src": "C:\\CFH\\frontend\\src\\services\\analyticsApi.ts",
+            "dest": "C:\\CFH\\frontend\\src\\components\\analytics\\analyticsApi.ts",
+            "confidence": 0.72,
+            "reason": "Matched pattern '\\banalytic(s|s-)\\b|\\bmetric\\b|\\bdashboard\\b' → 'analytics'"
+          }
+        ]
+      },
+      "markdown": "# analyticsApi.ts\n\n**Detected Type:** `.ts`  |  **Suggested Dest:** `analytics`  |  **Confidence:** `0.72`\n\n## Purpose (heuristic)\n- Matched pattern '\\banalytic(s|s-)\\b|\\bmetric\\b|\\bdashboard\\b' → 'analytics'\n\n## Code Preview\n```\n/**\n * @file analyticsApi.ts\n * @path C:\\CFH\\frontend\\src\\services\\analyticsApi.ts\n * @author Cod1 Team\n * @created 2025-06-11 [1810]\n * @purpose Fetches analytics data from the backend API.\n * @user_impact Enables the frontend to display analytics data.\n * @version 1.0.0\n */\nexport interface AnalyticsFilters { dateFrom: string; dateTo: string; }\n\nexport const fetchAnalytics = async (filters: AnalyticsFilters) => {\n  const resp = await fetch(`/api/analytics?from=${filters.dateFrom}&to=${filters.dateTo}`, {\n    headers: { 'Accept': 'application/json' },\n  });\n  const data = await resp.json();\n  return data;\n};\n```\n\n> This summary is heuristic-only. Replace with LLM-backed analysis later."
+    },
+    {
+      "file": "C:/CFH/frontend/src/services/escrowApi.ts",
+      "routing": {
+        "suggested_moves": [
+          {
+            "src": "C:\\CFH\\frontend\\src\\services\\escrowApi.ts",
+            "dest": "C:\\CFH\\frontend\\src\\components\\escrow\\escrowApi.ts",
+            "confidence": 0.8,
+            "reason": "Matched pattern '\\bescrow\\b|\\bwallet\\b|\\bsettlement\\b' → 'escrow'"
+          }
+        ]
+      },
+      "markdown": "# escrowApi.ts\n\n**Detected Type:** `.ts`  |  **Suggested Dest:** `escrow`  |  **Confidence:** `0.80`\n\n## Purpose (heuristic)\n- Matched pattern '\\bescrow\\b|\\bwallet\\b|\\bsettlement\\b' → 'escrow'\n\n## Code Preview\n```\n/**\n * @file escrowApi.ts\n * @path C:\\CFH\\frontend\\src\\services\\escrowApi.ts\n * @author Mini Team\n * @created 2025-06-10 [0823]\n * @purpose Centralizes all API requests and client-side validation for the escrow module.\n * @user_impact Provides a single, reliable point for frontend components to communicate with the backend.\n * @version 1.0.0\n */\nimport axios from 'axios';\nimport Joi from 'joi';\n\nconst API_URL = '/api/escrow';\nconst getAuthToken = () => `Bearer ${localStorage.getItem('jwt_token')}`;\n\nexport const proposeConditionSchema = Joi.object({\n    description: Joi.string().min(50).max(500).required().messages({\n        'string.empty': 'Description is required.',\n        'string.min': 'Description must be at least 50 characters long.',\n        'string.max': 'Description cannot exceed 500 characters.'\n```\n\n> This summary is heuristic-only. Replace with LLM-backed analysis later."
+    }
+  ]
+}

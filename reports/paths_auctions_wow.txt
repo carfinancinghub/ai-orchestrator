@@ -1,0 +1,5 @@
+C:\CFH\frontend\cypress.config.js
+C:\CFH\frontend\cypress\e2e\CarTransportCoordination.cy.js
+C:\CFH\frontend\cypress\support\commands.js
+C:\CFH\frontend\cypress\support\e2e.js
+C:\CFH\frontend\jest.config.js
