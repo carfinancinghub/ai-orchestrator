@@ -1,78 +1,78 @@
 {
   "resolved": {
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\cypress_e2e_CarTransportCoordination.cy.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_aiBidService.ts.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\cypress_support_commands.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AIBidStarter.js.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\cypress_support_e2e.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AIEquityFinancer.js.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\cypress.config.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_auctionAnalyticsService.ts.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\jest.config.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionGamificationEngine.js.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_.vite_deps_chunk-VHW23IB5.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionHistory.js.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_.vite_deps_react_jsx-dev-runtime.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionManager.js.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_.vite_deps_react_jsx-runtime.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionMetrics.js.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_.vite_deps_react-dom.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionNotifier.js.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_.vite_deps_react.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionScheduler.js.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_adraffy_ens-normalize_dist_all.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_auctionService.ts.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_adraffy_ens-normalize_dist_all.min.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionTemplateEngine.js.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_adraffy_ens-normalize_dist_index-xnf.min.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_BidHeatmapEngine.js.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_adraffy_ens-normalize_dist_index.min.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_gamificationService.ts.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_adraffy_ens-normalize_dist_nf.min.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_proxyBiddingEngine.ts.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_babel_code-frame_lib_index.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_docs_frontend_src_utils_auction_auctionExportUtils.md.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_babel_compat-data_corejs2-built-ins.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_docs_frontend_src_utils_auction_new_1.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_babel_compat-data_corejs3-shipped-proposals.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_admin_auction_AdminAuctionOverview.jsx.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_babel_compat-data_native-modules.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionAccessibilityWrapper.jsx.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_babel_compat-data_overlapping-plugins.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionAccessibilityWrapper.tsx.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_babel_compat-data_plugin-bugfixes.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionIntelligenceDashboard.jsx.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_babel_compat-data_plugins.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionIntelligenceDashboard.tsx.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_babel_core_lib_config_cache-contexts.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionItemListing.tsx.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_babel_core_lib_config_caching.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionLiveBidTracker.jsx.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ],
-    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\node_modules_babel_core_lib_config_config-chain.js.md": [
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionLiveBidTracker.tsx.md": [
       "C:/CFH/frontend/src/services/escrowApi.ts"
     ]
   },

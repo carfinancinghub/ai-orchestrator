@@ -1,4 +1,4 @@
-### File: `cypress/support/commands.js`
+### File: `C:/CFH/docs/frontend/src/utils/auction/new 1`
 
 **Summary**
 - (heuristic) TBD
@@ -18,8 +18,8 @@
 {
   "suggested_moves": [
     {
-      "source": "cypress/support/commands.js",
-      "dest": "cypress/support/commands.js",
+      "source": "C:/CFH/docs/frontend/src/utils/auction/new 1",
+      "dest": "C:/CFH/docs/frontend/src/utils/auction/new 1",
       "confidence": 0.86,
       "reason": "heuristic"
     }

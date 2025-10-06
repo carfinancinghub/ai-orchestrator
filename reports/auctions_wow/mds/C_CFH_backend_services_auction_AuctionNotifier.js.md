@@ -1,6 +1,4 @@
-# Fallback Heuristic Batch Review — wow
-
-### File: `cypress.config.js`
+### File: `C:/CFH/backend/services/auction/AuctionNotifier.js`
 
 **Summary**
 - (heuristic) TBD
@@ -20,8 +18,8 @@
 {
   "suggested_moves": [
     {
-      "source": "cypress.config.js",
-      "dest": "cypress.config.js",
+      "source": "C:/CFH/backend/services/auction/AuctionNotifier.js",
+      "dest": "C:/CFH/backend/services/auction/AuctionNotifier.js",
       "confidence": 0.86,
       "reason": "heuristic"
     }

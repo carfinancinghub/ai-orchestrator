@@ -1,4 +1,4 @@
-### File: `cypress/e2e/CarTransportCoordination.cy.js`
+### File: `C:/CFH/backend/services/auction/AuctionScheduler.js`
 
 **Summary**
 - (heuristic) TBD
@@ -18,8 +18,8 @@
 {
   "suggested_moves": [
     {
-      "source": "cypress/e2e/CarTransportCoordination.cy.js",
-      "dest": "cypress/e2e/CarTransportCoordination.cy.js",
+      "source": "C:/CFH/backend/services/auction/AuctionScheduler.js",
+      "dest": "C:/CFH/backend/services/auction/AuctionScheduler.js",
       "confidence": 0.86,
       "reason": "heuristic"
     }

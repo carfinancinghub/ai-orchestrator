@@ -1,4 +1,4 @@
-### File: `jest.config.js`
+### File: `src/components/auction/AuctionIntelligenceDashboard.tsx`
 
 **Summary**
 - (heuristic) TBD
@@ -18,8 +18,8 @@
 {
   "suggested_moves": [
     {
-      "source": "jest.config.js",
-      "dest": "jest.config.js",
+      "source": "src/components/auction/AuctionIntelligenceDashboard.tsx",
+      "dest": "src/components/auction/AuctionIntelligenceDashboard.tsx",
       "confidence": 0.86,
       "reason": "heuristic"
     }
