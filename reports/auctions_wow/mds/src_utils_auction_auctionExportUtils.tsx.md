@@ -1,4 +1,4 @@
-### File: `C:/CFH/backend/services/auction/AuctionNotifier.js`
+### File: `src/utils/auction/auctionExportUtils.tsx`
 
 **Summary**
 - (heuristic) TBD
@@ -18,8 +18,8 @@
 {
   "suggested_moves": [
     {
-      "source": "C:/CFH/backend/services/auction/AuctionNotifier.js",
-      "dest": "C:/CFH/backend/services/auction/AuctionNotifier.js",
+      "source": "src/utils/auction/auctionExportUtils.tsx",
+      "dest": "src/utils/auction/auctionExportUtils.tsx",
       "confidence": 0.86,
       "reason": "heuristic"
     }

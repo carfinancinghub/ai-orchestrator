@@ -25,8 +25,7 @@
     }
   ],
   "dependencies": [
-    "@services/escrowApi.ts"
+    "@services/escrow/fees.ts"
   ]
 }
 ```
-
