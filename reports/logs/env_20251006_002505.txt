@@ -1,0 +1,18 @@
+PSVersion:
+
+Name                           Value
+----                           -----
+PSVersion                      7.5.3
+PSEdition                      Core
+GitCommitId                    7.5.3
+OS                             Microsoft Windows 10.0.26100
+Platform                       Win32NT
+PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0…}
+PSRemotingProtocolVersion      2.3
+SerializationVersion           1.1.0.1
+WSManStackVersion              3.0
+
+
+Python: Python 3.13.7
+Node:   v22.19.0
+Uvicorn: Running uvicorn 0.30.6 with CPython 3.13.7 on Windows

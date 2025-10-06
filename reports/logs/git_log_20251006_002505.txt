@@ -1,0 +1,5 @@
+d975238 chore(logs): add PowerShell session transcript 20251006_002432
+ce3edf5 auctions Wow++: stem-dedup selection ΓåÆ reviewer MDs, deps, and TSX stubs
+c9b7c88 build_ts(fallback): normalize output names (strip source ext before .tsx)
+ff4ea94 chore(reports): auctions Wow++ MDs (clean run) + resolved deps to escrowApi
+78ca80d chore(reports): regenerate canonical lists from CFH roots (exclude venv/node_modules/tests)

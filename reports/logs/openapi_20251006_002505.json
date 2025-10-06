@@ -1,0 +1,577 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AI Orchestrator",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/convert/prep": {
+      "post": {
+        "tags": [
+          "convert"
+        ],
+        "summary": "Convert Prep",
+        "description": "Write Batch_{module}_*.csv files to reports/batches.\nIf `selected_list` is provided, read CSV (expects a 'path' column),\nverify paths exist, optionally filter by `module`, then batch.\nOtherwise, inventory under FRONTEND_ROOT (legacy behavior).",
+        "operationId": "convert_prep_convert_prep_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrepReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Convert Prep Convert Prep Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/convert/tree": {
+      "post": {
+        "tags": [
+          "convert"
+        ],
+        "summary": "Convert Tree",
+        "operationId": "convert_tree_convert_tree_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConvertTreeReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Convert Tree Convert Tree Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/build_ts": {
+      "post": {
+        "tags": [
+          "convert"
+        ],
+        "summary": "Build Ts",
+        "description": "Build TS/TSX files from a list of .plan.md (or per-file review .md) docs.\n\nReturns a dict:\n  {\n    \"ok\": bool,\n    \"written\": [str],\n    \"errors\": [str],\n    \"label\": str,\n    \"out_dir\": str\n  }\n\nIf app.prep.ts_builder.build_ts_from_plans exists, we call it; otherwise\nwe fall back to a safe stub that writes .tsx stubs into src/_ai_out.",
+        "operationId": "build_ts_build_ts_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BuildTsReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Build Ts Build Ts Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/prune": {
+      "post": {
+        "tags": [
+          "convert"
+        ],
+        "summary": "Prune",
+        "description": "Produce/overwrite pruned_module_map.csv with \"keep_all\" mapping for provided md_paths.\nCSV columns: source,action,reason",
+        "operationId": "prune_prune_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PruneReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Prune Prune Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/resolve_deps": {
+      "post": {
+        "tags": [
+          "convert"
+        ],
+        "summary": "Resolve Deps",
+        "description": "Parse per-file review .mds (routing JSON, extracted via reviewer.parse_review_md),\nmap \"dependencies\" to repo paths via tsconfig.paths and/or explicit alias overrides.\nWrites reports/deps/resolved_deps.json (stable name for CI diffs).",
+        "operationId": "resolve_deps_resolve_deps_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResolveDepsReq"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Resolve Deps Resolve Deps Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "meta"
+        ],
+        "summary": "Root",
+        "operationId": "root__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Root  Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_health": {
+      "get": {
+        "tags": [
+          "meta"
+        ],
+        "summary": "Health",
+        "operationId": "health__health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Health  Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orchestrator/status": {
+      "get": {
+        "tags": [
+          "meta"
+        ],
+        "summary": "Status",
+        "operationId": "status_orchestrator_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Status Orchestrator Status Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readyz": {
+      "get": {
+        "tags": [
+          "meta"
+        ],
+        "summary": "Readyz",
+        "operationId": "readyz_readyz_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response Readyz Readyz Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/_meta/routes": {
+      "get": {
+        "tags": [
+          "meta"
+        ],
+        "summary": "List Routes",
+        "operationId": "list_routes__meta_routes_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Response List Routes  Meta Routes Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BuildTsReq": {
+        "properties": {
+          "module": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Module"
+          },
+          "md_paths": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Md Paths"
+          },
+          "pruned_map": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pruned Map"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          }
+        },
+        "type": "object",
+        "required": [
+          "md_paths"
+        ],
+        "title": "BuildTsReq"
+      },
+      "ConvertTreeReq": {
+        "properties": {
+          "module": {
+            "type": "string",
+            "title": "Module"
+          },
+          "root": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Root"
+          }
+        },
+        "type": "object",
+        "required": [
+          "module"
+        ],
+        "title": "ConvertTreeReq"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "PrepReq": {
+        "properties": {
+          "module": {
+            "type": "string",
+            "title": "Module"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "min_size": {
+            "type": "integer",
+            "title": "Min Size",
+            "default": 1
+          },
+          "chunk_size": {
+            "type": "integer",
+            "title": "Chunk Size",
+            "default": 100
+          },
+          "md_first": {
+            "type": "boolean",
+            "title": "Md First",
+            "default": false
+          },
+          "review_tier": {
+            "type": "string",
+            "title": "Review Tier",
+            "default": "free"
+          },
+          "selected_list": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected List"
+          }
+        },
+        "type": "object",
+        "required": [
+          "module"
+        ],
+        "title": "PrepReq"
+      },
+      "PruneReq": {
+        "properties": {
+          "md_paths": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Md Paths"
+          },
+          "strategy": {
+            "type": "string",
+            "title": "Strategy",
+            "default": "keep_all"
+          },
+          "out_csv": {
+            "type": "string",
+            "title": "Out Csv",
+            "default": "reports/prune/pruned_module_map.csv"
+          }
+        },
+        "type": "object",
+        "required": [
+          "md_paths"
+        ],
+        "title": "PruneReq"
+      },
+      "ResolveDepsReq": {
+        "properties": {
+          "md_paths": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Md Paths",
+            "default": []
+          },
+          "tsconfig_path": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tsconfig Path"
+          },
+          "aliases": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "items": "@{type=string}",
+                  "type": "array"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Aliases"
+          }
+        },
+        "type": "object",
+        "title": "ResolveDepsReq"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

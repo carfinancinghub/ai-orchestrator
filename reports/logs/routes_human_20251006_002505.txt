@@ -1,0 +1,19 @@
+
+path                  methods
+----                  -------
+/                     {GET}
+/_health              {GET}
+/_meta/routes         {GET}
+/build_ts             {POST}
+/convert/prep         {POST}
+/convert/tree         {POST}
+/docs                 {GET}
+/docs/oauth2-redirect {GET}
+/openapi.json         {GET}
+/orchestrator/status  {GET}
+/prune                {POST}
+/readyz               {GET}
+/redoc                {GET}
+/resolve_deps         {POST}
+
+

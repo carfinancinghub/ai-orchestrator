@@ -1,0 +1,114 @@
+{
+  "resolved": {
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_auctionService.ts.md": [
+      "C:/CFH/frontend/src/services/escrowApi.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionTemplateEngine.js.md": [
+      "C:/CFH/frontend/src/services/escrowApi.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_BidHeatmapEngine.js.md": [
+      "C:/CFH/frontend/src/services/escrowApi.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_gamificationService.ts.md": [
+      "C:/CFH/frontend/src/services/escrowApi.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_proxyBiddingEngine.ts.md": [
+      "C:/CFH/frontend/src/services/escrowApi.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_docs_frontend_src_utils_auction_auctionExportUtils.md.md": [
+      "C:/CFH/frontend/src/services/escrowApi.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_docs_frontend_src_utils_auction_new_1.md": [
+      "C:/CFH/frontend/src/services/escrowApi.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_admin_auction_AdminAuctionOverview.jsx.md": [
+      "C:/CFH/frontend/src/services/escrowApi.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionAccessibilityWrapper.jsx.md": [
+      "C:/CFH/frontend/src/services/escrowApi.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionIntelligenceDashboard.jsx.md": [
+      "C:/CFH/frontend/src/services/escrowApi.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionLiveBidTracker.jsx.md": [
+      "C:/CFH/frontend/src/services/escrowApi.ts"
+    ]
+  },
+  "unresolved": {
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_aiBidService.ts.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AIBidStarter.js.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AIEquityFinancer.js.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_auctionAnalyticsService.ts.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionGamificationEngine.js.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionHistory.js.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionManager.js.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionMetrics.js.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionNotifier.js.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\C_CFH_backend_services_auction_AuctionScheduler.js.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\M_CFH_backend_controllers_auction_auctionController.ts.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\M_CFH_backend_controllers_auction_AuctionReputationTracker.ts.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\M_CFH_backend_routes_admin_services_auction_AuctionDisputeDaemon.js.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\M_CFH_backend_routes_auction_auctionManagementRoutes.ts.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionAccessibilityWrapper.tsx.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionIntelligenceDashboard.tsx.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionItemListing.tsx.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionLiveBidTracker.tsx.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionManagement.tsx.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionPremiumInsightsPanel.tsx.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_AuctionSEOHead.tsx.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_core_AuctionHistoryTracker.jsx.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_components_auction_core_AuctionListingForm.jsx.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_tests_auction_AuctionIntegrationTest.js.md": [
+      "@services/escrow/fees.ts"
+    ],
+    "C:\\c\\ai-orchestrator\\reports\\auctions_wow\\mds\\src_utils_auction_auctionExportUtils.tsx.md": [
+      "@services/escrow/fees.ts"
+    ]
+  }
+}
