@@ -6,7 +6,6 @@ import hashlib
 import json as _json_mod
 import os
 import re
-import time
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
@@ -118,6 +117,66 @@ def _normalize_batch_artifacts(root_dir: Path, batch_obj: Dict[str, Any] | None)
     return out
 
 
+# --- helpers for selected_list filtering -------------------------------------------------
+def _read_selected_list(csv_path: Path) -> List[str]:
+    """
+    Read a CSV that contains at least a 'path' column.
+    Returns a list of the raw path strings (as-is).
+    """
+    paths: List[str] = []
+    try:
+        with csv_path.open("r", encoding="utf-8", newline="") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                p = (row.get("path") or "").strip()
+                if p:
+                    paths.append(p)
+    except Exception:
+        # Treat unreadable as empty
+        return []
+    return paths
+
+
+def _filter_for_module(paths: List[str], module: str) -> List[str]:
+    """
+    Keep paths that match the module folder name. If the module ends with 's',
+    also accept the singular form (e.g., 'auctions' => 'auction' + 'auctions').
+    Match is on folder boundaries only, case-insensitive, and supports / or \.
+    """
+    if not module:
+        return paths
+
+    base = module.lower().rstrip("s")  # 'auctions' -> 'auction'
+    rx = re.compile(rf"(?i)[/\\]{re.escape(base)}s?[/\\]")  # '/auction/' OR '/auctions/'
+    return [p for p in paths if rx.search(p)]
+
+def _stat_rows_from_paths(raw_paths: List[str]) -> List[Dict[str, Any]]:
+    """
+    Build rows with {path,size,mtime,sha1} from arbitrary absolute or relative paths.
+    Missing files are skipped.
+    """
+    rows: List[Dict[str, Any]] = []
+    for raw in raw_paths:
+        try:
+            p = Path(raw)
+            if not p.exists() or not p.is_file():
+                continue
+            st = p.stat()
+            rows.append(
+                {
+                    "path": p.resolve().as_posix(),
+                    "size": int(st.st_size),
+                    "mtime": int(st.st_mtime),
+                    "sha1": _sha1_file(p),
+                }
+            )
+        except Exception:
+            continue
+    # stable output
+    rows.sort(key=lambda r: (r["path"].lower(), r["size"]))
+    return rows
+
+
 # -----------------------------------------------------------------------------
 # Models
 # -----------------------------------------------------------------------------
@@ -126,6 +185,10 @@ class PrepReq(BaseModel):
     label: Optional[str] = None
     min_size: int = 1
     chunk_size: int = 100
+    # new fields to support external selection + tiered flows
+    md_first: bool = False
+    review_tier: str = "free"  # "free" | "premium" | "wow"
+    selected_list: Optional[str] = None  # path to CSV with a 'path' column
 
 
 class ConvertTreeReq(BaseModel):
@@ -152,17 +215,33 @@ class PruneReq(BaseModel):
 @router.post("/convert/prep", name="convert_prep")
 def convert_prep(req: PrepReq = Body(...)) -> dict:
     """
-    Inventory code under FRONTEND_ROOT and write Batch_{module}_*.csv files
-    to reports/batches. Returns list of batch CSV paths.
+    Write Batch_{module}_*.csv files to reports/batches.
+    If `selected_list` is provided, read CSV (expects a 'path' column),
+    verify paths exist, optionally filter by `module`, then batch.
+    Otherwise, inventory under FRONTEND_ROOT (legacy behavior).
     """
     batch_dir = REPORTS_DIR / "batches"
-    rows = _collect_batch_rows(FRONTEND_ROOT, req.module, min_size=req.min_size)
+
+    if req.selected_list:
+        csv_path = Path(req.selected_list)
+        if not csv_path.exists():
+            raise HTTPException(status_code=404, detail=f"selected_list not found: {csv_path}")
+        raw_paths = _read_selected_list(csv_path)
+        # optional module narrow (can be removed if you want CSV-only)
+        narrowed = _filter_for_module(raw_paths, req.module)
+        rows = _stat_rows_from_paths(narrowed)
+    else:
+        rows = _collect_batch_rows(FRONTEND_ROOT, req.module, min_size=req.min_size)
+
     outs = _write_batches(rows, req.module, batch_dir, chunk_size=req.chunk_size)
     return {
         "ok": True,
         "module": req.module,
         "count": len(rows),
         "batches": [p.as_posix() for p in outs],
+        "md_first": bool(req.md_first),
+        "review_tier": req.review_tier,
+        "selected_list_used": Path(req.selected_list).resolve().as_posix() if req.selected_list else None,
     }
 
 
@@ -217,21 +296,35 @@ def build_ts(req: BuildTsReq = Body(...)) -> dict:
     out_root = Path("src") / "_ai_out"
     out_root.mkdir(parents=True, exist_ok=True)
     if not used_native:
-        for md in req.md_paths:
-            try:
-                mdp = Path(md)
-                outp = out_root / mdp.name.replace(".md", ".tsx")
-                header = (
-                    f"/**\n"
-                    f" * GENERATED STUB FROM PLAN\n"
-                    f" * plan: {mdp.as_posix()}\n"
-                    f" * date: {datetime.utcnow().isoformat()}Z\n"
-                    f" */\n\n"
-                )
-                outp.write_text(header + "export default function TODO() { return null }\n", encoding="utf-8")
-                written.append(outp.as_posix())
-            except Exception as e:
-                errors.append(f"{md}: {e!r}")
+    for md in req.md_paths:
+        try:
+            mdp = Path(md)
+            # derive a sane output filename: strip ".md", then strip source ext if present
+            raw = mdp.name
+            if raw.endswith(".md"):
+                raw = raw[:-3]
+            # strip one trailing source extension if present
+            for ext in (".ts", ".tsx", ".js", ".jsx"):
+                if raw.endswith(ext):
+                    raw = raw[: -len(ext)]
+                    break
+            # final extension: TSX (safe default)
+            outp = out_root / f"{raw}.tsx"
+
+            header = (
+                f"/**\n"
+                f" * GENERATED STUB FROM PLAN\n"
+                f" * plan: {mdp.as_posix()}\n"
+                f" * date: {datetime.utcnow().isoformat()}Z\n"
+                f" */\n\n"
+            )
+            outp.write_text(
+                header + "export default function TODO() { return null }\n",
+                encoding="utf-8",
+            )
+            written.append(outp.as_posix())
+        except Exception as e:
+            errors.append(f"{md}: {e!r}")
 
     return {"ok": True, "written": written, "errors": errors, "label": label, "out_dir": out_root.as_posix()}
 
@@ -394,4 +487,3 @@ def resolve_deps(req: ResolveDepsReq = Body(...)) -> dict:
         "orphans": sorted({d for arr in out_unresolved.values() for d in arr}),
         "tsconfig_used": tsconfig_used,
     }
-
