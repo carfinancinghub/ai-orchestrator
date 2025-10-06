@@ -20,4 +20,5 @@
 **/.venv/**        linguist-vendored
 **/venv/**         linguist-vendored
 **/dist/**         linguist-vendored
-*.min.js           linguist-vendored
+*.min.js           linguist-vendored.env.template text eol=lf
+
