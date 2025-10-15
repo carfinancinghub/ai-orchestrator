@@ -39,3 +39,5 @@ Thumbs.db
 tools/cod1/
 *-access.json
 org_access.json
+src/_ai_out/
+frontend/src/_ai_out/
