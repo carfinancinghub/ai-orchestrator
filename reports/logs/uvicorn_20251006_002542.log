@@ -1,0 +1,8 @@
+INFO:     Will watch for changes in these directories: ['C:\\c\\ai-orchestrator']
+INFO:     Uvicorn running on http://127.0.0.1:8121 (Press CTRL+C to quit)
+INFO:     Started reloader process [174968] using WatchFiles
+INFO:     Started server process [165212]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61567 - "POST /build_ts HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'app\tools\dedupe_master_inventory.py'. Reloading...
