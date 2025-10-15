@@ -5925,3 +5925,235 @@ PS C:\c\ai-orchestrator> $report = @"
 - Spot-check MD tiers; if OK, proceed to TS build from MD
 "@
 PS C:\c\ai-orchestrator> $rp = "reports/debug/sgman_md_auctions_clean_$stamp.md"
+PS C:\c\ai-orchestrator> $report | Set-Content -Path $rp -Encoding UTF8
+PS C:\c\ai-orchestrator> git add reports/batches_clean reports/auctions_wow reports/logs $rp
+
+PS C:\c\ai-orchestrator> git commit -m "docs(auctions): clean md_first (wow) + prune [$stamp]"
+
+PS C:\c\ai-orchestrator> git push
+
+PS C:\c\ai-orchestrator> clear
+PS C:\c\ai-orchestrator> # Paths
+PS C:\c\ai-orchestrator> Set-Location C:\c\ai-orchestrator
+PS C:\c\ai-orchestrator> $InDir  = "reports\batches"
+PS C:\c\ai-orchestrator> $OutDir = "reports\batches_clean"
+PS C:\c\ai-orchestrator> New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
+PS C:\c\ai-orchestrator> # Helper: code files only
+PS C:\c\ai-orchestrator> function Is-Code($p){ return $p -match '\.(ts|tsx|js|jsx)$' }
+PS C:\c\ai-orchestrator> # Filter each batch
+PS C:\c\ai-orchestrator> Get-ChildItem -File $InDir\Batch_auctions_*.csv | Sort-Object Name | ForEach-Object {
+  $in  = $_.FullName
+  $out = Join-Path $OutDir $_.Name
+
+  $rows = Import-Csv $in
+
+  $clean = $rows | Where-Object {
+    $p = $_.path
+    (Is-Code $p) -and
+    $p -notmatch '\\node_modules\\|/node_modules/' -and
+    $p -notmatch '\\dist\\|/dist/' -and
+    $p -notmatch '\\build\\|/build/' -and
+    $p -notmatch '\\__mocks__\\|/__mocks__/' -and
+    $p -notmatch '\.(md|txt|yml|yaml|json|map)$' -and
+    $p -notmatch '\.(test|spec)\.[a-z0-9]+$'
+  }
+
+  # keep headers even if empty to avoid API parse errors
+  $clean | Select-Object path,size,mtime,sha1 | Export-Csv -NoTypeInformation -Encoding UTF8 -LiteralPath $out
+  "Cleaned => $out  (in:$($rows.Count) out:$($clean.Count))"
+}
+Cleaned => reports\batches_clean\Batch_auctions_1.csv  (in:36 out:36)
+Cleaned => reports\batches_clean\Batch_auctions_10.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_100.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_101.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_102.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_103.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_104.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_105.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_106.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_107.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_108.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_109.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_11.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_110.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_111.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_112.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_113.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_114.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_115.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_116.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_117.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_118.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_119.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_12.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_120.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_121.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_122.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_123.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_124.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_125.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_126.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_127.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_128.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_129.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_13.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_130.csv  (in:100 out:3)
+Cleaned => reports\batches_clean\Batch_auctions_131.csv  (in:100 out:98)
+Cleaned => reports\batches_clean\Batch_auctions_132.csv  (in:100 out:100)
+Cleaned => reports\batches_clean\Batch_auctions_133.csv  (in:100 out:100)
+Cleaned => reports\batches_clean\Batch_auctions_134.csv  (in:100 out:100)
+Cleaned => reports\batches_clean\Batch_auctions_135.csv  (in:100 out:100)
+Cleaned => reports\batches_clean\Batch_auctions_136.csv  (in:100 out:54)
+Cleaned => reports\batches_clean\Batch_auctions_137.csv  (in:100 out:21)
+Cleaned => reports\batches_clean\Batch_auctions_138.csv  (in:1 out:1)
+Cleaned => reports\batches_clean\Batch_auctions_14.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_15.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_16.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_17.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_18.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_19.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_2.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_20.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_21.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_22.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_23.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_24.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_25.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_26.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_27.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_28.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_29.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_3.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_30.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_31.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_32.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_33.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_34.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_35.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_36.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_37.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_38.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_39.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_4.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_40.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_41.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_42.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_43.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_44.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_45.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_46.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_47.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_48.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_49.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_5.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_50.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_51.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_52.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_53.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_54.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_55.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_56.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_57.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_58.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_59.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_6.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_60.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_61.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_62.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_63.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_64.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_65.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_66.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_67.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_68.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_69.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_7.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_70.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_71.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_72.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_73.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_74.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_75.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_76.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_77.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_78.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_79.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_8.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_80.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_81.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_82.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_83.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_84.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_85.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_86.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_87.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_88.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_89.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_9.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_90.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_91.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_92.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_93.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_94.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_95.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_96.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_97.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_98.csv  (in:100 out:0)
+Cleaned => reports\batches_clean\Batch_auctions_99.csv  (in:100 out:0)
+PS C:\c\ai-orchestrator> # Optional: print the clean folder link
+PS C:\c\ai-orchestrator> $origin = git remote get-url origin
+PS C:\c\ai-orchestrator> $base = ($origin -like "git@*:*") ? ("https://github.com/" + (($origin -replace "^git@[^:]+:", "") -replace "\.git$","")) : ($origin -replace "\.git$","")
+PS C:\c\ai-orchestrator> "$base/tree/feat/full-5step-gemini/reports/batches_clean"
+https://github.com/carfinancinghub/ai-orchestrator/tree/feat/full-5step-gemini/reports/batches_clean
+PS C:\c\ai-orchestrator> Set-Location C:\c\ai-orchestrator
+PS C:\c\ai-orchestrator> $MdOut  = "reports\auctions_wow"
+PS C:\c\ai-orchestrator> $LogDir = "reports\logs"
+PS C:\c\ai-orchestrator> New-Item -ItemType Directory -Force -Path $MdOut,$LogDir | Out-Null
+PS C:\c\ai-orchestrator> $stamp  = (Get-Date).ToString("yyyyMMdd_HHmmss")
+PS C:\c\ai-orchestrator> # Use CLEAN batches
+PS C:\c\ai-orchestrator> $Batches = Get-ChildItem -File reports\batches_clean\Batch_auctions_*.csv | Sort-Object Name
+PS C:\c\ai-orchestrator> if ($Batches.Count -eq 0) { throw "No clean batches found in reports\batches_clean." }
+PS C:\c\ai-orchestrator> $made = 0
+PS C:\c\ai-orchestrator> foreach ($b in $Batches) {
+  $body = @{
+    csv         = $b.FullName
+    md_first    = $true
+    review_tier = "wow"
+    module      = "auctions"
+  } | ConvertTo-Json -Depth 5
+
+  $resp = curl -s -X POST http://127.0.0.1:8121/convert/tree -H "Content-Type: application/json" -d $body
+  $resp | Out-File -FilePath (Join-Path $LogDir "tree_clean_$($b.BaseName)_$stamp.json") -Encoding utf8
+  $made++
+}
+PS C:\c\ai-orchestrator> # Optional prune of new MDs
+PS C:\c\ai-orchestrator> $MdPaths = Get-ChildItem -Path $MdOut -Filter *.md -Recurse -File | Select-Object -Expand FullName
+PS C:\c\ai-orchestrator> if ($MdPaths.Count -gt 0) {
+  $pruneBody = [pscustomobject]@{
+    module       = "auctions"
+    dedupe_props = $true
+    md_paths     = $MdPaths
+  } | ConvertTo-Json -Depth 5
+
+  curl -s -X POST http://127.0.0.1:8121/prune -H "Content-Type: application/json" -d $pruneBody `
+    | Out-File -FilePath (Join-Path $LogDir "prune_clean_auctions_$stamp.json") -Encoding utf8
+}
+PS C:\c\ai-orchestrator> # Commit + SG Man note
+PS C:\c\ai-orchestrator> $last = (git rev-parse --short HEAD)
+PS C:\c\ai-orchestrator> $report = @"
+# SG Man Report — Auctions (Clean MD) [$stamp]
+
+## Summary
+- Rebuilt clean batches (excluded node_modules/dist/build/__mocks__/tests, non-code)
+- Ran /convert/tree (md_first=wow) on CLEAN batches
+- Optional prune completed
+
+## Artifacts
+- reports/batches_clean/
+- reports/auctions_wow (tiered .md)
+- reports/logs/tree_clean_*.json, prune_clean_*.json
+
+## Next
+- Spot-check MD tiers; if OK, proceed to TS build from MD
+"@
+PS C:\c\ai-orchestrator> $rp = "reports/debug/sgman_md_auctions_clean_$stamp.md"
