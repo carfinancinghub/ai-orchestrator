@@ -1,24 +1,2 @@
-# Normalize text files to LF in repo; Windows will check out as CRLF automatically
-* text=auto eol=lf
-
-# Always treat these as binary
-*.png binary
-*.jpg binary
-*.jpeg binary
-*.gif binary
-*.webp binary
-*.zip binary
-*.gz binary
-*.tgz binary
-*.bz2 binary
-*.7z binary
-*.pdf binary
-*.wasm binary
-
-# Treat vendor/build outputs as vendored for GitHub linguist
-**/node_modules/** linguist-vendored
-**/.venv/**        linguist-vendored
-**/venv/**         linguist-vendored
-**/dist/**         linguist-vendored
-*.min.js           linguist-vendored.env.template text eol=lf
-
+reports/**/*.txt text eol=lf
+reports/**/*.csv text eol=lf
