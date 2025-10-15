@@ -1,0 +1,292 @@
+src/_ai_out/batch_review_20251005_121815.tsx(1,141): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251005_121815.tsx(1,143): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251005_121815.tsx(1,144): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/batch_review_20251005_121815.tsx(1,205): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251005_122004.tsx(1,141): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251005_122004.tsx(1,143): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251005_122004.tsx(1,144): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/batch_review_20251005_122004.tsx(1,205): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251005_232156.tsx(1,141): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251005_232156.tsx(1,143): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251005_232156.tsx(1,144): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/batch_review_20251005_232156.tsx(1,205): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251005_232449.tsx(1,141): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251005_232449.tsx(1,143): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251005_232449.tsx(1,144): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/batch_review_20251005_232449.tsx(1,205): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251006_002015.tsx(1,141): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251006_002015.tsx(1,143): error TS1127: Invalid character.
+src/_ai_out/batch_review_20251006_002015.tsx(1,144): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/batch_review_20251006_002015.tsx(1,205): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_aiBidService.ts.tsx(1,163): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_aiBidService.ts.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_aiBidService.ts.tsx(1,166): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_aiBidService.ts.tsx(1,245): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_aiBidService.tsx(1,163): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_aiBidService.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_aiBidService.tsx(1,166): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_aiBidService.tsx(1,245): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AIBidStarter.js.tsx(1,163): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AIBidStarter.js.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AIBidStarter.js.tsx(1,166): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AIBidStarter.js.tsx(1,245): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AIBidStarter.tsx(1,163): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AIBidStarter.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AIBidStarter.tsx(1,166): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AIBidStarter.tsx(1,245): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AIEquityFinancer.js.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AIEquityFinancer.js.tsx(1,169): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AIEquityFinancer.js.tsx(1,170): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AIEquityFinancer.js.tsx(1,253): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AIEquityFinancer.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AIEquityFinancer.tsx(1,169): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AIEquityFinancer.tsx(1,170): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AIEquityFinancer.tsx(1,253): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_auctionAnalyticsService.ts.tsx(1,174): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_auctionAnalyticsService.ts.tsx(1,176): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_auctionAnalyticsService.ts.tsx(1,177): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_auctionAnalyticsService.ts.tsx(1,267): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_auctionAnalyticsService.tsx(1,174): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_auctionAnalyticsService.tsx(1,176): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_auctionAnalyticsService.tsx(1,177): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_auctionAnalyticsService.tsx(1,267): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionGamificationEngine.js.tsx(1,176): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionGamificationEngine.js.tsx(1,178): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionGamificationEngine.js.tsx(1,179): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionGamificationEngine.js.tsx(1,271): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionGamificationEngine.tsx(1,176): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionGamificationEngine.tsx(1,178): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionGamificationEngine.tsx(1,179): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionGamificationEngine.tsx(1,271): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionHistory.js.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionHistory.js.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionHistory.js.tsx(1,168): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionHistory.js.tsx(1,249): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionHistory.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionHistory.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionHistory.tsx(1,168): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionHistory.tsx(1,249): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionManager.js.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionManager.js.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionManager.js.tsx(1,168): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionManager.js.tsx(1,249): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionManager.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionManager.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionManager.tsx(1,168): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionManager.tsx(1,249): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionMetrics.js.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionMetrics.js.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionMetrics.js.tsx(1,168): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionMetrics.js.tsx(1,249): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionMetrics.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionMetrics.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionMetrics.tsx(1,168): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionMetrics.tsx(1,249): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionNotifier.js.tsx(1,166): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionNotifier.js.tsx(1,168): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionNotifier.js.tsx(1,169): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionNotifier.js.tsx(1,251): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionNotifier.tsx(1,166): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionNotifier.tsx(1,168): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionNotifier.tsx(1,169): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionNotifier.tsx(1,251): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionScheduler.js.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionScheduler.js.tsx(1,169): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionScheduler.js.tsx(1,170): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionScheduler.js.tsx(1,253): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionScheduler.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionScheduler.tsx(1,169): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionScheduler.tsx(1,170): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionScheduler.tsx(1,253): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_auctionService.ts.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_auctionService.ts.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_auctionService.ts.tsx(1,168): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_auctionService.ts.tsx(1,249): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_auctionService.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_auctionService.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_auctionService.tsx(1,168): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_auctionService.tsx(1,249): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionTemplateEngine.js.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionTemplateEngine.js.tsx(1,174): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionTemplateEngine.js.tsx(1,175): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionTemplateEngine.js.tsx(1,263): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionTemplateEngine.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionTemplateEngine.tsx(1,174): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_AuctionTemplateEngine.tsx(1,175): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_AuctionTemplateEngine.tsx(1,263): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_BidHeatmapEngine.js.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_BidHeatmapEngine.js.tsx(1,169): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_BidHeatmapEngine.js.tsx(1,170): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_BidHeatmapEngine.js.tsx(1,253): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_BidHeatmapEngine.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_BidHeatmapEngine.tsx(1,169): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_BidHeatmapEngine.tsx(1,170): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_BidHeatmapEngine.tsx(1,253): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_gamificationService.ts.tsx(1,170): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_gamificationService.ts.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_gamificationService.ts.tsx(1,173): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_gamificationService.ts.tsx(1,259): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_gamificationService.tsx(1,170): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_gamificationService.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_gamificationService.tsx(1,173): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_gamificationService.tsx(1,259): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_proxyBiddingEngine.ts.tsx(1,169): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_proxyBiddingEngine.ts.tsx(1,171): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_proxyBiddingEngine.ts.tsx(1,172): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_proxyBiddingEngine.ts.tsx(1,257): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_proxyBiddingEngine.tsx(1,169): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_proxyBiddingEngine.tsx(1,171): error TS1127: Invalid character.
+src/_ai_out/C_CFH_backend_services_auction_proxyBiddingEngine.tsx(1,172): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_backend_services_auction_proxyBiddingEngine.tsx(1,257): error TS1127: Invalid character.
+src/_ai_out/C_CFH_docs_frontend_src_utils_auction_auctionExportUtils.md.tsx(1,176): error TS1127: Invalid character.
+src/_ai_out/C_CFH_docs_frontend_src_utils_auction_auctionExportUtils.md.tsx(1,178): error TS1127: Invalid character.
+src/_ai_out/C_CFH_docs_frontend_src_utils_auction_auctionExportUtils.md.tsx(1,179): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_docs_frontend_src_utils_auction_auctionExportUtils.md.tsx(1,271): error TS1127: Invalid character.
+src/_ai_out/C_CFH_docs_frontend_src_utils_auction_auctionExportUtils.tsx(1,176): error TS1127: Invalid character.
+src/_ai_out/C_CFH_docs_frontend_src_utils_auction_auctionExportUtils.tsx(1,178): error TS1127: Invalid character.
+src/_ai_out/C_CFH_docs_frontend_src_utils_auction_auctionExportUtils.tsx(1,179): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_docs_frontend_src_utils_auction_auctionExportUtils.tsx(1,271): error TS1127: Invalid character.
+src/_ai_out/C_CFH_docs_frontend_src_utils_auction_new_1.tsx(1,160): error TS1127: Invalid character.
+src/_ai_out/C_CFH_docs_frontend_src_utils_auction_new_1.tsx(1,162): error TS1127: Invalid character.
+src/_ai_out/C_CFH_docs_frontend_src_utils_auction_new_1.tsx(1,163): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/C_CFH_docs_frontend_src_utils_auction_new_1.tsx(1,239): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_controllers_auction_auctionController.ts.tsx(1,171): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_controllers_auction_auctionController.ts.tsx(1,173): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_controllers_auction_auctionController.ts.tsx(1,174): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/M_CFH_backend_controllers_auction_auctionController.ts.tsx(1,261): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_controllers_auction_auctionController.tsx(1,171): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_controllers_auction_auctionController.tsx(1,173): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_controllers_auction_auctionController.tsx(1,174): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/M_CFH_backend_controllers_auction_auctionController.tsx(1,261): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_controllers_auction_AuctionReputationTracker.ts.tsx(1,178): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_controllers_auction_AuctionReputationTracker.ts.tsx(1,180): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_controllers_auction_AuctionReputationTracker.ts.tsx(1,181): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/M_CFH_backend_controllers_auction_AuctionReputationTracker.ts.tsx(1,275): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_controllers_auction_AuctionReputationTracker.tsx(1,178): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_controllers_auction_AuctionReputationTracker.tsx(1,180): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_controllers_auction_AuctionReputationTracker.tsx(1,181): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/M_CFH_backend_controllers_auction_AuctionReputationTracker.tsx(1,275): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_routes_admin_services_auction_AuctionDisputeDaemon.js.tsx(1,184): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_routes_admin_services_auction_AuctionDisputeDaemon.js.tsx(1,186): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_routes_admin_services_auction_AuctionDisputeDaemon.js.tsx(1,187): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/M_CFH_backend_routes_admin_services_auction_AuctionDisputeDaemon.js.tsx(1,287): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_routes_admin_services_auction_AuctionDisputeDaemon.tsx(1,184): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_routes_admin_services_auction_AuctionDisputeDaemon.tsx(1,186): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_routes_admin_services_auction_AuctionDisputeDaemon.tsx(1,187): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/M_CFH_backend_routes_admin_services_auction_AuctionDisputeDaemon.tsx(1,287): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_routes_auction_auctionManagementRoutes.ts.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_routes_auction_auctionManagementRoutes.ts.tsx(1,174): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_routes_auction_auctionManagementRoutes.ts.tsx(1,175): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/M_CFH_backend_routes_auction_auctionManagementRoutes.ts.tsx(1,263): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_routes_auction_auctionManagementRoutes.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_routes_auction_auctionManagementRoutes.tsx(1,174): error TS1127: Invalid character.
+src/_ai_out/M_CFH_backend_routes_auction_auctionManagementRoutes.tsx(1,175): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/M_CFH_backend_routes_auction_auctionManagementRoutes.tsx(1,263): error TS1127: Invalid character.
+src/_ai_out/src_components_admin_auction_AdminAuctionOverview.jsx.tsx(1,170): error TS1127: Invalid character.
+src/_ai_out/src_components_admin_auction_AdminAuctionOverview.jsx.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/src_components_admin_auction_AdminAuctionOverview.jsx.tsx(1,173): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_admin_auction_AdminAuctionOverview.jsx.tsx(1,259): error TS1127: Invalid character.
+src/_ai_out/src_components_admin_auction_AdminAuctionOverview.tsx(1,170): error TS1127: Invalid character.
+src/_ai_out/src_components_admin_auction_AdminAuctionOverview.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/src_components_admin_auction_AdminAuctionOverview.tsx(1,173): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_admin_auction_AdminAuctionOverview.tsx(1,259): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionAccessibilityWrapper.jsx.tsx(1,171): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionAccessibilityWrapper.jsx.tsx(1,173): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionAccessibilityWrapper.jsx.tsx(1,174): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionAccessibilityWrapper.jsx.tsx(1,261): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionAccessibilityWrapper.tsx(1,171): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionAccessibilityWrapper.tsx(1,173): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionAccessibilityWrapper.tsx(1,174): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionAccessibilityWrapper.tsx(1,261): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionAccessibilityWrapper.tsx.tsx(1,171): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionAccessibilityWrapper.tsx.tsx(1,173): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionAccessibilityWrapper.tsx.tsx(1,174): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionAccessibilityWrapper.tsx.tsx(1,261): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionIntelligenceDashboard.jsx.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionIntelligenceDashboard.jsx.tsx(1,174): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionIntelligenceDashboard.jsx.tsx(1,175): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionIntelligenceDashboard.jsx.tsx(1,263): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionIntelligenceDashboard.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionIntelligenceDashboard.tsx(1,174): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionIntelligenceDashboard.tsx(1,175): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionIntelligenceDashboard.tsx(1,263): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionIntelligenceDashboard.tsx.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionIntelligenceDashboard.tsx.tsx(1,174): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionIntelligenceDashboard.tsx.tsx(1,175): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionIntelligenceDashboard.tsx.tsx(1,263): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionItemListing.tsx(1,162): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionItemListing.tsx(1,164): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionItemListing.tsx(1,165): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionItemListing.tsx(1,243): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionItemListing.tsx.tsx(1,162): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionItemListing.tsx.tsx(1,164): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionItemListing.tsx.tsx(1,165): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionItemListing.tsx.tsx(1,243): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionLiveBidTracker.jsx.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionLiveBidTracker.jsx.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionLiveBidTracker.jsx.tsx(1,168): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionLiveBidTracker.jsx.tsx(1,249): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionLiveBidTracker.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionLiveBidTracker.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionLiveBidTracker.tsx(1,168): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionLiveBidTracker.tsx(1,249): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionLiveBidTracker.tsx.tsx(1,165): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionLiveBidTracker.tsx.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionLiveBidTracker.tsx.tsx(1,168): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionLiveBidTracker.tsx.tsx(1,249): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionManagement.tsx(1,161): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionManagement.tsx(1,163): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionManagement.tsx(1,164): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionManagement.tsx(1,241): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionManagement.tsx.tsx(1,161): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionManagement.tsx.tsx(1,163): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionManagement.tsx.tsx(1,164): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionManagement.tsx.tsx(1,241): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionPremiumInsightsPanel.tsx(1,171): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionPremiumInsightsPanel.tsx(1,173): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionPremiumInsightsPanel.tsx(1,174): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionPremiumInsightsPanel.tsx(1,261): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionPremiumInsightsPanel.tsx.tsx(1,171): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionPremiumInsightsPanel.tsx.tsx(1,173): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionPremiumInsightsPanel.tsx.tsx(1,174): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionPremiumInsightsPanel.tsx.tsx(1,261): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionSEOHead.tsx(1,158): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionSEOHead.tsx(1,160): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionSEOHead.tsx(1,161): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionSEOHead.tsx(1,235): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionSEOHead.tsx.tsx(1,158): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionSEOHead.tsx.tsx(1,160): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_AuctionSEOHead.tsx.tsx(1,161): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_AuctionSEOHead.tsx.tsx(1,235): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_core_AuctionHistoryTracker.jsx.tsx(1,170): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_core_AuctionHistoryTracker.jsx.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_core_AuctionHistoryTracker.jsx.tsx(1,173): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_core_AuctionHistoryTracker.jsx.tsx(1,259): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_core_AuctionHistoryTracker.tsx(1,170): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_core_AuctionHistoryTracker.tsx(1,172): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_core_AuctionHistoryTracker.tsx(1,173): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_core_AuctionHistoryTracker.tsx(1,259): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_core_AuctionListingForm.jsx.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_core_AuctionListingForm.jsx.tsx(1,169): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_core_AuctionListingForm.jsx.tsx(1,170): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_core_AuctionListingForm.jsx.tsx(1,253): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_core_AuctionListingForm.tsx(1,167): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_core_AuctionListingForm.tsx(1,169): error TS1127: Invalid character.
+src/_ai_out/src_components_auction_core_AuctionListingForm.tsx(1,170): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_components_auction_core_AuctionListingForm.tsx(1,253): error TS1127: Invalid character.
+src/_ai_out/src_tests_auction_AuctionIntegrationTest.js.tsx(1,160): error TS1127: Invalid character.
+src/_ai_out/src_tests_auction_AuctionIntegrationTest.js.tsx(1,162): error TS1127: Invalid character.
+src/_ai_out/src_tests_auction_AuctionIntegrationTest.js.tsx(1,163): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_tests_auction_AuctionIntegrationTest.js.tsx(1,239): error TS1127: Invalid character.
+src/_ai_out/src_tests_auction_AuctionIntegrationTest.tsx(1,160): error TS1127: Invalid character.
+src/_ai_out/src_tests_auction_AuctionIntegrationTest.tsx(1,162): error TS1127: Invalid character.
+src/_ai_out/src_tests_auction_AuctionIntegrationTest.tsx(1,163): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_tests_auction_AuctionIntegrationTest.tsx(1,239): error TS1127: Invalid character.
+src/_ai_out/src_utils_auction_auctionExportUtils.tsx(1,157): error TS1127: Invalid character.
+src/_ai_out/src_utils_auction_auctionExportUtils.tsx(1,159): error TS1127: Invalid character.
+src/_ai_out/src_utils_auction_auctionExportUtils.tsx(1,160): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_utils_auction_auctionExportUtils.tsx(1,233): error TS1127: Invalid character.
+src/_ai_out/src_utils_auction_auctionExportUtils.tsx.tsx(1,157): error TS1127: Invalid character.
+src/_ai_out/src_utils_auction_auctionExportUtils.tsx.tsx(1,159): error TS1127: Invalid character.
+src/_ai_out/src_utils_auction_auctionExportUtils.tsx.tsx(1,160): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/_ai_out/src_utils_auction_auctionExportUtils.tsx.tsx(1,233): error TS1127: Invalid character.
