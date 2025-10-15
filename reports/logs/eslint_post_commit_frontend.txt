@@ -1,2 +1,2 @@
-Need to install the following packages:
-eslint@9.37.0
+Invalid option '--eslintrc' - perhaps you meant '--ext'?
+You're using eslint.config.js, some command line flags are no longer available. Please see https://eslint.org/docs/latest/use/command-line-interface for details.
