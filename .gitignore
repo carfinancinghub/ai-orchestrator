@@ -41,3 +41,5 @@ tools/cod1/
 org_access.json
 src/_ai_out/
 frontend/src/_ai_out/
+
+reports/logs/*.log
