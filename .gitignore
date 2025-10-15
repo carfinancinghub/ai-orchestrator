@@ -1,0 +1,13 @@
+# Runtime / vendors
+node_modules/
+**/node_modules/
+.venv/
+**/.venv/
+
+# Local caches & heavy bridges
+app/services/llm/
+reports/artifacts/*.zip
+
+# Misc local stuff you don't want in the PR
+artifacts/
+d/
