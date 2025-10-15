@@ -6157,3 +6157,22 @@ PS C:\c\ai-orchestrator> $report = @"
 - Spot-check MD tiers; if OK, proceed to TS build from MD
 "@
 PS C:\c\ai-orchestrator> $rp = "reports/debug/sgman_md_auctions_clean_$stamp.md"
+PS C:\c\ai-orchestrator> $report | Set-Content -Path $rp -Encoding UTF8
+PS C:\c\ai-orchestrator> git add reports/batches_clean reports/auctions_wow reports/logs $rp
+
+PS C:\c\ai-orchestrator> git commit -m "docs(auctions): clean md_first (wow) + prune [$stamp]"
+
+PS C:\c\ai-orchestrator> git push
+
+PS C:\c\ai-orchestrator> clear
+PS C:\c\ai-orchestrator> # Build from MD → TS ZIP
+PS C:\c\ai-orchestrator> $LogDir = "reports\logs"
+PS C:\c\ai-orchestrator> $stamp  = (Get-Date).ToString("yyyyMMdd_HHmmss")
+PS C:\c\ai-orchestrator> $MdPaths = Get-ChildItem -Path reports\auctions_wow -Filter *.md -Recurse -File | Select-Object -Expand FullName
+PS C:\c\ai-orchestrator> $buildBody = [pscustomobject]@{
+  from_md  = $true
+  emit_zip = $true
+  zip_name = "auctions_wow_build_$stamp.zip"
+  root     = "frontend"
+  md_paths = $MdPaths
+} | ConvertTo-Json -Depth 5
