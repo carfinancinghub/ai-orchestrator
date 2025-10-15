@@ -1,1 +1,0 @@
-/**\n * GENERATED from: C:/c/ai-orchestrator/reports/auctions_wow/mds/M_CFH_backend_routes_auction_auctionManagementRoutes.ts.md\n * date: 2025-10-06T07:20:32.766045Z\n */\n\nexport const TODO_M_CFH_backend_routes_auction_auctionManagementRoutes_ts = () => null;\n

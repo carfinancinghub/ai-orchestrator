@@ -1,1 +1,1 @@
-/**\n * GENERATED from: C:/c/ai-orchestrator/reports/auctions_wow/mds/src_components_auction_AuctionAccessibilityWrapper.jsx.md\n * date: 2025-10-06T07:20:32.766713Z\n */\n\nexport const TODO_src_components_auction_AuctionAccessibilityWrapper_jsx = () => null;\n
+/**\n * GENERATED from: C:/c/ai-orchestrator/reports/pruned_auctions_wow/mds/src_components_auction_AuctionAccessibilityWrapper.jsx.md\n * date: 2025-10-15T08:58:59.318970Z\n */\n\nexport const TODO_src_components_auction_AuctionAccessibilityWrapper_jsx = () => null;\n
