@@ -19,3 +19,7 @@ __pycache__/
 # Env files (keep only sample files checked-in)
 .env
 .env.*
+# Reports noise
+reports/logs/
+reports/build/
+reports/artifacts/
