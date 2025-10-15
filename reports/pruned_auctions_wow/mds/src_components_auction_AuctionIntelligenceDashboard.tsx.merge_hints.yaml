@@ -1,0 +1,10 @@
+suggest_merge: true
+confidence_hint: 0.85
+group_core: "AuctionIntelligenceDashboard"
+members:
+  - "$_"
+  - "$_"
+notes:
+  - "Unify overlapping props/interfaces (e.g., BidProps, AuctionProps)."
+  - "Prefer TS/TSX over JS/JSX when equivalent."
+  - "Keep YAML tiers; do not drop Wow/Premium sections."

@@ -1,0 +1,109 @@
+Found 36 matches under reports\pruned_auctions_wow
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_aiBidService.ts.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_AIBidStarter.js.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_AIEquityFinancer.js.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_auctionAnalyticsService.ts.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_AuctionGamificationEngine.js.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_AuctionHistory.js.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_AuctionManager.js.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_AuctionMetrics.js.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_AuctionNotifier.js.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_AuctionScheduler.js.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_auctionService.ts.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_AuctionTemplateEngine.js.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_BidHeatmapEngine.js.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_gamificationService.ts.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_backend_services_auction_proxyBiddingEngine.ts.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_docs_frontend_src_utils_auction_auctionExportUtils.md.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\C_CFH_docs_frontend_src_utils_auction_new_1.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\M_CFH_backend_controllers_auction_auctionController.ts.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\M_CFH_backend_controllers_auction_AuctionReputationTracker.ts.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\M_CFH_backend_routes_admin_services_auction_AuctionDisputeDaemon.js.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\M_CFH_backend_routes_auction_auctionManagementRoutes.ts.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_admin_auction_AdminAuctionOverview.jsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_auction_AuctionAccessibilityWrapper.jsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_auction_AuctionAccessibilityWrapper.tsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_auction_AuctionIntelligenceDashboard.jsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_auction_AuctionIntelligenceDashboard.tsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_auction_AuctionItemListing.tsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_auction_AuctionLiveBidTracker.jsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_auction_AuctionLiveBidTracker.tsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_auction_AuctionManagement.tsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_auction_AuctionPremiumInsightsPanel.tsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_auction_AuctionSEOHead.tsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_auction_core_AuctionHistoryTracker.jsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_components_auction_core_AuctionListingForm.jsx.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_tests_auction_AuctionIntegrationTest.js.md
+HINT:  (none)
+
+MD:    C:\c\ai-orchestrator\reports\pruned_auctions_wow\mds\src_utils_auction_auctionExportUtils.tsx.md
+HINT:  (none)
+

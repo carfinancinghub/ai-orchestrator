@@ -1,0 +1,2050 @@
+ MISSING DEPENDENCY  Cannot find dependency 'jsdom'
+
+
+[1m[46m RUN [49m[22m [36mv3.2.4 [39m[90mC:/CFH/frontend[39m
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Errors ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+
+Vitest caught 127 unhandled errors during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Unhandled Error ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Error: Cannot find package 'jsdom' imported from C:\CFH\frontend\node_modules\vitest\dist\chunks\index.CmSc2RE5.js
+ Γ¥» Object.getPackageJSONURL node:internal/modules/package_json_reader:266:9
+ Γ¥» packageResolve node:internal/modules/esm/resolve:767:81
+ Γ¥» moduleResolve node:internal/modules/esm/resolve:853:18
+ Γ¥» defaultResolve node:internal/modules/esm/resolve:983:11
+ Γ¥» ModuleLoader.#cachedDefaultResolve node:internal/modules/esm/loader:717:20
+ Γ¥» ModuleLoader.resolve node:internal/modules/esm/loader:694:38
+ Γ¥» ModuleLoader.getModuleJobForImport node:internal/modules/esm/loader:308:38
+ Γ¥» onImport.tracePromise.__proto__ node:internal/modules/esm/loader:650:36
+ Γ¥» TracingChannel.tracePromise node:diagnostics_channel:344:14
+ Γ¥» ModuleLoader.import node:internal/modules/esm/loader:649:21
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+Serialized Error: { code: 'ERR_MODULE_NOT_FOUND' }
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+
+
+[2m Test Files [22m [90m (127)[39m
+[2m      Tests [22m [2mno tests[22m
+[2m     Errors [22m [1m[31m127 errors[39m[22m
+[2m   Start at [22m 01:43:37
+[2m   Duration [22m 14.90s[2m (transform 48ms, setup 0ms, collect 0ms, tests 0ms, environment 0ms, prepare 0ms)[22m
+
