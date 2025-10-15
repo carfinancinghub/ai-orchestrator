@@ -1,0 +1,300 @@
+src/archive/hauler/haulerBucket.ts(70,1): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(70,13): error TS1005: ';' expected.
+src/archive/hauler/haulerBucket.ts(70,22): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(71,1): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/archive/hauler/haulerBucket.ts(71,3): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(72,3): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/archive/hauler/haulerBucket.ts(72,5): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(72,16): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(72,18): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(72,29): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(72,32): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(72,38): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(72,41): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(72,51): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(72,59): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(72,64): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(72,66): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(72,78): error TS1005: '(' expected.
+src/archive/hauler/haulerBucket.ts(72,86): error TS1005: ')' expected.
+src/archive/hauler/haulerBucket.ts(72,104): error TS1005: ',' expected.
+src/archive/hauler/haulerBucket.ts(72,131): error TS1005: ',' expected.
+src/archive/hauler/haulerBucket.ts(72,143): error TS1005: ',' expected.
+src/archive/hauler/haulerBucket.ts(73,3): error TS1003: Identifier expected.
+src/archive/hauler/haulerBucket.ts(73,5): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(73,15): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(73,44): error TS1005: ';' expected.
+src/archive/hauler/haulerBucket.ts(73,47): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(73,57): error TS1435: Unknown keyword or identifier. Did you mean 'object'?
+src/archive/hauler/haulerBucket.ts(73,70): error TS1005: '(' expected.
+src/archive/hauler/haulerBucket.ts(73,91): error TS1005: ')' expected.
+src/archive/hauler/haulerBucket.ts(74,3): error TS1003: Identifier expected.
+src/archive/hauler/haulerBucket.ts(74,5): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(74,16): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(74,36): error TS1005: ';' expected.
+src/archive/hauler/haulerBucket.ts(74,83): error TS1005: ';' expected.
+src/archive/hauler/haulerBucket.ts(75,3): error TS1003: Identifier expected.
+src/archive/hauler/haulerBucket.ts(75,5): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(75,21): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(75,29): error TS1146: Declaration expected.
+src/archive/hauler/haulerBucket.ts(76,3): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(77,3): error TS17006: An unary expression with the '-' operator is not allowed in the left-hand side of an exponentiation expression. Consider enclosing the expression in parentheses.
+src/archive/hauler/haulerBucket.ts(77,5): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(77,16): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(77,18): error TS1435: Unknown keyword or identifier. Did you mean 'return'?
+src/archive/hauler/haulerBucket.ts(77,26): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(77,28): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(77,33): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(77,36): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(77,40): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(77,51): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(77,58): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(77,65): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(77,74): error TS1005: '(' expected.
+src/archive/hauler/haulerBucket.ts(77,79): error TS1005: ';' expected.
+src/archive/hauler/haulerBucket.ts(77,99): error TS1005: ';' expected.
+src/archive/hauler/haulerBucket.ts(77,102): error TS1005: ')' expected.
+src/archive/hauler/haulerBucket.ts(78,3): error TS1003: Identifier expected.
+src/archive/hauler/haulerBucket.ts(78,5): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(78,15): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(78,39): error TS1005: ';' expected.
+src/archive/hauler/haulerBucket.ts(78,50): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(79,3): error TS1003: Identifier expected.
+src/archive/hauler/haulerBucket.ts(79,5): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(79,16): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(79,29): error TS1005: ';' expected.
+src/archive/hauler/haulerBucket.ts(79,34): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(79,37): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(79,41): error TS1434: Unexpected keyword or identifier.
+src/archive/hauler/haulerBucket.ts(80,3): error TS1003: Identifier expected.
+src/archive/hauler/haulerBucket.ts(80,5): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(80,21): error TS1109: Expression expected.
+src/archive/hauler/haulerBucket.ts(80,29): error TS1146: Declaration expected.
+src/components/admin/AdminAuctionOverview.tsx(2,1): error TS1435: Unknown keyword or identifier. Did you mean 'this'?
+src/components/admin/AdminAuctionOverview.tsx(2,6): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,11): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,15): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,20): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,30): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,42): error TS1443: Module declaration names may only use ' or " quoted strings.
+src/components/admin/AdminAuctionOverview.tsx(2,54): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,65): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,69): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,74): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,83): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,86): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,95): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,122): error TS1005: ';' expected.
+src/components/admin/AdminAuctionOverview.tsx(2,147): error TS1005: '=' expected.
+src/components/admin/AdminAuctionOverview.tsx(2,152): error TS1005: ';' expected.
+src/components/admin/AdminAuctionOverview.tsx(2,157): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,163): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,166): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,176): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,182): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,186): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminAuctionOverview.tsx(2,207): error TS1005: ';' expected.
+src/components/admin/AdminAuctionOverview.tsx(2,214): error TS1443: Module declaration names may only use ' or " quoted strings.
+src/components/admin/AdminAuctionOverview.tsx(2,237): error TS1005: '=' expected.
+src/components/admin/AdminAuctionOverview.tsx(2,242): error TS1005: ';' expected.
+src/components/admin/AdminAuctionOverview.tsx(2,254): error TS1005: '(' expected.
+src/components/admin/AdminAuctionOverview.tsx(2,264): error TS1005: ';' expected.
+src/components/admin/AdminAuctionOverview.tsx(2,272): error TS1003: Identifier expected.
+src/components/admin/AdminAuctionOverview.tsx(2,272): error TS1109: Expression expected.
+src/components/admin/AdminAuctionOverview.tsx(4,1): error TS1005: ')' expected.
+src/components/admin/AdminAuctionOverview.tsx(4,1): error TS1005: ';' expected.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,1): error TS1435: Unknown keyword or identifier. Did you mean 'this'?
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,6): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,16): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,20): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,25): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,35): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,59): error TS1005: ';' expected.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,64): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,75): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,84): error TS1435: Unknown keyword or identifier. Did you mean 'interface'?
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,95): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,98): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,105): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,109): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,115): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,118): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,122): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,129): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,134): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,138): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,148): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,162): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,169): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,172): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,178): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,189): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,192): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,202): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,209): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,213): error TS1435: Unknown keyword or identifier. Did you mean 'type'?
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,219): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,226): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,230): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(2,246): error TS1003: Identifier expected.
+src/components/admin/AdminCustomWidgetLibrary.tsx(4,1): error TS1127: Invalid character.
+src/components/admin/AdminCustomWidgetLibrary.tsx(4,2): error TS1127: Invalid character.
+src/components/admin/AdminCustomWidgetLibrary.tsx(4,3): error TS1127: Invalid character.
+src/components/admin/AdminCustomWidgetLibrary.tsx(6,3): error TS1443: Module declaration names may only use ' or " quoted strings.
+src/components/admin/AdminCustomWidgetLibrary.tsx(79,38): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(79,45): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(90,23): error TS1005: ';' expected.
+src/components/admin/AdminCustomWidgetLibrary.tsx(90,29): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(90,47): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(104,27): error TS1005: ';' expected.
+src/components/admin/AdminCustomWidgetLibrary.tsx(104,34): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(113,21): error TS1005: ';' expected.
+src/components/admin/AdminCustomWidgetLibrary.tsx(113,27): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(113,42): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(124,22): error TS1005: ';' expected.
+src/components/admin/AdminCustomWidgetLibrary.tsx(124,25): error TS1443: Module declaration names may only use ' or " quoted strings.
+src/components/admin/AdminCustomWidgetLibrary.tsx(151,21): error TS1434: Unexpected keyword or identifier.
+src/components/admin/AdminCustomWidgetLibrary.tsx(151,27): error TS1435: Unknown keyword or identifier. Did you mean 'export'?
+src/components/admin/AdminCustomWidgetLibrary.tsx(151,42): error TS1434: Unexpected keyword or identifier.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,1): error TS1435: Unknown keyword or identifier. Did you mean 'this'?
+src/components/admin/LiveDashboardHealthWidget.tsx(2,6): error TS1434: Unexpected keyword or identifier.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,17): error TS1434: Unexpected keyword or identifier.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,35): error TS1005: ';' expected.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,45): error TS1435: Unknown keyword or identifier. Did you mean 'interface'?
+src/components/admin/LiveDashboardHealthWidget.tsx(2,60): error TS1005: '(' expected.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,67): error TS1005: ';' expected.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,74): error TS1005: ';' expected.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,77): error TS1005: ')' expected.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,81): error TS1434: Unexpected keyword or identifier.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,85): error TS1434: Unexpected keyword or identifier.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,94): error TS1434: Unexpected keyword or identifier.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,109): error TS1005: ';' expected.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,128): error TS1443: Module declaration names may only use ' or " quoted strings.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,145): error TS1005: '(' expected.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,152): error TS1005: ';' expected.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,158): error TS1005: ';' expected.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,167): error TS1005: ')' expected.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,175): error TS1434: Unexpected keyword or identifier.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,184): error TS1434: Unexpected keyword or identifier.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,188): error TS1434: Unexpected keyword or identifier.
+src/components/admin/LiveDashboardHealthWidget.tsx(2,205): error TS1003: Identifier expected.
+src/components/admin/LiveDashboardHealthWidget.tsx(4,1): error TS1127: Invalid character.
+src/components/admin/LiveDashboardHealthWidget.tsx(4,2): error TS1127: Invalid character.
+src/components/admin/LiveDashboardHealthWidget.tsx(4,3): error TS1127: Invalid character.
+src/components/admin/LiveDashboardHealthWidget.tsx(6,3): error TS1443: Module declaration names may only use ' or " quoted strings.
+src/components/admin/LiveDashboardHealthWidget.tsx(82,33): error TS1005: ';' expected.
+src/components/ai/AIBadgeOverlay.ts(2,1): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIBadgeOverlay.ts(2,5): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIBadgeOverlay.ts(2,15): error TS1228: A type predicate is only allowed in return type position for functions and methods.
+src/components/ai/AIBadgeOverlay.ts(2,18): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIBadgeOverlay.ts(2,28): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIBadgeOverlay.ts(2,38): error TS1005: ';' expected.
+src/components/ai/AIBadgeOverlay.ts(2,43): error TS1435: Unknown keyword or identifier. Did you mean 'undefined'?
+src/components/ai/AIBadgeOverlay.ts(2,51): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIBadgeOverlay.ts(2,60): error TS1435: Unknown keyword or identifier. Did you mean 'type'?
+src/components/ai/AIBadgeOverlay.ts(2,70): error TS1005: '(' expected.
+src/components/ai/AIBadgeOverlay.ts(2,74): error TS1005: ';' expected.
+src/components/ai/AIBadgeOverlay.ts(2,80): error TS1005: ';' expected.
+src/components/ai/AIBadgeOverlay.ts(2,84): error TS1005: ')' expected.
+src/components/ai/AIBadgeOverlay.ts(2,116): error TS1005: ';' expected.
+src/components/ai/AIBadgeOverlay.ts(2,122): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIBadgeOverlay.ts(2,126): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIBadgeOverlay.ts(2,132): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIBadgeOverlay.ts(2,156): error TS1005: ';' expected.
+src/components/ai/AIBadgeOverlay.ts(2,162): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIBadgeOverlay.ts(2,165): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIBadgeOverlay.ts(4,1): error TS1003: Identifier expected.
+src/components/ai/AIPredictorDashboard.tsx(2,1): error TS1435: Unknown keyword or identifier. Did you mean 'this'?
+src/components/ai/AIPredictorDashboard.tsx(2,6): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(2,17): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(2,27): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(2,31): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(2,40): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(2,62): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(2,77): error TS1005: ',' expected.
+src/components/ai/AIPredictorDashboard.tsx(2,81): error TS1005: '(' expected.
+src/components/ai/AIPredictorDashboard.tsx(2,84): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(2,85): error TS1109: Expression expected.
+src/components/ai/AIPredictorDashboard.tsx(2,91): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(2,99): error TS1435: Unknown keyword or identifier. Did you mean 'string'?
+src/components/ai/AIPredictorDashboard.tsx(2,106): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(2,113): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(2,131): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(2,146): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(2,167): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(2,177): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(2,198): error TS1003: Identifier expected.
+src/components/ai/AIPredictorDashboard.tsx(4,1): error TS1127: Invalid character.
+src/components/ai/AIPredictorDashboard.tsx(4,2): error TS1127: Invalid character.
+src/components/ai/AIPredictorDashboard.tsx(4,3): error TS1127: Invalid character.
+src/components/ai/AIPredictorDashboard.tsx(6,3): error TS1443: Module declaration names may only use ' or " quoted strings.
+src/components/ai/AIPredictorDashboard.tsx(68,58): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(68,65): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(109,36): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(109,43): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(135,26): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(146,43): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(146,54): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(146,73): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(146,95): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(147,34): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(165,43): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(165,53): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(165,72): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(165,94): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIPredictorDashboard.tsx(166,34): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(183,27): error TS1005: ';' expected.
+src/components/ai/AIPredictorDashboard.tsx(183,61): error TS1005: ';' expected.
+src/components/ai/AIScorePanel.ts(2,1): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,5): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,14): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,25): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,30): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,43): error TS1005: ';' expected.
+src/components/ai/AIScorePanel.ts(2,47): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,58): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,69): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,88): error TS1005: ';' expected.
+src/components/ai/AIScorePanel.ts(2,122): error TS1005: ';' expected.
+src/components/ai/AIScorePanel.ts(2,127): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,134): error TS1435: Unknown keyword or identifier. Did you mean 'interface'?
+src/components/ai/AIScorePanel.ts(2,149): error TS1005: '(' expected.
+src/components/ai/AIScorePanel.ts(2,153): error TS1005: ';' expected.
+src/components/ai/AIScorePanel.ts(2,159): error TS1005: ';' expected.
+src/components/ai/AIScorePanel.ts(2,163): error TS1005: ')' expected.
+src/components/ai/AIScorePanel.ts(2,167): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,173): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,176): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,180): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,185): error TS1435: Unknown keyword or identifier. Did you mean 'return'?
+src/components/ai/AIScorePanel.ts(2,194): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(2,197): error TS1434: Unexpected keyword or identifier.
+src/components/ai/AIScorePanel.ts(4,1): error TS1003: Identifier expected.
+src/components/ai/BidConfidenceMeter.tsx(2,1): error TS1434: Unexpected keyword or identifier.
+src/components/ai/BidConfidenceMeter.tsx(2,159): error TS1002: Unterminated string literal.
+src/components/ai/BidConfidenceMeter.tsx(4,3): error TS1443: Module declaration names may only use ' or " quoted strings.
+src/components/ai/BidConfidenceMeter.tsx(42,21): error TS1434: Unexpected keyword or identifier.
+src/components/ai/BidConfidenceMeter.tsx(42,28): error TS1434: Unexpected keyword or identifier.
+src/components/ai/BidConfidenceMeter.tsx(42,31): error TS1434: Unexpected keyword or identifier.
+src/components/ai/BidConfidenceMeter.tsx(42,37): error TS1434: Unexpected keyword or identifier.
+src/components/ai/BidConfidenceMeter.tsx(42,52): error TS1005: '(' expected.
+src/components/ai/BidConfidenceMeter.tsx(42,60): error TS1005: ';' expected.
+src/components/ai/BidConfidenceMeter.tsx(42,61): error TS1005: ';' expected.
+src/components/ai/BidConfidenceMeter.tsx(58,21): error TS1005: ')' expected.
+src/components/ai/BidConfidenceMeter.tsx(58,28): error TS1434: Unexpected keyword or identifier.
+src/components/ai/BidConfidenceMeter.tsx(58,31): error TS1434: Unexpected keyword or identifier.
+src/components/ai/BidConfidenceMeter.tsx(58,37): error TS1434: Unexpected keyword or identifier.
+src/components/ai/BidConfidenceMeter.tsx(58,48): error TS1005: '(' expected.
+src/components/ai/BidConfidenceMeter.tsx(58,56): error TS1005: ';' expected.
+src/components/ai/BidConfidenceMeter.tsx(58,57): error TS1005: ';' expected.
+src/components/ai/BidConfidenceMeter.tsx(119,1): error TS1127: Invalid character.
+src/components/ai/BidConfidenceMeter.tsx(119,2): error TS1127: Invalid character.
+src/components/ai/BidConfidenceMeter.tsx(119,3): error TS1127: Invalid character.
+src/components/ai/BidConfidenceMeter.tsx(119,5): error TS1005: ';' expected.
+src/components/ai/BidConfidenceMeter.tsx(120,17): error TS1005: ';' expected.
+src/components/ai/BidConfidenceMeter.tsx(120,29): error TS1109: Expression expected.
+src/components/ai/BidConfidenceMeter.tsx(120,31): error TS1434: Unexpected keyword or identifier.
+src/components/ai/BidConfidenceMeter.tsx(120,37): error TS1434: Unexpected keyword or identifier.
+src/components/ai/BidConfidenceMeter.tsx(120,50): error TS1443: Module declaration names may only use ' or " quoted strings.
+src/components/ai/BidConfidenceMeter.tsx(120,76): error TS1434: Unexpected keyword or identifier.
+src/components/ai/BidConfidenceMeter.tsx(120,79): error TS1434: Unexpected keyword or identifier.
