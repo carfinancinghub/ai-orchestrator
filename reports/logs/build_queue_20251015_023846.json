@@ -1,0 +1,1 @@
+{"ok":false,"error":"validation_error","details":[{"type":"missing","loc":["body","md_paths"],"msg":"Field required","input":{"feature":"message-queue","pillar":"auctions"}}]}
