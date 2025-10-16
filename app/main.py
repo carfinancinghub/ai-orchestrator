@@ -18,3 +18,11 @@ def health():
 
 # <- this is the missing piece: include the API router with /run-one
 app.include_router(api_router)
+
+# --- redis health hook ---
+try:
+    from app.routes.redis_health import router as _redis_router
+    app.include_router(_redis_router)
+except Exception as _e:
+    # non-fatal in environments without that module
+    pass
