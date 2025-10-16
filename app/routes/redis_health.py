@@ -3,7 +3,7 @@ import os, socket
 from urllib.parse import urlparse
 from datetime import datetime
 
-router = APIRouter()
+router = APIRouter(prefix="/redis")
 
 def _tcp_ping(url: str, timeout: float = 0.5) -> bool:
     try:
@@ -15,7 +15,7 @@ def _tcp_ping(url: str, timeout: float = 0.5) -> bool:
     except Exception:
         return False
 
-@router.get("/redis/health")
+@router.get("/health")
 def redis_health():
     enabled = os.getenv("CFH_REDIS_ESCROW") == "1"
     url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
