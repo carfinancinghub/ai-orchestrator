@@ -43,3 +43,7 @@ venv/
 __pycache__/
 fd
 tools/cod1/*.txt
+# prevent tools from scanning huge/looped trees
+app/services/llm/node_modules/
+**/node_modules/
+src/_ai_out/
