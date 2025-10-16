@@ -1,6 +1,7 @@
 /**
- * EscrowQueueService — Phase 3 bootstrap
- * Default: in-memory adapter (no external deps). Real Redis sits behind CFH_REDIS_ESCROW.
+ * EscrowQueueService — Phase 3
+ * - Default: in-memory adapter (no external deps)
+ * - If CFH_REDIS_ESCROW=1, prefer Redis adapter (lazy import)
  */
 
 export type EscrowJob = {
@@ -76,15 +77,18 @@ class InMemoryEscrowQueue implements IEscrowQueue {
   }
 }
 
-// Feature flag gate (ensure you set CFH_REDIS_ESCROW=1 only when real Redis adapter is ready)
-const REDIS_FLAG = process.env.CFH_REDIS_ESCROW === "1";
-
-/**
- * TODO(redis): when CFH_REDIS_ESCROW=1, return a Redis-backed implementation.
- * For now, always return in-memory to keep CI/dev happy.
- */
-export function getEscrowQueue(): IEscrowQueue {
-  // Placeholder: detect REDIS_FLAG and swap implementation later.
+// --- async factory with flag-gated Redis ---
+export async function getEscrowQueue(): Promise<IEscrowQueue> {
+  const REDIS_FLAG = process.env.CFH_REDIS_ESCROW === "1";
+  if (REDIS_FLAG) {
+    const url = process.env.REDIS_URL || "redis://localhost:6379/0";
+    try {
+      const mod = await import("./RedisEscrowQueue");
+      return new mod.RedisEscrowQueue(url);
+    } catch (e) {
+      console.warn("Redis adapter unavailable, falling back to in-memory. Reason:", e);
+    }
+  }
   return new InMemoryEscrowQueue();
 }
 
