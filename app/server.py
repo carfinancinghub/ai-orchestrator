@@ -26,13 +26,23 @@ except Exception as e:
 else:
     _IMPORT_ERROR = None
 
+<<<<<<< HEAD
 # --- optional redis health router (safe if missing) ----------------------------
+=======
+
+
+
+
+>>>>>>> origin/main
 try:
     from app.routes.redis_health import router as redis_health_router
 except Exception:
     redis_health_router = None
+<<<<<<< HEAD
 
 # --- settings ------------------------------------------------------------------
+=======
+>>>>>>> origin/main
 SERVICE_NAME = "orchestrator"
 DEFAULT_HOST = os.getenv("HOST", "127.0.0.1")
 DEFAULT_PORT = int(os.getenv("PORT", "8121"))
@@ -54,11 +64,18 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+<<<<<<< HEAD
     # main router
     if router is not None:
         app.include_router(router)
 
     # optional redis router (already declares prefix="/redis")
+=======
+    if router is not None:
+        app.include_router(router)
+
+    # Optional Redis health router
+>>>>>>> origin/main
     if "redis_health_router" in globals() and redis_health_router is not None:
         app.include_router(redis_health_router)
 

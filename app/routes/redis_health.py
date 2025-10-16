@@ -5,7 +5,11 @@ import socket
 from typing import Any, Dict
 from urllib.parse import urlparse
 
+<<<<<<< HEAD
 from fastapi import APIRouter
+=======
+router = APIRouter(prefix="/redis")
+>>>>>>> origin/main
 
 # All endpoints under /redis/*
 router = APIRouter(prefix="/redis")
@@ -31,12 +35,17 @@ def _tcp_reachable(host: str, port: int, timeout: float = 0.5) -> bool:
         return False
 
 @router.get("/health")
+<<<<<<< HEAD
 def redis_health() -> Dict[str, Any]:
     """
     Lightweight reachability signal. No hard dependency on redis-py.
     Returns whether the Redis TCP endpoint is reachable (when enabled).
     """
     enabled = bool(os.getenv("CFH_REDIS_ESCROW", "0") == "1")
+=======
+def redis_health():
+    enabled = os.getenv("CFH_REDIS_ESCROW") == "1"
+>>>>>>> origin/main
     url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 
     if not enabled:
