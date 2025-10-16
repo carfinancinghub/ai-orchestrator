@@ -75,7 +75,11 @@ def create_app() -> FastAPI:
         app.include_router(router)
 
     
+    
     # optional build_ts router
+    if "build_ts_router" in globals() and build_ts_router is not None:
+        app.include_router(build_ts_router)
+# optional build_ts router
     if "build_ts_router" in globals() and build_ts_router is not None:
         app.include_router(build_ts_router)
 
