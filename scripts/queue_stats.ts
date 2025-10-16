@@ -1,11 +1,11 @@
 /**
  * Minimal shim: import queue & dump stats to console for wave scripts.
- * Later: replace with HTTP call to /redis/health once API endpoint exists.
+ * Now awaits the async factory. Later: replace with HTTP /redis/health.
  */
 import { getEscrowQueue } from "../src/_ai_out/redis_stubs/EscrowQueueService.tsx";
 
 async function main() {
-  const q = getEscrowQueue();
+  const q = await getEscrowQueue();
   const s = await q.stats();
   // CSV-ish line for easy grep/append by existing wave tooling
   // ts, module, queued, processing, acked, failed
