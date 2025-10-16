@@ -1,0 +1,1768 @@
+== AUDIT 20250906_150904 ==
+Root: C:\c\ai-orchestrator
+Frontend: C:\Backup_Projects\CFH\frontend
+== Git (ai-orchestrator) ==
+ts-migration/next-step
+ M .gitattributes
+ D .orchestrator/policies/file_allowlist.jso
+ M api/routes.py
+ M app/main.py
+ M app/ops.py
+ M app/ops_cli.py
+ M app/services/llm/sparka_bridge.mjs
+ D artifacts/convert_20250819_234506.txt
+ D artifacts/convert_20250819_234543.txt
+ D artifacts/convert_20250820_000254.txt
+ D artifacts/convert_20250820_000305.txt
+ D artifacts/convert_20250820_001019.txt
+ D artifacts/convert_20250820_033259.txt
+ D artifacts/convert_20250820_033643.txt
+ D artifacts/convert_20250820_034307.txt
+ D artifacts/evaluate_20250817_231100.txt
+ D artifacts/evaluate_20250817_231125.txt
+ D artifacts/evaluate_20250817_231556.txt
+ D artifacts/evaluate_20250819_214232.txt
+ D artifacts/evaluate_20250819_225354.txt
+ D artifacts/evaluate_20250819_233728.txt
+ D artifacts/evaluate_20250819_233733.txt
+ D artifacts/evaluate_20250819_233946.txt
+ D artifacts/generate_20250817_230442.txt
+ D artifacts/generate_20250817_230838.txt
+ D artifacts/generate_20250817_231100.txt
+ D artifacts/generate_20250817_231125.txt
+ D artifacts/generate_20250817_231357.txt
+ D artifacts/generate_20250817_231441.txt
+ D artifacts/generate_20250817_231556.txt
+ D artifacts/generate_20250819_200654.txt
+ D artifacts/generate_20250819_201650.txt
+ D artifacts/generate_20250819_214232.txt
+ D artifacts/generate_20250819_225354.txt
+ D artifacts/generate_20250819_233728.txt
+ D artifacts/generate_20250819_233733.txt
+ D artifacts/generate_20250819_233946.txt
+ D artifacts/generate_20250820_033258.txt
+ D artifacts/generate_20250820_033642.txt
+ D artifacts/generate_20250820_034307.txt
+ D artifacts/migrate_20250820_000305.txt
+ D artifacts/persist_20250817_231100.txt
+ D artifacts/persist_20250817_231125.txt
+ D artifacts/persist_20250817_231556.txt
+ D artifacts/persist_20250819_214232.txt
+ D artifacts/persist_20250819_225354.txt
+ D artifacts/persist_20250819_233728.txt
+ D artifacts/persist_20250819_233733.txt
+ D artifacts/persist_20250819_233946.txt
+ D artifacts/qa_20250817_231100.txt
+ D artifacts/qa_20250817_231125.txt
+ D artifacts/qa_20250817_231556.txt
+ D artifacts/qa_20250819_214232.txt
+ D artifacts/qa_20250819_225354.txt
+ D artifacts/qa_20250819_233728.txt
+ D artifacts/qa_20250819_233733.txt
+ D artifacts/qa_20250819_233946.txt
+ D artifacts/review_20250817_231100.txt
+ D artifacts/review_20250817_231125.txt
+ D artifacts/review_20250817_231556.txt
+ D artifacts/review_20250819_214232.txt
+ D artifacts/review_20250819_225354.txt
+ D artifacts/review_20250819_233728.txt
+ D artifacts/review_20250819_233733.txt
+ D artifacts/review_20250819_233946.txt
+ D reports/CFH/codemap.json
+ D reports/CFH/drive-F-refs.csv
+ D reports/CFH/f-drive-in-code.csv
+ D reports/CFH/f-drive-in-docs.csv
+ D reports/CFH/letters-only-files.csv
+ D reports/batch_summary_20250828_101202.csv
+ D reports/errors_05d8d229.json
+ D reports/errors_069c548f.json
+ D reports/errors_093cd215.json
+ D reports/errors_199d2c3a.json
+ D reports/errors_1ba69c0d.json
+ D reports/errors_201a0fb1.json
+ D reports/errors_229c62df.json
+ D reports/errors_22a03d22.json
+ D reports/errors_23f272ad.json
+ D reports/errors_2cfbda48.json
+ D reports/errors_2d476710.json
+ D reports/errors_2d4acc6b.json
+ D reports/errors_326ef945.json
+ D reports/errors_34f3f5f2.json
+ D reports/errors_373a0b40.json
+ D reports/errors_47cf1260.json
+ D reports/errors_4994e97e.json
+ D reports/errors_4eb0d4f9.json
+ D reports/errors_4f3b6a8d.json
+ D reports/errors_516cedc1.json
+ D reports/errors_537d0230.json
+ D reports/errors_553f85bc.json
+ D reports/errors_5669fc22.json
+ D reports/errors_5a40333a.json
+ D reports/errors_6a4d16c8.json
+ D reports/errors_6df29266.json
+ D reports/errors_6ffa8c7e.json
+ D reports/errors_776b67b6.json
+ D reports/errors_7d803517.json
+ D reports/errors_7fa835cf.json
+ D reports/errors_84e62bf8.json
+ D reports/errors_873ab6b5.json
+ D reports/errors_874e38bd.json
+ D reports/errors_87d1f2c8.json
+ D reports/errors_881b4f78.json
+ D reports/errors_9194c46e.json
+ D reports/errors_92714085.json
+ D reports/errors_950e34de.json
+ D reports/errors_9793a262.json
+ D reports/errors_9861f83b.json
+ D reports/errors_a29d50e9.json
+ D reports/errors_a32732b5.json
+ D reports/errors_a34f6a35.json
+ D reports/errors_a8910a14.json
+ D reports/errors_aef3effa.json
+ D reports/errors_b3d7360d.json
+ D reports/errors_b5c6f148.json
+ D reports/errors_b9c2fb21.json
+ D reports/errors_bba26661.json
+ D reports/errors_bc9a7c55.json
+ D reports/errors_c0510dcd.json
+ D reports/errors_cd6e94c7.json
+ D reports/errors_ce441982.json
+ D reports/errors_d27f18ba.json
+ D reports/errors_d3d7b287.json
+ D reports/errors_d47ebc5d.json
+ D reports/errors_d8556dd6.json
+ D reports/errors_dbab927b.json
+ D reports/errors_e74e64b3.json
+ D reports/errors_e93c6c01.json
+ D reports/errors_ed437e7e.json
+ D reports/errors_f033956d.json
+ D reports/errors_faca0a58.json
+ D reports/errors_fc47ebdf.json
+ D reports/errors_template.md
+ D reports/gates_069c548f.json
+ D reports/gates_1ba69c0d.json
+ D reports/gates_34f3f5f2.json
+ D reports/gates_9793a262.json
+ D reports/gates_a8910a14.json
+ D reports/gates_aef3effa.json
+ D reports/gates_f033956d.json
+ D reports/inventory_cache_05d8d229.json
+ D reports/inventory_cache_069c548f.json
+ D reports/inventory_cache_07732634.json
+ D reports/inventory_cache_093cd215.json
+ D reports/inventory_cache_1ba69c0d.json
+ D reports/inventory_cache_1e5e4d1a.json
+ D reports/inventory_cache_321d7e4d.json
+ D reports/inventory_cache_34f3f5f2.json
+ D reports/inventory_cache_47cf1260.json
+ D reports/inventory_cache_516cedc1.json
+ D reports/inventory_cache_522ea03c.json
+ D reports/inventory_cache_67f55e3a.json
+ D reports/inventory_cache_6a4d16c8.json
+ D reports/inventory_cache_6cc14d61.json
+ D reports/inventory_cache_71442f09.json
+ D reports/inventory_cache_950e34de.json
+ D reports/inventory_cache_9793a262.json
+ D reports/inventory_cache_a5543dd8.json
+ D reports/inventory_cache_a8910a14.json
+ D reports/inventory_cache_aef3effa.json
+ D reports/inventory_cache_b134ab7d.json
+ D reports/inventory_cache_c1183b7b.json
+ D reports/inventory_cache_f033956d.json
+ D reports/inventory_cache_f2abdccc.json
+ D reports/inventory_cache_fc03dcdd.json
+ D reports/inventory_sample.csv
+ D reports/migration_list_.md
+ D reports/migration_list_05d8d229.csv
+ D reports/migration_list_516cedc1.csv
+ D reports/migration_list_6a4d16c8.csv
+ D reports/migration_list_950e34de.csv
+ D reports/migration_list_e93c6c01.md
+ D reports/migration_list_template.md
+ D reports/reviews/069c548f/Free/__mocks__/health_test.json
+ D reports/reviews/069c548f/Free/__mocks__/health_test.md
+ D reports/reviews/069c548f/Free/_archive/jsx_legacy/button.json
+ D reports/reviews/069c548f/Free/_archive/jsx_legacy/button.md
+ D reports/reviews/069c548f/Free/_archive/jsx_legacy/loadingspinner.json
+ D reports/reviews/069c548f/Free/_archive/jsx_legacy/loadingspinner.md
+ D reports/reviews/069c548f/Free/_archive/jsx_legacy/messaging.json
+ D reports/reviews/069c548f/Free/_archive/jsx_legacy/messaging.md
+ D reports/reviews/069c548f/Free/_archive/jsx_legacy/navbar.json
+ D reports/reviews/069c548f/Free/_archive/jsx_legacy/navbar.md
+ D reports/reviews/069c548f/Free/_archive/jsx_legacy/protectedroute.json
+ D reports/reviews/069c548f/Free/_archive/jsx_legacy/protectedroute.md
+ D reports/reviews/069c548f/Free/app.json
+ D reports/reviews/069c548f/Free/app.md
+ D reports/reviews/069c548f/Free/components/adminemailnotifications.json
+ D reports/reviews/069c548f/Free/components/adminemailnotifications.md
+ D reports/reviews/069c548f/Free/hooks/usemechanicsocket.json
+ D reports/reviews/069c548f/Free/hooks/usemechanicsocket.md
+ D reports/reviews/069c548f/Free/hooks/usemechanicsocket.test.json
+ D reports/reviews/069c548f/Free/hooks/usemechanicsocket.test.md
+ D reports/reviews/069c548f/Free/index.json
+ D reports/reviews/069c548f/Free/index.md
+ D reports/reviews/069c548f/Free/setuptests.json
+ D reports/reviews/069c548f/Free/setuptests.md
+ D reports/reviews/069c548f/Free/styles/theme.json
+ D reports/reviews/069c548f/Free/styles/theme.md
+ D reports/reviews/069c548f/Free/tests/ai/aibadgeoverlay.test.json
+ D reports/reviews/069c548f/Free/tests/ai/aibadgeoverlay.test.md
+ D reports/reviews/069c548f/Free/tests/ai/aiscorepanel.test.json
+ D reports/reviews/069c548f/Free/tests/ai/aiscorepanel.test.md
+ D reports/reviews/069c548f/Free/tests/ai/bidconfidencemeter.test.json
+ D reports/reviews/069c548f/Free/tests/ai/bidconfidencemeter.test.md
+ D reports/reviews/069c548f/Free/tests/ai/bidstrategyadvisor.test.json
+ D reports/reviews/069c548f/Free/tests/ai/bidstrategyadvisor.test.md
+ D reports/reviews/069c548f/Free/tests/ai/predictivecomparison.test.json
+ D reports/reviews/069c548f/Free/tests/ai/predictivecomparison.test.md
+ D reports/reviews/069c548f/Free/tests/ai/smartinsightswidget.test.json
+ D reports/reviews/069c548f/Free/tests/ai/smartinsightswidget.test.md
+ D reports/reviews/069c548f/Free/tests/ai/trustscoreviewer.test.json
+ D reports/reviews/069c548f/Free/tests/ai/trustscoreviewer.test.md
+ D reports/reviews/069c548f/Free/tests/ai/valuationassistant.test.json
+ D reports/reviews/069c548f/Free/tests/ai/valuationassistant.test.md
+ D reports/reviews/069c548f/Free/tests/ai/valuationlivefeed.test.json
+ D reports/reviews/069c548f/Free/tests/ai/valuationlivefeed.test.md
+ D reports/reviews/069c548f/Free/tests/aidiagnosticsassistant.test.json
+ D reports/reviews/069c548f/Free/tests/aidiagnosticsassistant.test.md
+ D reports/reviews/069c548f/Free/tests/arbitrator/arbitratoranalyticspanel.test.json
+ D reports/reviews/069c548f/Free/tests/arbitrator/arbitratoranalyticspanel.test.md
+ D reports/reviews/069c548f/Free/tests/arbitrator/arbitratordashboard.test.json
+ D reports/reviews/069c548f/Free/tests/arbitrator/arbitratordashboard.test.md
+ D reports/reviews/069c548f/Free/tests/auction/auctionintegrationtest.json
+ D reports/reviews/069c548f/Free/tests/auction/auctionintegrationtest.md
+ D reports/reviews/069c548f/Free/tests/auction/auctionintelligencedashboard.test.json
+ D reports/reviews/069c548f/Free/tests/auction/auctionintelligencedashboard.test.md
+ D reports/reviews/069c548f/Free/tests/auction/auctionpremiuminsightspanel.test.json
+ D reports/reviews/069c548f/Free/tests/auction/auctionpremiuminsightspanel.test.md
+ D reports/reviews/069c548f/Free/tests/buyer/buyerauctionhistory.test.json
+ D reports/reviews/069c548f/Free/tests/buyer/buyerauctionhistory.test.md
+ D reports/reviews/069c548f/Free/tests/buyer/buyerbidmodal.test.json
+ D reports/reviews/069c548f/Free/tests/buyer/buyerbidmodal.test.md
+ D reports/reviews/069c548f/Free/tests/buyer/buyercontractview.test.json
+ D reports/reviews/069c548f/Free/tests/buyer/buyercontractview.test.md
+ D reports/reviews/069c548f/Free/tests/buyer/buyerdeliverytracker.test.json
+ D reports/reviews/069c548f/Free/tests/buyer/buyerdeliverytracker.test.md
+ D reports/reviews/069c548f/Free/tests/buyer/buyerfinancingoffers.test.json
+ D reports/reviews/069c548f/Free/tests/buyer/buyerfinancingoffers.test.md
+ D reports/reviews/069c548f/Free/tests/buyer/buyertitletracker.test.json
+ D reports/reviews/069c548f/Free/tests/buyer/buyertitletracker.test.md
+ D reports/reviews/069c548f/Free/tests/buyercommunityforum.test.json
+ D reports/reviews/069c548f/Free/tests/buyercommunityforum.test.md
+ D reports/reviews/069c548f/Free/tests/buyerlenderresults.test.json
+ D reports/reviews/069c548f/Free/tests/buyerlenderresults.test.md
+ D reports/reviews/069c548f/Free/tests/buyersearchpreferences.test.json
+ D reports/reviews/069c548f/Free/tests/buyersearchpreferences.test.md
+ D reports/reviews/069c548f/Free/tests/cartransportcoordination.test.json
+ D reports/reviews/069c548f/Free/tests/cartransportcoordination.test.md
+ D reports/reviews/069c548f/Free/tests/collaborationchat.test.json
+ D reports/reviews/069c548f/Free/tests/collaborationchat.test.md
+ D reports/reviews/069c548f/Free/tests/components/userprofilepage.test.json
+ D reports/reviews/069c548f/Free/tests/components/userprofilepage.test.md
+ D reports/reviews/069c548f/Free/tests/contracts/contractsummary.test.json
+ D reports/reviews/069c548f/Free/tests/contracts/contractsummary.test.md
+ D reports/reviews/069c548f/Free/tests/equity-hub/equityintelligencehub.test.json
+ D reports/reviews/069c548f/Free/tests/equity-hub/equityintelligencehub.test.md
+ D reports/reviews/069c548f/Free/tests/escrow/escrowofficerdashboard.test.json
+ D reports/reviews/069c548f/Free/tests/escrow/escrowofficerdashboard.test.md
+ D reports/reviews/069c548f/Free/tests/escrow/escrowstatusviewer.test.json
+ D reports/reviews/069c548f/Free/tests/escrow/escrowstatusviewer.test.md
+ D reports/reviews/069c548f/Free/tests/escrow/escrowsyncadminpanel.test.json
+ D reports/reviews/069c548f/Free/tests/escrow/escrowsyncadminpanel.test.md
+ D reports/reviews/069c548f/Free/tests/escrowstatussync.test.json
+ D reports/reviews/069c548f/Free/tests/escrowstatussync.test.md
+ D reports/reviews/069c548f/Free/tests/escrowstatustracker.test.json
+ D reports/reviews/069c548f/Free/tests/escrowstatustracker.test.md
+ D reports/reviews/069c548f/Free/tests/finance/financeriskassessment.test.json
+ D reports/reviews/069c548f/Free/tests/finance/financeriskassessment.test.md
+ D reports/reviews/069c548f/Free/tests/gamification/achievementpopup.test.json
+ D reports/reviews/069c548f/Free/tests/gamification/achievementpopup.test.md
+ D reports/reviews/069c548f/Free/tests/gamification/badgestorefront.test.json
+ D reports/reviews/069c548f/Free/tests/gamification/badgestorefront.test.md
+ D reports/reviews/069c548f/Free/tests/guestdashboard.test.json
+ D reports/reviews/069c548f/Free/tests/guestdashboard.test.md
+ D reports/reviews/069c548f/Free/tests/guestdashboard.test50000.json
+ D reports/reviews/069c548f/Free/tests/guestdashboard.test50000.md
+ D reports/reviews/069c548f/Free/tests/hauler/haulerauctiondelivery.test.json
+ D reports/reviews/069c548f/Free/tests/hauler/haulerauctiondelivery.test.md
+ D reports/reviews/069c548f/Free/tests/haulercollaboration.test.json
+ D reports/reviews/069c548f/Free/tests/haulercollaboration.test.md
+ D reports/reviews/069c548f/Free/tests/haulercommunityboard.test.json
+ D reports/reviews/069c548f/Free/tests/haulercommunityboard.test.md
+ D reports/reviews/069c548f/Free/tests/inspectionphotopreviewer.test.json
+ D reports/reviews/069c548f/Free/tests/inspectionphotopreviewer.test.md
+ D reports/reviews/069c548f/Free/tests/insurance/insuranceaimodelperformance.test.json
+ D reports/reviews/069c548f/Free/tests/insurance/insuranceaimodelperformance.test.md
+ D reports/reviews/069c548f/Free/tests/insurance/insuranceclaimsanalytics.test.json
+ D reports/reviews/069c548f/Free/tests/insurance/insuranceclaimsanalytics.test.md
+ D reports/reviews/069c548f/Free/tests/insurance/insuranceclaimsprocessor.test.json
+ D reports/reviews/069c548f/Free/tests/insurance/insuranceclaimsprocessor.test.md
+ D reports/reviews/069c548f/Free/tests/insurance/insuranceofficerdashboard.test.json
+ D reports/reviews/069c548f/Free/tests/insurance/insuranceofficerdashboard.test.md
+ D reports/reviews/069c548f/Free/tests/judge/smartverdicthint.test.json
+ D reports/reviews/069c548f/Free/tests/judge/smartverdicthint.test.md
+ D reports/reviews/069c548f/Free/tests/lender/lendertermshistoryviewer.test.json
+ D reports/reviews/069c548f/Free/tests/lender/lendertermshistoryviewer.test.md
+ D reports/reviews/069c548f/Free/tests/lenderexportpanel.test.json
+ D reports/reviews/069c548f/Free/tests/lenderexportpanel.test.md
+ D reports/reviews/069c548f/Free/tests/marketplace/marketplaceinsightsdashboard.test.json
+ D reports/reviews/069c548f/Free/tests/marketplace/marketplaceinsightsdashboard.test.md
+ D reports/reviews/069c548f/Free/tests/mechanic/mechanicinspectionform.test.json
+ D reports/reviews/069c548f/Free/tests/mechanic/mechanicinspectionform.test.md
+ D reports/reviews/069c548f/Free/tests/mechanicdashboard.test.json
+ D reports/reviews/069c548f/Free/tests/mechanicdashboard.test.md
+ D reports/reviews/069c548f/Free/tests/mechanicshiftplanner.test.json
+ D reports/reviews/069c548f/Free/tests/mechanicshiftplanner.test.md
+ D reports/reviews/069c548f/Free/tests/mobile/mobileanalytics.test.json
+ D reports/reviews/069c548f/Free/tests/mobile/mobileanalytics.test.md
+ D reports/reviews/069c548f/Free/tests/mobile/mobileauctionview.test.json
+ D reports/reviews/069c548f/Free/tests/mobile/mobileauctionview.test.md
+ D reports/reviews/069c548f/Free/tests/officer/disputeradarwidget.test.json
+ D reports/reviews/069c548f/Free/tests/officer/disputeradarwidget.test.md
+ D reports/reviews/069c548f/Free/tests/officerdashboard.test.json
+ D reports/reviews/069c548f/Free/tests/officerdashboard.test.md
+ D reports/reviews/069c548f/Free/tests/onboarding/onboardingwizard.test.json
+ D reports/reviews/069c548f/Free/tests/onboarding/onboardingwizard.test.md
+ D reports/reviews/069c548f/Free/tests/premium/badgedisplay.test.json
+ D reports/reviews/069c548f/Free/tests/premium/badgedisplay.test.md
+ D reports/reviews/069c548f/Free/tests/premium/premiumdashboard.test.json
+ D reports/reviews/069c548f/Free/tests/premium/premiumdashboard.test.md
+ D reports/reviews/069c548f/Free/tests/premium/pricinginsights.test.json
+ D reports/reviews/069c548f/Free/tests/premium/pricinginsights.test.md
+ D reports/reviews/069c548f/Free/tests/premium/recommendedauctions.test.json
+ D reports/reviews/069c548f/Free/tests/premium/recommendedauctions.test.md
+ D reports/reviews/069c548f/Free/tests/premium/supportchatwidget.test.json
+ D reports/reviews/069c548f/Free/tests/premium/supportchatwidget.test.md
+ D reports/reviews/069c548f/Free/tests/premium/vrtourlauncher.json
+ D reports/reviews/069c548f/Free/tests/premium/vrtourlauncher.md
+ D reports/reviews/069c548f/Free/tests/riskassessmentengine.test.json
+ D reports/reviews/069c548f/Free/tests/riskassessmentengine.test.md
+ D reports/reviews/069c548f/Free/tests/routeriskanalysis.test.json
+ D reports/reviews/069c548f/Free/tests/routeriskanalysis.test.md
+ D reports/reviews/069c548f/Free/tests/seller/selleranalyticschart.test.json
+ D reports/reviews/069c548f/Free/tests/seller/selleranalyticschart.test.md
+ D reports/reviews/069c548f/Free/tests/seller/sellerauctionform.test.json
+ D reports/reviews/069c548f/Free/tests/seller/sellerauctionform.test.md
+ D reports/reviews/069c548f/Free/tests/seller/sellerauctionstatus.test.json
+ D reports/reviews/069c548f/Free/tests/seller/sellerauctionstatus.test.md
+ D reports/reviews/069c548f/Free/tests/seller/sellerdashboard.test.json
+ D reports/reviews/069c548f/Free/tests/seller/sellerdashboard.test.md
+ D reports/reviews/069c548f/Free/tests/seller/sellerinventorylist.test.json
+ D reports/reviews/069c548f/Free/tests/seller/sellerinventorylist.test.md
+ D reports/reviews/069c548f/Free/tests/sellerdeepanalytics.test.json
+ D reports/reviews/069c548f/Free/tests/sellerdeepanalytics.test.md
+ D reports/reviews/069c548f/Free/tests/sellerexportpanel.test.json
+ D reports/reviews/069c548f/Free/tests/sellerexportpanel.test.md
+ D reports/reviews/069c548f/Free/tests/sellerreputationdashboard.test.json
+ D reports/reviews/069c548f/Free/tests/sellerreputationdashboard.test.md
+ D reports/reviews/069c548f/Free/tests/taskcompletionbutton.test.json
+ D reports/reviews/069c548f/Free/tests/taskcompletionbutton.test.md
+ D reports/reviews/069c548f/Free/tests/vehiclehealthtrendcharts.test.json
+ D reports/reviews/069c548f/Free/tests/vehiclehealthtrendcharts.test.md
+ D reports/reviews/069c548f/Free/tests/vehicleinspectionmodule.test.json
+ D reports/reviews/069c548f/Free/tests/vehicleinspectionmodule.test.md
+ D reports/reviews/069c548f/Free/tests/vindecoder.test.json
+ D reports/reviews/069c548f/Free/tests/vindecoder.test.md
+ D reports/reviews/069c548f/Free/utils/auction/auctionexportutils.json
+ D reports/reviews/069c548f/Free/utils/auction/auctionexportutils.md
+ D reports/reviews/069c548f/Free/utils/auction/auctionexportutils.test.json
+ D reports/reviews/069c548f/Free/utils/auction/auctionexportutils.test.md
+ D reports/reviews/069c548f/Free/utils/graph/graphexportservice.json
+ D reports/reviews/069c548f/Free/utils/graph/graphexportservice.md
+ D reports/reviews/069c548f/Free/utils/inspection/submitinspectiontobackend.json
+ D reports/reviews/069c548f/Free/utils/inspection/submitinspectiontobackend.md
+ D reports/reviews/069c548f/Free/utils/rewardhelper.json
+ D reports/reviews/069c548f/Free/utils/rewardhelper.md
+ D reports/reviews/069c548f/Free/utils/socialsharehelper.json
+ D reports/reviews/069c548f/Free/utils/socialsharehelper.md
+ D reports/reviews/069c548f/Free/utils/useauth.json
+ D reports/reviews/069c548f/Free/utils/useauth.md
+ D reports/reviews/069c548f/Premium/__mocks__/health_test.json
+ D reports/reviews/069c548f/Premium/__mocks__/health_test.md
+ D reports/reviews/069c548f/Premium/_archive/jsx_legacy/button.json
+ D reports/reviews/069c548f/Premium/_archive/jsx_legacy/button.md
+ D reports/reviews/069c548f/Premium/_archive/jsx_legacy/loadingspinner.json
+ D reports/reviews/069c548f/Premium/_archive/jsx_legacy/loadingspinner.md
+ D reports/reviews/069c548f/Premium/_archive/jsx_legacy/messaging.json
+ D reports/reviews/069c548f/Premium/_archive/jsx_legacy/messaging.md
+ D reports/reviews/069c548f/Premium/_archive/jsx_legacy/navbar.json
+ D reports/reviews/069c548f/Premium/_archive/jsx_legacy/navbar.md
+ D reports/reviews/069c548f/Premium/_archive/jsx_legacy/protectedroute.json
+ D reports/reviews/069c548f/Premium/_archive/jsx_legacy/protectedroute.md
+ D reports/reviews/069c548f/Premium/app.json
+ D reports/reviews/069c548f/Premium/app.md
+ D reports/reviews/069c548f/Premium/components/adminemailnotifications.json
+ D reports/reviews/069c548f/Premium/components/adminemailnotifications.md
+ D reports/reviews/069c548f/Premium/hooks/usemechanicsocket.json
+ D reports/reviews/069c548f/Premium/hooks/usemechanicsocket.md
+ D reports/reviews/069c548f/Premium/hooks/usemechanicsocket.test.json
+ D reports/reviews/069c548f/Premium/hooks/usemechanicsocket.test.md
+ D reports/reviews/069c548f/Premium/index.json
+ D reports/reviews/069c548f/Premium/index.md
+ D reports/reviews/069c548f/Premium/setuptests.json
+ D reports/reviews/069c548f/Premium/setuptests.md
+ D reports/reviews/069c548f/Premium/styles/theme.json
+ D reports/reviews/069c548f/Premium/styles/theme.md
+ D reports/reviews/069c548f/Premium/tests/ai/aibadgeoverlay.test.json
+ D reports/reviews/069c548f/Premium/tests/ai/aibadgeoverlay.test.md
+ D reports/reviews/069c548f/Premium/tests/ai/aiscorepanel.test.json
+ D reports/reviews/069c548f/Premium/tests/ai/aiscorepanel.test.md
+ D reports/reviews/069c548f/Premium/tests/ai/bidconfidencemeter.test.json
+ D reports/reviews/069c548f/Premium/tests/ai/bidconfidencemeter.test.md
+ D reports/reviews/069c548f/Premium/tests/ai/bidstrategyadvisor.test.json
+ D reports/reviews/069c548f/Premium/tests/ai/bidstrategyadvisor.test.md
+ D reports/reviews/069c548f/Premium/tests/ai/predictivecomparison.test.json
+ D reports/reviews/069c548f/Premium/tests/ai/predictivecomparison.test.md
+ D reports/reviews/069c548f/Premium/tests/ai/smartinsightswidget.test.json
+ D reports/reviews/069c548f/Premium/tests/ai/smartinsightswidget.test.md
+ D reports/reviews/069c548f/Premium/tests/ai/trustscoreviewer.test.json
+ D reports/reviews/069c548f/Premium/tests/ai/trustscoreviewer.test.md
+ D reports/reviews/069c548f/Premium/tests/ai/valuationassistant.test.json
+ D reports/reviews/069c548f/Premium/tests/ai/valuationassistant.test.md
+ D reports/reviews/069c548f/Premium/tests/ai/valuationlivefeed.test.json
+ D reports/reviews/069c548f/Premium/tests/ai/valuationlivefeed.test.md
+ D reports/reviews/069c548f/Premium/tests/aidiagnosticsassistant.test.json
+ D reports/reviews/069c548f/Premium/tests/aidiagnosticsassistant.test.md
+ D reports/reviews/069c548f/Premium/tests/arbitrator/arbitratoranalyticspanel.test.json
+ D reports/reviews/069c548f/Premium/tests/arbitrator/arbitratoranalyticspanel.test.md
+ D reports/reviews/069c548f/Premium/tests/arbitrator/arbitratordashboard.test.json
+ D reports/reviews/069c548f/Premium/tests/arbitrator/arbitratordashboard.test.md
+ D reports/reviews/069c548f/Premium/tests/auction/auctionintegrationtest.json
+ D reports/reviews/069c548f/Premium/tests/auction/auctionintegrationtest.md
+ D reports/reviews/069c548f/Premium/tests/auction/auctionintelligencedashboard.test.json
+ D reports/reviews/069c548f/Premium/tests/auction/auctionintelligencedashboard.test.md
+ D reports/reviews/069c548f/Premium/tests/auction/auctionpremiuminsightspanel.test.json
+ D reports/reviews/069c548f/Premium/tests/auction/auctionpremiuminsightspanel.test.md
+ D reports/reviews/069c548f/Premium/tests/buyer/buyerauctionhistory.test.json
+ D reports/reviews/069c548f/Premium/tests/buyer/buyerauctionhistory.test.md
+ D reports/reviews/069c548f/Premium/tests/buyer/buyerbidmodal.test.json
+ D reports/reviews/069c548f/Premium/tests/buyer/buyerbidmodal.test.md
+ D reports/reviews/069c548f/Premium/tests/buyer/buyercontractview.test.json
+ D reports/reviews/069c548f/Premium/tests/buyer/buyercontractview.test.md
+ D reports/reviews/069c548f/Premium/tests/buyer/buyerdeliverytracker.test.json
+ D reports/reviews/069c548f/Premium/tests/buyer/buyerdeliverytracker.test.md
+ D reports/reviews/069c548f/Premium/tests/buyer/buyerfinancingoffers.test.json
+ D reports/reviews/069c548f/Premium/tests/buyer/buyerfinancingoffers.test.md
+ D reports/reviews/069c548f/Premium/tests/buyer/buyertitletracker.test.json
+ D reports/reviews/069c548f/Premium/tests/buyer/buyertitletracker.test.md
+ D reports/reviews/069c548f/Premium/tests/buyercommunityforum.test.json
+ D reports/reviews/069c548f/Premium/tests/buyercommunityforum.test.md
+ D reports/reviews/069c548f/Premium/tests/buyerlenderresults.test.json
+ D reports/reviews/069c548f/Premium/tests/buyerlenderresults.test.md
+ D reports/reviews/069c548f/Premium/tests/buyersearchpreferences.test.json
+ D reports/reviews/069c548f/Premium/tests/buyersearchpreferences.test.md
+ D reports/reviews/069c548f/Premium/tests/cartransportcoordination.test.json
+ D reports/reviews/069c548f/Premium/tests/cartransportcoordination.test.md
+ D reports/reviews/069c548f/Premium/tests/collaborationchat.test.json
+ D reports/reviews/069c548f/Premium/tests/collaborationchat.test.md
+ D reports/reviews/069c548f/Premium/tests/components/userprofilepage.test.json
+ D reports/reviews/069c548f/Premium/tests/components/userprofilepage.test.md
+ D reports/reviews/069c548f/Premium/tests/contracts/contractsummary.test.json
+ D reports/reviews/069c548f/Premium/tests/contracts/contractsummary.test.md
+ D reports/reviews/069c548f/Premium/tests/equity-hub/equityintelligencehub.test.json
+ D reports/reviews/069c548f/Premium/tests/equity-hub/equityintelligencehub.test.md
+ D reports/reviews/069c548f/Premium/tests/escrow/escrowofficerdashboard.test.json
+ D reports/reviews/069c548f/Premium/tests/escrow/escrowofficerdashboard.test.md
+ D reports/reviews/069c548f/Premium/tests/escrow/escrowstatusviewer.test.json
+ D reports/reviews/069c548f/Premium/tests/escrow/escrowstatusviewer.test.md
+ D reports/reviews/069c548f/Premium/tests/escrow/escrowsyncadminpanel.test.json
+ D reports/reviews/069c548f/Premium/tests/escrow/escrowsyncadminpanel.test.md
+ D reports/reviews/069c548f/Premium/tests/escrowstatussync.test.json
+ D reports/reviews/069c548f/Premium/tests/escrowstatussync.test.md
+ D reports/reviews/069c548f/Premium/tests/escrowstatustracker.test.json
+ D reports/reviews/069c548f/Premium/tests/escrowstatustracker.test.md
+ D reports/reviews/069c548f/Premium/tests/finance/financeriskassessment.test.json
+ D reports/reviews/069c548f/Premium/tests/finance/financeriskassessment.test.md
+ D reports/reviews/069c548f/Premium/tests/gamification/achievementpopup.test.json
+ D reports/reviews/069c548f/Premium/tests/gamification/achievementpopup.test.md
+ D reports/reviews/069c548f/Premium/tests/gamification/badgestorefront.test.json
+ D reports/reviews/069c548f/Premium/tests/gamification/badgestorefront.test.md
+ D reports/reviews/069c548f/Premium/tests/guestdashboard.test.json
+ D reports/reviews/069c548f/Premium/tests/guestdashboard.test.md
+ D reports/reviews/069c548f/Premium/tests/guestdashboard.test50000.json
+ D reports/reviews/069c548f/Premium/tests/guestdashboard.test50000.md
+ D reports/reviews/069c548f/Premium/tests/hauler/haulerauctiondelivery.test.json
+ D reports/reviews/069c548f/Premium/tests/hauler/haulerauctiondelivery.test.md
+ D reports/reviews/069c548f/Premium/tests/haulercollaboration.test.json
+ D reports/reviews/069c548f/Premium/tests/haulercollaboration.test.md
+ D reports/reviews/069c548f/Premium/tests/haulercommunityboard.test.json
+ D reports/reviews/069c548f/Premium/tests/haulercommunityboard.test.md
+ D reports/reviews/069c548f/Premium/tests/inspectionphotopreviewer.test.json
+ D reports/reviews/069c548f/Premium/tests/inspectionphotopreviewer.test.md
+ D reports/reviews/069c548f/Premium/tests/insurance/insuranceaimodelperformance.test.json
+ D reports/reviews/069c548f/Premium/tests/insurance/insuranceaimodelperformance.test.md
+ D reports/reviews/069c548f/Premium/tests/insurance/insuranceclaimsanalytics.test.json
+ D reports/reviews/069c548f/Premium/tests/insurance/insuranceclaimsanalytics.test.md
+ D reports/reviews/069c548f/Premium/tests/insurance/insuranceclaimsprocessor.test.json
+ D reports/reviews/069c548f/Premium/tests/insurance/insuranceclaimsprocessor.test.md
+ D reports/reviews/069c548f/Premium/tests/insurance/insuranceofficerdashboard.test.json
+ D reports/reviews/069c548f/Premium/tests/insurance/insuranceofficerdashboard.test.md
+ D reports/reviews/069c548f/Premium/tests/judge/smartverdicthint.test.json
+ D reports/reviews/069c548f/Premium/tests/judge/smartverdicthint.test.md
+ D reports/reviews/069c548f/Premium/tests/lender/lendertermshistoryviewer.test.json
+ D reports/reviews/069c548f/Premium/tests/lender/lendertermshistoryviewer.test.md
+ D reports/reviews/069c548f/Premium/tests/lenderexportpanel.test.json
+ D reports/reviews/069c548f/Premium/tests/lenderexportpanel.test.md
+ D reports/reviews/069c548f/Premium/tests/marketplace/marketplaceinsightsdashboard.test.json
+ D reports/reviews/069c548f/Premium/tests/marketplace/marketplaceinsightsdashboard.test.md
+ D reports/reviews/069c548f/Premium/tests/mechanic/mechanicinspectionform.test.json
+ D reports/reviews/069c548f/Premium/tests/mechanic/mechanicinspectionform.test.md
+ D reports/reviews/069c548f/Premium/tests/mechanicdashboard.test.json
+ D reports/reviews/069c548f/Premium/tests/mechanicdashboard.test.md
+ D reports/reviews/069c548f/Premium/tests/mechanicshiftplanner.test.json
+ D reports/reviews/069c548f/Premium/tests/mechanicshiftplanner.test.md
+ D reports/reviews/069c548f/Premium/tests/mobile/mobileanalytics.test.json
+ D reports/reviews/069c548f/Premium/tests/mobile/mobileanalytics.test.md
+ D reports/reviews/069c548f/Premium/tests/mobile/mobileauctionview.test.json
+ D reports/reviews/069c548f/Premium/tests/mobile/mobileauctionview.test.md
+ D reports/reviews/069c548f/Premium/tests/officer/disputeradarwidget.test.json
+ D reports/reviews/069c548f/Premium/tests/officer/disputeradarwidget.test.md
+ D reports/reviews/069c548f/Premium/tests/officerdashboard.test.json
+ D reports/reviews/069c548f/Premium/tests/officerdashboard.test.md
+ D reports/reviews/069c548f/Premium/tests/onboarding/onboardingwizard.test.json
+ D reports/reviews/069c548f/Premium/tests/onboarding/onboardingwizard.test.md
+ D reports/reviews/069c548f/Premium/tests/premium/badgedisplay.test.json
+ D reports/reviews/069c548f/Premium/tests/premium/badgedisplay.test.md
+ D reports/reviews/069c548f/Premium/tests/premium/premiumdashboard.test.json
+ D reports/reviews/069c548f/Premium/tests/premium/premiumdashboard.test.md
+ D reports/reviews/069c548f/Premium/tests/premium/pricinginsights.test.json
+ D reports/reviews/069c548f/Premium/tests/premium/pricinginsights.test.md
+ D reports/reviews/069c548f/Premium/tests/premium/recommendedauctions.test.json
+ D reports/reviews/069c548f/Premium/tests/premium/recommendedauctions.test.md
+ D reports/reviews/069c548f/Premium/tests/premium/supportchatwidget.test.json
+ D reports/reviews/069c548f/Premium/tests/premium/supportchatwidget.test.md
+ D reports/reviews/069c548f/Premium/tests/premium/vrtourlauncher.json
+ D reports/reviews/069c548f/Premium/tests/premium/vrtourlauncher.md
+ D reports/reviews/069c548f/Premium/tests/riskassessmentengine.test.json
+ D reports/reviews/069c548f/Premium/tests/riskassessmentengine.test.md
+ D reports/reviews/069c548f/Premium/tests/routeriskanalysis.test.json
+ D reports/reviews/069c548f/Premium/tests/routeriskanalysis.test.md
+ D reports/reviews/069c548f/Premium/tests/seller/selleranalyticschart.test.json
+ D reports/reviews/069c548f/Premium/tests/seller/selleranalyticschart.test.md
+ D reports/reviews/069c548f/Premium/tests/seller/sellerauctionform.test.json
+ D reports/reviews/069c548f/Premium/tests/seller/sellerauctionform.test.md
+ D reports/reviews/069c548f/Premium/tests/seller/sellerauctionstatus.test.json
+ D reports/reviews/069c548f/Premium/tests/seller/sellerauctionstatus.test.md
+ D reports/reviews/069c548f/Premium/tests/seller/sellerdashboard.test.json
+ D reports/reviews/069c548f/Premium/tests/seller/sellerdashboard.test.md
+ D reports/reviews/069c548f/Premium/tests/seller/sellerinventorylist.test.json
+ D reports/reviews/069c548f/Premium/tests/seller/sellerinventorylist.test.md
+ D reports/reviews/069c548f/Premium/tests/sellerdeepanalytics.test.json
+ D reports/reviews/069c548f/Premium/tests/sellerdeepanalytics.test.md
+ D reports/reviews/069c548f/Premium/tests/sellerexportpanel.test.json
+ D reports/reviews/069c548f/Premium/tests/sellerexportpanel.test.md
+ D reports/reviews/069c548f/Premium/tests/sellerreputationdashboard.test.json
+ D reports/reviews/069c548f/Premium/tests/sellerreputationdashboard.test.md
+ D reports/reviews/069c548f/Premium/tests/taskcompletionbutton.test.json
+ D reports/reviews/069c548f/Premium/tests/taskcompletionbutton.test.md
+ D reports/reviews/069c548f/Premium/tests/vehiclehealthtrendcharts.test.json
+ D reports/reviews/069c548f/Premium/tests/vehiclehealthtrendcharts.test.md
+ D reports/reviews/069c548f/Premium/tests/vehicleinspectionmodule.test.json
+ D reports/reviews/069c548f/Premium/tests/vehicleinspectionmodule.test.md
+ D reports/reviews/069c548f/Premium/tests/vindecoder.test.json
+ D reports/reviews/069c548f/Premium/tests/vindecoder.test.md
+ D reports/reviews/069c548f/Premium/utils/auction/auctionexportutils.json
+ D reports/reviews/069c548f/Premium/utils/auction/auctionexportutils.md
+ D reports/reviews/069c548f/Premium/utils/auction/auctionexportutils.test.json
+ D reports/reviews/069c548f/Premium/utils/auction/auctionexportutils.test.md
+ D reports/reviews/069c548f/Premium/utils/graph/graphexportservice.json
+ D reports/reviews/069c548f/Premium/utils/graph/graphexportservice.md
+ D reports/reviews/069c548f/Premium/utils/inspection/submitinspectiontobackend.json
+ D reports/reviews/069c548f/Premium/utils/inspection/submitinspectiontobackend.md
+ D reports/reviews/069c548f/Premium/utils/rewardhelper.json
+ D reports/reviews/069c548f/Premium/utils/rewardhelper.md
+ D reports/reviews/069c548f/Premium/utils/socialsharehelper.json
+ D reports/reviews/069c548f/Premium/utils/socialsharehelper.md
+ D reports/reviews/069c548f/Premium/utils/useauth.json
+ D reports/reviews/069c548f/Premium/utils/useauth.md
+ D reports/reviews/069c548f/Wow++/__mocks__/health_test.json
+ D reports/reviews/069c548f/Wow++/__mocks__/health_test.md
+ D reports/reviews/069c548f/Wow++/_archive/jsx_legacy/button.json
+ D reports/reviews/069c548f/Wow++/_archive/jsx_legacy/button.md
+ D reports/reviews/069c548f/Wow++/_archive/jsx_legacy/loadingspinner.json
+ D reports/reviews/069c548f/Wow++/_archive/jsx_legacy/loadingspinner.md
+ D reports/reviews/069c548f/Wow++/_archive/jsx_legacy/messaging.json
+ D reports/reviews/069c548f/Wow++/_archive/jsx_legacy/messaging.md
+ D reports/reviews/069c548f/Wow++/_archive/jsx_legacy/navbar.json
+ D reports/reviews/069c548f/Wow++/_archive/jsx_legacy/navbar.md
+ D reports/reviews/069c548f/Wow++/_archive/jsx_legacy/protectedroute.json
+ D reports/reviews/069c548f/Wow++/_archive/jsx_legacy/protectedroute.md
+ D reports/reviews/069c548f/Wow++/app.json
+ D reports/reviews/069c548f/Wow++/app.md
+ D reports/reviews/069c548f/Wow++/components/adminemailnotifications.json
+ D reports/reviews/069c548f/Wow++/components/adminemailnotifications.md
+ D reports/reviews/069c548f/Wow++/hooks/usemechanicsocket.json
+ D reports/reviews/069c548f/Wow++/hooks/usemechanicsocket.md
+ D reports/reviews/069c548f/Wow++/hooks/usemechanicsocket.test.json
+ D reports/reviews/069c548f/Wow++/hooks/usemechanicsocket.test.md
+ D reports/reviews/069c548f/Wow++/index.json
+ D reports/reviews/069c548f/Wow++/index.md
+ D reports/reviews/069c548f/Wow++/setuptests.json
+ D reports/reviews/069c548f/Wow++/setuptests.md
+ D reports/reviews/069c548f/Wow++/styles/theme.json
+ D reports/reviews/069c548f/Wow++/styles/theme.md
+ D reports/reviews/069c548f/Wow++/tests/ai/aibadgeoverlay.test.json
+ D reports/reviews/069c548f/Wow++/tests/ai/aibadgeoverlay.test.md
+ D reports/reviews/069c548f/Wow++/tests/ai/aiscorepanel.test.json
+ D reports/reviews/069c548f/Wow++/tests/ai/aiscorepanel.test.md
+ D reports/reviews/069c548f/Wow++/tests/ai/bidconfidencemeter.test.json
+ D reports/reviews/069c548f/Wow++/tests/ai/bidconfidencemeter.test.md
+ D reports/reviews/069c548f/Wow++/tests/ai/bidstrategyadvisor.test.json
+ D reports/reviews/069c548f/Wow++/tests/ai/bidstrategyadvisor.test.md
+ D reports/reviews/069c548f/Wow++/tests/ai/predictivecomparison.test.json
+ D reports/reviews/069c548f/Wow++/tests/ai/predictivecomparison.test.md
+ D reports/reviews/069c548f/Wow++/tests/ai/smartinsightswidget.test.json
+ D reports/reviews/069c548f/Wow++/tests/ai/smartinsightswidget.test.md
+ D reports/reviews/069c548f/Wow++/tests/ai/trustscoreviewer.test.json
+ D reports/reviews/069c548f/Wow++/tests/ai/trustscoreviewer.test.md
+ D reports/reviews/069c548f/Wow++/tests/ai/valuationassistant.test.json
+ D reports/reviews/069c548f/Wow++/tests/ai/valuationassistant.test.md
+ D reports/reviews/069c548f/Wow++/tests/ai/valuationlivefeed.test.json
+ D reports/reviews/069c548f/Wow++/tests/ai/valuationlivefeed.test.md
+ D reports/reviews/069c548f/Wow++/tests/aidiagnosticsassistant.test.json
+ D reports/reviews/069c548f/Wow++/tests/aidiagnosticsassistant.test.md
+ D reports/reviews/069c548f/Wow++/tests/arbitrator/arbitratoranalyticspanel.test.json
+ D reports/reviews/069c548f/Wow++/tests/arbitrator/arbitratoranalyticspanel.test.md
+ D reports/reviews/069c548f/Wow++/tests/arbitrator/arbitratordashboard.test.json
+ D reports/reviews/069c548f/Wow++/tests/arbitrator/arbitratordashboard.test.md
+ D reports/reviews/069c548f/Wow++/tests/auction/auctionintegrationtest.json
+ D reports/reviews/069c548f/Wow++/tests/auction/auctionintegrationtest.md
+ D reports/reviews/069c548f/Wow++/tests/auction/auctionintelligencedashboard.test.json
+ D reports/reviews/069c548f/Wow++/tests/auction/auctionintelligencedashboard.test.md
+ D reports/reviews/069c548f/Wow++/tests/auction/auctionpremiuminsightspanel.test.json
+ D reports/reviews/069c548f/Wow++/tests/auction/auctionpremiuminsightspanel.test.md
+ D reports/reviews/069c548f/Wow++/tests/buyer/buyerauctionhistory.test.json
+ D reports/reviews/069c548f/Wow++/tests/buyer/buyerauctionhistory.test.md
+ D reports/reviews/069c548f/Wow++/tests/buyer/buyerbidmodal.test.json
+ D reports/reviews/069c548f/Wow++/tests/buyer/buyerbidmodal.test.md
+ D reports/reviews/069c548f/Wow++/tests/buyer/buyercontractview.test.json
+ D reports/reviews/069c548f/Wow++/tests/buyer/buyercontractview.test.md
+ D reports/reviews/069c548f/Wow++/tests/buyer/buyerdeliverytracker.test.json
+ D reports/reviews/069c548f/Wow++/tests/buyer/buyerdeliverytracker.test.md
+ D reports/reviews/069c548f/Wow++/tests/buyer/buyerfinancingoffers.test.json
+ D reports/reviews/069c548f/Wow++/tests/buyer/buyerfinancingoffers.test.md
+ D reports/reviews/069c548f/Wow++/tests/buyer/buyertitletracker.test.json
+ D reports/reviews/069c548f/Wow++/tests/buyer/buyertitletracker.test.md
+ D reports/reviews/069c548f/Wow++/tests/buyercommunityforum.test.json
+ D reports/reviews/069c548f/Wow++/tests/buyercommunityforum.test.md
+ D reports/reviews/069c548f/Wow++/tests/buyerlenderresults.test.json
+ D reports/reviews/069c548f/Wow++/tests/buyerlenderresults.test.md
+ D reports/reviews/069c548f/Wow++/tests/buyersearchpreferences.test.json
+ D reports/reviews/069c548f/Wow++/tests/buyersearchpreferences.test.md
+ D reports/reviews/069c548f/Wow++/tests/cartransportcoordination.test.json
+ D reports/reviews/069c548f/Wow++/tests/cartransportcoordination.test.md
+ D reports/reviews/069c548f/Wow++/tests/collaborationchat.test.json
+ D reports/reviews/069c548f/Wow++/tests/collaborationchat.test.md
+ D reports/reviews/069c548f/Wow++/tests/components/userprofilepage.test.json
+ D reports/reviews/069c548f/Wow++/tests/components/userprofilepage.test.md
+ D reports/reviews/069c548f/Wow++/tests/contracts/contractsummary.test.json
+ D reports/reviews/069c548f/Wow++/tests/contracts/contractsummary.test.md
+ D reports/reviews/069c548f/Wow++/tests/equity-hub/equityintelligencehub.test.json
+ D reports/reviews/069c548f/Wow++/tests/equity-hub/equityintelligencehub.test.md
+ D reports/reviews/069c548f/Wow++/tests/escrow/escrowofficerdashboard.test.json
+ D reports/reviews/069c548f/Wow++/tests/escrow/escrowofficerdashboard.test.md
+ D reports/reviews/069c548f/Wow++/tests/escrow/escrowstatusviewer.test.json
+ D reports/reviews/069c548f/Wow++/tests/escrow/escrowstatusviewer.test.md
+ D reports/reviews/069c548f/Wow++/tests/escrow/escrowsyncadminpanel.test.json
+ D reports/reviews/069c548f/Wow++/tests/escrow/escrowsyncadminpanel.test.md
+ D reports/reviews/069c548f/Wow++/tests/escrowstatussync.test.json
+ D reports/reviews/069c548f/Wow++/tests/escrowstatussync.test.md
+ D reports/reviews/069c548f/Wow++/tests/escrowstatustracker.test.json
+ D reports/reviews/069c548f/Wow++/tests/escrowstatustracker.test.md
+ D reports/reviews/069c548f/Wow++/tests/finance/financeriskassessment.test.json
+ D reports/reviews/069c548f/Wow++/tests/finance/financeriskassessment.test.md
+ D reports/reviews/069c548f/Wow++/tests/gamification/achievementpopup.test.json
+ D reports/reviews/069c548f/Wow++/tests/gamification/achievementpopup.test.md
+ D reports/reviews/069c548f/Wow++/tests/gamification/badgestorefront.test.json
+ D reports/reviews/069c548f/Wow++/tests/gamification/badgestorefront.test.md
+ D reports/reviews/069c548f/Wow++/tests/guestdashboard.test.json
+ D reports/reviews/069c548f/Wow++/tests/guestdashboard.test.md
+ D reports/reviews/069c548f/Wow++/tests/guestdashboard.test50000.json
+ D reports/reviews/069c548f/Wow++/tests/guestdashboard.test50000.md
+ D reports/reviews/069c548f/Wow++/tests/hauler/haulerauctiondelivery.test.json
+ D reports/reviews/069c548f/Wow++/tests/hauler/haulerauctiondelivery.test.md
+ D reports/reviews/069c548f/Wow++/tests/haulercollaboration.test.json
+ D reports/reviews/069c548f/Wow++/tests/haulercollaboration.test.md
+ D reports/reviews/069c548f/Wow++/tests/haulercommunityboard.test.json
+ D reports/reviews/069c548f/Wow++/tests/haulercommunityboard.test.md
+ D reports/reviews/069c548f/Wow++/tests/inspectionphotopreviewer.test.json
+ D reports/reviews/069c548f/Wow++/tests/inspectionphotopreviewer.test.md
+ D reports/reviews/069c548f/Wow++/tests/insurance/insuranceaimodelperformance.test.json
+ D reports/reviews/069c548f/Wow++/tests/insurance/insuranceaimodelperformance.test.md
+ D reports/reviews/069c548f/Wow++/tests/insurance/insuranceclaimsanalytics.test.json
+ D reports/reviews/069c548f/Wow++/tests/insurance/insuranceclaimsanalytics.test.md
+ D reports/reviews/069c548f/Wow++/tests/insurance/insuranceclaimsprocessor.test.json
+ D reports/reviews/069c548f/Wow++/tests/insurance/insuranceclaimsprocessor.test.md
+ D reports/reviews/069c548f/Wow++/tests/insurance/insuranceofficerdashboard.test.json
+ D reports/reviews/069c548f/Wow++/tests/insurance/insuranceofficerdashboard.test.md
+ D reports/reviews/069c548f/Wow++/tests/judge/smartverdicthint.test.json
+ D reports/reviews/069c548f/Wow++/tests/judge/smartverdicthint.test.md
+ D reports/reviews/069c548f/Wow++/tests/lender/lendertermshistoryviewer.test.json
+ D reports/reviews/069c548f/Wow++/tests/lender/lendertermshistoryviewer.test.md
+ D reports/reviews/069c548f/Wow++/tests/lenderexportpanel.test.json
+ D reports/reviews/069c548f/Wow++/tests/lenderexportpanel.test.md
+ D reports/reviews/069c548f/Wow++/tests/marketplace/marketplaceinsightsdashboard.test.json
+ D reports/reviews/069c548f/Wow++/tests/marketplace/marketplaceinsightsdashboard.test.md
+ D reports/reviews/069c548f/Wow++/tests/mechanic/mechanicinspectionform.test.json
+ D reports/reviews/069c548f/Wow++/tests/mechanic/mechanicinspectionform.test.md
+ D reports/reviews/069c548f/Wow++/tests/mechanicdashboard.test.json
+ D reports/reviews/069c548f/Wow++/tests/mechanicdashboard.test.md
+ D reports/reviews/069c548f/Wow++/tests/mechanicshiftplanner.test.json
+ D reports/reviews/069c548f/Wow++/tests/mechanicshiftplanner.test.md
+ D reports/reviews/069c548f/Wow++/tests/mobile/mobileanalytics.test.json
+ D reports/reviews/069c548f/Wow++/tests/mobile/mobileanalytics.test.md
+ D reports/reviews/069c548f/Wow++/tests/mobile/mobileauctionview.test.json
+ D reports/reviews/069c548f/Wow++/tests/mobile/mobileauctionview.test.md
+ D reports/reviews/069c548f/Wow++/tests/officer/disputeradarwidget.test.json
+ D reports/reviews/069c548f/Wow++/tests/officer/disputeradarwidget.test.md
+ D reports/reviews/069c548f/Wow++/tests/officerdashboard.test.json
+ D reports/reviews/069c548f/Wow++/tests/officerdashboard.test.md
+ D reports/reviews/069c548f/Wow++/tests/onboarding/onboardingwizard.test.json
+ D reports/reviews/069c548f/Wow++/tests/onboarding/onboardingwizard.test.md
+ D reports/reviews/069c548f/Wow++/tests/premium/badgedisplay.test.json
+ D reports/reviews/069c548f/Wow++/tests/premium/badgedisplay.test.md
+ D reports/reviews/069c548f/Wow++/tests/premium/premiumdashboard.test.json
+ D reports/reviews/069c548f/Wow++/tests/premium/premiumdashboard.test.md
+ D reports/reviews/069c548f/Wow++/tests/premium/pricinginsights.test.json
+ D reports/reviews/069c548f/Wow++/tests/premium/pricinginsights.test.md
+ D reports/reviews/069c548f/Wow++/tests/premium/recommendedauctions.test.json
+ D reports/reviews/069c548f/Wow++/tests/premium/recommendedauctions.test.md
+ D reports/reviews/069c548f/Wow++/tests/premium/supportchatwidget.test.json
+ D reports/reviews/069c548f/Wow++/tests/premium/supportchatwidget.test.md
+ D reports/reviews/069c548f/Wow++/tests/premium/vrtourlauncher.json
+ D reports/reviews/069c548f/Wow++/tests/premium/vrtourlauncher.md
+ D reports/reviews/069c548f/Wow++/tests/riskassessmentengine.test.json
+ D reports/reviews/069c548f/Wow++/tests/riskassessmentengine.test.md
+ D reports/reviews/069c548f/Wow++/tests/routeriskanalysis.test.json
+ D reports/reviews/069c548f/Wow++/tests/routeriskanalysis.test.md
+ D reports/reviews/069c548f/Wow++/tests/seller/selleranalyticschart.test.json
+ D reports/reviews/069c548f/Wow++/tests/seller/selleranalyticschart.test.md
+ D reports/reviews/069c548f/Wow++/tests/seller/sellerauctionform.test.json
+ D reports/reviews/069c548f/Wow++/tests/seller/sellerauctionform.test.md
+ D reports/reviews/069c548f/Wow++/tests/seller/sellerauctionstatus.test.json
+ D reports/reviews/069c548f/Wow++/tests/seller/sellerauctionstatus.test.md
+ D reports/reviews/069c548f/Wow++/tests/seller/sellerdashboard.test.json
+ D reports/reviews/069c548f/Wow++/tests/seller/sellerdashboard.test.md
+ D reports/reviews/069c548f/Wow++/tests/seller/sellerinventorylist.test.json
+ D reports/reviews/069c548f/Wow++/tests/seller/sellerinventorylist.test.md
+ D reports/reviews/069c548f/Wow++/tests/sellerdeepanalytics.test.json
+ D reports/reviews/069c548f/Wow++/tests/sellerdeepanalytics.test.md
+ D reports/reviews/069c548f/Wow++/tests/sellerexportpanel.test.json
+ D reports/reviews/069c548f/Wow++/tests/sellerexportpanel.test.md
+ D reports/reviews/069c548f/Wow++/tests/sellerreputationdashboard.test.json
+ D reports/reviews/069c548f/Wow++/tests/sellerreputationdashboard.test.md
+ D reports/reviews/069c548f/Wow++/tests/taskcompletionbutton.test.json
+ D reports/reviews/069c548f/Wow++/tests/taskcompletionbutton.test.md
+ D reports/reviews/069c548f/Wow++/tests/vehiclehealthtrendcharts.test.json
+ D reports/reviews/069c548f/Wow++/tests/vehiclehealthtrendcharts.test.md
+ D reports/reviews/069c548f/Wow++/tests/vehicleinspectionmodule.test.json
+ D reports/reviews/069c548f/Wow++/tests/vehicleinspectionmodule.test.md
+ D reports/reviews/069c548f/Wow++/tests/vindecoder.test.json
+ D reports/reviews/069c548f/Wow++/tests/vindecoder.test.md
+ D reports/reviews/069c548f/Wow++/utils/auction/auctionexportutils.json
+ D reports/reviews/069c548f/Wow++/utils/auction/auctionexportutils.md
+ D reports/reviews/069c548f/Wow++/utils/auction/auctionexportutils.test.json
+ D reports/reviews/069c548f/Wow++/utils/auction/auctionexportutils.test.md
+ D reports/reviews/069c548f/Wow++/utils/graph/graphexportservice.json
+ D reports/reviews/069c548f/Wow++/utils/graph/graphexportservice.md
+ D reports/reviews/069c548f/Wow++/utils/inspection/submitinspectiontobackend.json
+ D reports/reviews/069c548f/Wow++/utils/inspection/submitinspectiontobackend.md
+ D reports/reviews/069c548f/Wow++/utils/rewardhelper.json
+ D reports/reviews/069c548f/Wow++/utils/rewardhelper.md
+ D reports/reviews/069c548f/Wow++/utils/socialsharehelper.json
+ D reports/reviews/069c548f/Wow++/utils/socialsharehelper.md
+ D reports/reviews/069c548f/Wow++/utils/useauth.json
+ D reports/reviews/069c548f/Wow++/utils/useauth.md
+ D reports/run-20250819T200654Z.json
+ D reports/run-20250819T201650Z.json
+ D reports/run-20250819T214232Z.json
+ D reports/run-20250819T225354Z.json
+ D reports/run-20250819T233728Z.json
+ D reports/run-20250819T233733Z.json
+ D reports/run-20250819T233946Z.json
+ D reports/scan_05d8d229.json
+ D reports/scan_069c548f.json
+ D reports/scan_07732634.json
+ D reports/scan_093cd215.json
+ D reports/scan_199d2c3a.json
+ D reports/scan_1ba69c0d.json
+ D reports/scan_1e5e4d1a.json
+ D reports/scan_201a0fb1.json
+ D reports/scan_229c62df.json
+ D reports/scan_22a03d22.json
+ D reports/scan_23f272ad.json
+ D reports/scan_2cfbda48.json
+ D reports/scan_2d476710.json
+ D reports/scan_2d4acc6b.json
+ D reports/scan_321d7e4d.json
+ D reports/scan_326ef945.json
+ D reports/scan_34f3f5f2.json
+ D reports/scan_373a0b40.json
+ D reports/scan_47cf1260.json
+ D reports/scan_4994e97e.json
+ D reports/scan_4eb0d4f9.json
+ D reports/scan_4f3b6a8d.json
+ D reports/scan_516cedc1.json
+ D reports/scan_522ea03c.json
+ D reports/scan_537d0230.json
+ D reports/scan_553f85bc.json
+ D reports/scan_5669fc22.json
+ D reports/scan_5a40333a.json
+ D reports/scan_67f55e3a.json
+ D reports/scan_6a4d16c8.json
+ D reports/scan_6cc14d61.json
+ D reports/scan_6df29266.json
+ D reports/scan_6ffa8c7e.json
+ D reports/scan_71442f09.json
+ D reports/scan_776b67b6.json
+ D reports/scan_7d803517.json
+ D reports/scan_7fa835cf.json
+ D reports/scan_84e62bf8.json
+ D reports/scan_873ab6b5.json
+ D reports/scan_874e38bd.json
+ D reports/scan_87d1f2c8.json
+ D reports/scan_881b4f78.json
+ D reports/scan_9194c46e.json
+ D reports/scan_92714085.json
+ D reports/scan_950e34de.json
+ D reports/scan_9793a262.json
+ D reports/scan_9861f83b.json
+ D reports/scan_a29d50e9.json
+ D reports/scan_a32732b5.json
+ D reports/scan_a34f6a35.json
+ D reports/scan_a5543dd8.json
+ D reports/scan_a8910a14.json
+ D reports/scan_aef3effa.json
+ D reports/scan_b134ab7d.json
+ D reports/scan_b3d7360d.json
+ D reports/scan_b5c6f148.json
+ D reports/scan_b9c2fb21.json
+ D reports/scan_bba26661.json
+ D reports/scan_bc9a7c55.json
+ D reports/scan_c0510dcd.json
+ D reports/scan_c1183b7b.json
+ D reports/scan_cd6e94c7.json
+ D reports/scan_ce441982.json
+ D reports/scan_d27f18ba.json
+ D reports/scan_d3d7b287.json
+ D reports/scan_d47ebc5d.json
+ D reports/scan_d8556dd6.json
+ D reports/scan_dbab927b.json
+ D reports/scan_e74e64b3.json
+ D reports/scan_e93c6c01.json
+ D reports/scan_ed437e7e.json
+ D reports/scan_f033956d.json
+ D reports/scan_f2abdccc.json
+ D reports/scan_faca0a58.json
+ D reports/scan_fc03dcdd.json
+ D reports/scan_fc47ebdf.json
+ M reports/scan_latest.json
+ D reports/staging_report_template.md
+ D reports/summary_batches_20250828_094718.csv
+ D reports/summary_batches_20250828_095215.csv
+ D reports/summary_batches_20250828_095532.csv
+ D reports/summary_batches_20250830_083905.csv
+ M reports/tsx_inventory_full_clean.csv
+?? .gitattributes.bak-20250904_070849
+?? .gitattributes.bak-20250904_070936
+?? .gitattributes.bak-20250904_071022
+?? .orchestrator/policies/file_allowlist.json
+?? FileInventory.txt
+?? app/main.py.bak-20250904_070849
+?? app/main.py.bak-20250904_070936
+?? app/main.py.bak-20250904_071022
+?? app/ops.py.bak
+?? app/ops.py.bak-20250904_070849
+?? app/ops.py.bak-20250904_070936
+?? app/ops.py.bak-20250904_071022
+?? app/ops.py.broken.20250906_125913.bak
+?? app/ops.py.broken.20250906_125921.bak
+?? app/ops.py.broken.20250906_130330.bak
+?? app/ops.py.prepatch.bak
+?? app/ops.py.recover.bak
+?? app/ops.py.recover_full.bak
+?? app/ops_cli.py.bak
+?? app/ops_local.py
+?? app/services/llm/fixtures/
+?? app/services/llm/package-lock.json
+?? app/services/llm/package.json
+?? app/services/llm/test_bridge.cjs
+?? app/special_live.py
+?? reports/audit_20250906_150904.log
+?? reports/duplicates_20250906_005627.csv
+?? reports/errors_00f6054b.json
+?? reports/errors_178f648a.json
+?? reports/errors_4145cdda.json
+?? reports/errors_a8f48c29.json
+?? reports/errors_d4c58af0.json
+?? reports/errors_e0f9b34e.json
+?? reports/errors_e763ddd3.json
+?? reports/full_inventory_37cf5891.txt
+?? reports/gates_00f6054b.json
+?? reports/gates_178f648a.json
+?? reports/gates_187cb53c.json
+?? reports/gates_24bc9894.json
+?? reports/gates_2e7037b8.json
+?? reports/gates_3bbee85d.json
+?? reports/gates_4145cdda.json
+?? reports/gates_4413a7a6.json
+?? reports/gates_74913752.json
+?? reports/gates_a05280c1.json
+?? reports/gates_a8f48c29.json
+?? reports/gates_bd80d5c9.json
+?? reports/gates_d4c58af0.json
+?? reports/gates_d7de5021.json
+?? reports/gates_dfa739cf.json
+?? reports/gates_e0f9b34e.json
+?? reports/gates_e763ddd3.json
+?? reports/gates_e9aafa50.json
+?? reports/gates_special_0f703c94.json
+?? reports/gates_special_1b83c4e3.json
+?? reports/gates_special_265b532f.json
+?? reports/gates_special_5f74e955.json
+?? reports/gates_special_d45d7e68.json
+?? reports/grouped_files.txt
+?? reports/grouped_files_5f74e955.txt
+?? reports/grouped_files_745d3735.txt
+?? reports/grouped_files_letters_only.txt
+?? reports/grouped_files_letters_only_745d3735.txt
+?? reports/inventory_20250906_005627.csv
+?? reports/inventory_20250906_005627.json
+?? reports/inventory_cache_00f6054b.json
+?? reports/inventory_cache_178f648a.json
+?? reports/inventory_cache_4145cdda.json
+?? reports/inventory_cache_a8f48c29.json
+?? reports/inventory_cache_d4c58af0.json
+?? reports/inventory_cache_e0f9b34e.json
+?? reports/inventory_cache_e763ddd3.json
+?? reports/letters_only_5f74e955.csv
+?? reports/scan_00f6054b.json
+?? reports/scan_178f648a.json
+?? reports/scan_187cb53c.json
+?? reports/scan_1be98a49.json
+?? reports/scan_24bc9894.json
+?? reports/scan_2e7037b8.json
+?? reports/scan_3bbee85d.json
+?? reports/scan_4145cdda.json
+?? reports/scan_436fe38c.json
+?? reports/scan_4413a7a6.json
+?? reports/scan_48e5f09b.json
+?? reports/scan_6f4a0e62.json
+?? reports/scan_74913752.json
+?? reports/scan_879f6437.json
+?? reports/scan_a05280c1.json
+?? reports/scan_a8f48c29.json
+?? reports/scan_bd80d5c9.json
+?? reports/scan_d4c58af0.json
+?? reports/scan_d59c639c.json
+?? reports/scan_d7de5021.json
+?? reports/scan_dfa739cf.json
+?? reports/scan_e0f9b34e.json
+?? reports/scan_e7571050.json
+?? reports/scan_e763ddd3.json
+?? reports/scan_e9aafa50.json
+?? reports/selected_20250906_005627.csv
+?? reports/special_inventory_0f703c94.csv
+?? reports/special_inventory_1b83c4e3.csv
+?? reports/special_inventory_265b532f.csv
+?? reports/special_inventory_37cf5891.csv
+?? reports/special_inventory_5f74e955.csv
+?? reports/special_inventory_745d3735.csv
+?? reports/special_inventory_d45d7e68.csv
+?? reports/special_scan_0f703c94.json
+?? reports/special_scan_1b83c4e3.json
+?? reports/special_scan_265b532f.json
+?? reports/special_scan_37cf5891.json
+?? reports/special_scan_5f74e955.json
+?? reports/special_scan_745d3735.json
+?? reports/special_scan_d45d7e68.json
+?? reports/special_scan_latest.json
+?? reports/tests_only_5f74e955.csv
+?? requirements.nora.txt
+?? services/
+?? workspaces/
+== Ports ==
+
+LocalPort OwningProcess  State Image
+--------- -------------  ----- -----
+     8021         20472 Listen python
+
+
+== Health Check ==
+StatusCode: 200
+{"status":"ok","app":"cfh-orchestrator"}
+== Key files hashes ==
+app\ops.py: 278DA42F8A1A5F357E775EBD4928783A1F1E43A00ACB822AC8E7E035E9B9009B
+from __future__ import annotations
+from dataclasses import dataclass
+from typing import List, Dict, Tuple, Optional
+app\ops_cli.py: 9341C3E80E6E6C766ADCA1ED31BA651C4E4958D4897AC0F560B69E69ED9A75BE
+# ============================================================
+# File: app/ops_cli.py
+# Purpose: Command-line entry for orchestrator (standard + special)
+app\main.py: C21F8C14E89FA7E675232EB34A087A7DEC126DD7D795BC082D6103B96CB9DA55
+# Path: C:\c\ai-orchestrator\app\main.py
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+app\__init__.py: E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855
+
+== Reports presence ==
+
+== Artifacts snapshot ==
+
+Directory                                  Name
+---------                                  ----                                                    
+C:\c\ai-orchestrator\artifacts             migration_list_00f6054b.csv                             
+C:\c\ai-orchestrator\artifacts             migration_list_178f648a.csv                             
+C:\c\ai-orchestrator\artifacts             migration_list_4145cdda.csv                             
+C:\c\ai-orchestrator\artifacts             migration_list_a8f48c29.csv                             
+C:\c\ai-orchestrator\artifacts             migration_list_d4c58af0.csv                             
+C:\c\ai-orchestrator\artifacts             migration_list_e0f9b34e.csv                             
+C:\c\ai-orchestrator\artifacts             migration_list_e763ddd3.csv                             
+C:\c\ai-orchestrator\artifacts\generations src__App.jsx.gen.json                                   
+C:\c\ai-orchestrator\artifacts\generations src__App.tsx.gen.json                                   
+C:\c\ai-orchestrator\artifacts\generations src__archive__hauler__haulerBucket.js.gen.json          
+C:\c\ai-orchestrator\artifacts\generations src__archive__hauler__haulerBucket.ts.gen.json          
+C:\c\ai-orchestrator\artifacts\generations src__archive__hauler__HaulerController.js.gen.json      
+C:\c\ai-orchestrator\artifacts\generations src__archive__hauler__haulerReputationController.js.gen…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__AdminAuctionOverview.jsx.gen.js…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__AdminCustomWidgetLibrary.jsx.ge…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__analytics__AdminEngagementAnaly…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__analytics__AdminRoleAnalytics.j…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__arbitration__AdminArbitrationDa…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__auction__AdminAuctionOverview.j…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__badges__AdminBadgeAuditLog.jsx.…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__compliance__AdminComplianceDash…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__contract__AdminContractTemplate…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__dashboard__AdminDashboard.jsx.g…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__dashboard__AdminKPIWidget.jsx.g…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__dashboard__AdminSummaryPanel.js…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__disputes__AdminDisputeAnalytics…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__disputes__AdminDisputeArchive.j…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__disputes__AdminDisputeDashboard…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__disputes__AdminDisputeIndex.jsx…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__disputes__DisputeReview.jsx.gen…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__disputes__DisputeSummaryView.js…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__disputes__StartAuctionForm.jsx.…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__escrow__AdminEscrowClaim.jsx.ge…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__escrow__AdminEscrowMonitor.jsx.…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__export__AdminReportExport.jsx.g…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__finance__AdminFinancialOverview…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__health__AdminSystemHealth.jsx.g…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__insights__AdminInsights.jsx.gen…
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__layout__AdminLayout.jsx.gen.json
+C:\c\ai-orchestrator\artifacts\generations src__components__admin__layout__AdminNavigation.jsx.gen…
+
+
+== Staged files snapshot ==
+
+FullName
+--------                                                                                           
+C:\c\ai-orchestrator\artifacts\_staged_all\src\App.tsx                                             
+C:\c\ai-orchestrator\artifacts\_staged_all\src\Apptsx                                              
+C:\c\ai-orchestrator\artifacts\_staged_all\src\index.tsx                                           
+C:\c\ai-orchestrator\artifacts\_staged_all\src\indextsx                                            
+C:\c\ai-orchestrator\artifacts\_staged_all\src\setupTests.ts                                       
+C:\c\ai-orchestrator\artifacts\_staged_all\src\vite-env.d.ts                                       
+C:\c\ai-orchestrator\artifacts\_staged_all\src\archive\hauler\haulerBucket.ts                      
+C:\c\ai-orchestrator\artifacts\_staged_all\src\archive\hauler\HaulerController.ts                  
+C:\c\ai-orchestrator\artifacts\_staged_all\src\archive\hauler\haulerReputationController.ts        
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\AdminEmailNotifications.tsx              
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\AdminAuctionOverview.tsx           
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\AdminCustomWidgetLibrary.tsx       
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\LiveDashboardHealthWidget.tsx      
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\analytics\AdminEngagementAnalytics…
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\analytics\AdminRoleAnalytics.tsx   
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\arbitration\AdminArbitrationDashbo…
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\auction\AdminAuctionOverview.tsx   
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\badges\AdminBadgeAuditLog.tsx      
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\compliance\AdminComplianceDashboar…
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\contract\AdminContractTemplates.tsx
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\dashboard\AdminDashboard.tsx       
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\dashboard\AdminKPIWidget.tsx       
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\dashboard\AdminSummaryPanel.tsx    
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\disputes\AdminDisputeAnalytics.tsx 
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\disputes\AdminDisputeArchive.tsx   
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\disputes\AdminDisputeDashboard.tsx 
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\disputes\AdminDisputeIndex.tsx     
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\disputes\DisputeReview.tsx         
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\disputes\DisputeSummaryView.tsx    
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\disputes\StartAuctionForm.tsx      
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\escrow\AdminEscrowClaim.tsx        
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\escrow\AdminEscrowMonitor.tsx      
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\export\AdminReportExport.tsx       
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\finance\AdminFinancialOverview.tsx 
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\health\AdminSystemHealth.tsx       
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\insights\AdminInsights.tsx         
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\layout\AdminLayout.tsx             
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\layout\AdminNavigation.tsx         
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\layout\AdminSidebar.tsx            
+C:\c\ai-orchestrator\artifacts\_staged_all\src\components\admin\layout\AdminTopbar.tsx             
+
+
+== Frontend check ==
+
+FullName
+--------                                                                                           
+C:\Backup_Projects\CFH\frontend\node_modules\@adobe\css-tools\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\@asamuzakjp\css-color\node_modules\lru-cache\dist\com…
+C:\Backup_Projects\CFH\frontend\node_modules\@asamuzakjp\css-color\node_modules\lru-cache\dist\esm…
+C:\Backup_Projects\CFH\frontend\node_modules\@asamuzakjp\css-color\node_modules\lru-cache\package.…
+C:\Backup_Projects\CFH\frontend\node_modules\@asamuzakjp\css-color\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\code-frame\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\compat-data\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\core\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\generator\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\helper-compilation-targets\package.json        
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\helper-globals\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\helper-module-imports\package.json             
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\helper-module-transforms\package.json          
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\helper-plugin-utils\package.json               
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\helper-string-parser\package.json              
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\helper-validator-identifier\package.json       
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\helper-validator-option\package.json           
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\helpers\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\parser\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\plugin-transform-react-jsx-self\package.json   
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\plugin-transform-react-jsx-source\package.json 
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\runtime\helpers\esm\package.json               
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\runtime\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\template\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\traverse\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\@babel\types\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\@csstools\color-helpers\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\@csstools\css-calc\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\@csstools\css-color-parser\package.json               
+C:\Backup_Projects\CFH\frontend\node_modules\@csstools\css-parser-algorithms\package.json          
+C:\Backup_Projects\CFH\frontend\node_modules\@csstools\css-tokenizer\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\@esbuild\win32-x64\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\@eslint\eslintrc\node_modules\argparse\package.json   
+C:\Backup_Projects\CFH\frontend\node_modules\@eslint\eslintrc\node_modules\js-yaml\package.json    
+C:\Backup_Projects\CFH\frontend\node_modules\@eslint\eslintrc\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\@eslint\js\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\@eslint-community\eslint-utils\package.json           
+C:\Backup_Projects\CFH\frontend\node_modules\@eslint-community\regexpp\package.json                
+C:\Backup_Projects\CFH\frontend\node_modules\@humanwhocodes\config-array\package.json              
+C:\Backup_Projects\CFH\frontend\node_modules\@humanwhocodes\module-importer\package.json           
+C:\Backup_Projects\CFH\frontend\node_modules\@humanwhocodes\object-schema\package.json             
+C:\Backup_Projects\CFH\frontend\node_modules\@jest\schemas\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\@jridgewell\gen-mapping\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\@jridgewell\remapping\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\@jridgewell\resolve-uri\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\@jridgewell\sourcemap-codec\package.json              
+C:\Backup_Projects\CFH\frontend\node_modules\@jridgewell\trace-mapping\package.json                
+C:\Backup_Projects\CFH\frontend\node_modules\@kurkle\color\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\@nodelib\fs.scandir\package.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\@nodelib\fs.stat\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\@nodelib\fs.walk\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\@remix-run\router\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\@rolldown\pluginutils\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\@rollup\rollup-win32-x64-msvc\package.json            
+C:\Backup_Projects\CFH\frontend\node_modules\@sinclair\typebox\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\@tensorflow\tfjs-converter\package.json               
+C:\Backup_Projects\CFH\frontend\node_modules\@tensorflow\tfjs-core\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\@tensorflow-models\blazeface\package.json             
+C:\Backup_Projects\CFH\frontend\node_modules\@tensorflow-models\blazeface\tsconfig.json            
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\dom\node_modules\ansi-styles\package…
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\dom\node_modules\pretty-format\packa…
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\dom\node_modules\react-is\package.js…
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\dom\package.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\jest-dom\node_modules\dom-accessibil…
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\jest-dom\types\__tests__\bun\tsconfi…
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\jest-dom\types\__tests__\jest\tsconf…
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\jest-dom\types\__tests__\jest-global…
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\jest-dom\types\__tests__\vitest\tsco…
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\jest-dom\package.json                
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\react\package.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\user-event\dist\cjs\package.json     
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\user-event\dist\esm\package.json     
+C:\Backup_Projects\CFH\frontend\node_modules\@testing-library\user-event\package.json              
+C:\Backup_Projects\CFH\frontend\node_modules\@types\aria-query\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\@types\babel__core\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\@types\babel__generator\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\@types\babel__template\package.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\@types\babel__traverse\package.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\@types\estree\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\@types\long\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\@types\node\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\@types\offscreencanvas\package.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\@types\prop-types\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\@types\react\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\@types\react-dom\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\@types\seedrandom\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\eslint-plugin\package.json         
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\parser\package.json                
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\scope-manager\package.json         
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\type-utils\package.json            
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\types\package.json                 
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\typescript-estree\node_modules\bra…
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\typescript-estree\node_modules\min…
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\typescript-estree\node_modules\min…
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\typescript-estree\node_modules\min…
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\typescript-estree\node_modules\sem…
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\typescript-estree\package.json     
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\utils\package.json                 
+C:\Backup_Projects\CFH\frontend\node_modules\@typescript-eslint\visitor-keys\package.json          
+C:\Backup_Projects\CFH\frontend\node_modules\@ungap\structured-clone\cjs\package.json              
+C:\Backup_Projects\CFH\frontend\node_modules\@ungap\structured-clone\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\@vitejs\plugin-react\package.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\@vitest\expect\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\@vitest\runner\node_modules\p-limit\package.json      
+C:\Backup_Projects\CFH\frontend\node_modules\@vitest\runner\node_modules\yocto-queue\package.json  
+C:\Backup_Projects\CFH\frontend\node_modules\@vitest\runner\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\@vitest\snapshot\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\@vitest\spy\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\@vitest\utils\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\@webgpu\types\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\acorn\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\acorn-jsx\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\acorn-walk\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\agent-base\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\ajv\package.json                                      
+C:\Backup_Projects\CFH\frontend\node_modules\ansi-regex\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\ansi-styles\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\aria-query\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\array-buffer-byte-length\package.json                 
+C:\Backup_Projects\CFH\frontend\node_modules\array-buffer-byte-length\tsconfig.json                
+C:\Backup_Projects\CFH\frontend\node_modules\array-includes\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\array-union\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\array.prototype.findlast\package.json                 
+C:\Backup_Projects\CFH\frontend\node_modules\array.prototype.flat\package.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\array.prototype.flatmap\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\array.prototype.tosorted\package.json                 
+C:\Backup_Projects\CFH\frontend\node_modules\arraybuffer.prototype.slice\package.json              
+C:\Backup_Projects\CFH\frontend\node_modules\assertion-error\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\async-function\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\async-function\tsconfig.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\asynckit\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\available-typed-arrays\package.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\available-typed-arrays\tsconfig.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\axios\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\balanced-match\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\brace-expansion\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\braces\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\browserslist\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\cac\package.json                                      
+C:\Backup_Projects\CFH\frontend\node_modules\call-bind\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\call-bind-apply-helpers\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\call-bind-apply-helpers\tsconfig.json                 
+C:\Backup_Projects\CFH\frontend\node_modules\call-bound\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\call-bound\tsconfig.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\callsites\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\caniuse-lite\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\chai\node_modules\type-detect\package.json            
+C:\Backup_Projects\CFH\frontend\node_modules\chai\package.json                                     
+C:\Backup_Projects\CFH\frontend\node_modules\chalk\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\chart.js\auto\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\chart.js\helpers\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\chart.js\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\check-error\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\clsx\package.json                                     
+C:\Backup_Projects\CFH\frontend\node_modules\color-convert\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\color-name\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\combined-stream\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\concat-map\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\confbox\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\convert-source-map\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\cross-spawn\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\css.escape\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\cssstyle\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\csstype\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\data-urls\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\data-view-buffer\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\data-view-buffer\tsconfig.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\data-view-byte-length\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\data-view-byte-length\tsconfig.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\data-view-byte-offset\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\data-view-byte-offset\tsconfig.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\date-fns\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\debug\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\decimal.js\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\deep-eql\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\deep-is\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\define-data-property\package.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\define-data-property\tsconfig.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\define-properties\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\delayed-stream\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\dequal\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\diff-sequences\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\dir-glob\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\doctrine\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\dom-accessibility-api\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\dunder-proto\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\dunder-proto\tsconfig.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\electron-to-chromium\package.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\entities\dist\commonjs\package.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\entities\dist\esm\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\entities\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\es-abstract\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\es-define-property\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\es-define-property\tsconfig.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\es-errors\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\es-errors\tsconfig.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\es-iterator-helpers\package.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\es-object-atoms\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\es-object-atoms\tsconfig.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\es-set-tostringtag\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\es-set-tostringtag\tsconfig.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\es-shim-unscopables\package.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\es-shim-unscopables\tsconfig.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\es-to-primitive\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\es-to-primitive\tsconfig.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\esbuild\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\escalade\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\eslint\node_modules\argparse\package.json             
+C:\Backup_Projects\CFH\frontend\node_modules\eslint\node_modules\doctrine\package.json             
+C:\Backup_Projects\CFH\frontend\node_modules\eslint\node_modules\escape-string-regexp\package.json 
+C:\Backup_Projects\CFH\frontend\node_modules\eslint\node_modules\find-up\package.json              
+C:\Backup_Projects\CFH\frontend\node_modules\eslint\node_modules\js-yaml\package.json              
+C:\Backup_Projects\CFH\frontend\node_modules\eslint\node_modules\locate-path\package.json          
+C:\Backup_Projects\CFH\frontend\node_modules\eslint\node_modules\p-limit\package.json              
+C:\Backup_Projects\CFH\frontend\node_modules\eslint\node_modules\p-locate\package.json             
+C:\Backup_Projects\CFH\frontend\node_modules\eslint\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\module_…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\test\resolve…
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\node_modules\resolve\package.json 
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react\package.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-plugin-react-hooks\package.json                
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-scope\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\eslint-visitor-keys\package.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\espree\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\esquery\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\esrecurse\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\estraverse\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\estree-walker\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\esutils\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\fast-deep-equal\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\fast-glob\node_modules\glob-parent\package.json       
+C:\Backup_Projects\CFH\frontend\node_modules\fast-glob\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\fast-json-stable-stringify\package.json               
+C:\Backup_Projects\CFH\frontend\node_modules\fast-levenshtein\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\fastq\test\tsconfig.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\fastq\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\file-entry-cache\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\fill-range\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\flat-cache\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\flatted\cjs\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\flatted\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\follow-redirects\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\for-each\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\for-each\tsconfig.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\form-data\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\framer-motion\client\package.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\framer-motion\dom\mini\package.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\framer-motion\dom\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\framer-motion\m\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\framer-motion\mini\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\framer-motion\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\fs.realpath\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\function-bind\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\function.prototype.name\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\functions-have-names\package.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\gensync\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\get-func-name\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\get-intrinsic\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\get-proto\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\get-proto\tsconfig.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\get-symbol-description\package.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\get-symbol-description\tsconfig.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\glob\package.json                                     
+C:\Backup_Projects\CFH\frontend\node_modules\glob-parent\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\globals\node_modules\type-fest\package.json           
+C:\Backup_Projects\CFH\frontend\node_modules\globals\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\globalthis\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\globby\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\globrex\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\gopd\package.json                                     
+C:\Backup_Projects\CFH\frontend\node_modules\gopd\tsconfig.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\graphemer\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\has-bigints\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\has-bigints\tsconfig.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\has-flag\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\has-property-descriptors\package.json                 
+C:\Backup_Projects\CFH\frontend\node_modules\has-proto\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\has-proto\tsconfig.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\has-symbols\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\has-symbols\tsconfig.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\has-tostringtag\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\has-tostringtag\tsconfig.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\hasown\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\hasown\tsconfig.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\html-encoding-sniffer\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\html-parse-stringify\package.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\http-proxy-agent\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\https-proxy-agent\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\i18next\dist\esm\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\i18next\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\iconv-lite\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\ignore\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\import-fresh\node_modules\resolve-from\package.json   
+C:\Backup_Projects\CFH\frontend\node_modules\import-fresh\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\imurmurhash\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\indent-string\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\inflight\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\inherits\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\internal-slot\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\internal-slot\tsconfig.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\is-array-buffer\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\is-array-buffer\tsconfig.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\is-async-function\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\is-async-function\tsconfig.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\is-bigint\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\is-bigint\tsconfig.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\is-boolean-object\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\is-boolean-object\tsconfig.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\is-callable\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\is-core-module\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\is-data-view\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\is-data-view\tsconfig.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\is-date-object\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\is-date-object\tsconfig.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\is-extglob\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\is-finalizationregistry\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\is-finalizationregistry\tsconfig.json                 
+C:\Backup_Projects\CFH\frontend\node_modules\is-generator-function\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\is-generator-function\tsconfig.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\is-glob\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\is-map\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\is-map\tsconfig.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\is-negative-zero\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\is-negative-zero\tsconfig.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\is-number\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\is-number-object\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\is-number-object\tsconfig.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\is-path-inside\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\is-potential-custom-element-name\package.json         
+C:\Backup_Projects\CFH\frontend\node_modules\is-regex\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\is-regex\tsconfig.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\is-set\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\is-set\tsconfig.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\is-shared-array-buffer\package.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\is-shared-array-buffer\tsconfig.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\is-string\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\is-string\tsconfig.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\is-symbol\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\is-symbol\tsconfig.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\is-typed-array\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\is-typed-array\tsconfig.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\is-weakmap\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\is-weakmap\tsconfig.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\is-weakref\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\is-weakref\tsconfig.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\is-weakset\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\is-weakset\tsconfig.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\isarray\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\isexe\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\iterator.prototype\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\js-tokens\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\jsdom\node_modules\rrweb-cssom\package.json           
+C:\Backup_Projects\CFH\frontend\node_modules\jsdom\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\jsesc\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\json-buffer\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\json-schema-traverse\package.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\json-stable-stringify-without-jsonify\package.json    
+C:\Backup_Projects\CFH\frontend\node_modules\json5\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\jsx-ast-utils\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\keyv\package.json                                     
+C:\Backup_Projects\CFH\frontend\node_modules\levn\package.json                                     
+C:\Backup_Projects\CFH\frontend\node_modules\local-pkg\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\lodash.merge\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\long\package.json                                     
+C:\Backup_Projects\CFH\frontend\node_modules\loose-envify\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\loupe\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\lru-cache\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\lucide-react\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\lz-string\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\magic-string\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\math-intrinsics\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\math-intrinsics\tsconfig.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\merge-stream\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\merge2\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\micromatch\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\mime-db\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\mime-types\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\min-indent\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\minimatch\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\mlly\node_modules\pathe\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\mlly\package.json                                     
+C:\Backup_Projects\CFH\frontend\node_modules\motion-dom\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\motion-utils\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\ms\package.json                                       
+C:\Backup_Projects\CFH\frontend\node_modules\nanoid\async\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\nanoid\non-secure\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\nanoid\url-alphabet\package.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\nanoid\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\natural-compare\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\node-fetch\node_modules\tr46\package.json             
+C:\Backup_Projects\CFH\frontend\node_modules\node-fetch\node_modules\webidl-conversions\package.js…
+C:\Backup_Projects\CFH\frontend\node_modules\node-fetch\node_modules\whatwg-url\package.json       
+C:\Backup_Projects\CFH\frontend\node_modules\node-fetch\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\node-releases\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\nwsapi\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\object-assign\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\object-inspect\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\object-keys\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\object.assign\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\object.entries\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\object.fromentries\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\object.values\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\once\package.json                                     
+C:\Backup_Projects\CFH\frontend\node_modules\optionator\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\own-keys\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\own-keys\tsconfig.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\parent-module\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\parse5\dist\cjs\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\parse5\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\path-exists\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\path-is-absolute\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\path-key\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\path-parse\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\path-type\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\pathe\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\pathval\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\picocolors\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\picomatch\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\pkg-types\node_modules\pathe\package.json             
+C:\Backup_Projects\CFH\frontend\node_modules\pkg-types\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\possible-typed-array-names\package.json               
+C:\Backup_Projects\CFH\frontend\node_modules\possible-typed-array-names\tsconfig.json              
+C:\Backup_Projects\CFH\frontend\node_modules\postcss\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\prelude-ls\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\pretty-format\node_modules\ansi-styles\package.json   
+C:\Backup_Projects\CFH\frontend\node_modules\pretty-format\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\prop-types\node_modules\react-is\package.json         
+C:\Backup_Projects\CFH\frontend\node_modules\prop-types\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\proxy-from-env\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\psl\types\tsconfig.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\psl\package.json                                      
+C:\Backup_Projects\CFH\frontend\node_modules\punycode\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\querystringify\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\queue-microtask\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\react\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\react-dom\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\react-i18next\dist\es\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\react-i18next\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\react-is\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\react-refresh\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\react-router\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\react-router-dom\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\react-toastify\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\redent\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\reflect.getprototypeof\package.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\regexp.prototype.flags\package.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\requires-port\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\reusify\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\reusify\tsconfig.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\rimraf\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\rollup\dist\es\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\rollup\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\rrweb-cssom\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\run-parallel\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\safe-array-concat\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\safe-array-concat\tsconfig.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\safe-push-apply\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\safe-push-apply\tsconfig.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\safe-regex-test\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\safe-regex-test\tsconfig.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\safer-buffer\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\saxes\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\scheduler\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\seedrandom\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\semver\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\set-function-length\package.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\set-function-length\tsconfig.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\set-function-name\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\set-function-name\tsconfig.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\set-proto\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\set-proto\tsconfig.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\shebang-command\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\shebang-regex\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\side-channel\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\side-channel\tsconfig.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\side-channel-list\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\side-channel-list\tsconfig.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\side-channel-map\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\side-channel-map\tsconfig.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\side-channel-weakmap\package.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\side-channel-weakmap\tsconfig.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\siginfo\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\signal-exit\dist\cjs\package.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\signal-exit\dist\mjs\package.json                     
+C:\Backup_Projects\CFH\frontend\node_modules\signal-exit\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\slash\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\source-map-js\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\stackback\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\std-env\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\stop-iteration-iterator\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\stop-iteration-iterator\tsconfig.json                 
+C:\Backup_Projects\CFH\frontend\node_modules\string.prototype.matchall\package.json                
+C:\Backup_Projects\CFH\frontend\node_modules\string.prototype.repeat\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\string.prototype.trim\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\string.prototype.trimend\package.json                 
+C:\Backup_Projects\CFH\frontend\node_modules\string.prototype.trimstart\package.json               
+C:\Backup_Projects\CFH\frontend\node_modules\strip-ansi\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\strip-indent\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\strip-json-comments\package.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\strip-literal\node_modules\js-tokens\package.json     
+C:\Backup_Projects\CFH\frontend\node_modules\strip-literal\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\supports-color\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\supports-preserve-symlinks-flag\package.json          
+C:\Backup_Projects\CFH\frontend\node_modules\symbol-tree\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\text-table\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\tinybench\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\tinypool\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\tinyspy\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\to-regex-range\package.json                           
+C:\Backup_Projects\CFH\frontend\node_modules\tough-cookie\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\tr46\package.json                                     
+C:\Backup_Projects\CFH\frontend\node_modules\ts-api-utils\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\tsconfck\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\tslib\modules\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\tslib\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\type-check\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\type-detect\package.json                              
+C:\Backup_Projects\CFH\frontend\node_modules\typed-array-buffer\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\typed-array-buffer\tsconfig.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\typed-array-byte-length\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\typed-array-byte-length\tsconfig.json                 
+C:\Backup_Projects\CFH\frontend\node_modules\typed-array-byte-offset\package.json                  
+C:\Backup_Projects\CFH\frontend\node_modules\typed-array-byte-offset\tsconfig.json                 
+C:\Backup_Projects\CFH\frontend\node_modules\typed-array-length\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\typed-array-length\tsconfig.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\typescript\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\ufo\package.json                                      
+C:\Backup_Projects\CFH\frontend\node_modules\unbox-primitive\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\unbox-primitive\tsconfig.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\undici-types\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\universalify\package.json                             
+C:\Backup_Projects\CFH\frontend\node_modules\update-browserslist-db\package.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\uri-js\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\url-parse\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\vite\types\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\vite\package.json                                     
+C:\Backup_Projects\CFH\frontend\node_modules\vite-node\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\vite-tsconfig-paths\package.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\vitest\node_modules\execa\package.json                
+C:\Backup_Projects\CFH\frontend\node_modules\vitest\node_modules\get-stream\package.json           
+C:\Backup_Projects\CFH\frontend\node_modules\vitest\node_modules\human-signals\package.json        
+C:\Backup_Projects\CFH\frontend\node_modules\vitest\node_modules\is-stream\package.json            
+C:\Backup_Projects\CFH\frontend\node_modules\vitest\node_modules\mimic-fn\package.json             
+C:\Backup_Projects\CFH\frontend\node_modules\vitest\node_modules\npm-run-path\package.json         
+C:\Backup_Projects\CFH\frontend\node_modules\vitest\node_modules\onetime\package.json              
+C:\Backup_Projects\CFH\frontend\node_modules\vitest\node_modules\path-key\package.json             
+C:\Backup_Projects\CFH\frontend\node_modules\vitest\node_modules\strip-final-newline\package.json  
+C:\Backup_Projects\CFH\frontend\node_modules\vitest\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\void-elements\package.json                            
+C:\Backup_Projects\CFH\frontend\node_modules\w3c-xmlserializer\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\webidl-conversions\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\whatwg-encoding\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\whatwg-mimetype\package.json                          
+C:\Backup_Projects\CFH\frontend\node_modules\whatwg-url\package.json                               
+C:\Backup_Projects\CFH\frontend\node_modules\which\package.json                                    
+C:\Backup_Projects\CFH\frontend\node_modules\which-boxed-primitive\package.json                    
+C:\Backup_Projects\CFH\frontend\node_modules\which-boxed-primitive\tsconfig.json                   
+C:\Backup_Projects\CFH\frontend\node_modules\which-builtin-type\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\which-builtin-type\tsconfig.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\which-collection\package.json                         
+C:\Backup_Projects\CFH\frontend\node_modules\which-collection\tsconfig.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\which-typed-array\package.json                        
+C:\Backup_Projects\CFH\frontend\node_modules\which-typed-array\tsconfig.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\why-is-node-running\package.json                      
+C:\Backup_Projects\CFH\frontend\node_modules\word-wrap\package.json                                
+C:\Backup_Projects\CFH\frontend\node_modules\wrappy\package.json                                   
+C:\Backup_Projects\CFH\frontend\node_modules\ws\package.json                                       
+C:\Backup_Projects\CFH\frontend\node_modules\xml-name-validator\package.json                       
+C:\Backup_Projects\CFH\frontend\node_modules\xmlchars\package.json                                 
+C:\Backup_Projects\CFH\frontend\node_modules\yallist\package.json                                  
+C:\Backup_Projects\CFH\frontend\node_modules\yocto-queue\package.json                              
+C:\Backup_Projects\CFH\frontend\packages\inspection-utils\tsconfig.json                            
+C:\Backup_Projects\CFH\frontend\package.json                                                       
+C:\Backup_Projects\CFH\frontend\tsconfig.json                                                      
+
+
+== grouped_files.txt head ==
+## Grouped by base name (run 745d3735)
+### index  (count=64)
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/allprojectfilename/index.js
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/zipped_batches/batch_1/index.js
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/zipped_batches/batch_2/index.js
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/zipped_batches/batch_3/index.js
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/zipped_batches/batch_7/index.js
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/frontend/src/index.jsx
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/frontend/packages/inspection-utils/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/socket/index.js
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/types/express/index.d.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/ai/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/ar/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/blockchain/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/cache/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/db/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/exchange/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/notification/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/payment/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/security/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/social/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/voice/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/vr/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/backend/services/websocket/index.ts
+ - C:/Backup_Projects/CFH_Backup_2025-08-02_15-36/allprojectfilename/Manualy_Editing_Files/Recovered/index.js
+ - C:/Backup_Projects/CFH/frontend/index.jsx
+ - C:/Backup_Projects/CFH/frontend/index.test.tsx
+ - C:/Backup_Projects/CFH/frontend/index.tsx
+ - C:/Backup_Projects/CFH/zipped_batches/batch_1/index.js
+ - C:/Backup_Projects/CFH/zipped_batches/batch_1/index.test.ts
+ - C:/Backup_Projects/CFH/zipped_batches/batch_1/index.ts
+ - C:/Backup_Projects/CFH/zipped_batches/batch_2/index.js
+ - C:/Backup_Projects/CFH/zipped_batches/batch_2/index.test.ts
+ - C:/Backup_Projects/CFH/zipped_batches/batch_2/index.ts
+ - C:/Backup_Projects/CFH/zipped_batches/batch_3/index.js
+ - C:/Backup_Projects/CFH/zipped_batches/batch_3/index.test.ts
+ - C:/Backup_Projects/CFH/zipped_batches/batch_3/index.ts
+ - C:/Backup_Projects/CFH/zipped_batches/batch_7/index.js
+ - C:/Backup_Projects/CFH/zipped_batches/batch_7/index.test.ts
+ - C:/Backup_Projects/CFH/zipped_batches/batch_7/index.ts
+ - C:/Backup_Projects/CFH/frontend/src/index.jsx
+ - C:/Backup_Projects/CFH/frontend/src/index.test.tsx
+ - C:/Backup_Projects/CFH/frontend/src/index.tsx
+ - C:/Backup_Projects/CFH/frontend/src/i18n/index.ts
+ - C:/Backup_Projects/CFH/frontend/src/components/common/index.ts
+ - C:/Backup_Projects/CFH/frontend/packages/inspection-utils/index.ts
+ - C:/Backup_Projects/CFH/backend/socket/index.js
+ - C:/Backup_Projects/CFH/backend/socket/index.test.ts
+ - C:/Backup_Projects/CFH/backend/socket/index.ts
+ - C:/Backup_Projects/CFH/backend/types/express/index.d.ts
+== scan_latest.json head ==
+{
+  "run_id": "e7571050",
+  "root": "C:\\Backup_Projects\\CFH\\frontend",
+  "found_js_jsx": 618,
+  "counts": {
+    "js": 277,
+    "jsx": 804,
+    "ts": 350,
+    "tsx": 1128,
+    "md": 4
+  },
+  "discrepancies": {
+    "local": 618
+  },
+  "ts_siblings_skipped": true,
+  "cap": 2000,
+  "generated_at": 1757189022
+}
+== END ==

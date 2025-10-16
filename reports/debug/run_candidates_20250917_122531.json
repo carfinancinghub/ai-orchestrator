@@ -1,0 +1,26 @@
+﻿[
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_voice.js_20250917_122530.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_122530\\voice.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\voice_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\voice.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_122530\\verify\\voice.ts.json",
+    "run_id": "20250917_122530"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_vote.js_20250917_122530.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_122530\\vote.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\vote_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\vote.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_122530\\verify\\vote.ts.json",
+    "run_id": "20250917_122530"
+  },
+  {
+    "review": "C:\\c\\ai-orchestrator\\reports\\debug\\file_review_vr-inspection.js_20250917_122531.md",
+    "suggestions": "C:\\c\\ai-orchestrator\\artifacts\\suggestions\\20250917_122531\\vr-inspection.js.json",
+    "spec": "C:\\c\\ai-orchestrator\\artifacts\\specs\\vr-inspection_spec.md",
+    "generated": "C:\\c\\ai-orchestrator\\artifacts\\generated\\vr-inspection.ts",
+    "verify": "C:\\c\\ai-orchestrator\\artifacts\\reviews\\20250917_122531\\verify\\vr-inspection.ts.json",
+    "run_id": "20250917_122531"
+  }
+]

@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "checks": {
+    "router_loaded": true,
+    "reports_dir": "C:\\c\\ai-orchestrator\\reports",
+    "reports_dir_writable": true,
+    "providers": {
+      "openai": {
+        "sdk": true,
+        "key": true,
+        "ok": true
+      },
+      "gemini": {
+        "sdk": true,
+        "key": true,
+        "ok": true
+      },
+      "grok": {
+        "sdk": true,
+        "key": true,
+        "ok": true
+      },
+      "anthropic": {
+        "sdk": true,
+        "key": false,
+        "ok": false
+      }
+    },
+    "sdk_openai": true,
+    "sdk_gemini": true,
+    "sdk_grok_xai": true,
+    "sdk_anthropic": false,
+    "provider_env_missing": [
+    ],
+    "providers_enabled": [
+      "openai",
+      "gemini",
+      "grok"
+    ],
+    "cfh_root": true
+  }
+}
+

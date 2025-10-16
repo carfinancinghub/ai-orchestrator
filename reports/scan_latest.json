@@ -1,0 +1,18 @@
+{
+  "run_id": "e7571050",
+  "root": "C:\\Backup_Projects\\CFH\\frontend",
+  "found_js_jsx": 618,
+  "counts": {
+    "js": 277,
+    "jsx": 804,
+    "ts": 350,
+    "tsx": 1128,
+    "md": 4
+  },
+  "discrepancies": {
+    "local": 618
+  },
+  "ts_siblings_skipped": true,
+  "cap": 2000,
+  "generated_at": 1757189022
+}
