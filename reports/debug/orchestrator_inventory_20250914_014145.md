@@ -23,9 +23,7 @@
 - Found ternary-like usage in: audit-run.ps1
 
 ## .env keys present (names only)
-- OPENAI_API_KEY: set
-- GEMINI_API_KEY: set
-- GROK_API_KEY: set
 - AIO_PROVIDERS: set
 - AIO_UPLOAD_TS: missing
 - AIO_MAX_FILES_PER_PR: set
+

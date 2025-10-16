@@ -1552,9 +1552,6 @@ Preferred root: C:\Backup_Projects\CFH\frontend
 - 1042 bytes - C:\Backup_Projects\CFH\zipped_batches\batch_5\signatureInit.ts
 - 3625 bytes - C:\cfh_backup_20250713\backend\controllers\contracts\signatureInit.ts
 
-## sk-sk-REDACTED.js
-- 86469 bytes - C:\Users\Agasi5\AppData\Local\Microsoft\Office\SolutionPackages\eb13ffc574511e4c2109e596bf583432\PackageResources\OfflineFiles\sk-sk-REDACTED.js
-- 86475 bytes - C:\Users\Agasi5\AppData\Local\Microsoft\Office\SolutionPackages\5c03df60fa6305f4a2b5be2c5698aeb\PackageResources\OfflineFiles\sk-sk-REDACTED.js
 
 ## sl-si-ui-strings-json_06d470fecd56c1b4f7dc5ff4229cd590.js
 - 85000 bytes - C:\Users\Agasi5\AppData\Local\Microsoft\Office\SolutionPackages\eb13ffc574511e4c2109e596bf583432\PackageResources\OfflineFiles\sl-si-ui-strings-json_06d470fecd56c1b4f7dc5ff4229cd590.js
@@ -1907,4 +1904,5 @@ Preferred root: C:\Backup_Projects\CFH\frontend
 - 73608 bytes - C:\Users\Agasi5\AppData\Local\Packages\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\AC\Microsoft\ServiceWorkerFiles\9B12304E-7D41-4E39-B04E-639F23C5C879\Zrtu2hQ08VU_1.js
 - 73876 bytes - C:\Users\Agasi5\AppData\Local\Packages\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\AC\Microsoft\ServiceWorkerFiles\C068A8CA-D1B4-4091-863A-C19C7EC549D5\Zrtu2hQ08VU_1.js
 - 73876 bytes - C:\Users\Agasi5\AppData\Local\Packages\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\AC\Microsoft\ServiceWorkerFiles\CFAB3EEA-A1C2-4B6A-87E3-8F750FCF06A1\Zrtu2hQ08VU_1.js
+
 

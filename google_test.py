@@ -3,11 +3,9 @@ import json
 
 # --- Configuration ---------------------------------------------------------
 # 1. Paste your Google API Key directly here between the quotes.
-API_KEY = "AIzaSyCLM9lAFMh4_3aAfZgSpJi07UCrORj0vDw"
 
 # 2. We will use the known-good model and URL structure.
 MODEL_NAME = "gemini-pro-latest"
-URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL_NAME}:generateContent?key={API_KEY}"
 # ---------------------------------------------------------------------------
 
 # Define the headers for the request

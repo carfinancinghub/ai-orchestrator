@@ -44,12 +44,10 @@ Copy `scripts_one-prompt.ps1` from this package to `scripts\one-prompt.ps1`, the
 - `pip install openai anthropic google-genai`
 - Put keys in `.env`:
   ```
-  OPENAI_API_KEY=sk-...
-  ANTHROPIC_API_KEY=sk-ant-...
-  GOOGLE_API_KEY=AIza...
   ```
 - Run: `python .\scripts\smoke_llms.py`
 
 ## 6) Guardrails already in place
 - `.gitattributes` normalizes EOLs
 - `.git/hooks/pre-commit` blocks absolute Windows paths
+

@@ -31,7 +31,6 @@
     "sdk_grok_xai": true,
     "sdk_anthropic": false,
     "provider_env_missing": [
-      "ANTHROPIC_API_KEY"
     ],
     "providers_enabled": [
       "openai",
@@ -41,3 +40,4 @@
     "cfh_root": true
   }
 }
+
