@@ -36,6 +36,11 @@ else:
 >>>>>>> origin/main
 try:
     from app.routes.redis_health import router as redis_health_router
+
+try:
+    from app.routes.build_ts import router as build_ts_router
+except Exception:
+    build_ts_router = None
 except Exception:
     redis_health_router = None
 <<<<<<< HEAD
@@ -69,15 +74,10 @@ def create_app() -> FastAPI:
     if router is not None:
         app.include_router(router)
 
-    # optional redis router (already declares prefix="/redis")
-=======
-    if router is not None:
-        app.include_router(router)
-
-    # Optional Redis health router
->>>>>>> origin/main
-    if "redis_health_router" in globals() and redis_health_router is not None:
-        app.include_router(redis_health_router)
+    
+    # optional build_ts router
+    if "build_ts_router" in globals() and build_ts_router is not None:
+        app.include_router(build_ts_router)
 
     _register_health_endpoints(app)
     _register_error_handlers(app)
