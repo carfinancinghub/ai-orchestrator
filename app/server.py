@@ -1,3 +1,4 @@
+# app/server.py
 from __future__ import annotations
 
 import os
@@ -18,40 +19,29 @@ if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
 # --- main API router (optional if import fails) --------------------------------
+_IMPORT_ERROR = None
 try:
-    from api.routes import router
+    from api.routes import router  # noqa: F401
 except Exception as e:
-    router = None
+    router = None  # type: ignore[assignment]
     _IMPORT_ERROR = e
-else:
-    _IMPORT_ERROR = None
 
-<<<<<<< HEAD
-# --- optional redis health router (safe if missing) ----------------------------
-=======
-
-
-
-
->>>>>>> origin/main
+# --- optional routers (safe if missing) ----------------------------------------
 try:
-    from app.routes.redis_health import router as redis_health_router
+    from app.routes.redis_health import router as redis_health_router  # noqa: F401
+except Exception:
+    redis_health_router = None  # type: ignore[assignment]
 
 try:
-    from app.routes.build_ts import router as build_ts_router
+    from app.routes.build_ts import router as build_ts_router  # noqa: F401
 except Exception:
-    build_ts_router = None
-except Exception:
-    redis_health_router = None
-<<<<<<< HEAD
+    build_ts_router = None  # type: ignore[assignment]
 
 # --- settings ------------------------------------------------------------------
-=======
->>>>>>> origin/main
 SERVICE_NAME = "orchestrator"
 DEFAULT_HOST = os.getenv("HOST", "127.0.0.1")
 DEFAULT_PORT = int(os.getenv("PORT", "8121"))
-ALLOWED_ORIGINS = os.getenv("CORS_ALLOW_ORIGINS", "*").split(",")
+ALLOWED_ORIGINS = [o for o in os.getenv("CORS_ALLOW_ORIGINS", "*").split(",") if o]
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
 PROVIDER_ENV_HINTS = ["OPENAI_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_API_KEY", "GROK_API_KEY"]
 REPORTS_DIR = Path(os.getenv("REPORTS_DIR", _REPO_ROOT / "reports"))
@@ -63,24 +53,20 @@ def create_app() -> FastAPI:
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],  # swap with ALLOWED_ORIGINS if you need strict CORS
+        allow_origins=ALLOWED_ORIGINS if ALLOWED_ORIGINS != ["*"] else ["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
 
-<<<<<<< HEAD
     # main router
     if router is not None:
         app.include_router(router)
 
-    
-    
-    # optional build_ts router
-    if "build_ts_router" in globals() and build_ts_router is not None:
-        app.include_router(build_ts_router)
-# optional build_ts router
-    if "build_ts_router" in globals() and build_ts_router is not None:
+    # optional routers
+    if redis_health_router is not None:
+        app.include_router(redis_health_router)
+    if build_ts_router is not None:
         app.include_router(build_ts_router)
 
     _register_health_endpoints(app)
@@ -115,7 +101,7 @@ def _register_health_endpoints(app: FastAPI) -> None:
 
         # Router import status
         checks["router_loaded"] = router is not None
-        if router is None and "_IMPORT_ERROR" in globals():
+        if router is None and _IMPORT_ERROR is not None:
             checks["router_error"] = repr(_IMPORT_ERROR)
 
         # Reports directory availability & writability
@@ -164,7 +150,7 @@ def _register_health_endpoints(app: FastAPI) -> None:
         checks["sdk_anthropic"] = providers["anthropic"]["ok"]
 
         # Missing env hints
-        missing_envs = [k for k in PROVIDER_ENV_HINTS if not _has_key(k)]
+        missing_envs = [k for k in PROVIDER_ENV_HINTS if not os.getenv(k)]
         checks["provider_env_missing"] = missing_envs
         checks["providers_enabled"] = [name for name, st in providers.items() if st.get("ok")]
 
@@ -223,6 +209,7 @@ def _configure_logging() -> None:
 # --- CLI entrypoint ------------------------------------------------------------
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(
         "app.server:create_app",
         factory=True,
