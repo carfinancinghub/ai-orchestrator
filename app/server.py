@@ -1,20 +1,23 @@
-# C:\c\ai-orchestrator\app\server.py
-
 from __future__ import annotations
 
-import os, sys, logging
+import os
+import sys
+import logging
 from pathlib import Path
 from typing import Any, Dict, List
+
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
 
+# --- sys.path wiring -----------------------------------------------------------
 _THIS_FILE = Path(__file__).resolve()
 _REPO_ROOT = _THIS_FILE.parents[1]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
+# --- main API router (optional if import fails) --------------------------------
 try:
     from api.routes import router
 except Exception as e:
@@ -23,40 +26,47 @@ except Exception as e:
 else:
     _IMPORT_ERROR = None
 
-
+# --- optional redis health router (safe if missing) ----------------------------
 try:
     from app.routes.redis_health import router as redis_health_router
 except Exception:
     redis_health_router = None
+
+# --- settings ------------------------------------------------------------------
 SERVICE_NAME = "orchestrator"
 DEFAULT_HOST = os.getenv("HOST", "127.0.0.1")
 DEFAULT_PORT = int(os.getenv("PORT", "8121"))
 ALLOWED_ORIGINS = os.getenv("CORS_ALLOW_ORIGINS", "*").split(",")
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
-PROVIDER_ENV_HINTS = ["OPENAI_API_KEY","GEMINI_API_KEY","ANTHROPIC_API_KEY","GROK_API_KEY"]
+PROVIDER_ENV_HINTS = ["OPENAI_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_API_KEY", "GROK_API_KEY"]
 REPORTS_DIR = Path(os.getenv("REPORTS_DIR", _REPO_ROOT / "reports"))
 
+# --- app factory ---------------------------------------------------------------
 def create_app() -> FastAPI:
     _configure_logging()
-    app = FastAPI(title="AI Orchestrator", version=os.getenv("ORCHESTRATOR_VERSION","0.1.0"))
-    # If you want to honor ALLOWED_ORIGINS exactly, replace ["*"] with ALLOWED_ORIGINS
+    app = FastAPI(title="AI Orchestrator", version=os.getenv("ORCHESTRATOR_VERSION", "0.1.0"))
+
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=["*"],  # swap with ALLOWED_ORIGINS if you need strict CORS
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    # main router
     if router is not None:
         app.include_router(router)
-    
-    # Optional Redis health router
+
+    # optional redis router (already declares prefix="/redis")
     if "redis_health_router" in globals() and redis_health_router is not None:
-        app.include_router(redis_health_router, prefix="/redis")
-_register_health_endpoints(app)
+        app.include_router(redis_health_router)
+
+    _register_health_endpoints(app)
     _register_error_handlers(app)
     return app
 
+# --- meta + readyz -------------------------------------------------------------
 def _register_health_endpoints(app: FastAPI) -> None:
     @app.get("/", tags=["meta"])
     def root() -> Dict[str, Any]:
@@ -97,7 +107,7 @@ def _register_health_endpoints(app: FastAPI) -> None:
         checks["reports_dir"] = str(REPORTS_DIR)
         checks["reports_dir_writable"] = bool(writable)
 
-        # --- Provider checks: require SDK import AND API key to be True ---
+        # Provider checks
         import importlib
 
         def _has_sdk(*import_names: str) -> bool:
@@ -119,27 +129,27 @@ def _register_health_endpoints(app: FastAPI) -> None:
             return {"sdk": sdk, "key": key, "ok": (sdk and key)}
 
         providers = {
-            "openai":     _provider_status(["openai"],                     "OPENAI_API_KEY"),
-            "gemini":     _provider_status(["google.generativeai"],        "GEMINI_API_KEY"),
-            "grok":       _provider_status(["xai", "xai_sdk", "grok"],     "GROK_API_KEY"),
-            "anthropic":  _provider_status(["anthropic"],                  "ANTHROPIC_API_KEY"),
+            "openai": _provider_status(["openai"], "OPENAI_API_KEY"),
+            "gemini": _provider_status(["google.generativeai"], "GEMINI_API_KEY"),
+            "grok": _provider_status(["xai", "xai_sdk", "grok"], "GROK_API_KEY"),
+            "anthropic": _provider_status(["anthropic"], "ANTHROPIC_API_KEY"),
         }
         checks["providers"] = providers
 
-        # Back-compat flat flags (ok only when both SDK+key are present)
-        checks["sdk_openai"]   = providers["openai"]["ok"]
-        checks["sdk_gemini"]   = providers["gemini"]["ok"]
+        # Back-compat flags (true only when SDK+key present)
+        checks["sdk_openai"] = providers["openai"]["ok"]
+        checks["sdk_gemini"] = providers["gemini"]["ok"]
         checks["sdk_grok_xai"] = providers["grok"]["ok"]
-        checks["sdk_anthropic"]= providers["anthropic"]["ok"]
+        checks["sdk_anthropic"] = providers["anthropic"]["ok"]
 
-        # Provider env hint list (still useful for quick setup)
+        # Missing env hints
         missing_envs = [k for k in PROVIDER_ENV_HINTS if not _has_key(k)]
         checks["provider_env_missing"] = missing_envs
         checks["providers_enabled"] = [name for name, st in providers.items() if st.get("ok")]
-        # --- CFH-specific probe
+
+        # CFH-specific probe
         checks["cfh_root"] = os.path.exists(r"C:\CFH\frontend")
 
-        # Overall ready flag (unchanged logic)
         ok = bool(checks["router_loaded"]) and bool(checks["reports_dir_writable"])
         return {"ok": ok, "checks": checks}
 
@@ -159,6 +169,7 @@ def _register_health_endpoints(app: FastAPI) -> None:
                 items.append({"path": "<error>", "err": repr(e)})
         return {"count": len(items), "routes": items}
 
+# --- error handlers ------------------------------------------------------------
 def _register_error_handlers(app: FastAPI) -> None:
     logger = logging.getLogger("uvicorn.error")
 
@@ -178,15 +189,17 @@ def _register_error_handlers(app: FastAPI) -> None:
             content={"ok": False, "error": "internal_error", "detail": repr(exc)},
         )
 
+# --- logging -------------------------------------------------------------------
 def _configure_logging() -> None:
     level = getattr(logging, LOG_LEVEL, logging.INFO)
     logging.basicConfig(
         level=level,
         format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
-        datefmt="%Y-%m-%d %H:%M:%S",
+        datefmt="%%Y-%%m-%%d %%H:%%M:%%S",
     )
     logging.getLogger("uvicorn.access").setLevel(level)
 
+# --- CLI entrypoint ------------------------------------------------------------
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
@@ -197,6 +210,3 @@ if __name__ == "__main__":
         log_level=LOG_LEVEL.lower(),
         reload=bool(os.getenv("RELOAD", "0") == "1"),
     )
-
-
-
