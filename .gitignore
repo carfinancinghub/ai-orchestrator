@@ -47,3 +47,4 @@ tools/cod1/*.txt
 app/services/llm/node_modules/
 **/node_modules/
 src/_ai_out/
+reports/wave_metrics_redis.csv
