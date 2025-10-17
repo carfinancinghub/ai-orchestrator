@@ -214,10 +214,13 @@ def review_batch(paths: list[str], tier: str, label: str | None, reports_dir: Pa
         "dependencies": { "<repo-rel>": [ ... ] }
       }
     """
-    label = label or "batch"
+base = Path(reports_dir or "reports")
+label = label or "wave"
+
+# avoid double label, e.g., "reports\wave-mdfirst\wave-mdfirst"
+out_dir = base if base.name == label else (base / label)
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    out_root = Path(reports_dir) / label
-    mds_dir = out_root / "mds"
+    mds_dir = out_dir / "mds"
     _ensure_dir(mds_dir)
 
     per_file_mds: list[str] = []
@@ -268,7 +271,7 @@ def review_batch(paths: list[str], tier: str, label: str | None, reports_dir: Pa
             batch_lines.append("- Dependencies: _none inferred_")
         batch_lines.append("")
 
-    batch_md = out_root / f"batch_review_{stamp}.md"
+    batch_md = out_dir / f"batch_review_{stamp}.md"
     batch_md.write_text("\n".join(batch_lines) + "\n", encoding="utf-8")
 
     return {
