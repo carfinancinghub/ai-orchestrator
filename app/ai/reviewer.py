@@ -17,7 +17,7 @@ BUCKET_RULES: List[Tuple[str, str, float]] = [
     (r"\bdisput(e|es)\b|\barbitrator\b|\bappeal\b",  "disputes",     0.78),
     (r"\bmechanic\b|\binspection\b|\brepair\b",      "mechanic",     0.80),
     (r"\binsur(ance|er)\b|\bcarrier\b|\bpolicy\b",   "insurance",    0.78),
-    (r"\badmin\b|\btenant\b|\brole\b|\bpermission\b","admin",        0.75),
+    (r"\badmin\b|\btenant\b|\brole\b|\bpermission\b|\bkpi\b|\bcompliance\b|\bdispute(s)?\b","admin",0.85),
     (r"\bchat\b|\bmessage\b|\bthread\b",             "chat",         0.72),
     (r"\banalytic(s|s-)\b|\bmetric\b|\bdashboard\b", "analytics",    0.72),
     (r"\bcontract\b|\bagreement\b|\bsignature\b",    "contract",     0.72),
@@ -214,11 +214,11 @@ def review_batch(paths: list[str], tier: str, label: str | None, reports_dir: Pa
         "dependencies": { "<repo-rel>": [ ... ] }
       }
     """
-base = Path(reports_dir or "reports")
-label = label or "wave"
+    base = Path(reports_dir or "reports")
+    label = label or "wave"
 
-# avoid double label, e.g., "reports\wave-mdfirst\wave-mdfirst"
-out_dir = base if base.name == label else (base / label)
+    # avoid double label, e.g., "reports\wave-mdfirst\wave-mdfirst"
+    out_dir = base if base.name == label else (base / label)
     stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     mds_dir = out_dir / "mds"
     _ensure_dir(mds_dir)
@@ -362,4 +362,82 @@ export default function {comp_name}(): JSX.Element {{
     else:
         # dry run of builder—no write
         return {"written": []}
+
+def review_batch(paths: List[str],
+                 tier: str = "wow",
+                 label: str | None = None,
+                 reports_dir: str | Path = "reports") -> Dict[str, Any]:
+    """
+    Writes:
+      - reports/<label>/batch_review_<stamp>.md
+      - reports/<label>/mds/<safe>_review.md  (per file)
+    Returns:
+      {
+        "per_file_mds": [...],
+        "batch_md": "reports/<label>/batch_review_*.md",
+        "dependencies": { "<repo-rel>": [ ... ] }
+      }
+    """
+    base = Path(reports_dir)
+    label = label or "wave"
+
+    # avoid double label, e.g., reports\wave\wave
+    out_dir = base if base.name == label else (base / label)
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    mds_dir = out_dir / "mds"
+    _ensure_dir(mds_dir)
+
+    per_file_mds: List[str] = []
+    deps_map: Dict[str, List[str]] = {}
+
+    batch_lines: List[str] = []
+    batch_lines.append(f"# Batch Review — {tier}  ({stamp})")
+    batch_lines.append("")
+    batch_lines.append(f"_Label:_ `{label}`  •  _Count:_ `{len(paths)}`")
+    batch_lines.append("")
+
+    for p_str in paths:
+        p = Path(p_str)
+        text = _read_text(p)
+        rel = _repo_rel(p)
+
+        bucket, score, reason = heuristic_route(text)
+
+        repo_root = os.getenv("FRONTEND_ROOT", r"C:\CFH\frontend")
+        dest = None
+        if bucket:
+            try:
+                components = Path(repo_root) / "src" / "components"
+                dest = str((components / bucket / p.name).resolve())
+            except Exception:
+                dest = None
+
+        deps = _infer_dependencies(text)
+        deps_map[rel] = deps
+
+        md_body = _tiers_block(p, text, tier=tier, dest_path=dest, deps=deps)
+        safe = _safe_name(rel)
+        md_path = mds_dir / f"{safe}_review.md"
+        _ensure_dir(md_path.parent)
+        md_path.write_text(md_body, encoding="utf-8")
+        per_file_mds.append(md_path.as_posix())
+
+        batch_lines.append(f"### File: `{rel}`")
+        batch_lines.append("")
+        batch_lines.append(f"- Suggested bucket: `{bucket or 'unknown'}`  •  Confidence: `{score:.2f}`")
+        batch_lines.append(f"- Proposed dest: `{dest or ''}`")
+        if deps:
+            batch_lines.append(f"- Dependencies: {', '.join(f'`{d}`' for d in deps)}")
+        else:
+            batch_lines.append("- Dependencies: _none inferred_")
+        batch_lines.append("")
+
+    batch_md = out_dir / f"batch_review_{stamp}.md"
+    batch_md.write_text("\n".join(batch_lines) + "\n", encoding="utf-8")
+
+    return {
+        "per_file_mds": per_file_mds,
+        "batch_md": batch_md.as_posix(),
+        "dependencies": deps_map,
+    }
 
